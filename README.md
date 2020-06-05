@@ -3,7 +3,7 @@ SubMusic is a music provider app for the Garmin Connect IQ store and synchronize
 
 Set up Synced Playlists    |  Choose from synced playlists | Enjoy your music 
 :-------------------------:|:-------------------------:|:-------------------------:
-![](images/ConfigureSyncView.png)  |  ![](images/ChoosePlaybackView.png) | ![](images/PlaybackView.png)
+![](images/ConfigureSyncVIew.png) | ![](images/ChoosePlaybackView.png) | ![](images/PlaybackView.png)
 
 ## == Nextcloud ==
 
@@ -17,4 +17,4 @@ Enable the SubSonic backend in System settings in the web UI.
 
 ## == Support ==
 
-If you use the "Contact Developer" option, make sure to attach your email address to the message so I can reply. You can also go to https://github.com/memen45/SubMusic on GitHub and open an issue.
+If you use the "Contact Developer" option, please make sure to attach your email address to the message so I can reply. You can also go to https://github.com/memen45/SubMusic on GitHub and open an issue.
