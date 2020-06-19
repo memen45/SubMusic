@@ -1,0 +1,1505 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<debugInfo>
+<pcToLineNum>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="3" lineNum="8" pc="268435456" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="3" lineNum="9" pc="268435460" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="4" lineNum="13" pc="268435479" symbol="onLayout"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="20" pc="268435484" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="22" pc="268435488" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="23" pc="268435511" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="25" pc="268435522" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="26" pc="268435550" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="29" pc="268435554" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="31" pc="268435564" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="32" pc="268435603" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="34" pc="268435642" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="35" pc="268435655" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="5" lineNum="38" pc="268435659" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="6" lineNum="42" pc="268435732" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="6" lineNum="46" pc="268435736" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="6" lineNum="47" pc="268435776" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="6" lineNum="48" pc="268435788" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="6" lineNum="49" pc="268435828" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="7" lineNum="56" pc="268435926" symbol="onHide"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackView.mc" id="7" lineNum="57" pc="268435930" symbol="onHide"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="9" lineNum="8" pc="268435954" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="9" lineNum="9" pc="268435958" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="9" lineNum="11" pc="268435976" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="9" lineNum="12" pc="268435990" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="10" lineNum="15" pc="268436005" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="10" lineNum="16" pc="268436009" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="10" lineNum="17" pc="268436023" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="10" lineNum="18" pc="268436052" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="10" lineNum="19" pc="268436081" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="10" lineNum="21" pc="268436085" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="10" lineNum="22" pc="268436114" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="11" lineNum="26" pc="268436144" symbol="onBack"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="11" lineNum="27" pc="268436148" symbol="onBack"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="30" pc="268436161" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="33" pc="268436165" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="34" pc="268436204" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="35" pc="268436211" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="39" pc="268436222" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="40" pc="268436261" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="41" pc="268436268" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="45" pc="268436279" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="46" pc="268436305" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="47" pc="268436337" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="48" pc="268436367" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="49" pc="268436402" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="54" pc="268436449" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="55" pc="268436488" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="56" pc="268436495" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="58" pc="268436506" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="59" pc="268436532" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="60" pc="268436564" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="62" pc="268436594" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="63" pc="268436630" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="64" pc="268436635" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="67" pc="268436641" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="68" pc="268436675" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="69" pc="268436680" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="70" pc="268436709" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="74" pc="268436715" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="75" pc="268436749" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="76" pc="268436775" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="77" pc="268436780" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="80" pc="268436825" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="81" pc="268436865" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="12" lineNum="83" pc="268436905" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="13" lineNum="86" pc="268436934" symbol="getPlaylistById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="13" lineNum="87" pc="268436938" symbol="getPlaylistById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="13" lineNum="88" pc="268436964" symbol="getPlaylistById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="13" lineNum="90" pc="268436990" symbol="getPlaylistById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="13" lineNum="91" pc="268437003" symbol="getPlaylistById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="13" lineNum="92" pc="268437016" symbol="getPlaylistById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="13" lineNum="93" pc="268437040" symbol="getPlaylistById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="13" lineNum="94" pc="268437069" symbol="getPlaylistById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncDelegate.mc" id="13" lineNum="97" pc="268437094" symbol="getPlaylistById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="15" lineNum="11" pc="268437097" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="15" lineNum="12" pc="268437101" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="15" lineNum="13" pc="268437146" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="15" lineNum="14" pc="268437159" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="15" lineNum="16" pc="268437176" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="15" lineNum="17" pc="268437190" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="25" pc="268437205" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="26" pc="268437209" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="27" pc="268437230" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="28" pc="268437268" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="29" pc="268437296" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="30" pc="268437322" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="32" pc="268437328" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="33" pc="268437335" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="34" pc="268437363" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="38" pc="268437369" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="39" pc="268437397" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="40" pc="268437431" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="43" pc="268437437" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="44" pc="268437450" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="16" lineNum="45" pc="268437469" symbol="addSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="17" lineNum="53" pc="268437473" symbol="subSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="17" lineNum="54" pc="268437477" symbol="subSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="17" lineNum="55" pc="268437498" symbol="subSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="17" lineNum="56" pc="268437505" symbol="subSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="17" lineNum="58" pc="268437509" symbol="subSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="17" lineNum="59" pc="268437537" symbol="subSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="17" lineNum="60" pc="268437563" symbol="subSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="17" lineNum="62" pc="268437567" symbol="subSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="18" lineNum="70" pc="268437588" symbol="getFrontSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="18" lineNum="71" pc="268437592" symbol="getFrontSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="18" lineNum="72" pc="268437611" symbol="getFrontSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="18" lineNum="73" pc="268437631" symbol="getFrontSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="18" lineNum="75" pc="268437636" symbol="getFrontSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="19" lineNum="83" pc="268437663" symbol="storeSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="19" lineNum="84" pc="268437667" symbol="storeSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="19" lineNum="85" pc="268437680" symbol="storeSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="19" lineNum="86" pc="268437687" symbol="storeSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="19" lineNum="90" pc="268437691" symbol="storeSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="19" lineNum="91" pc="268437704" symbol="storeSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="19" lineNum="94" pc="268437750" symbol="storeSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="20" lineNum="97" pc="268437771" symbol="skipSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="20" lineNum="98" pc="268437775" symbol="skipSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="106" pc="268437796" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="107" pc="268437800" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="108" pc="268437832" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="109" pc="268437851" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="110" pc="268437881" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="111" pc="268437894" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="112" pc="268437936" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="113" pc="268437954" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="116" pc="268437974" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="119" pc="268438020" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="121" pc="268438050" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="21" lineNum="122" pc="268438064" symbol="flushDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="22" lineNum="130" pc="268438068" symbol="getRefIdById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="22" lineNum="131" pc="268438072" symbol="getRefIdById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="22" lineNum="132" pc="268438091" symbol="getRefIdById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="22" lineNum="133" pc="268438115" symbol="getRefIdById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="22" lineNum="134" pc="268438149" symbol="getRefIdById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="22" lineNum="137" pc="268438171" symbol="getRefIdById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="23" lineNum="140" pc="268438174" symbol="writeToStorage"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="23" lineNum="141" pc="268438178" symbol="writeToStorage"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="24" lineNum="144" pc="268438225" symbol="getSongCount"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="24" lineNum="145" pc="268438229" symbol="getSongCount"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="25" lineNum="148" pc="268438257" symbol="getSyncCount"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="25" lineNum="149" pc="268438261" symbol="getSyncCount"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="26" lineNum="152" pc="268438289" symbol="getDeleteCount"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSongStore.mc" id="26" lineNum="153" pc="268438293" symbol="getDeleteCount"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="28" lineNum="8" pc="268438312" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="28" lineNum="9" pc="268438316" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="28" lineNum="11" pc="268438334" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="29" lineNum="15" pc="268438358" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="29" lineNum="17" pc="268438362" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="29" lineNum="18" pc="268438385" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="29" lineNum="20" pc="268438424" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="29" lineNum="21" pc="268438431" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="29" lineNum="24" pc="268438442" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="29" lineNum="25" pc="268438456" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="29" lineNum="27" pc="268438482" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="29" lineNum="30" pc="268438505" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="30" lineNum="34" pc="268438546" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="30" lineNum="35" pc="268438550" symbol="onDone"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="31" lineNum="39" pc="268438568" symbol="onBack"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenuDelegate.mc" id="31" lineNum="40" pc="268438572" symbol="onBack"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="33" lineNum="6" pc="268438601" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="33" lineNum="7" pc="268438605" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="34" lineNum="13" pc="268438624" symbol="onStart"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="35" lineNum="17" pc="268438629" symbol="onStop"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="36" lineNum="21" pc="268438634" symbol="getContentDelegate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="36" lineNum="22" pc="268438638" symbol="getContentDelegate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="37" lineNum="26" pc="268438662" symbol="getSyncDelegate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="37" lineNum="27" pc="268438666" symbol="getSyncDelegate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="38" lineNum="31" pc="268438690" symbol="getPlaybackConfigurationView"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="38" lineNum="32" pc="268438694" symbol="getPlaybackConfigurationView"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="39" lineNum="36" pc="268438766" symbol="getSyncConfigurationView"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicApp.mc" id="39" lineNum="37" pc="268438770" symbol="getSyncConfigurationView"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="41" lineNum="11" pc="268438842" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="41" lineNum="12" pc="268438846" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="41" lineNum="14" pc="268438864" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="42" lineNum="20" pc="268438877" symbol="getContentIterator"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="42" lineNum="21" pc="268438881" symbol="getContentIterator"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="43" lineNum="25" pc="268438891" symbol="onAdAction"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="43" lineNum="26" pc="268438895" symbol="onAdAction"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="44" lineNum="29" pc="268438933" symbol="onCustomButton"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="44" lineNum="30" pc="268438937" symbol="onCustomButton"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="45" lineNum="34" pc="268438964" symbol="onThumbsUp"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="45" lineNum="35" pc="268438968" symbol="onThumbsUp"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="46" lineNum="39" pc="268439006" symbol="onThumbsDown"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="46" lineNum="40" pc="268439010" symbol="onThumbsDown"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="47" lineNum="44" pc="268439048" symbol="onShuffle"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="47" lineNum="45" pc="268439052" symbol="onShuffle"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="48" lineNum="48" pc="268439071" symbol="onRepeat"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="48" lineNum="49" pc="268439075" symbol="onRepeat"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="49" lineNum="52" pc="268439099" symbol="resetContentIterator"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="49" lineNum="53" pc="268439103" symbol="resetContentIterator"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="49" lineNum="54" pc="268439133" symbol="resetContentIterator"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="50" lineNum="57" pc="268439143" symbol="onMore"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="50" lineNum="58" pc="268439147" symbol="onMore"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="51" lineNum="60" pc="268439171" symbol="onLibrary"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="51" lineNum="61" pc="268439175" symbol="onLibrary"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="52" lineNum="66" pc="268439199" symbol="onSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="52" lineNum="67" pc="268439203" symbol="onSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="53" lineNum="70" pc="268439268" symbol="getSongName"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentDelegate.mc" id="53" lineNum="71" pc="268439272" symbol="getSongName"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="55" lineNum="11" pc="268439344" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="55" lineNum="12" pc="268439348" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="55" lineNum="14" pc="268439366" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="56" lineNum="18" pc="268439379" symbol="canSkip"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="56" lineNum="19" pc="268439383" symbol="canSkip"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="57" lineNum="23" pc="268439387" symbol="get"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="57" lineNum="24" pc="268439391" symbol="get"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="57" lineNum="26" pc="268439420" symbol="get"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="57" lineNum="29" pc="268439425" symbol="get"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="58" lineNum="33" pc="268439446" symbol="getPlaybackProfile"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="58" lineNum="34" pc="268439450" symbol="getPlaybackProfile"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="58" lineNum="35" pc="268439478" symbol="getPlaybackProfile"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="58" lineNum="36" pc="268439488" symbol="getPlaybackProfile"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="58" lineNum="46" pc="268439598" symbol="getPlaybackProfile"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="58" lineNum="47" pc="268439611" symbol="getPlaybackProfile"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="58" lineNum="48" pc="268439621" symbol="getPlaybackProfile"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="58" lineNum="49" pc="268439634" symbol="getPlaybackProfile"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="58" lineNum="50" pc="268439644" symbol="getPlaybackProfile"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="59" lineNum="54" pc="268439648" symbol="next"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="59" lineNum="55" pc="268439652" symbol="next"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="59" lineNum="57" pc="268439687" symbol="next"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="59" lineNum="59" pc="268439692" symbol="next"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="59" lineNum="60" pc="268439711" symbol="next"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="60" lineNum="64" pc="268439732" symbol="peekNext"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="60" lineNum="65" pc="268439736" symbol="peekNext"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="60" lineNum="67" pc="268439771" symbol="peekNext"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="60" lineNum="69" pc="268439776" symbol="peekNext"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="61" lineNum="73" pc="268439803" symbol="peekPrevious"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="61" lineNum="74" pc="268439807" symbol="peekPrevious"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="61" lineNum="76" pc="268439824" symbol="peekPrevious"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="61" lineNum="78" pc="268439829" symbol="peekPrevious"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="62" lineNum="82" pc="268439856" symbol="previous"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="62" lineNum="83" pc="268439860" symbol="previous"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="62" lineNum="85" pc="268439877" symbol="previous"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="62" lineNum="87" pc="268439882" symbol="previous"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="62" lineNum="88" pc="268439901" symbol="previous"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="63" lineNum="92" pc="268439922" symbol="shuffling"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="63" lineNum="93" pc="268439926" symbol="shuffling"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="64" lineNum="96" pc="268439936" symbol="toggleShuffle"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="64" lineNum="97" pc="268439940" symbol="toggleShuffle"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="64" lineNum="99" pc="268439957" symbol="toggleShuffle"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="64" lineNum="100" pc="268439968" symbol="toggleShuffle"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="64" lineNum="102" pc="268439983" symbol="toggleShuffle"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="107" pc="268439996" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="108" pc="268440000" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="110" pc="268440014" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="111" pc="268440053" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="113" pc="268440092" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="115" pc="268440112" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="116" pc="268440125" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="117" pc="268440149" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="118" pc="268440173" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="119" pc="268440197" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="120" pc="268440204" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="123" pc="268440240" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="126" pc="268440244" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="127" pc="268440287" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="129" pc="268440294" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="132" pc="268440298" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="133" pc="268440311" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="134" pc="268440318" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="65" lineNum="135" pc="268440347" symbol="initializePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="66" lineNum="140" pc="268440364" symbol="getObj"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="66" lineNum="141" pc="268440368" symbol="getObj"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="145" pc="268440434" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="147" pc="268440438" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="148" pc="268440454" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="149" pc="268440485" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="151" pc="268440504" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="152" pc="268440534" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="153" pc="268440547" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="154" pc="268440588" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="155" pc="268440610" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicContentIterator.mc" id="67" lineNum="158" pc="268440636" symbol="shufflePlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="69" lineNum="13" pc="268440650" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="69" lineNum="14" pc="268440654" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="69" lineNum="16" pc="268440672" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="70" lineNum="20" pc="268440719" symbol="onLayout"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="71" lineNum="27" pc="268440724" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="71" lineNum="29" pc="268440728" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="71" lineNum="30" pc="268440740" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="71" lineNum="31" pc="268440763" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="71" lineNum="32" pc="268440797" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="71" lineNum="34" pc="268440801" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="71" lineNum="35" pc="268440811" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="72" lineNum="39" pc="268440840" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="72" lineNum="43" pc="268440844" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="72" lineNum="44" pc="268440884" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="72" lineNum="45" pc="268440896" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="72" lineNum="48" pc="268440936" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="73" lineNum="54" pc="268441061" symbol="onHide"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="74" lineNum="59" pc="268441066" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="74" lineNum="60" pc="268441070" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="74" lineNum="61" pc="268441080" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="74" lineNum="62" pc="268441092" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="66" pc="268441109" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="67" pc="268441113" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="70" pc="268441121" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="71" pc="268441160" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="72" pc="268441167" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="75" pc="268441178" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="76" pc="268441191" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="77" pc="268441215" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="78" pc="268441222" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="82" pc="268441242" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="83" pc="268441281" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="84" pc="268441288" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="87" pc="268441299" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="88" pc="268441312" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="89" pc="268441336" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="90" pc="268441343" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="94" pc="268441363" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="95" pc="268441425" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="96" pc="268441455" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="101" pc="268441577" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="103" pc="268441604" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="75" lineNum="104" pc="268441656" symbol="pushSyncMenu"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="76" lineNum="107" pc="268441667" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="76" lineNum="108" pc="268441671" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="76" lineNum="109" pc="268441681" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="76" lineNum="110" pc="268441708" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="76" lineNum="111" pc="268441715" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="76" lineNum="113" pc="268441731" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="76" lineNum="114" pc="268441786" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigureSyncView.mc" id="76" lineNum="115" pc="268441796" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="78" lineNum="15" pc="268441813" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="78" lineNum="16" pc="268441817" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="78" lineNum="24" pc="268441917" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="79" lineNum="32" pc="268441928" symbol="getPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="79" lineNum="33" pc="268441932" symbol="getPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="79" lineNum="35" pc="268441955" symbol="getPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="79" lineNum="37" pc="268441965" symbol="getPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="79" lineNum="38" pc="268441981" symbol="getPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="80" lineNum="41" pc="268442030" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="80" lineNum="42" pc="268442034" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="80" lineNum="45" pc="268442069" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="80" lineNum="50" pc="268442163" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="80" lineNum="51" pc="268442185" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="80" lineNum="53" pc="268442189" symbol="onGetPlaylists"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="81" lineNum="62" pc="268442228" symbol="getPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="81" lineNum="64" pc="268442232" symbol="getPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="81" lineNum="66" pc="268442242" symbol="getPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="81" lineNum="68" pc="268442258" symbol="getPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="81" lineNum="69" pc="268442268" symbol="getPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="81" lineNum="71" pc="268442278" symbol="getPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="81" lineNum="75" pc="268442316" symbol="getPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="82" lineNum="78" pc="268442355" symbol="onGetPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="82" lineNum="79" pc="268442359" symbol="onGetPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="82" lineNum="83" pc="268442394" symbol="onGetPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="82" lineNum="88" pc="268442488" symbol="onGetPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="82" lineNum="89" pc="268442512" symbol="onGetPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="82" lineNum="92" pc="268442516" symbol="onGetPlaylist"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="83" lineNum="102" pc="268442551" symbol="download"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="83" lineNum="104" pc="268442555" symbol="download"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="83" lineNum="106" pc="268442565" symbol="download"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="83" lineNum="107" pc="268442581" symbol="download"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="83" lineNum="108" pc="268442591" symbol="download"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="83" lineNum="110" pc="268442601" symbol="download"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="83" lineNum="116" pc="268442680" symbol="download"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="84" lineNum="119" pc="268442719" symbol="onDownload"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="84" lineNum="120" pc="268442723" symbol="onDownload"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="84" lineNum="123" pc="268442749" symbol="onDownload"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="84" lineNum="124" pc="268442760" symbol="onDownload"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="84" lineNum="125" pc="268442784" symbol="onDownload"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="84" lineNum="127" pc="268442788" symbol="onDownload"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="85" lineNum="135" pc="268442820" symbol="stream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="85" lineNum="137" pc="268442824" symbol="stream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="85" lineNum="139" pc="268442834" symbol="stream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="85" lineNum="140" pc="268442850" symbol="stream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="85" lineNum="141" pc="268442860" symbol="stream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="85" lineNum="142" pc="268442870" symbol="stream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="85" lineNum="144" pc="268442880" symbol="stream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="85" lineNum="150" pc="268442959" symbol="stream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="86" lineNum="153" pc="268442998" symbol="onStream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="86" lineNum="154" pc="268443002" symbol="onStream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="86" lineNum="157" pc="268443028" symbol="onStream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="86" lineNum="158" pc="268443039" symbol="onStream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="86" lineNum="159" pc="268443063" symbol="onStream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="86" lineNum="161" pc="268443067" symbol="onStream"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="164" pc="268443099" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="165" pc="268443103" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="167" pc="268443119" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="168" pc="268443138" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="169" pc="268443157" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="170" pc="268443176" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="171" pc="268443195" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="172" pc="268443214" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="173" pc="268443233" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="174" pc="268443252" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="87" lineNum="176" pc="268443271" symbol="typeStringToEncoding"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="179" pc="268443275" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="180" pc="268443279" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="181" pc="268443297" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="182" pc="268443306" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="183" pc="268443324" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="184" pc="268443333" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="185" pc="268443351" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="186" pc="268443360" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="187" pc="268443378" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="188" pc="268443387" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="189" pc="268443405" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="190" pc="268443414" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="191" pc="268443432" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="192" pc="268443441" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="193" pc="268443459" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="194" pc="268443468" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="195" pc="268443486" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="196" pc="268443495" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="197" pc="268443513" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="198" pc="268443522" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="199" pc="268443540" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="88" lineNum="201" pc="268443549" symbol="respCodeToString"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="89" lineNum="204" pc="268443556" symbol="setFallback"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubSonicAPI.mc" id="89" lineNum="205" pc="268443560" symbol="setFallback"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="91" lineNum="14" pc="268443571" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="91" lineNum="15" pc="268443575" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="91" lineNum="17" pc="268443593" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="91" lineNum="18" pc="268443603" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="92" lineNum="21" pc="268443614" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="92" lineNum="22" pc="268443618" symbol="onShow"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="93" lineNum="36" pc="268443870" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="93" lineNum="37" pc="268443874" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="93" lineNum="38" pc="268443910" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="93" lineNum="39" pc="268443922" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\ErrorView.mc" id="93" lineNum="41" pc="268443958" symbol="onUpdate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\RequestDelegate.mc" id="95" lineNum="9" pc="268443979" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\RequestDelegate.mc" id="95" lineNum="10" pc="268443983" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\RequestDelegate.mc" id="95" lineNum="11" pc="268443993" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\RequestDelegate.mc" id="96" lineNum="15" pc="268444004" symbol="makeWebRequest"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\RequestDelegate.mc" id="96" lineNum="16" pc="268444008" symbol="makeWebRequest"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\RequestDelegate.mc" id="97" lineNum="20" pc="268444047" symbol="onWebResponse"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\RequestDelegate.mc" id="97" lineNum="21" pc="268444051" symbol="onWebResponse"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="99" lineNum="16" pc="268444082" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="99" lineNum="17" pc="268444086" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="99" lineNum="20" pc="268444140" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="99" lineNum="21" pc="268444170" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="99" lineNum="22" pc="268444184" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="99" lineNum="25" pc="268444203" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="100" lineNum="28" pc="268444243" symbol="handshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="100" lineNum="29" pc="268444247" symbol="handshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="100" lineNum="32" pc="268444301" symbol="handshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="100" lineNum="35" pc="268444327" symbol="handshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="100" lineNum="36" pc="268444341" symbol="handshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="100" lineNum="37" pc="268444361" symbol="handshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="100" lineNum="39" pc="268444380" symbol="handshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="100" lineNum="45" pc="268444443" symbol="handshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="101" lineNum="48" pc="268444492" symbol="onHandshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="101" lineNum="49" pc="268444496" symbol="onHandshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="101" lineNum="52" pc="268444531" symbol="onHandshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="101" lineNum="55" pc="268444568" symbol="onHandshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="101" lineNum="56" pc="268444590" symbol="onHandshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="101" lineNum="60" pc="268444594" symbol="onHandshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="101" lineNum="61" pc="268444610" symbol="onHandshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="101" lineNum="62" pc="268444631" symbol="onHandshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="101" lineNum="63" pc="268444638" symbol="onHandshake"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="102" lineNum="68" pc="268444652" symbol="session"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="102" lineNum="69" pc="268444656" symbol="session"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="102" lineNum="70" pc="268444708" symbol="session"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="74" pc="268444729" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="76" pc="268444733" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="77" pc="268444740" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="84" pc="268444745" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="85" pc="268444765" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="88" pc="268444770" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="96" pc="268445023" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="99" pc="268445052" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="100" pc="268445059" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="101" pc="268445097" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="102" pc="268445114" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="103" pc="268445137" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="104" pc="268445158" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="106" pc="268445164" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="110" pc="268445180" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="112" pc="268445197" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="114" pc="268445202" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="115" pc="268445209" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="117" pc="268445248" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="118" pc="268445271" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="120" pc="268445276" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="121" pc="268445329" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="123" pc="268445385" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="124" pc="268445408" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="125" pc="268445427" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="126" pc="268445440" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="128" pc="268445473" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\AmpacheAPI.mc" id="103" lineNum="131" pc="268445481" symbol="parseISODate"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="24" pc="268445522" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="25" pc="268445526" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="28" pc="268445544" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="29" pc="268445587" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="30" pc="268445600" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="31" pc="268445614" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="35" pc="268445661" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="36" pc="268445704" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="37" pc="268445717" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="38" pc="268445731" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="42" pc="268445778" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="43" pc="268445821" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="44" pc="268445834" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="45" pc="268445848" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="48" pc="268445895" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="105" lineNum="49" pc="268445925" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="53" pc="268445972" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="54" pc="268445976" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="56" pc="268445999" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="57" pc="268446012" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="58" pc="268446031" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="59" pc="268446055" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="61" pc="268446102" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="62" pc="268446121" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="63" pc="268446145" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="65" pc="268446192" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="66" pc="268446222" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="106" lineNum="74" pc="268446275" symbol="onStartSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="107" lineNum="78" pc="268446288" symbol="isSyncNeeded"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="107" lineNum="79" pc="268446292" symbol="isSyncNeeded"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="87" pc="268446296" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="88" pc="268446300" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="90" pc="268446319" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="91" pc="268446354" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="92" pc="268446374" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="93" pc="268446386" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="96" pc="268446390" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="97" pc="268446409" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="99" pc="268446419" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="108" lineNum="101" pc="268446451" symbol="syncNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="104" pc="268446490" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="105" pc="268446494" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="106" pc="268446501" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="107" pc="268446511" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="110" pc="268446521" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="111" pc="268446545" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="114" pc="268446571" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="115" pc="268446578" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="116" pc="268446592" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="117" pc="268446602" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="121" pc="268446608" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="122" pc="268446632" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="123" pc="268446637" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="126" pc="268446663" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="129" pc="268446689" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="130" pc="268446713" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="134" pc="268446749" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="137" pc="268446775" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="138" pc="268446812" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="139" pc="268446825" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="141" pc="268446863" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="144" pc="268446895" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="145" pc="268446917" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="147" pc="268446939" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="109" lineNum="148" pc="268446953" symbol="onNextPlaylistLocal"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="110" lineNum="151" pc="268446966" symbol="findById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="110" lineNum="152" pc="268446970" symbol="findById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="110" lineNum="153" pc="268446994" symbol="findById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="110" lineNum="154" pc="268447019" symbol="findById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="110" lineNum="157" pc="268447041" symbol="findById"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="165" pc="268447044" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="166" pc="268447048" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="168" pc="268447067" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="171" pc="268447102" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="172" pc="268447122" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="173" pc="268447134" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="175" pc="268447138" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="176" pc="268447157" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="178" pc="268447167" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="111" lineNum="180" pc="268447199" symbol="syncNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="183" pc="268447238" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="184" pc="268447242" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="186" pc="268447249" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="188" pc="268447259" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="189" pc="268447283" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="190" pc="268447307" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="191" pc="268447312" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="196" pc="268447338" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="197" pc="268447381" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="198" pc="268447407" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="201" pc="268447451" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="202" pc="268447488" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="203" pc="268447501" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="205" pc="268447539" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="208" pc="268447571" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="209" pc="268447593" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="211" pc="268447615" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="112" lineNum="212" pc="268447629" symbol="onNextPlaylistSync"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="220" pc="268447642" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="222" pc="268447646" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="224" pc="268447687" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="225" pc="268447717" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="228" pc="268447730" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="229" pc="268447767" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="230" pc="268447777" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="232" pc="268447783" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="234" pc="268447796" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="235" pc="268447820" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="238" pc="268447856" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="241" pc="268447879" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="242" pc="268447899" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="243" pc="268447913" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="244" pc="268447933" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="247" pc="268447971" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="248" pc="268448008" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="249" pc="268448022" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="251" pc="268448073" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="254" pc="268448087" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="113" lineNum="255" pc="268448130" symbol="syncNextPlaylistDelete"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="114" lineNum="259" pc="268448143" symbol="deleteSongs"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="114" lineNum="260" pc="268448147" symbol="deleteSongs"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="114" lineNum="261" pc="268448182" symbol="deleteSongs"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="114" lineNum="262" pc="268448214" symbol="deleteSongs"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="115" lineNum="266" pc="268448227" symbol="syncNextSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="115" lineNum="267" pc="268448231" symbol="syncNextSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="115" lineNum="268" pc="268448250" symbol="syncNextSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="115" lineNum="269" pc="268448257" symbol="syncNextSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="115" lineNum="270" pc="268448275" symbol="syncNextSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="115" lineNum="271" pc="268448292" symbol="syncNextSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="115" lineNum="273" pc="268448296" symbol="syncNextSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="115" lineNum="274" pc="268448358" symbol="syncNextSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="115" lineNum="275" pc="268448392" symbol="syncNextSong"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="116" lineNum="279" pc="268448442" symbol="onSongDownloaded"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="116" lineNum="280" pc="268448446" symbol="onSongDownloaded"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="116" lineNum="282" pc="268448474" symbol="onSongDownloaded"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="116" lineNum="284" pc="268448506" symbol="onSongDownloaded"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="116" lineNum="285" pc="268448523" symbol="onSongDownloaded"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="117" lineNum="289" pc="268448536" symbol="onSongDownloadFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="117" lineNum="290" pc="268448540" symbol="onSongDownloadFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="117" lineNum="292" pc="268448566" symbol="onSongDownloadFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="117" lineNum="294" pc="268448598" symbol="onSongDownloadFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="117" lineNum="295" pc="268448615" symbol="onSongDownloadFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="118" lineNum="299" pc="268448628" symbol="onSongSynced"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="118" lineNum="300" pc="268448632" symbol="onSongSynced"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="118" lineNum="302" pc="268448648" symbol="onSongSynced"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="118" lineNum="303" pc="268448682" symbol="onSongSynced"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="118" lineNum="305" pc="268448695" symbol="onSongSynced"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="119" lineNum="309" pc="268448714" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="119" lineNum="310" pc="268448718" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="119" lineNum="311" pc="268448753" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="119" lineNum="312" pc="268448769" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="119" lineNum="313" pc="268448799" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicSyncDelegate.mc" id="119" lineNum="314" pc="268448812" symbol="onFail"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="8" pc="268448840" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="9" pc="268448844" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="11" pc="268448896" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="14" pc="268448919" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="15" pc="268448958" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="16" pc="268448971" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="17" pc="268448995" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="18" pc="268449002" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="19" pc="268449015" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackMenu.mc" id="121" lineNum="20" pc="268449058" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackDelegate.mc" id="125" lineNum="5" pc="268449117" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackDelegate.mc" id="125" lineNum="6" pc="268449121" symbol="initialize"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackDelegate.mc" id="126" lineNum="10" pc="268449140" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackDelegate.mc" id="126" lineNum="12" pc="268449144" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackDelegate.mc" id="126" lineNum="13" pc="268449193" symbol="onSelect"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackDelegate.mc" id="127" lineNum="16" pc="268449213" symbol="onBack"/>
+<entry filename="C:\\Users\\rceme\\eclipse-workspace\\SubMusic\\source\\SubMusicConfigurePlaybackDelegate.mc" id="127" lineNum="17" pc="268449217" symbol="onBack"/>
+</pcToLineNum>
+<symbolTable>
+<entry id="127" method="true" symbol="getRefIdById"/>
+<entry id="8388639" module="true" symbol="Graphics"/>
+<entry field="true" id="106" symbol="&lt;globals/AmpacheAPI/&lt;&gt;d_url&gt;"/>
+<entry id="8390434" method="true" symbol="getSyncConfigurationView"/>
+<entry field="true" id="139" symbol="PLAYLIST_DELETE"/>
+<entry id="8390557" method="true" symbol="resetContentIterator"/>
+<entry id="101" method="true" symbol="respCodeToString"/>
+<entry id="37" method="true" symbol="initializePlaylist"/>
+<entry id="8389346" symbol="text"/>
+<entry id="31" method="true" symbol="pushSyncMenu"/>
+<entry id="8390211" module="true" symbol="Media"/>
+<entry id="8390379" method="true" symbol="onThumbsUp"/>
+<entry id="8390380" method="true" symbol="onThumbsDown"/>
+<entry id="79" method="true" symbol="syncNextPlaylistSync"/>
+<entry field="true" id="33" symbol="&lt;globals/SubMusicContentIterator/&lt;&gt;d_songidx&gt;"/>
+<entry id="85" method="true" symbol="onSongDownloadFail"/>
+<entry id="98" method="true" symbol="stream"/>
+<entry id="13" object="true" symbol="SubMusicSongStore"/>
+<entry id="8388826" method="true" symbol="next"/>
+<entry field="true" id="57" symbol="mCallback"/>
+<entry field="true" id="8388938" symbol="month"/>
+<entry id="8390501" module="true" symbol="Cryptography"/>
+<entry field="true" id="60" symbol="&lt;globals/SubMusicContentDelegate/&lt;&gt;d_events&gt;"/>
+<entry field="true" id="108" symbol="&lt;globals/AmpacheAPI/&lt;&gt;d_client&gt;"/>
+<entry field="true" id="54" symbol="ServerUser"/>
+<entry id="8390424" module="true" symbol="Storage"/>
+<entry field="true" id="136" symbol="SONGS_LOCAL"/>
+<entry field="true" id="134" symbol="d_textarea"/>
+<entry id="8390520" symbol="algorithm"/>
+<entry id="125" method="true" symbol="skipSong"/>
+<entry field="true" id="109" symbol="&lt;globals/AmpacheAPI/&lt;&gt;d_hash&gt;"/>
+<entry field="true" id="34" symbol="&lt;globals/SubMusicContentIterator/&lt;&gt;d_playlist&gt;"/>
+<entry field="true" id="8388611" module="true" symbol="Toybox"/>
+<entry id="115" method="true" symbol="parseISODate"/>
+<entry field="true" id="28" symbol="&lt;globals/SubMusicConfigureSyncView/&lt;&gt;d_menushown&gt;"/>
+<entry id="8390435" symbol="context"/>
+<entry id="8390377" method="true" symbol="getContentIterator"/>
+<entry id="63" method="true" symbol="getSongName"/>
+<entry field="true" id="75" symbol="&lt;globals/SubMusicSyncDelegate/&lt;&gt;d_api&gt;"/>
+<entry id="23" object="true" symbol="SubMusicSyncDelegate"/>
+<entry field="true" id="87" symbol="&lt;globals/SubSonicAPI/&lt;&gt;d_base_url&gt;"/>
+<entry id="8390373" method="true" symbol="shuffling"/>
+<entry id="81" method="true" symbol="syncNextPlaylistDelete"/>
+<entry id="39" method="true" symbol="shufflePlaylist"/>
+<entry field="true" id="52" symbol="AppName"/>
+<entry id="8389339" symbol="second"/>
+<entry id="19" object="true" symbol="SubSonicAPI"/>
+<entry id="18" object="true" symbol="SubMusicConfigureSyncView"/>
+<entry id="8390440" symbol="contentType"/>
+<entry field="true" id="65" symbol="URL"/>
+<entry id="77" method="true" symbol="onNextPlaylistLocal"/>
+<entry id="8388772" module="true" object="true" symbol="Fonts"/>
+<entry id="129" method="true" symbol="getSongCount"/>
+<entry id="112" method="true" symbol="handshake"/>
+<entry id="8390430" method="true" symbol="getContentDelegate"/>
+<entry field="true" id="67" symbol="TYPE"/>
+<entry id="38" method="true" symbol="getObj"/>
+<entry field="true" id="91" symbol="&lt;globals/SubSonicAPI/&lt;&gt;d_callback&gt;"/>
+<entry field="true" id="118" symbol="&lt;globals/SubMusicSongStore/&lt;&gt;d_locals&gt;"/>
+<entry id="8389338" symbol="minute"/>
+<entry id="8388648" module="true" symbol="WatchUi"/>
+<entry id="8389081" method="true" symbol="onBack"/>
+<entry id="84" method="true" symbol="onSongDownloaded"/>
+<entry id="82" method="true" symbol="deleteSongs"/>
+<entry field="true" id="104" symbol="&lt;globals/SubMusicConfigureSyncDelegate/&lt;&gt;d_deletelist&gt;"/>
+<entry id="8390378" method="true" symbol="onAdAction"/>
+<entry field="true" id="55" symbol="ApiStandardAmpache"/>
+<entry field="true" id="119" symbol="&lt;globals/SubMusicSongStore/&lt;&gt;d_tosync&gt;"/>
+<entry field="true" id="46" symbol="fetchingSongs"/>
+<entry id="8388789" method="true" symbol="get"/>
+<entry id="8390342" method="true" symbol="isSyncNeeded"/>
+<entry id="8389124" method="true" symbol="onUpdate"/>
+<entry field="true" id="68" symbol="&lt;globals/SubMusicSyncDelegate/&lt;&gt;d_locallists&gt;"/>
+<entry field="true" id="8389065" symbol="locY"/>
+<entry field="true" id="8389064" symbol="locX"/>
+<entry id="14" object="true" symbol="SubMusicConfigurePlaybackMenuDelegate"/>
+<entry id="8390422" method="true" symbol="onDone"/>
+<entry id="8390431" method="true" symbol="getSyncDelegate"/>
+<entry id="36" method="true" symbol="toggleShuffle"/>
+<entry field="true" id="8390516" symbol="mContext"/>
+<entry field="true" id="120" symbol="&lt;globals/SubMusicSongStore/&lt;&gt;d_todelete&gt;"/>
+<entry field="true" id="73" symbol="&lt;globals/SubMusicSyncDelegate/&lt;&gt;d_songs_total&gt;"/>
+<entry field="true" id="89" symbol="&lt;globals/SubSonicAPI/&lt;&gt;d_pass&gt;"/>
+<entry id="8388771" module="true" object="true" symbol="Drawables"/>
+<entry field="true" id="110" symbol="&lt;globals/AmpacheAPI/&lt;&gt;d_auth&gt;"/>
+<entry id="8389348" symbol="font"/>
+<entry field="true" id="8389067" symbol="height"/>
+<entry id="94" method="true" symbol="getPlaylist"/>
+<entry id="41" module="true" symbol="Menus"/>
+<entry id="126" method="true" symbol="flushDelete"/>
+<entry field="true" id="49" symbol="ApiStandardSubsonic"/>
+<entry field="true" id="8389066" symbol="width"/>
+<entry id="86" method="true" symbol="onSongSynced"/>
+<entry id="124" method="true" symbol="storeSong"/>
+<entry id="8389122" method="true" symbol="onLayout"/>
+<entry id="102" method="true" symbol="setFallback"/>
+<entry id="8389349" symbol="justification"/>
+<entry field="true" id="66" symbol="CAN_SKIP"/>
+<entry field="true" id="103" symbol="&lt;globals/SubMusicConfigureSyncDelegate/&lt;&gt;d_synclist&gt;"/>
+<entry id="99" method="true" symbol="onStream"/>
+<entry field="true" id="50" symbol="ApiStandard"/>
+<entry id="15" object="true" symbol="SubMusicApp"/>
+<entry id="8388637" module="true" symbol="Communications"/>
+<entry id="20" object="true" symbol="ErrorView"/>
+<entry id="128" method="true" symbol="writeToStorage"/>
+<entry field="true" id="70" symbol="&lt;globals/SubMusicSyncDelegate/&lt;&gt;d_deletelists&gt;"/>
+<entry id="8390371" method="true" symbol="peekNext"/>
+<entry field="true" id="137" symbol="PLAYLIST_LOCAL"/>
+<entry id="8390372" method="true" symbol="peekPrevious"/>
+<entry field="true" id="117" symbol="&lt;globals/SubMusicConfigurePlaybackView/&lt;&gt;d_msg&gt;"/>
+<entry id="8389844" symbol="responseType"/>
+<entry field="true" id="48" symbol="fetchingPlaylists"/>
+<entry field="true" id="132" symbol="&lt;globals/ErrorView/&lt;&gt;d_title&gt;"/>
+<entry id="76" method="true" symbol="syncNextPlaylistLocal"/>
+<entry field="true" id="47" symbol="ServerAddress"/>
+<entry id="12" object="true" symbol="SubMusicConfigureSyncDelegate"/>
+<entry id="62" method="true" symbol="onLibrary"/>
+<entry id="8388786" method="true" symbol="method"/>
+<entry field="true" id="88" symbol="&lt;globals/SubSonicAPI/&lt;&gt;d_user&gt;"/>
+<entry field="true" id="64" symbol="ID"/>
+<entry id="8390382" method="true" symbol="onSong"/>
+<entry field="true" id="92" symbol="&lt;globals/SubSonicAPI/&lt;&gt;d_fallback&gt;"/>
+<entry field="true" id="53" symbol="ServerKey"/>
+<entry id="8389619" method="true" symbol="onSelect"/>
+<entry id="8388645" module="true" symbol="Time"/>
+<entry id="8388769" module="true" object="true" symbol="Rez"/>
+<entry id="105" method="true" symbol="getPlaylistById"/>
+<entry id="26" object="true" symbol="SubMusicConfigurePlaybackDelegate"/>
+<entry field="true" id="107" symbol="&lt;globals/AmpacheAPI/&lt;&gt;d_user&gt;"/>
+<entry id="8390432" method="true" symbol="getPlaybackConfigurationView"/>
+<entry field="true" id="8388720" symbol="hour"/>
+<entry id="8390088" module="true" object="true" symbol="JsonData"/>
+<entry id="8390784" method="true" symbol="onRepeat"/>
+<entry id="93" method="true" symbol="getPlaylists"/>
+<entry id="61" method="true" symbol="onMore"/>
+<entry field="true" id="72" symbol="&lt;globals/SubMusicSyncDelegate/&lt;&gt;d_songstore&gt;"/>
+<entry field="true" id="42" symbol="LauncherIcon"/>
+<entry id="22" object="true" symbol="AmpacheAPI"/>
+<entry id="8390374" method="true" symbol="canSkip"/>
+<entry field="true" id="138" symbol="PLAYLIST_SYNC"/>
+<entry id="11" object="true" symbol="SubMusicConfigurePlaybackView"/>
+<entry id="8389123" method="true" symbol="onShow"/>
+<entry field="true" id="69" symbol="&lt;globals/SubMusicSyncDelegate/&lt;&gt;d_synclists&gt;"/>
+<entry id="8390369" method="true" symbol="getPlaybackProfile"/>
+<entry id="8389835" method="true" symbol="makeWebRequest"/>
+<entry id="8390370" method="true" symbol="previous"/>
+<entry id="78" method="true" symbol="findById"/>
+<entry id="8391045" method="true" symbol="onCustomButton"/>
+<entry id="8388770" module="true" object="true" symbol="Strings"/>
+<entry id="83" method="true" symbol="syncNextSong"/>
+<entry id="8388702" method="true" symbol="initialize"/>
+<entry id="8389279" method="true" symbol="onStart"/>
+<entry field="true" id="133" symbol="&lt;globals/ErrorView/&lt;&gt;d_detail&gt;"/>
+<entry id="21" object="true" symbol="RequestDelegate"/>
+<entry id="123" method="true" symbol="getFrontSync"/>
+<entry id="17" object="true" symbol="SubMusicContentIterator"/>
+<entry field="true" id="51" symbol="syncMenuTitle"/>
+<entry id="8388641" module="true" symbol="Math"/>
+<entry id="8390341" method="true" symbol="onStartSync"/>
+<entry id="121" method="true" symbol="addSong"/>
+<entry id="96" method="true" symbol="download"/>
+<entry id="130" method="true" symbol="getSyncCount"/>
+<entry id="58" method="true" symbol="onWebResponse"/>
+<entry field="true" id="35" symbol="&lt;globals/SubMusicContentIterator/&lt;&gt;d_shuffle&gt;"/>
+<entry id="8389281" method="true" symbol="onStop"/>
+<entry id="8389347" symbol="color"/>
+<entry field="true" id="8388939" symbol="day"/>
+<entry field="true" id="44" symbol="configurePlaybackMessage"/>
+<entry id="97" method="true" symbol="onDownload"/>
+<entry id="80" method="true" symbol="onNextPlaylistSync"/>
+<entry field="true" id="45" symbol="playbackMenuTitle"/>
+<entry field="true" id="59" symbol="&lt;globals/SubMusicContentDelegate/&lt;&gt;d_iterator&gt;"/>
+<entry id="16" object="true" symbol="SubMusicContentDelegate"/>
+<entry id="32" method="true" symbol="onFail"/>
+<entry field="true" id="8388940" symbol="year"/>
+<entry field="true" id="43" symbol="AppVersionTitle"/>
+<entry field="true" id="71" symbol="&lt;globals/SubMusicSyncDelegate/&lt;&gt;d_state&gt;"/>
+<entry id="40" module="true" symbol="Layouts"/>
+<entry field="true" id="90" symbol="&lt;globals/SubSonicAPI/&lt;&gt;d_params&gt;"/>
+<entry field="true" id="74" symbol="&lt;globals/SubMusicSyncDelegate/&lt;&gt;d_songs_count&gt;"/>
+<entry id="113" method="true" symbol="onHandshake"/>
+<entry id="8390381" method="true" symbol="onShuffle"/>
+<entry field="true" id="56" symbol="configureSyncMessage"/>
+<entry id="95" method="true" symbol="onGetPlaylist"/>
+<entry field="true" id="27" symbol="&lt;globals/SubMusicConfigureSyncView/&lt;&gt;d_playlists&gt;"/>
+<entry field="true" id="29" symbol="&lt;globals/SubMusicConfigureSyncView/&lt;&gt;d_api&gt;"/>
+<entry id="24" object="true" symbol="SubMusicConfigurePlaybackMenu"/>
+<entry id="131" method="true" symbol="getDeleteCount"/>
+<entry id="8390441" object="true" symbol="mediaEncoding"/>
+<entry field="true" id="111" symbol="&lt;globals/AmpacheAPI/&lt;&gt;d_auth_expire&gt;"/>
+<entry field="true" id="135" symbol="PLAYLIST"/>
+<entry id="8389125" method="true" symbol="onHide"/>
+<entry id="100" method="true" symbol="typeStringToEncoding"/>
+<entry id="122" method="true" symbol="subSong"/>
+<entry id="114" method="true" symbol="session"/>
+<entry id="25" module="true" symbol="SongInfo"/>
+<entry field="true" id="116" symbol="&lt;globals/SubMusicConfigurePlaybackView/&lt;&gt;d_menushown&gt;"/>
+<entry id="8388635" module="true" symbol="Application"/>
+<entry field="true" id="8389642" symbol="title"/>
+<entry id="30" method="true" symbol="onGetPlaylists"/>
+</symbolTable>
+<localVars>
+<entry endPc="268435484" name="dc" stackId="1" startPc="268435479"/>
+<entry endPc="268435731" name="playlist" stackId="1" startPc="268435488"/>
+<entry endPc="268435926" name="dc" stackId="1" startPc="268435732"/>
+<entry endPc="268436144" name="item" stackId="1" startPc="268436005"/>
+<entry endPc="268436449" name="idx" stackId="3" startPc="268436367"/>
+<entry endPc="268436812" name="in_sync" stackId="8" startPc="268436594"/>
+<entry endPc="268436812" name="in_local" stackId="7" startPc="268436594"/>
+<entry endPc="268436812" name="in_delete" stackId="6" startPc="268436594"/>
+<entry endPc="268436825" name="idx" stackId="5" startPc="268436594"/>
+<entry endPc="268436933" name="synclists" stackId="2" startPc="268436165"/>
+<entry endPc="268436933" name="deletelists" stackId="4" startPc="268436165"/>
+<entry endPc="268436933" name="playlists" stackId="1" startPc="268436165"/>
+<entry endPc="268437094" name="idx" stackId="4" startPc="268437040"/>
+<entry endPc="268437096" name="keys" stackId="3" startPc="268436938"/>
+<entry endPc="268437097" name="playlists" stackId="2" startPc="268436934"/>
+<entry endPc="268437097" name="id" stackId="1" startPc="268436934"/>
+<entry endPc="268437472" name="refId" stackId="2" startPc="268437209"/>
+<entry endPc="268437473" name="song" stackId="1" startPc="268437205"/>
+<entry endPc="268437587" name="refId" stackId="2" startPc="268437477"/>
+<entry endPc="268437588" name="song" stackId="1" startPc="268437473"/>
+<entry endPc="268437662" name="keys" stackId="1" startPc="268437592"/>
+<entry endPc="268437770" name="song" stackId="3" startPc="268437667"/>
+<entry endPc="268437771" name="refId" stackId="2" startPc="268437663"/>
+<entry endPc="268437771" name="id" stackId="1" startPc="268437663"/>
+<entry endPc="268437796" name="id" stackId="1" startPc="268437771"/>
+<entry endPc="268438037" name="contentRef" stackId="5" startPc="268437881"/>
+<entry endPc="268438037" name="refId" stackId="4" startPc="268437881"/>
+<entry endPc="268438050" name="idx" stackId="3" startPc="268437881"/>
+<entry endPc="268438067" name="count" stackId="2" startPc="268437800"/>
+<entry endPc="268438068" name="callback" stackId="1" startPc="268437796"/>
+<entry endPc="268438171" name="idx" stackId="3" startPc="268438115"/>
+<entry endPc="268438173" name="keys" stackId="2" startPc="268438072"/>
+<entry endPc="268438174" name="songId" stackId="1" startPc="268438068"/>
+<entry endPc="268438545" name="playlist" stackId="2" startPc="268438362"/>
+<entry endPc="268438546" name="item" stackId="1" startPc="268438358"/>
+<entry endPc="268438629" name="state" stackId="1" startPc="268438624"/>
+<entry endPc="268438634" name="state" stackId="1" startPc="268438629"/>
+<entry endPc="268438662" name="arg" stackId="1" startPc="268438634"/>
+<entry endPc="268438933" name="adContext" stackId="1" startPc="268438891"/>
+<entry endPc="268438964" name="button" stackId="1" startPc="268438933"/>
+<entry endPc="268439006" name="contentRefId" stackId="1" startPc="268438964"/>
+<entry endPc="268439048" name="contentRefId" stackId="1" startPc="268439006"/>
+<entry endPc="268439268" name="playbackPosition" stackId="3" startPc="268439199"/>
+<entry endPc="268439268" name="songEvent" stackId="2" startPc="268439199"/>
+<entry endPc="268439268" name="contentRefId" stackId="1" startPc="268439199"/>
+<entry endPc="268439344" name="refId" stackId="1" startPc="268439268"/>
+<entry endPc="268439647" name="profile" stackId="1" startPc="268439450"/>
+<entry endPc="268440227" name="refId" stackId="6" startPc="268440173"/>
+<entry endPc="268440240" name="idx" stackId="5" startPc="268440173"/>
+<entry endPc="268440241" name="store" stackId="4" startPc="268440112"/>
+<entry endPc="268440241" name="songs" stackId="3" startPc="268440112"/>
+<entry endPc="268440363" name="lists" stackId="2" startPc="268440000"/>
+<entry endPc="268440363" name="availables" stackId="7" startPc="268440000"/>
+<entry endPc="268440363" name="song" stackId="8" startPc="268440000"/>
+<entry endPc="268440363" name="playlist" stackId="1" startPc="268440000"/>
+<entry endPc="268440434" name="idx" stackId="1" startPc="268440364"/>
+<entry endPc="268440623" name="other" stackId="3" startPc="268440534"/>
+<entry endPc="268440636" name="idx" stackId="2" startPc="268440534"/>
+<entry endPc="268440649" name="tmp" stackId="1" startPc="268440438"/>
+<entry endPc="268440724" name="dc" stackId="1" startPc="268440719"/>
+<entry endPc="268441061" name="dc" stackId="1" startPc="268440840"/>
+<entry endPc="268441109" name="playlists" stackId="1" startPc="268441066"/>
+<entry endPc="268441229" name="id" stackId="5" startPc="268441215"/>
+<entry endPc="268441242" name="idx" stackId="4" startPc="268441215"/>
+<entry endPc="268441350" name="id" stackId="8" startPc="268441336"/>
+<entry endPc="268441363" name="idx" stackId="7" startPc="268441336"/>
+<entry endPc="268441591" name="item" stackId="11" startPc="268441455"/>
+<entry endPc="268441604" name="idx" stackId="10" startPc="268441455"/>
+<entry endPc="268441666" name="precheckedItems" stackId="1" startPc="268441113"/>
+<entry endPc="268441666" name="keys" stackId="3" startPc="268441113"/>
+<entry endPc="268441666" name="playlists" stackId="2" startPc="268441113"/>
+<entry endPc="268441666" name="menu" stackId="9" startPc="268441113"/>
+<entry endPc="268441666" name="sync_ids" stackId="6" startPc="268441113"/>
+<entry endPc="268441812" name="detail" stackId="4" startPc="268441671"/>
+<entry endPc="268441812" name="title" stackId="3" startPc="268441671"/>
+<entry endPc="268441813" name="responseCode" stackId="1" startPc="268441667"/>
+<entry endPc="268441813" name="data" stackId="2" startPc="268441667"/>
+<entry endPc="268441928" name="fallback" stackId="1" startPc="268441813"/>
+<entry endPc="268442029" name="url" stackId="2" startPc="268441932"/>
+<entry endPc="268442030" name="callback" stackId="1" startPc="268441928"/>
+<entry endPc="268442228" name="responseCode" stackId="1" startPc="268442030"/>
+<entry endPc="268442228" name="data" stackId="2" startPc="268442030"/>
+<entry endPc="268442354" name="options" stackId="6" startPc="268442232"/>
+<entry endPc="268442354" name="url" stackId="4" startPc="268442232"/>
+<entry endPc="268442354" name="params" stackId="5" startPc="268442232"/>
+<entry endPc="268442355" name="context" stackId="3" startPc="268442228"/>
+<entry endPc="268442355" name="callback" stackId="2" startPc="268442228"/>
+<entry endPc="268442355" name="id" stackId="1" startPc="268442228"/>
+<entry endPc="268442551" name="context" stackId="3" startPc="268442355"/>
+<entry endPc="268442551" name="responseCode" stackId="1" startPc="268442355"/>
+<entry endPc="268442551" name="data" stackId="2" startPc="268442355"/>
+<entry endPc="268442718" name="options" stackId="7" startPc="268442555"/>
+<entry endPc="268442718" name="url" stackId="5" startPc="268442555"/>
+<entry endPc="268442718" name="params" stackId="6" startPc="268442555"/>
+<entry endPc="268442719" name="context" stackId="4" startPc="268442551"/>
+<entry endPc="268442719" name="encoding" stackId="2" startPc="268442551"/>
+<entry endPc="268442719" name="callback" stackId="3" startPc="268442551"/>
+<entry endPc="268442719" name="id" stackId="1" startPc="268442551"/>
+<entry endPc="268442820" name="context" stackId="3" startPc="268442719"/>
+<entry endPc="268442820" name="responseCode" stackId="1" startPc="268442719"/>
+<entry endPc="268442820" name="data" stackId="2" startPc="268442719"/>
+<entry endPc="268442997" name="options" stackId="7" startPc="268442824"/>
+<entry endPc="268442997" name="url" stackId="5" startPc="268442824"/>
+<entry endPc="268442997" name="params" stackId="6" startPc="268442824"/>
+<entry endPc="268442998" name="context" stackId="4" startPc="268442820"/>
+<entry endPc="268442998" name="encoding" stackId="2" startPc="268442820"/>
+<entry endPc="268442998" name="callback" stackId="3" startPc="268442820"/>
+<entry endPc="268442998" name="id" stackId="1" startPc="268442820"/>
+<entry endPc="268443099" name="context" stackId="3" startPc="268442998"/>
+<entry endPc="268443099" name="responseCode" stackId="1" startPc="268442998"/>
+<entry endPc="268443099" name="data" stackId="2" startPc="268442998"/>
+<entry endPc="268443274" name="encoding" stackId="2" startPc="268443103"/>
+<entry endPc="268443275" name="type" stackId="1" startPc="268443099"/>
+<entry endPc="268443556" name="responseCode" stackId="1" startPc="268443275"/>
+<entry endPc="268443571" name="fallback" stackId="1" startPc="268443556"/>
+<entry endPc="268443614" name="detail" stackId="2" startPc="268443571"/>
+<entry endPc="268443614" name="title" stackId="1" startPc="268443571"/>
+<entry endPc="268443979" name="dc" stackId="1" startPc="268443870"/>
+<entry endPc="268444004" name="context" stackId="2" startPc="268443979"/>
+<entry endPc="268444004" name="callback" stackId="1" startPc="268443979"/>
+<entry endPc="268444047" name="options" stackId="3" startPc="268444004"/>
+<entry endPc="268444047" name="url" stackId="1" startPc="268444004"/>
+<entry endPc="268444047" name="params" stackId="2" startPc="268444004"/>
+<entry endPc="268444082" name="code" stackId="1" startPc="268444047"/>
+<entry endPc="268444082" name="data" stackId="2" startPc="268444047"/>
+<entry endPc="268444242" name="hasher" stackId="1" startPc="268444086"/>
+<entry endPc="268444242" name="pw" stackId="2" startPc="268444086"/>
+<entry endPc="268444491" name="hasher" stackId="1" startPc="268444247"/>
+<entry endPc="268444491" name="timestamp" stackId="2" startPc="268444247"/>
+<entry endPc="268444491" name="params" stackId="3" startPc="268444247"/>
+<entry endPc="268444651" name="expire" stackId="3" startPc="268444496"/>
+<entry endPc="268444652" name="responseCode" stackId="1" startPc="268444492"/>
+<entry endPc="268444652" name="data" stackId="2" startPc="268444492"/>
+<entry endPc="268444728" name="now" stackId="1" startPc="268444656"/>
+<entry endPc="268445174" name="first" stackId="5" startPc="268445114"/>
+<entry endPc="268445478" name="sign" stackId="7" startPc="268445248"/>
+<entry endPc="268445521" name="tzOffset" stackId="6" startPc="268444733"/>
+<entry endPc="268445521" name="suffix" stackId="3" startPc="268444733"/>
+<entry endPc="268445521" name="moment" stackId="2" startPc="268444733"/>
+<entry endPc="268445521" name="tz" stackId="4" startPc="268444733"/>
+<entry endPc="268445522" name="date" stackId="1" startPc="268444729"/>
+<entry endPc="268446102" name="idx" stackId="2" startPc="268446055"/>
+<entry endPc="268446192" name="idx" stackId="3" startPc="268446145"/>
+<entry endPc="268446275" name="idx" stackId="4" startPc="268446222"/>
+<entry endPc="268446287" name="keys" stackId="1" startPc="268445976"/>
+<entry endPc="268446489" name="context" stackId="2" startPc="268446300"/>
+<entry endPc="268446489" name="keys" stackId="1" startPc="268446300"/>
+<entry endPc="268446489" name="id" stackId="3" startPc="268446300"/>
+<entry endPc="268446650" name="local" stackId="7" startPc="268446545"/>
+<entry endPc="268446650" name="is_local" stackId="8" startPc="268446545"/>
+<entry endPc="268446663" name="idx" stackId="6" startPc="268446545"/>
+<entry endPc="268446749" name="idx" stackId="9" startPc="268446713"/>
+<entry endPc="268446965" name="locallists" stackId="10" startPc="268446494"/>
+<entry endPc="268446965" name="remotes" stackId="4" startPc="268446494"/>
+<entry endPc="268446965" name="nr_synced" stackId="3" startPc="268446494"/>
+<entry endPc="268446965" name="locals" stackId="5" startPc="268446494"/>
+<entry endPc="268446966" name="context" stackId="2" startPc="268446490"/>
+<entry endPc="268446966" name="playlist" stackId="1" startPc="268446490"/>
+<entry endPc="268447041" name="idx" stackId="3" startPc="268446994"/>
+<entry endPc="268447044" name="locals" stackId="2" startPc="268446966"/>
+<entry endPc="268447044" name="id" stackId="1" startPc="268446966"/>
+<entry endPc="268447237" name="context" stackId="2" startPc="268447048"/>
+<entry endPc="268447237" name="keys" stackId="1" startPc="268447048"/>
+<entry endPc="268447237" name="id" stackId="3" startPc="268447048"/>
+<entry endPc="268447325" name="local" stackId="6" startPc="268447283"/>
+<entry endPc="268447338" name="idx" stackId="5" startPc="268447283"/>
+<entry endPc="268447641" name="locallists" stackId="7" startPc="268447242"/>
+<entry endPc="268447641" name="remotes" stackId="4" startPc="268447242"/>
+<entry endPc="268447641" name="nr_synced" stackId="3" startPc="268447242"/>
+<entry endPc="268447642" name="context" stackId="2" startPc="268447238"/>
+<entry endPc="268447642" name="playlist" stackId="1" startPc="268447238"/>
+<entry endPc="268447856" name="songidx" stackId="5" startPc="268447820"/>
+<entry endPc="268448060" name="locallists" stackId="3" startPc="268447717"/>
+<entry endPc="268448060" name="deletelists" stackId="6" startPc="268447717"/>
+<entry endPc="268448060" name="songs" stackId="4" startPc="268447717"/>
+<entry endPc="268448060" name="list_id" stackId="2" startPc="268447717"/>
+<entry endPc="268448073" name="idx" stackId="1" startPc="268447717"/>
+<entry endPc="268448226" name="count" stackId="1" startPc="268448147"/>
+<entry endPc="268448441" name="song" stackId="1" startPc="268448231"/>
+<entry endPc="268448536" name="refId" stackId="1" startPc="268448442"/>
+<entry endPc="268448536" name="song" stackId="2" startPc="268448442"/>
+<entry endPc="268448628" name="context" stackId="3" startPc="268448536"/>
+<entry endPc="268448628" name="responseCode" stackId="1" startPc="268448536"/>
+<entry endPc="268448628" name="data" stackId="2" startPc="268448536"/>
+<entry endPc="268448713" name="progress" stackId="2" startPc="268448632"/>
+<entry endPc="268448714" name="count" stackId="1" startPc="268448628"/>
+<entry endPc="268448839" name="msg" stackId="4" startPc="268448718"/>
+<entry endPc="268448840" name="context" stackId="3" startPc="268448714"/>
+<entry endPc="268448840" name="responseCode" stackId="1" startPc="268448714"/>
+<entry endPc="268448840" name="data" stackId="2" startPc="268448714"/>
+<entry endPc="268449103" name="label" stackId="5" startPc="268448995"/>
+<entry endPc="268449103" name="sublabel" stackId="6" startPc="268448995"/>
+<entry endPc="268449103" name="id" stackId="4" startPc="268448995"/>
+<entry endPc="268449116" name="idx" stackId="3" startPc="268448995"/>
+<entry endPc="268449116" name="local_playlists" stackId="1" startPc="268448844"/>
+<entry endPc="268449116" name="keys" stackId="2" startPc="268448844"/>
+<entry endPc="268449213" name="item" stackId="1" startPc="268449140"/>
+</localVars>
+<annotations/>
+<dataEntryOffsetMappings>
+<dataEntry offset="103" parentId="" symbolId="globals" type="module"/>
+<dataEntry offset="286" parentId="globals" symbolId="SubMusicConfigurePlaybackMenuDelegate" type="class"/>
+<dataEntry offset="357" parentId="globals" symbolId="SubMusicConfigureSyncView" type="class"/>
+<dataEntry offset="484" parentId="globals" symbolId="SubMusicContentIterator" type="class"/>
+<dataEntry offset="651" parentId="globals" symbolId="Rez" type="module"/>
+<dataEntry offset="730" parentId="Rez" symbolId="Drawables" type="module"/>
+<dataEntry offset="769" parentId="Rez" symbolId="Menus" type="module"/>
+<dataEntry offset="800" parentId="Rez" symbolId="Fonts" type="module"/>
+<dataEntry offset="831" parentId="Rez" symbolId="Layouts" type="module"/>
+<dataEntry offset="862" parentId="Rez" symbolId="JsonData" type="module"/>
+<dataEntry offset="893" parentId="Rez" symbolId="Strings" type="module"/>
+<dataEntry offset="1036" parentId="globals" symbolId="RequestDelegate" type="class"/>
+<dataEntry offset="1115" parentId="globals" symbolId="SubMusicConfigurePlaybackMenu" type="class"/>
+<dataEntry offset="1162" parentId="globals" symbolId="SubMusicContentDelegate" type="class"/>
+<dataEntry offset="1321" parentId="globals" symbolId="SongInfo" type="module"/>
+<dataEntry offset="1384" parentId="globals" symbolId="SubMusicApp" type="class"/>
+<dataEntry offset="1479" parentId="globals" symbolId="SubMusicSyncDelegate" type="class"/>
+<dataEntry offset="1702" parentId="globals" symbolId="SubSonicAPI" type="class"/>
+<dataEntry offset="1885" parentId="globals" symbolId="SubMusicConfigureSyncDelegate" type="class"/>
+<dataEntry offset="1980" parentId="globals" symbolId="AmpacheAPI" type="class"/>
+<dataEntry offset="2107" parentId="globals" symbolId="SubMusicConfigurePlaybackView" type="class"/>
+<dataEntry offset="2202" parentId="globals" symbolId="SubMusicSongStore" type="class"/>
+<dataEntry offset="2361" parentId="globals" symbolId="SubMusicConfigurePlaybackDelegate" type="class"/>
+<dataEntry offset="2424" parentId="globals" symbolId="ErrorView" type="class"/>
+<dataEntry offset="2511" parentId="globals" symbolId="Storage" type="module"/>
+</dataEntryOffsetMappings>
+<functions>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicConfigurePlaybackView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onLayout" parent="SubMusicConfigurePlaybackView">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onShow" parent="SubMusicConfigurePlaybackView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onUpdate" parent="SubMusicConfigurePlaybackView">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onHide" parent="SubMusicConfigurePlaybackView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicConfigureSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onSelect" parent="SubMusicConfigureSyncDelegate">
+<param id="item"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onBack" parent="SubMusicConfigureSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onDone" parent="SubMusicConfigureSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getPlaylistById" parent="SubMusicConfigureSyncDelegate">
+<param id="id"/>
+<param id="playlists"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicSongStore">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="addSong" parent="SubMusicSongStore">
+<param id="song"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="subSong" parent="SubMusicSongStore">
+<param id="song"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getFrontSync" parent="SubMusicSongStore">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="storeSong" parent="SubMusicSongStore">
+<param id="id"/>
+<param id="refId"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="skipSong" parent="SubMusicSongStore">
+<param id="id"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="flushDelete" parent="SubMusicSongStore">
+<param id="callback"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getRefIdById" parent="SubMusicSongStore">
+<param id="songId"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="writeToStorage" parent="SubMusicSongStore">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getSongCount" parent="SubMusicSongStore">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getSyncCount" parent="SubMusicSongStore">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getDeleteCount" parent="SubMusicSongStore">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicConfigurePlaybackMenuDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onSelect" parent="SubMusicConfigurePlaybackMenuDelegate">
+<param id="item"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onDone" parent="SubMusicConfigurePlaybackMenuDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onBack" parent="SubMusicConfigurePlaybackMenuDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicApp">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onStart" parent="SubMusicApp">
+<param id="state"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onStop" parent="SubMusicApp">
+<param id="state"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getContentDelegate" parent="SubMusicApp">
+<param id="arg"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getSyncDelegate" parent="SubMusicApp">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getPlaybackConfigurationView" parent="SubMusicApp">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getSyncConfigurationView" parent="SubMusicApp">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicContentDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getContentIterator" parent="SubMusicContentDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onAdAction" parent="SubMusicContentDelegate">
+<param id="adContext"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onCustomButton" parent="SubMusicContentDelegate">
+<param id="button"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onThumbsUp" parent="SubMusicContentDelegate">
+<param id="contentRefId"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onThumbsDown" parent="SubMusicContentDelegate">
+<param id="contentRefId"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onShuffle" parent="SubMusicContentDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onRepeat" parent="SubMusicContentDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="resetContentIterator" parent="SubMusicContentDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onMore" parent="SubMusicContentDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onLibrary" parent="SubMusicContentDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onSong" parent="SubMusicContentDelegate">
+<param id="contentRefId"/>
+<param id="songEvent"/>
+<param id="playbackPosition"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getSongName" parent="SubMusicContentDelegate">
+<param id="refId"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="canSkip" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="get" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getPlaybackProfile" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="next" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="peekNext" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="peekPrevious" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="previous" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="shuffling" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="toggleShuffle" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initializePlaylist" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getObj" parent="SubMusicContentIterator">
+<param id="idx"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="shufflePlaylist" parent="SubMusicContentIterator">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicConfigureSyncView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onLayout" parent="SubMusicConfigureSyncView">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onShow" parent="SubMusicConfigureSyncView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onUpdate" parent="SubMusicConfigureSyncView">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onHide" parent="SubMusicConfigureSyncView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onGetPlaylists" parent="SubMusicConfigureSyncView">
+<param id="playlists"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="pushSyncMenu" parent="SubMusicConfigureSyncView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onFail" parent="SubMusicConfigureSyncView">
+<param id="responseCode"/>
+<param id="data"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubSonicAPI">
+<param id="fallback"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getPlaylists" parent="SubSonicAPI">
+<param id="callback"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onGetPlaylists" parent="SubSonicAPI">
+<param id="responseCode"/>
+<param id="data"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getPlaylist" parent="SubSonicAPI">
+<param id="id"/>
+<param id="callback"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onGetPlaylist" parent="SubSonicAPI">
+<param id="responseCode"/>
+<param id="data"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="download" parent="SubSonicAPI">
+<param id="id"/>
+<param id="encoding"/>
+<param id="callback"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onDownload" parent="SubSonicAPI">
+<param id="responseCode"/>
+<param id="data"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="stream" parent="SubSonicAPI">
+<param id="id"/>
+<param id="encoding"/>
+<param id="callback"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onStream" parent="SubSonicAPI">
+<param id="responseCode"/>
+<param id="data"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="typeStringToEncoding" parent="SubSonicAPI">
+<param id="type"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="respCodeToString" parent="SubSonicAPI">
+<param id="responseCode"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="setFallback" parent="SubSonicAPI">
+<param id="fallback"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="ErrorView">
+<param id="title"/>
+<param id="detail"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onShow" parent="ErrorView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onUpdate" parent="ErrorView">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="RequestDelegate">
+<param id="callback"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="makeWebRequest" parent="RequestDelegate">
+<param id="url"/>
+<param id="params"/>
+<param id="options"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onWebResponse" parent="RequestDelegate">
+<param id="code"/>
+<param id="data"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="AmpacheAPI">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="handshake" parent="AmpacheAPI">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onHandshake" parent="AmpacheAPI">
+<param id="responseCode"/>
+<param id="data"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="session" parent="AmpacheAPI">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="parseISODate" parent="AmpacheAPI">
+<param id="date"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onStartSync" parent="SubMusicSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="isSyncNeeded" parent="SubMusicSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="syncNextPlaylistLocal" parent="SubMusicSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onNextPlaylistLocal" parent="SubMusicSyncDelegate">
+<param id="playlist"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="findById" parent="SubMusicSyncDelegate">
+<param id="id"/>
+<param id="locals"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="syncNextPlaylistSync" parent="SubMusicSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onNextPlaylistSync" parent="SubMusicSyncDelegate">
+<param id="playlist"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="syncNextPlaylistDelete" parent="SubMusicSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="deleteSongs" parent="SubMusicSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="syncNextSong" parent="SubMusicSyncDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onSongDownloaded" parent="SubMusicSyncDelegate">
+<param id="refId"/>
+<param id="song"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onSongDownloadFail" parent="SubMusicSyncDelegate">
+<param id="responseCode"/>
+<param id="data"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onSongSynced" parent="SubMusicSyncDelegate">
+<param id="count"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onFail" parent="SubMusicSyncDelegate">
+<param id="responseCode"/>
+<param id="data"/>
+<param id="context"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicConfigurePlaybackMenu">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="SubMusicConfigurePlaybackDelegate">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onSelect" parent="SubMusicConfigurePlaybackDelegate">
+<param id="item"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onBack" parent="SubMusicConfigurePlaybackDelegate">
+<documentation/>
+</functionEntry>
+</functions>
+</debugInfo>

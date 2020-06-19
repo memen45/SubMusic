@@ -1,0 +1,19 @@
+<strings>
+    <string id="AppName">SubMusic</string>
+    
+    <string id="AppVersionTitle">iota</string>
+    <string id="ApiStandard">API backend</string>
+    <string id="ApiStandardSubsonic">Subsonic API</string>
+    <string id="ApiStandardAmpache">Ampache API</string>
+    <string id="ServerAddress">Server Address</string>
+    <string id="ServerUser">Username</string>
+    <string id="ServerKey">API key</string>
+
+    <string id="configureSyncMessage">Configure\nSync</string>
+    <string id="configurePlaybackMessage">Configure\nPlayback</string>
+    
+    <string id="syncMenuTitle">Choose sync</string>
+    <string id="fetchingSongs">Fetching Songs...</string>
+    <string id="fetchingPlaylists">Fetching Playlists...</string>
+    <string id="playbackMenuTitle">Playlists</string>
+</strings>
