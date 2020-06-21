@@ -7,14 +7,15 @@ module Storage {
 		PLAYLIST_LOCAL,
 		PLAYLIST_SYNC,
 		PLAYLIST_DELETE,
+		
+		SONGS_SYNC,
+		SONGS_DELETE,
 	}
 }
 
-module SongInfo {
+module ApiStandard {
 	enum {
-		ID,
-		URL,
-		CAN_SKIP,
-		TYPE
+		SUBSONIC = 0,
+		AMPACHE = 1,
 	}
 }

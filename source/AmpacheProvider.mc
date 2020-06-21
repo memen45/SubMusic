@@ -1,8 +1,18 @@
 class AmpacheProvider {
 	
-	private var d_api = new AmpacheAPI();		// access to the ampache api
+	private var d_api;
 	
-	function getPlaylists(callback) {
+	function initialize(settings) {
+		d_api = new AmpacheAPI(settings);
+	}
+	
+	function getPlaylists(callback, fallback) {
+	
+	}
+	function getPlaylist(id, callback, fallback) {
+	
+	}
+	function getSong(id, callback, fallback) {
 	
 	}
 	

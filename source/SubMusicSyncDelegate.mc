@@ -5,66 +5,35 @@ using Toybox.Media;
 // Performs the sync with the music provider
 class SubMusicSyncDelegate extends Media.SyncDelegate {
 
-    // playlists to sync or remove
-    private var d_locallists;			// already synced before
-    private var d_synclists;			// to be synced to local playlists
-    private var d_deletelists;			// to be deleted from local playlists
-    private var d_state;
+    // playlists to sync
+    private var d_todo;
     
     // songs to sync or remove
-    private var d_songstore;
+    private var d_liststore;
+    
+    // track the total of songs synced
     private var d_songs_total;
     private var d_songs_count = 0;
     
     // api access
-    private var d_api;
+    private var d_provider;
     
 
     // Constructor
-    function initialize() {
+    function initialize(provider) {
         SyncDelegate.initialize();
         
-        // get the local playlists
-        d_locallists = Application.Storage.getValue(Storage.PLAYLIST_LOCAL);
-        if (d_locallists == null) {
-        	d_locallists = {};
-        	Application.Storage.setValue(Storage.PLAYLIST_LOCAL, d_locallists);
-        }
+        d_provider = provider;
+        d_provider.setFallback(method(:onFail));
         
-        // get the sync playlists
-        d_synclists = Application.Storage.getValue(Storage.PLAYLIST_SYNC);
-        if (d_synclists == null) {
-        	d_synclists = {};
-        	Application.Storage.setValue(Storage.PLAYLIST_SYNC, d_synclists);
-        }
-        
-        // get the delete playlists
-        d_deletelists = Application.Storage.getValue(Storage.PLAYLIST_DELETE);
-        if (d_deletelists == null) {
-        	d_deletelists = [];
-        	Application.Storage.setValue(Storage.PLAYLIST_DELETE, d_deletelists);
-        }
-        
-        d_songstore = new SubMusicSongStore();
-        d_api = new SubSonicAPI(method(:onFail));
+        d_liststore = new SubMusicPlaylistSync();
     }
 
     // Starts the sync with the system
     function onStartSync() {
         System.println("Sync started...");
         
-        d_songs_total = 0;
-        var keys = d_locallists.keys();
-        for (var idx = 0; idx < keys.size(); ++idx) {
-        	d_songs_total += d_locallists[keys[idx]]["songCount"];
-        }
-        keys = d_synclists.keys();
-        for (var idx = 0; idx < keys.size(); ++idx) {
-        	d_songs_total += d_synclists[keys[idx]]["songCount"];
-        }
-        for (var idx = 0; idx < d_deletelists.size(); ++idx) {
-        	d_songs_total += d_locallists[d_deletelists[idx]]["songCount"];
-        }
+        d_songs_total = d_liststore.countSongs();
         
         // Step 1: Delete songs from locally removed playlists		-		syncNextPlaylistDelete();
         // Step 2: Synchronize local playlists with remote server 	+/-		syncNextPlaylistLocal();
@@ -73,144 +42,6 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
         // Step 5: Download songs from server to local storage		+		syncNextSong();
         syncNextPlaylistDelete();
     }
-
-    // Sync always needed to verify new songs on the server
-    function isSyncNeeded() {
-        return true;
-    }
-    
-    /**
-     * syncNextPlaylistLocal
-     * 
-     * request all songs in local lists and add/remove extra's or missing
-     */
-    function syncNextPlaylistLocal() {
-    	var keys = d_locallists.keys();
-    	
-    	System.println("To Update Playlists: " + keys.size());
-    	if (keys.size() == 0) {
-    		syncNextPlaylistSync();
-    		return;
-    	}
-    	
-    	var context = d_locallists[keys[0]];
-    	var id = context["id"];
-    	
-    	System.println("Syncing a local playlist: " + context["name"]);
-    	
-    	d_api.getPlaylist(id, method(:onNextPlaylistLocal), context);
-    }
-    
-    function onNextPlaylistLocal(playlist, context) {
-    	var nr_synced = 0;
-    	var remotes = playlist["entry"];
-    	var locals = context["entry"];
-    	
-    	// find remote additions (place on synclist)
-    	for (var idx = 0; idx < remotes.size(); ++idx) {
-    		var local = findById(remotes[idx]["id"], locals);
-    		
-    		// if song was on list, nothing changes
-    		if (local != null) {
-    			locals.remove(local);
-    			nr_synced++;
-    			continue;
-    		}
-    		
-    		// add song if it was not already local
-    		var is_local = d_songstore.addSong(remotes[idx]);
-    		if (is_local) {
-    			nr_synced++;
-    		}
-    	}
-    	System.println("locals left: " + locals);
-    	
-    	// find local extra's (place on deletelist)
-    	for (var idx = 0; idx < locals.size(); ++idx) {
-    		d_songstore.subSong(locals[idx]);
-    	}
-    	
-    	// remove from todos
-    	d_locallists.remove(context["id"]);
-    	
-    	// update local playlist information
-    	var locallists = Application.Storage.getValue(Storage.PLAYLIST_LOCAL);
-    	locallists[context["id"]] = playlist;
-    	Application.Storage.setValue(Storage.PLAYLIST_LOCAL, locallists);
-    	
-    	System.println("Synced a local playlist: " + context["name"]);
-    	
-    	// update the total counter
-    	d_songs_total += playlist["songCount"];
-    	d_songs_total -= context["songCount"];
-    	
-    	onSongSynced(nr_synced);
-    	syncNextPlaylistLocal();
-    }
-    
-    function findById(id, locals) {
-    	for (var idx = 0; idx < locals.size(); ++idx) {
-    		if (locals[idx]["id"].equals(id)) {
-    			return locals[idx];
-    		}
-    	}
-    	return null;
-    }
-    
-    /**
-     * syncNextPlaylistSync
-     * 
-     * request all songs in a playlist, add the missing songs to the songs to sync
-     */
-    function syncNextPlaylistSync() {
-    	var keys = d_synclists.keys();
-    	
-    	System.println("To Sync Playlists: " + keys.size());
-    	
-    	// advance to next step if done
-    	if (keys.size() == 0) {
-    		deleteSongs();
-    		return;	
-    	}
-    	var context = d_synclists[keys[0]];
-    	var id = context["id"];
-    	
-    	System.println("Syncing a new playlist: " + context["name"]);
-    	
-    	d_api.getPlaylist(id, method(:onNextPlaylistSync), context);
-    }
-    
-    function onNextPlaylistSync(playlist, context) {
-    	var nr_synced = 0;
-    	
-    	var remotes = playlist["entry"];
-    	
-    	for (var idx = 0; idx < remotes.size(); ++idx) {
-    		var local = d_songstore.addSong(remotes[idx]);
-    		if (local) {
-    			nr_synced++;
-    		}
-    	}
-    	
-    	// remove local playlist information
-    	d_synclists = Application.Storage.getValue(Storage.PLAYLIST_SYNC);
-    	d_synclists.remove(context["id"]);
-    	Application.Storage.setValue(Storage.PLAYLIST_SYNC, d_synclists);
-    	
-    	// update local playlist information
-    	var locallists = Application.Storage.getValue(Storage.PLAYLIST_LOCAL);
-    	locallists[context["id"]] = playlist;
-    	Application.Storage.setValue(Storage.PLAYLIST_LOCAL, locallists);
-    	
-    	System.println("Synced a new playlist: " + context["name"]);
-    	
-    	// update the total counter
-    	d_songs_total += playlist["songCount"];
-    	d_songs_total -= context["songCount"];
-    	
-    	onSongSynced(nr_synced);
-    	syncNextPlaylistSync();
-    }
     
     /**
      * syncNextPlaylistDelete
@@ -218,80 +49,97 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
      * remove all songs from a playlist
      */
      function syncNextPlaylistDelete() {
-     
-     	System.println("To Delete Playlists:  " + d_deletelists.size());
+     	System.println("To Delete Playlists:  " + d_liststore.getToDeleteIds().size());
      	
-     	for (var idx = 0; idx < d_deletelists.size(); ++idx) {
-     		var list_id = d_deletelists[idx];
-     		
-     		// get local songs from to delete playlist
-	    	var locallists = Application.Storage.getValue(Storage.PLAYLIST_LOCAL);
-	    	if (locallists[list_id] == null) {
-	    		continue;
-	    	}
-     		var songs = locallists[list_id]["entry"];
-     		
-	     	for (var songidx = 0; songidx < songs.size(); ++songidx) {
-	     		d_songstore.subSong(songs[songidx]);
-	     	}
-	     	// count as synced, since they need no sync on local list
-	     	onSongSynced(songs.size());
-	     	
-	    	// update local playlist information
-	    	System.println(locallists);
-	    	locallists.remove(list_id);
-	    	System.println(locallists);
-	    	Application.Storage.setValue(Storage.PLAYLIST_LOCAL, locallists);
-	    	
-	    	// update delete playlist store
-	    	var deletelists = Application.Storage.getValue(Storage.PLAYLIST_DELETE);
-	    	deletelists.remove(list_id);
-	    	Application.Storage.setValue(Storage.PLAYLIST_DELETE, deletelists);
-	    }
-     	d_deletelists = [];
+     	var count = d_liststore.delete();
+     	onSongSynced(count);
      	
-     	// prepare locallists
-     	d_locallists = Application.Storage.getValue(Storage.PLAYLIST_LOCAL);
-     	syncNextPlaylistLocal();
+     	// create todo list (playlist ids)
+     	d_todo = d_liststore.getLocalIds();
+     	d_todo.addAll(d_liststore.getToSyncIds());
+     	
+     	syncNextPlaylist();
      }
-
-    // Delete songs off the system
-    function deleteSongs() {
-		var count = d_songstore.flushDelete(method(:onSongSynced));
+    
+    /**
+     * syncNextPlaylistLocal
+     * 
+     * request all songs in local lists and add/remove extra's or missing
+     */
+	function syncNextPlaylist() {
+		System.println("To Update Playlists: " + d_todo.size());
+		
+     	if (d_todo.size() != 0) {
+     		System.println("Syncing a local playlist with id: " + d_todo[0]);
+     		d_provider.getPlaylist(d_todo[0], method(:onNextPlaylist));
+     		return;
+     	}
+     	
+     	// if nothing more to do, flush pending deletes, start downloading songs
+		var count = d_liststore.flushDelete();
+		
+		// report progress
+		onSongSynced(count);
 		System.println("Deleted: " + count + " songs from local storage");
+		
+		// create todo list (song ids)
+		d_todo = d_liststore.getSongsToSyncIds();
+		
+		// update fallback
+		d_provider.setFallback(method(:onSongDownloadFail));
 		syncNextSong();
     }
+    
+    function onNextPlaylist(playlist) {
+    	// update playlist and counts
+    	var count = d_liststore.update(playlist);
+    	d_songs_total = d_liststore.countSyncs();
+    	
+    	// report progress
+    	onSongSynced(count);
+    	System.println("Synced a local playlist: " + playlist["name"]);
+    	
+    	// slice first element from todo list
+    	d_todo.remove(d_todo[0]);
+    	syncNextPlaylist();
+    }
 
-    // Downloads the next song to be synced
-    function syncNextSong() {
-    	var song = d_songstore.getFrontSync();
-    	if (song == null) {
-    		d_songstore.writeToStorage();		// make sure the store is saved
+	// Downloads the next song to be synced
+	function syncNextSong() {
+		
+		System.println("To update songs: " + d_todo.size());
+		
+		// if todo empty, nothing to do
+		if (d_todo.size() == 0) {
     		Media.notifySyncComplete(null);
     		return;
     	}
-    	System.println("Syncing song " + song["title"] + " number " + d_songs_count + " of " + d_songs_total);
-    	d_api.setFallback(method(:onSongDownloadFail));
-    	d_api.stream(song["id"], "mp3", method(:onSongDownloaded), song);
+    	
+		System.println("Syncing song " + d_todo[0] + " number " + d_songs_count + " of " + d_songs_total);
+		
+		// make the request
+		d_provider.stream(d_todo[0], "mp3", method(:onSongDownloaded));
     }
 
     // Callback for when a song is downloaded
-    function onSongDownloaded(refId, song) {
-    	d_songstore.storeSong(song["id"], refId);
+	function onSongDownloaded(refId) {
+		d_liststore.storeSong(d_todo[0], refId);
+		
+		onSongSynced(1);
+		System.println("Synced song " + d_todo[0]);
     	
-    	System.println("Synced song " + song["id"]);
-    	
-    	onSongSynced(1);
+    	// remove first element from todo list
+    	d_todo.remove(d_todo[0]);
     	syncNextSong();
     }
     
     // fallback for failed download
-    function onSongDownloadFail(responseCode, data, context) {
-    	d_songstore.skipSong(context["id"]);
-    
-    	System.println("Sync failed " + context["id"]);
+	function onSongDownloadFail(responseCode, data) {
+		onSongSynced(1);
+		System.println("Sync failed " + d_todo[0]);
     	
-    	onSongSynced(1);
+    	// slice first element from todo list
+    	d_todo.remove(d_todo[0]);
     	syncNextSong();
     }
 
@@ -299,19 +147,23 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
     function onSongSynced(count) {
     	d_songs_count += count;
     	
-    	var progress = (100 * d_songs_count) / d_songs_total.toFloat();
+    	var count = d_songs_count - 1;
+    	var progress = (100 * count) / d_songs_total.toFloat();
     	progress = progress.toNumber();
     	
     	Media.notifySyncProgress(progress);
     }
     
     // fallback for API failures
-    function onFail(responseCode, data, context) {
-    	System.println("ResponseCode: " + responseCode + " on " + context);
+    function onFail(responseCode, data) {
+    	System.println("ResponseCode: " + responseCode + " payload " + data);
     	var msg = "Error code: " + responseCode + "\n";
-    	msg += d_api.respCodeToString(responseCode) + "\n";
-    	msg += "context: " + context;
+    	msg += d_provider.respCodeToString(responseCode) + "\n";
     	Media.notifySyncComplete(responseCode.toString());
     }
-    
+
+    // Sync always needed to verify new songs on the server
+    function isSyncNeeded() {
+        return true;
+    }
 }

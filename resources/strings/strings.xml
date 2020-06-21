@@ -1,7 +1,7 @@
 <strings>
     <string id="AppName">SubMusic</string>
     
-    <string id="AppVersionTitle">iota</string>
+    <string id="AppVersionTitle">alpha</string>
     <string id="ApiStandard">API backend</string>
     <string id="ApiStandardSubsonic">Subsonic API</string>
     <string id="ApiStandardAmpache">Ampache API</string>

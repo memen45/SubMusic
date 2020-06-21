@@ -1,27 +1,30 @@
 using Toybox.Communications;
+using Toybox.WatchUi;
 
 // class for interfacing with a subsonic API endpoint
 class SubSonicAPI {
 
-	private var d_base_url = Application.Properties.getValue("subsonic_API_URL") + "/rest/";
-	private var d_user = Application.Properties.getValue("subsonic_API_usr");
-	private var d_pass = Application.Properties.getValue("subsonic_API_key");
+	private var d_base_url;
+	private var d_user;
+	private var d_pass;
 	
 	private var d_params;
 	
 	private var d_callback;
-	private var d_fallback;
+	private var d_fallback;		// add null checks!
 	
-	function initialize(fallback) {
+	function initialize(settings) {
+		d_base_url = settings.get("api_url") + "/rest/";
+		d_user = settings.get("api_usr");
+		d_pass = settings.get("api_key");
 		d_params = {
     		"u" => d_user,
     		"p" => d_pass,
-    		"c" => Rez.Strings.AppName,
+    		"c" => WatchUi.loadResource(Rez.Strings.AppName),
     		"v" => "1.10.2",
     		"f" => "json",
     	};
-		
-		d_fallback = fallback;
+    	System.println("Initialize SubSonicAPI, url: " + d_base_url + " user: " + d_user + ", pass: " + d_pass + " client name: " + WatchUi.loadResource(Rez.Strings.AppName));
 	}
 	
 	/**
@@ -59,7 +62,7 @@ class SubSonicAPI {
 	 *
 	 * returns a listing of files in a saved playlist
 	 */
-	function getPlaylist(id, callback, context) {
+	function getPlaylist(id, callback) {
 	
 		d_callback = callback;
 		
@@ -70,12 +73,11 @@ class SubSonicAPI {
 		
     	var options = {
     		:method => Communications.HTTP_REQUEST_METHOD_GET,
-    		:context => context,
     	};
     	Communications.makeWebRequest(url, params, options, self.method(:onGetPlaylist));
     }
     
-    function onGetPlaylist(responseCode, data, context) {
+    function onGetPlaylist(responseCode, data) {
     	System.println("onGetPlaylist with responseCode: " + responseCode + ", payload " + data);
     	
     	
@@ -85,11 +87,11 @@ class SubSonicAPI {
 				|| (data["subsonic-response"] == null) 
 				|| (data["subsonic-response"]["status"] == null)
 				|| !(data["subsonic-response"]["status"].equals("ok"))) {
-			d_fallback.invoke(responseCode, data, context);
+			d_fallback.invoke(responseCode, data);
 			return;
 		}
     	
-    	d_callback.invoke(data["subsonic-response"]["playlist"], context);
+    	d_callback.invoke(data["subsonic-response"]["playlist"]);
     }
     
     /**
@@ -132,7 +134,7 @@ class SubSonicAPI {
      *
      * downloads a given media file
      */
-    function stream(id, encoding, callback, context) {
+    function stream(id, encoding, callback) {
     
     	d_callback = callback;
     
@@ -145,20 +147,19 @@ class SubSonicAPI {
     		:method => Communications.HTTP_REQUEST_METHOD_GET,
           	:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_AUDIO,
           	:mediaEncoding => typeStringToEncoding(encoding),
-          	:context => context,
    		};
     	Communications.makeWebRequest(url, params, options, self.method(:onStream));
     }
     
-    function onStream(responseCode, data, context) {
+    function onStream(responseCode, data) {
     	System.println("onStream with responseCode: " + responseCode);
     	
 		// check if request was successful and response is ok
 		if (responseCode != 200) {
-    		d_fallback.invoke(responseCode, data, context);
+    		d_fallback.invoke(responseCode, data);
 			return;
 		}
-    	d_callback.invoke(data.getId(), context);
+    	d_callback.invoke(data.getId());
     }
     
     function typeStringToEncoding(type) {

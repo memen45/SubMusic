@@ -4,22 +4,26 @@ using Toybox.Communications;
  
 class AmpacheAPI {
  
-	private var d_url = Application.Properties.getValue("API_url") + "/server/json.server.php";
- 	private var d_user = Application.Properties.getValue("API_user");
- 	private var d_client = "SubMusic";
+	private var d_url;
+ 	private var d_usr;
+ 	private var d_client = WatchUi.loadResource(Rez.Strings.AppName);
  	private var d_hash;		// password hash, required for every handshake
  	
  	private var d_auth;
  	private var d_auth_expire;
  	
  	
- 	function initialize() {
+ 	function initialize(settings) {
+ 		d_url = settings.get("api_url") + "/server/json.server.php";
+ 		d_usr = settings.get("api_usr");
+ 	
  		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
  		
  		// hash the password
- 		var pw = Application.Properties.getValue("API_key");
- 		hasher.update(pw);
+ 		hasher.update(settings.get("api_key"));
  		d_hash = hasher.digest();
+ 		
+ 		// check if auth is expired, it may be usable!
  		
  		// set expire time to 0
  		d_auth_expire = new Time.Moment(0);
