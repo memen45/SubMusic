@@ -34,6 +34,7 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
         System.println("Sync started...");
         
         d_songs_total = d_liststore.countSongs();
+        onSongSynced(0);
         
         // Step 1: Delete songs from locally removed playlists		-		syncNextPlaylistDelete();
         // Step 2: Synchronize local playlists with remote server 	+/-		syncNextPlaylistLocal();
@@ -84,6 +85,8 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
 		
 		// create todo list (song ids)
 		d_todo = d_liststore.getSongsToSyncIds();
+    	d_songs_total = d_liststore.countSyncs();
+    	d_songs_count = 0;
 		
 		// update fallback
 		d_provider.setFallback(method(:onSongDownloadFail));
@@ -93,7 +96,6 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
     function onNextPlaylist(playlist) {
     	// update playlist and counts
     	var count = d_liststore.update(playlist);
-    	d_songs_total = d_liststore.countSyncs();
     	
     	// report progress
     	onSongSynced(count);
@@ -147,8 +149,7 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
     function onSongSynced(count) {
     	d_songs_count += count;
     	
-    	var count = d_songs_count - 1;
-    	var progress = (100 * count) / d_songs_total.toFloat();
+    	var progress = (100 * d_songs_count) / d_songs_total.toFloat();
     	progress = progress.toNumber();
     	
     	Media.notifySyncProgress(progress);
