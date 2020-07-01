@@ -5,76 +5,192 @@ using Toybox.Communications;
 class AmpacheAPI {
  
 	private var d_url;
- 	private var d_usr;
- 	private var d_client = WatchUi.loadResource(Rez.Strings.AppName);
- 	private var d_hash;		// password hash, required for every handshake
- 	
- 	private var d_auth;
- 	private var d_auth_expire;
- 	
- 	
- 	function initialize(settings) {
- 		d_url = settings.get("api_url") + "/server/json.server.php";
- 		d_usr = settings.get("api_usr");
- 	
- 		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
- 		
- 		// hash the password
- 		hasher.update(settings.get("api_key"));
- 		d_hash = hasher.digest();
- 		
- 		// check if auth is expired, it may be usable!
- 		
- 		// set expire time to 0
- 		d_auth_expire = new Time.Moment(0);
- 	}
- 	
- 	function handshake() {
- 		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
- 		
- 		// get the time
- 		var timestamp = Time.now().value();
- 		
- 		// construct the auth
- 		hasher.update(timestamp);
- 		hasher.update(d_hash);
- 		d_auth = hasher.digest();
- 		
- 		var params = {
- 			"action" => "handshake",
- 			"user" => d_user,
- 			"timestamp" => timestamp,
- 			"auth" => d_auth,
- 		};
- 		Communications.makeWebRequest(d_url, params, {}, self.method(:onHandshake));
- 	}
- 	
- 	function onHandshake(responseCode, data) {
- 		System.println("AmpacheAPI: onHandshake with responseCode " + responseCode + " payload " + data);
- 		
- 		// check if request was successful 
- 		if ((responseCode != 200)
- 				|| (data == null)
- 				|| (data["error"] != null)) {
- 			d_fallback.invoke(responseCode, data);
- 			return;
- 		}
- 		
- 		// store the auth key for future communication
- 		d_auth = data["auth"];
- 		var expire = parseISODate(data["session_expire"]);
- 		if (expire != null) {
- 			d_auth_expire = expire;
- 		}
- 	}
- 	
- 	// returns true if the current session is not expired
- 	function session() {
- 		var now = new Time.Moment(Time.now().value());
- 		return now.lessThan(d_auth_expire);
- 	}
- 	
- 	// converts rfc3339 formatted timestamp to Time::Moment (null on error)
+	private var d_usr;
+	private var d_client = WatchUi.loadResource(Rez.Strings.AppName);
+	private var d_hash;		// password hash, required for every handshake
+	
+	private var d_session = Application.Storage.getValue("AMPACHE_API_SESSION");
+	private var d_expire;
+	
+	private var d_callback;
+	private var d_fallback;
+	
+	
+	function initialize(settings, fallback) {
+		d_url = settings.get("api_url") + "/server/json.server.php";
+		d_usr = settings.get("api_usr");
+	
+		// hash the password
+		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
+		hasher.update(settings.get("api_key"));
+		d_hash = hasher.digest();
+
+		d_fallback = fallback;
+		
+		// check if auth is expired, it may be usable!
+		d_expire = new Time.Moment(0);
+		if ((d_session == null)
+			|| (d_session["session_expire"] == null)) {
+			return;
+		}
+		var expire = parseISODate(d_session["session_expire"]);
+		if (expire == null) {
+			return;
+		}
+		d_expire = expire;
+	}
+	
+	function handshake(callback) {
+		d_callback = callback;
+
+		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
+		
+		// get the time
+		var timestamp = Time.now().value();
+		
+		// construct the auth
+		hasher.update(timestamp);
+		hasher.update(d_hash);
+		var auth = hasher.digest();
+		
+		var params = {
+			"action" => "handshake",
+			"user" => d_user,
+			"timestamp" => timestamp,
+			"auth" => auth,
+		};
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onHandshake));
+	}
+	
+	function onHandshake(responseCode, data) {
+		System.println("AmpacheAPI: onHandshake with responseCode " + responseCode + " payload " + data);
+		
+		// check if request was successful 
+		if ((responseCode != 200)
+				|| (data == null)
+				|| (data["error"] != null)) {
+			d_fallback.invoke(responseCode, data);
+			return;
+		}
+		
+		// store the session
+		d_session = data;
+		Application.Storage.setValue("AMPACHE_API_SESSION", d_session);
+
+		// store the auth key for future communication
+		var expire = parseISODate(d_session["session_expire"]);
+		if (expire != null) {
+			d_expire = expire;
+		}
+		d_callback.invoke();
+	}
+	
+	// returns array of playlist objects
+	function playlists(callback, params) {
+		System.println("AmpacheAPI::playlists");
+		
+		if (params == null) {
+			params = {};
+		}
+
+		params.put("action", "playlists");
+		params.put("auth", d_session.get("auth"));
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onPlaylists));
+	}
+	
+	function onPlaylists(responseCode, data) {
+		System.println("AmpacheAPI::onPlaylists with responseCode: " + responseCode + ", payload " + data);
+	
+		// check if request was successful and response is ok
+		if ((responseCode != 200) 
+				|| (data == null)) {
+			d_fallback.invoke(responseCode, data);
+			return;
+		}
+	d_callback.invoke(data);
+    }
+	
+	// returns single playlist info
+	function playlist(callback, params) {
+		System.println("AmpacheAPI::playlist id = " + params["id"]);
+		
+		params.put("action", "playlist");
+		params.put("auth", d_session.get("auth"));
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onPlaylist));
+	}
+	
+	function onPlaylist(responseCode, data) {
+		System.println("AmpacheAPI::onPlaylist with responseCode: " + responseCode + ", payload " + data);
+	
+	// check if request was successful and response is ok
+		if ((responseCode != 200) 
+				|| (data == null)) {
+			d_fallback.invoke(responseCode, data);
+			return;
+		}
+	d_callback.invoke(data);
+    }
+	
+	// returns array of song objects
+	function playlist_songs(callback, params) {
+		System.println("AmpacheAPI::playlist_songs " + params["id"]);
+		
+		params.put("action", "playlist_songs");
+		params.put("auth", d_session.get("auth"));
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onPlaylist_songs));
+	}
+	
+	function onPlaylist_songs(responseCode, data) {
+		System.println("AmpacheAPI::onPlaylist_songs with responseCode: " + responseCode + ", payload " + data);
+	
+	// check if request was successful and response is ok
+		if ((responseCode != 200) 
+				|| (data == null)) {
+			d_fallback.invoke(responseCode, data);
+			return;
+		}
+	d_callback.invoke(data);
+    }
+	
+	// returns refId to the downloaded song
+	function stream(callback, params) {
+		d_callback = callback;
+		
+		params.put("action", "stream");
+		params.put("auth", d_session.get("auth"));
+		
+		if (!params.hasKey("type")) {
+			params.put("type", "song");
+		}
+		var options = {
+			:method => Communications.HTTP_REQUEST_METHOD_GET,
+			:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_AUDIO,
+			:mediaEncoding => Media.ENCODING_MP3,
+		};
+		Communications.makeWebRequest(d_url, params, options, self.method(:onStream));
+	}
+	
+	function onStream(responseCode, data) {
+		System.println("AmpacheAPI::onStream with responseCode: " + responseCode);
+		
+		// check if request was successful and response is ok
+		if (responseCode != 200) {
+		d_fallback.invoke(responseCode, data);
+			return;
+		}
+		d_callback.invoke(data.getId());
+    }
+	
+	// returns true if the current session is not expired (optionally pass in duration for session)
+	function session(duration) {
+		var now = new Time.Moment(Time.now().value());
+		if (duration != null) {
+			now.add(duration);
+		}
+		return now.lessThan(d_expire);
+	}
+	
+	// converts rfc3339 formatted timestamp to Time::Moment (null on error)
 	function parseISODate(date) {
 		// assert(date instanceOf String)
 		if (date == null) {
@@ -90,10 +206,10 @@ class AmpacheAPI {
 		}
 		
 		var moment = Gregorian.moment({
-			:year 	=> date.substring( 0,  4).toNumber(),
-			:month 	=> date.substring( 5,  7).toNumber(),
-			:day 	=> date.substring( 8, 10).toNumber(),
-			:hour 	=> date.substring(11, 13).toNumber(),
+			:year	=> date.substring( 0,  4).toNumber(),
+			:month	=> date.substring( 5,  7).toNumber(),
+			:day	=> date.substring( 8, 10).toNumber(),
+			:hour	=> date.substring(11, 13).toNumber(),
 			:minute => date.substring(14, 16).toNumber(),
 			:second => date.substring(17, 19).toNumber(),
 		});

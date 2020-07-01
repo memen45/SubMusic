@@ -2,7 +2,7 @@ using Toybox.Communications;
 using Toybox.WatchUi;
 
 // class for interfacing with a subsonic API endpoint
-class SubSonicAPI {
+class SubsonicAPI {
 
 	private var d_base_url;
 	private var d_user;
@@ -13,18 +13,20 @@ class SubSonicAPI {
 	private var d_callback;
 	private var d_fallback;		// add null checks!
 	
-	function initialize(settings) {
+	function initialize(settings, fallback) {
 		d_base_url = settings.get("api_url") + "/rest/";
 		d_user = settings.get("api_usr");
 		d_pass = settings.get("api_key");
 		d_params = {
     		"u" => d_user,
     		"p" => d_pass,
-    		"c" => WatchUi.loadResource(Rez.Strings.AppName),
+    		"c" => (WatchUi.loadResource(Rez.Strings.AppName) + " " + WathUi.loadResource(Rez.Strings.AppVersionTitle)),
     		"v" => "1.10.2",
     		"f" => "json",
     	};
-    	System.println("Initialize SubSonicAPI, url: " + d_base_url + " user: " + d_user + ", pass: " + d_pass + " client name: " + WatchUi.loadResource(Rez.Strings.AppName));
+		d_fallback = fallback;
+
+    	System.println("Initialize SubSonicAPI, url: " + d_base_url + " user: " + d_user + ", pass: " + d_pass + " client name: " + d_params["c"]);
 	}
 	
 	/**
@@ -62,13 +64,15 @@ class SubSonicAPI {
 	 *
 	 * returns a listing of files in a saved playlist
 	 */
-	function getPlaylist(id, callback) {
+	function getPlaylist(callback, params) {
 	
 		d_callback = callback;
 		
 		var url = d_base_url + "getPlaylist";
 		
-		var params = d_params;
+		// construct parameters
+		var id = params["id"];
+		params = d_params;
 		params["id"] = id;			// set id for playlist
 		
     	var options = {
@@ -134,12 +138,16 @@ class SubSonicAPI {
      *
      * downloads a given media file
      */
-    function stream(id, encoding, callback) {
+    function stream(callback, params) {
     
     	d_callback = callback;
     
 		var url = d_base_url + "stream";
-		var params = d_params;
+
+		// construct parameters
+		var id = params["id"];
+		var encoding = params["format"]
+		params = d_params;
 		params["id"] = id;
 		params["format"] = encoding;
 		
@@ -152,7 +160,7 @@ class SubSonicAPI {
     }
     
     function onStream(responseCode, data) {
-    	System.println("onStream with responseCode: " + responseCode);
+    	System.println("SubsonicAPI::onStream with responseCode: " + responseCode);
     	
 		// check if request was successful and response is ok
 		if (responseCode != 200) {
@@ -175,34 +183,5 @@ class SubSonicAPI {
                 encoding = Media.ENCODING_ADTS;
         }
         return encoding;
-    }
-    
-    function respCodeToString(responseCode) {
-    	if (responseCode == Communications.INVALID_HTTP_HEADER_FIELDS_IN_REQUEST) {
-    		return "\"INVALID_HTTP_HEADER_FIELDS_IN_REQUEST\"";
-    	} else if (responseCode == Communications.INVALID_HTTP_BODY_IN_REQUEST) {
-    		return "\"INVALID_HTTP_BODY_IN_REQUEST\"";
-    	} else if (responseCode == Communications.INVALID_HTTP_METHOD_IN_REQUEST) {
-    		return "\"INVALID_HTTP_METHOD_IN_REQUEST\"";
-    	} else if (responseCode == Communications.NETWORK_REQUEST_TIMED_OUT) {
-    		return "\"NETWORK_REQUEST_TIMED_OUT\"";
-    	} else if (responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE) {
-    		return "\"INVALID_HTTP_BODY_IN_NETWORK_RESPONSE\"";
-    	} else if (responseCode == Communications.INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE) {
-    		return "\"INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE\"";
-    	} else if (responseCode == Communications.NETWORK_RESPONSE_TOO_LARGE) {
-    		return "\"NETWORK_RESPONSE_TOO_LARGE\"";
-    	} else if (responseCode == Communications.NETWORK_RESPONSE_OUT_OF_MEMORY) {
-    		return "\"NETWORK_RESPONSE_OUT_OF_MEMORY\"";
-    	} else if (responseCode == Communications.STORAGE_FULL) {
-    		return "\"STORAGE_FULL\"";
-    	} else if (responseCode == Communications.SECURE_CONNECTION_REQUIRED) {
-    		return "\"SECURE_CONNECTION_REQUIRED\"";
-    	}
-    	return "Unknown";
-    }
-    
-    function setFallback(fallback) {
-    	d_fallback = fallback;
     }
 }

@@ -72,7 +72,7 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
 		
      	if (d_todo.size() != 0) {
      		System.println("Syncing a local playlist with id: " + d_todo[0]);
-     		d_provider.getPlaylist(d_todo[0], method(:onNextPlaylist));
+     		d_provider.getPlaylistSongs(d_todo[0], method(:onNextPlaylist));
      		return;
      	}
      	
@@ -93,13 +93,13 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
 		syncNextSong();
     }
     
-    function onNextPlaylist(playlist) {
+    function onNextPlaylist(songs) {
     	// update playlist and counts
-    	var count = d_liststore.update(playlist);
+    	var count = d_liststore.update(d_todo[0], songs);
     	
     	// report progress
     	onSongSynced(count);
-    	System.println("Synced a local playlist: " + playlist["name"]);
+    	System.println("Synced a local playlist with id: " + todo[0]);
     	
     	// slice first element from todo list
     	d_todo.remove(d_todo[0]);
@@ -120,7 +120,7 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
 		System.println("Syncing song " + d_todo[0] + " number " + d_songs_count + " of " + d_songs_total);
 		
 		// make the request
-		d_provider.stream(d_todo[0], "mp3", method(:onSongDownloaded));
+		d_provider.getRefId(d_todo[0], method(:onSongDownloaded));
     }
 
     // Callback for when a song is downloaded
@@ -159,12 +159,38 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
     function onFail(responseCode, data) {
     	System.println("ResponseCode: " + responseCode + " payload " + data);
     	var msg = "Error code: " + responseCode + "\n";
-    	msg += d_provider.respCodeToString(responseCode) + "\n";
+    	msg += respCodeToString(responseCode) + "\n";
     	Media.notifySyncComplete(responseCode.toString());
     }
 
     // Sync always needed to verify new songs on the server
     function isSyncNeeded() {
         return true;
+    }
+    
+	// move to somewhere else later, but now this is the only place it is used
+    function respCodeToString(responseCode) {
+    	if (responseCode == Communications.INVALID_HTTP_HEADER_FIELDS_IN_REQUEST) {
+    		return "\"INVALID_HTTP_HEADER_FIELDS_IN_REQUEST\"";
+    	} else if (responseCode == Communications.INVALID_HTTP_BODY_IN_REQUEST) {
+    		return "\"INVALID_HTTP_BODY_IN_REQUEST\"";
+    	} else if (responseCode == Communications.INVALID_HTTP_METHOD_IN_REQUEST) {
+    		return "\"INVALID_HTTP_METHOD_IN_REQUEST\"";
+    	} else if (responseCode == Communications.NETWORK_REQUEST_TIMED_OUT) {
+    		return "\"NETWORK_REQUEST_TIMED_OUT\"";
+    	} else if (responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE) {
+    		return "\"INVALID_HTTP_BODY_IN_NETWORK_RESPONSE\"";
+    	} else if (responseCode == Communications.INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE) {
+    		return "\"INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE\"";
+    	} else if (responseCode == Communications.NETWORK_RESPONSE_TOO_LARGE) {
+    		return "\"NETWORK_RESPONSE_TOO_LARGE\"";
+    	} else if (responseCode == Communications.NETWORK_RESPONSE_OUT_OF_MEMORY) {
+    		return "\"NETWORK_RESPONSE_OUT_OF_MEMORY\"";
+    	} else if (responseCode == Communications.STORAGE_FULL) {
+    		return "\"STORAGE_FULL\"";
+    	} else if (responseCode == Communications.SECURE_CONNECTION_REQUIRED) {
+    		return "\"SECURE_CONNECTION_REQUIRED\"";
+    	}
+    	return "Unknown";
     }
 }

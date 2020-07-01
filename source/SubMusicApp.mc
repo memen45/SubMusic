@@ -20,8 +20,9 @@ class SubMusicApp extends Application.AudioContentProviderApp {
         var type = Application.Properties.getValue("API_standard");
         if (type == ApiStandard.AMPACHE) {
         	d_provider = new AmpacheProvider(settings);
+            return;
         }
-        d_provider = new SubSonicAPI(settings);
+        d_provider = new SubsonicProvider(settings);
     }
 
     // onStart() is called on application start up

@@ -113,21 +113,21 @@ class SubMusicPlaylistSync extends SubMusicPlaylistsBase {
 	}
 	
 	// update the given playlist on either locals or tosync
-	function update(playlist) {
-		var id = playlist["id"];
-		
-		var locals = null;
+	function update(id, songs) {
+		var locals;
 		
 		// load local list, return if not available
 		if (d_locals.hasKey(id)) {
-			locals = d_locals[id]["entry"];
+			locals = d_locals[id]["songs"];
 		} else if (d_tosync.hasKey(id)) {
 			locals = [];
+			d_locals[id] = d_tosync.get(id);
+			d_locals[id]["songs"] = [];
 		} else {
 			return 0;
 		}
 		
-		var remotes = playlist["entry"];
+		var remotes = songs;
 		var count = 0;
 		
 		// find remote additions
@@ -154,7 +154,7 @@ class SubMusicPlaylistSync extends SubMusicPlaylistsBase {
 		}
 		
 		// add / overwrite the local playlist
-		d_locals[id] = playlist;
+		d_locals[id]["songs"] = songs;
 		store(Storage.PLAYLIST_LOCAL);
 		
 		// remove from the tosync list
@@ -182,7 +182,7 @@ class SubMusicPlaylistSync extends SubMusicPlaylistsBase {
 			}
 			
 			// iterate over all the songs in the playlist
-			var songs = local["entry"];
+			var songs = local["songs"];
 			for (var song_idx = 0; song_idx < songs.size(); ++song_idx) {
 				count += d_songstore.subSong(songs[song_idx]);
 			}
