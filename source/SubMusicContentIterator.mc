@@ -42,6 +42,8 @@ class SubMusicContentIterator extends Media.ContentIterator {
             
             PLAYBACK_CONTROL_SHUFFLE,
             PLAYBACK_CONTROL_REPEAT,
+			PLAYBACK_CONTROL_SKIP_FORWARD,
+			PLAYBACK_CONTROL_SKIP_BACKWARD,
         ];
         profile.playbackNotificationThreshold = 1;
         profile.requirePlaybackNotification = false;
