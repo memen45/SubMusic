@@ -81,6 +81,7 @@ class SubsonicProvider {
 			var song = response["entry"][idx];
 			songs.add({
 				"id" => song["id"],
+				"time" => song["duration"],
 			});
 		}
 		d_callback.invoke(songs);

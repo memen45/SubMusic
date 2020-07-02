@@ -16,7 +16,7 @@ class SubMusicConfigurePlaybackMenu extends WatchUi.Menu2 {
 		for (var idx = 0; idx < keys.size(); ++idx) {
 			var id = keys[idx];
 			var label = local_playlists[id]["name"];
-			var sublabel = (local_playlists[id]["duration"] / 60).toNumber().toString() + " mins";
+			var sublabel = (local_playlists[id]["time"] / 60).toNumber().toString() + " mins";
 			addItem(new WatchUi.MenuItem(label, sublabel, id, null));
 		}
     }

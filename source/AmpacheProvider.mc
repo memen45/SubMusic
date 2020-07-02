@@ -124,6 +124,7 @@ class AmpacheProvider {
 			var song = response["song"][idx];
 			d_response["song"].add({
 				"id" => song["id"],
+				"time" => song["time"],
 			});
 		}
 

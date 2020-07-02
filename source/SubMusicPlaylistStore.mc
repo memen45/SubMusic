@@ -121,6 +121,8 @@ class SubMusicPlaylistSync extends SubMusicPlaylistsBase {
 			locals = d_locals[id]["songs"];
 		} else if (d_tosync.hasKey(id)) {
 			locals = [];
+			
+			// copy the playlist to the locals list
 			d_locals[id] = d_tosync.get(id);
 			d_locals[id]["songs"] = [];
 		} else {
@@ -129,6 +131,13 @@ class SubMusicPlaylistSync extends SubMusicPlaylistsBase {
 		
 		var remotes = songs;
 		var count = 0;
+		
+		// calculate time of the playlist
+		var time = 0;
+		for (var idx = 0; idx < remotes.size(); ++idx) {
+			time += remotes[idx]["time"];
+		}
+		d_locals[id]["time"] = time;
 		
 		// find remote additions
 		for (var idx = 0; idx < remotes.size(); ++idx) {
