@@ -28,7 +28,7 @@ class SubMusicConfigureSyncView extends WatchUi.View {
     function onShow() {
     
     	if (!d_menushown) {
-    		System.println("Will send SubSonicRequest now");
+    		System.println("Will send API request now");
     		d_provider.getAllPlaylists(method(:onGetAllPlaylists));
     		return;
     	}
@@ -98,7 +98,7 @@ class SubMusicConfigureSyncView extends WatchUi.View {
     
     function onFail(responseCode, data) {
     	var title = "Error: " + responseCode;
-    	var detail = d_provider.respCodeToString(responseCode) + "\n";
+    	var detail = respCodeToString(responseCode) + "\n";
     	if (data != null) {
     		detail += data["errorMessage"];
     	}
@@ -106,5 +106,30 @@ class SubMusicConfigureSyncView extends WatchUi.View {
 		d_menushown = true;
 		WatchUi.requestUpdate();
 	}
-
+    
+	// move to somewhere else later, but now this is one of the two places where it is used
+    function respCodeToString(responseCode) {
+    	if (responseCode == Communications.INVALID_HTTP_HEADER_FIELDS_IN_REQUEST) {
+    		return "\"INVALID_HTTP_HEADER_FIELDS_IN_REQUEST\"";
+    	} else if (responseCode == Communications.INVALID_HTTP_BODY_IN_REQUEST) {
+    		return "\"INVALID_HTTP_BODY_IN_REQUEST\"";
+    	} else if (responseCode == Communications.INVALID_HTTP_METHOD_IN_REQUEST) {
+    		return "\"INVALID_HTTP_METHOD_IN_REQUEST\"";
+    	} else if (responseCode == Communications.NETWORK_REQUEST_TIMED_OUT) {
+    		return "\"NETWORK_REQUEST_TIMED_OUT\"";
+    	} else if (responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE) {
+    		return "\"INVALID_HTTP_BODY_IN_NETWORK_RESPONSE\"";
+    	} else if (responseCode == Communications.INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE) {
+    		return "\"INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE\"";
+    	} else if (responseCode == Communications.NETWORK_RESPONSE_TOO_LARGE) {
+    		return "\"NETWORK_RESPONSE_TOO_LARGE\"";
+    	} else if (responseCode == Communications.NETWORK_RESPONSE_OUT_OF_MEMORY) {
+    		return "\"NETWORK_RESPONSE_OUT_OF_MEMORY\"";
+    	} else if (responseCode == Communications.STORAGE_FULL) {
+    		return "\"STORAGE_FULL\"";
+    	} else if (responseCode == Communications.SECURE_CONNECTION_REQUIRED) {
+    		return "\"SECURE_CONNECTION_REQUIRED\"";
+    	}
+    	return "Unknown";
+    }
 }

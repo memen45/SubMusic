@@ -168,7 +168,7 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
         return true;
     }
     
-	// move to somewhere else later, but now this is the only place it is used
+	// move to somewhere else later, but now this is one of the two places this is used
     function respCodeToString(responseCode) {
     	if (responseCode == Communications.INVALID_HTTP_HEADER_FIELDS_IN_REQUEST) {
     		return "\"INVALID_HTTP_HEADER_FIELDS_IN_REQUEST\"";

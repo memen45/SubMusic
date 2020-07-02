@@ -75,7 +75,7 @@ class AmpacheProvider {
 	}
 	
 	function do_playlists() {
-		if (!d_api.session()) {
+		if (!d_api.session(null)) {
 			d_api.handshake(self.method(:do_playlists));
 			return;
 		}
@@ -108,7 +108,7 @@ class AmpacheProvider {
 	}
 
 	function do_playlist_songs() {
-		if (!d_api.session()) {
+		if (!d_api.session(null)) {
 			d_api.handshake(self.method(:do_playlist_songs));
 			return;
 		}
@@ -139,7 +139,7 @@ class AmpacheProvider {
 
 	function do_stream() {
 		// check if session still valid
-		if (!d_api.session()) {
+		if (!d_api.session(null)) {
 			d_api.handshake(self.method(:do_stream));
 			return;
 		}

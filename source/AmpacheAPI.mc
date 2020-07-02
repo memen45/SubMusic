@@ -1,5 +1,6 @@
 using Toybox.Time;
 using Toybox.Cryptography;
+using Toybox.StringUtil;
 using Toybox.Communications;
  
 class AmpacheAPI {
@@ -23,12 +24,16 @@ class AmpacheAPI {
 	
 		// hash the password
 		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
-		hasher.update(settings.get("api_key"));
-		d_hash = hasher.digest();
+		hasher.update(string_to_ba(settings.get("api_key")));
+		d_hash = ba_to_hexstring(hasher.digest());
 
 		d_fallback = fallback;
 		
-    	System.println("Initialize AmpacheAPI, url: " + d_url + " user: " + d_usr + ", pass: " + d_hash + " client name: " + d_params["c"]);
+		// print the configuration for debugging
+    	System.println("Initialize AmpacheAPI, url: " + d_url 
+    										+ ", user: " + d_usr 
+    										+ ", pass: " + d_hash
+    										+ ", client name: " + d_client);
 		
 		// check if auth is expired, it may be usable!
 		d_expire = new Time.Moment(0);
@@ -50,19 +55,22 @@ class AmpacheAPI {
 		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
 		
 		// get the time
-		var timestamp = Time.now().value();
+		var timestamp = Time.now().value().format("%i");
 		
 		// construct the auth
-		hasher.update(timestamp);
-		hasher.update(d_hash);
+		hasher.update(string_to_ba(timestamp));
+		hasher.update(string_to_ba(d_hash));
 		var auth = hasher.digest();
 		
 		var params = {
 			"action" => "handshake",
-			"user" => d_user,
+			"user" => d_usr,
 			"timestamp" => timestamp,
 			"auth" => auth,
 		};
+		
+		System.println("AmpacheAPI::handshake with timestamp " + timestamp + " and auth " + ba_to_hexstring(auth));
+		
 		Communications.makeWebRequest(d_url, params, {}, self.method(:onHandshake));
 	}
 	
@@ -253,5 +261,21 @@ class AmpacheAPI {
 			}
 		}
 		return moment.add(new Time.Duration(tzOffset));
+	}
+	
+	function string_to_ba(string) {
+		var options = {
+			:fromRepresentation => StringUtil.REPRESENTATION_STRING_PLAIN_TEXT,
+			:toRepresentation => StringUtil.REPRESENTATION_BYTE_ARRAY,
+		};
+		return StringUtil.convertEncodedString(string, options);
+	}
+	
+	function ba_to_hexstring(ba) {
+		var options = {
+			:fromRepresentation => StringUtil.REPRESENTATION_BYTE_ARRAY,
+			:toRepresentation => StringUtil.REPRESENTATION_STRING_HEX,
+		};
+		return StringUtil.convertEncodedString(ba, options);
 	}
 }
