@@ -6,10 +6,10 @@ class AmpacheAPI {
  
 	private var d_url;
 	private var d_usr;
-	private var d_client = WatchUi.loadResource(Rez.Strings.AppName);
+	private var d_client;
 	private var d_hash;		// password hash, required for every handshake
 	
-	private var d_session = Application.Storage.getValue("AMPACHE_API_SESSION");
+	private var d_session;
 	private var d_expire;
 	
 	private var d_callback;
@@ -19,6 +19,7 @@ class AmpacheAPI {
 	function initialize(settings, fallback) {
 		d_url = settings.get("api_url") + "/server/json.server.php";
 		d_usr = settings.get("api_usr");
+		d_client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + WatchUi.loadResource(Rez.Strings.AppVersionTitle));
 	
 		// hash the password
 		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
@@ -27,8 +28,11 @@ class AmpacheAPI {
 
 		d_fallback = fallback;
 		
+    	System.println("Initialize AmpacheAPI, url: " + d_url + " user: " + d_usr + ", pass: " + d_hash + " client name: " + d_params["c"]);
+		
 		// check if auth is expired, it may be usable!
 		d_expire = new Time.Moment(0);
+		d_session = Application.Storage.getValue("AMPACHE_API_SESSION");
 		if ((d_session == null)
 			|| (d_session["session_expire"] == null)) {
 			return;

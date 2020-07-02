@@ -29,7 +29,7 @@ class SubMusicConfigureSyncView extends WatchUi.View {
     
     	if (!d_menushown) {
     		System.println("Will send SubSonicRequest now");
-    		d_provider.getPlaylists(method(:onGetPlaylists));
+    		d_provider.getAllPlaylists(method(:onGetAllPlaylists));
     		return;
     	}
 		d_menushown = false;
@@ -57,7 +57,7 @@ class SubMusicConfigureSyncView extends WatchUi.View {
     }
 
 	// handles the response on getplaylists API request
-	function onGetPlaylists(playlists) {
+	function onGetAllPlaylists(playlists) {
 		d_playlists = playlists;
 		pushSyncMenu();
 		WatchUi.requestUpdate();

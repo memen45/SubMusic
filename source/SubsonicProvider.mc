@@ -24,7 +24,7 @@ class SubsonicProvider {
 	 */
 	function getAllPlaylists(callback) {
 		d_callback = callback;
-		d_api.getPlaylists(self.method(:onGetPlaylists));
+		d_api.getPlaylists(self.method(:onGetAllPlaylists));
 	}
 	
 	/**
@@ -57,28 +57,31 @@ class SubsonicProvider {
 		d_api.stream(self.method(:onStream), params);
 	}
 
-	function onGetPlaylists(response) {
-
+	function onGetAllPlaylists(response) {
+		System.println("SubsonicProvider::onGetAllPlaylists( response = " + response + ")");
+		
 		// construct the standard array of playlist objects
 		var playlists = [];
 		for (var idx = 0; idx < response.size(); ++idx) {
-			playlists[idx] = {
+			playlists.add({
 				"id" => response[idx]["id"],
 				"name" => response[idx]["name"],
 				"songCount" => response[idx]["songCount"],
-			};
+			});
 		}
 		d_callback.invoke(playlists);
 	}
 
 	function onGetPlaylist(response) {
+		System.println("SubsonicProvider::onGetPlaylist( response = " + response + ")");
+		
 		// construct the standard array of song objects
 		var songs = [];
 		for (var idx = 0; idx < response["entry"].size(); ++idx) {
 			var song = response["entry"][idx];
-			songs[idx] = {
+			songs.add({
 				"id" => song["id"],
-			};
+			});
 		}
 		d_callback.invoke(songs);
 	}

@@ -87,26 +87,24 @@ class AmpacheProvider {
 		// append result to stored response
 		d_response["total_count"] = response["total_count"];
 		
-		// construct the standard array of playlist objects
-		var playlists = [];
+		// append the standard playlist objects to the array
 		for (var idx = 0; idx < response["playlists"].size(); ++idx) {
 			var playlist = response["playlists"][idx];
-			playlists[idx] = {
+			d_response["playlists"].add({
 				"id" => playlist["id"],
 				"name" => playlist["name"],
 				"songCount" => playlist["items"],
-			};
+			});
 		}
-		d_response["playlists"].addAll(playlists);
 
 		// if all collected, callback
 		var collected = d_response["playlists"].size();
-		if (collected < d_response["total_count"]) {	
-			d_params["offset"] += d_params["limit"];	// increase offset
-			do_playlists();
+		if (collected >= d_response["total_count"]) {	
+			d_callback.invoke(playlists);
 			return;
 		}
-		d_callback.invoke(playlists);
+		d_params["offset"] += d_params["limit"];	// increase offset
+		do_playlists();
 	}
 
 	function do_playlist_songs() {
@@ -121,24 +119,21 @@ class AmpacheProvider {
 	
 		d_response["total_count"] = response["total_count"];
 		
-		// construct the standard array of song objects
-		var songs = [];
+		// append the standard song objects to the array
 		for (var idx = 0; idx < response["song"].size(); ++idx) {
 			var song = response["song"][idx];
-			songs[idx] = {
+			d_response["song"].add({
 				"id" => song["id"],
-			};
+			});
 		}
-		// append result to stored response
-		d_response["song"].addAll(songs);
 
 		var collected = d_response["song"].size();
-		if (collected < d_response["total_count"]) {
-			d_params["offset"] += d_params["limit"];	// increase offset
-			do_playlist_songs();
+		if (collected >= d_response["total_count"]) {
+			d_callback.invoke(d_response["song"]);
 			return;
 		}
-		d_callback.invoke(d_response["song"]);
+		d_params["offset"] += d_params["limit"];	// increase offset
+		do_playlist_songs();
 	}
 
 	function do_stream() {

@@ -20,13 +20,13 @@ class SubsonicAPI {
 		d_params = {
     		"u" => d_user,
     		"p" => d_pass,
-    		"c" => (WatchUi.loadResource(Rez.Strings.AppName) + " " + WatchUi.loadResource(Rez.Strings.AppVersionTitle)),
+    		"c" => (WatchUi.loadResource(Rez.Strings.AppName) + " v" + WatchUi.loadResource(Rez.Strings.AppVersionTitle)),
     		"v" => "1.10.2",
     		"f" => "json",
     	};
 		d_fallback = fallback;
 
-    	System.println("Initialize SubSonicAPI, url: " + d_base_url + " user: " + d_user + ", pass: " + d_pass + " client name: " + d_params["c"]);
+    	System.println("Initialize SubsonicAPI, url: " + d_base_url + " user: " + d_user + ", pass: " + d_pass + " client name: " + d_params["c"]);
 	}
 	
 	/**
@@ -35,7 +35,7 @@ class SubsonicAPI {
 	 * returns all playlists the user is allowed to play.
 	 */
 	function getPlaylists(callback) {
-		System.println("Inside call getPlaylists");
+		System.println("SubsonicAPI::getPlaylists");
 		
 		d_callback = callback;
 		
@@ -44,7 +44,7 @@ class SubsonicAPI {
 	}
 	
 	function onGetPlaylists(responseCode, data) {
-		System.println("onGetPlaylists with responseCode: " + responseCode + ", payload " + data);		
+		System.println("SubsonicAPI::onGetPlaylists( responseCode: " + responseCode + ", data: " + data + ")");		
 		
 		// check if request was successful and response is ok
 		if ((responseCode != 200) 
