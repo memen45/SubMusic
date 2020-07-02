@@ -2,7 +2,7 @@
 	<setting propertyKey="@Properties.API_standard" title="@Strings.ApiStandard">
         <settingConfig type="list">
             <listEntry value="0">@Strings.ApiStandardSubsonic</listEntry>
-            <listEntry value="1">@Strings.APIStandardAmpache</listEntry>
+            <listEntry value="1">@Strings.ApiStandardAmpache</listEntry>
         </settingConfig>
     </setting>
 	<setting propertyKey="@Properties.subsonic_API_URL" title="@Strings.ServerAddress">

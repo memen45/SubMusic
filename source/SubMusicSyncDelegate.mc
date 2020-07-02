@@ -99,7 +99,7 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
     	
     	// report progress
     	onSongSynced(count);
-    	System.println("Synced a local playlist with id: " + todo[0]);
+    	System.println("Synced a local playlist with id: " + d_todo[0]);
     	
     	// slice first element from todo list
     	d_todo.remove(d_todo[0]);

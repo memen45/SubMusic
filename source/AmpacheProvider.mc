@@ -114,7 +114,7 @@ class AmpacheProvider {
 			d_api.handshake(self.method(:do_playlist_songs));
 			return;
 		}
-		d_api.playlist_songs(self.method(:on_do_playlist_songs), d_params)
+		d_api.playlist_songs(self.method(:on_do_playlist_songs), d_params);
 	}
 
 	function on_do_playlist_songs(response) {

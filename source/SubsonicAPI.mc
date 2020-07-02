@@ -20,7 +20,7 @@ class SubsonicAPI {
 		d_params = {
     		"u" => d_user,
     		"p" => d_pass,
-    		"c" => (WatchUi.loadResource(Rez.Strings.AppName) + " " + WathUi.loadResource(Rez.Strings.AppVersionTitle)),
+    		"c" => (WatchUi.loadResource(Rez.Strings.AppName) + " " + WatchUi.loadResource(Rez.Strings.AppVersionTitle)),
     		"v" => "1.10.2",
     		"f" => "json",
     	};
@@ -146,7 +146,7 @@ class SubsonicAPI {
 
 		// construct parameters
 		var id = params["id"];
-		var encoding = params["format"]
+		var encoding = params["format"];
 		params = d_params;
 		params["id"] = id;
 		params["format"] = encoding;
