@@ -1,10 +1,10 @@
 <strings>
     <string id="AppName">SubMusic</string>
     
-    <string id="AppVersionTitle">0.1.0-alpha</string>
+    <string id="AppVersionTitle">0.0.10-kappa</string>
     <string id="ApiStandard">API backend</string>
     <string id="ApiStandardSubsonic">Subsonic API</string>
-    <string id="ApiStandardAmpache">Ampache API (in beta)</string>
+    <string id="ApiStandardAmpache">Ampache API - alpha</string>
     <string id="ServerAddress">Server Address</string>
     <string id="ServerUser">Username</string>
     <string id="ServerKey">API key</string>

@@ -1,25 +1,33 @@
 # SubMusic
-Synchronize playlists from your server using the SubSonic API (Nextcloud - Subsonic - Ampache - Airsonic)
+Synchronize playlists from your own music server: Nextcloud - Subsonic - Ampache - Airsonic.
 
-Note there is a limitation for synchronizing larger playlists (above ~25 depending on metadata), due to how Subsonic and the watch work. Remove some songs from the playlist if you receive the -402 error during sync.
+## How to use
 
 Set up Synced Playlists    |  Choose from synced playlists | Enjoy your music 
 :-------------------------:|:-------------------------:|:-------------------------:
 ![](images/ConfigureSyncVIew.png) | ![](images/ChoosePlaybackView.png) | ![](images/PlaybackView.png)
 
-## == Nextcloud ==
+## Limitations 
+**SubSonic API** - not possible to synchronize larger playlists (above ~25 depending on metadata), due to how the Subsonic API is designed and how the watch works. Remove some songs from the playlist if you receive the -402 error during sync.
 
-Install, enable and open the owncloud/music app. In Settings copy the URL for the SubSonic endpoint and paste it into the connect iq app settings. The URL should look like the following: "https://example.nextcloud.com/apps/music/subsonic", no trailing slash. Now enter a Description (e.g. "Garmin SubMusic") and Generate API password to enable a new access for the SubSonic API endpoint. Enter your username and the generated password in the connect iq app settings.
+**Ampache API** - new and untested!
+
+## How to set up
+You need a music server supporting either the AmpacheAPI or the Subsonic API.
+
+### == Nextcloud ==
+
+In the connect iq app settings, choose 'Ampache API' for the 'API backend' option. Install, enable and open the owncloud/music app. In Settings copy the URL for the Ampache endpoint and paste it into the connect iq app settings. The URL should look like the following: "https://example.nextcloud.com/apps/music/ampache", no trailing slash. Now enter a Description (e.g. "Garmin SubMusic") and Generate API password to enable a new access for the Ampache API endpoint. Enter your username and the generated password in the connect iq app settings.
 
 Only mp3 is supported, since the music app does not transcode music.
 
 ![](images/NextcloudView.png)
 
-## == Ampache ==
+### == Ampache ==
 
-Enable the SubSonic backend in System settings in the web UI.
+Requires the more recent JSON methods in order to work with the watch. Only tested on Nextcloud music app, so please report any issues! Alternatively you can enable the SubSonic backend in System settings in the web UI and select Subsonic API in the connect iq app settings. Note that there are limitations on using Subsonic as endpoint.
 
-## == Subsonic ==
+### == Subsonic ==
 
 Should be supported now. Please report any issues!
 
