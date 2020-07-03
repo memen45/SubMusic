@@ -1,7 +1,7 @@
 <strings>
     <string id="AppName">SubMusic</string>
     
-    <string id="AppVersionTitle">0.0.10-kappa</string>
+    <string id="AppVersionTitle">0.0.11-lambda</string>
     <string id="ApiStandard">API backend</string>
     <string id="ApiStandardSubsonic">Subsonic API</string>
     <string id="ApiStandardAmpache">Ampache API - alpha</string>

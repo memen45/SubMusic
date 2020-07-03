@@ -114,7 +114,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 		
 		if ((playlist != null) && (lists[playlist] != null))
 		{
-			var songs = lists[playlist]["entry"];
+			var songs = lists[playlist]["songs"];
 			var store = new SubMusicSongStore();
 			for (var idx = 0; idx < songs.size(); ++idx) {
 				var refId = store.getRefIdById(songs[idx]["id"]);

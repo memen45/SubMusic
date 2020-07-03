@@ -134,13 +134,13 @@ class AmpacheAPI {
 	function onPlaylist(responseCode, data) {
 		System.println("AmpacheAPI::onPlaylist with responseCode: " + responseCode + ", payload " + data);
 	
-	// check if request was successful and response is ok
+		// check if request was successful and response is ok
 		if ((responseCode != 200) 
 				|| (data == null)) {
 			d_fallback.invoke(responseCode, data);
 			return;
 		}
-	d_callback.invoke(data);
+		d_callback.invoke(data);
     }
 	
 	// returns array of song objects
@@ -155,13 +155,13 @@ class AmpacheAPI {
 	function onPlaylist_songs(responseCode, data) {
 		System.println("AmpacheAPI::onPlaylist_songs with responseCode: " + responseCode + ", payload " + data);
 	
-	// check if request was successful and response is ok
+		// check if request was successful and response is ok
 		if ((responseCode != 200) 
 				|| (data == null)) {
 			d_fallback.invoke(responseCode, data);
 			return;
 		}
-	d_callback.invoke(data);
+		d_callback.invoke(data);
     }
 	
 	// returns refId to the downloaded song

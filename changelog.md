@@ -1,3 +1,10 @@
+Version 0.0.11
+- fixes playback configuration
+
+Version 0.0.10
+- rewrite of the sync engine
+- alpha support for the Ampache API (limited to 20 songs per playlist)
+
 Version 0.0.9
 - added support for removing playlists before sync occured
 - added handling of unsupported file types (songs will be skipped)
