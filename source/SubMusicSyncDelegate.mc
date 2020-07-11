@@ -149,6 +149,11 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
     function onSongSynced(count) {
     	d_songs_count += count;
     	
+    	if ((d_songs_total == 0) || (d_songs_count == 0)) {
+    		Media.notifySyncProgress(0);					// 0% progress
+    		return;
+    	}
+    	
     	var progress = (100 * d_songs_count) / d_songs_total.toFloat();
     	progress = progress.toNumber();
     	

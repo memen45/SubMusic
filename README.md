@@ -7,11 +7,6 @@ Set up Synced Playlists    |  Choose from synced playlists | Enjoy your music
 :-------------------------:|:-------------------------:|:-------------------------:
 ![](images/ConfigureSyncVIew.png) | ![](images/ChoosePlaybackView.png) | ![](images/PlaybackView.png)
 
-## Limitations 
-**SubSonic API** - not possible to synchronize larger playlists (above ~25 depending on metadata), due to how the Subsonic API is designed and how the watch works. Remove some songs from the playlist if you receive the -402 error during sync.
-
-**Ampache API** - new and untested!
-
 ## How to set up
 You need a music server supporting either the AmpacheAPI or the Subsonic API.
 
@@ -30,6 +25,13 @@ Requires the more recent JSON methods in order to work with the watch. Only test
 ### == Subsonic ==
 
 Should be supported now. Please report any issues!
+
+## Known issues 
+Below a list of known 'issues'. These are problems that cannot be fixed by design of either the watch software or the API backends chosen.
+
+**SubSonic API** - synchronization of large playlists (above ~25 depending on metadata) is not supported, due to how the Subsonic API is designed and how the watch works. Remove some songs from the playlist if you receive the -402 error during sync.
+
+**General** - self-signed certificates are not supported by the watch (Sync Error: 0). Either use http or proper https certificates.
 
 ## == Support ==
 

@@ -227,13 +227,13 @@ class SubMusicPlaylistSync extends SubMusicPlaylistsBase {
 		// count songs from local lists
 		var keys = d_locals.keys();
 		for (var idx = 0; idx < keys.size(); ++idx) {
-			count += d_locals[keys[idx]]["songCount"];
+			count += d_locals[keys[idx]]["songCount"].toNumber();
 		}
 		
 		// count songs from tosync lists
 		keys = d_tosync.keys();
 		for (var idx = 0; idx < keys.size(); ++idx) {
-			count += d_tosync[keys[idx]]["songCount"];
+			count += d_tosync[keys[idx]]["songCount"].toNumber();
 		}
 		
 		// do not count songs on todelete playlists, since those are 
@@ -248,7 +248,7 @@ class SubMusicPlaylistSync extends SubMusicPlaylistsBase {
 		// count songs from tosync lists
 		var keys = d_tosync.keys();
 		for (var idx = 0; idx < keys.size(); ++idx) {
-			count += d_tosync[keys[idx]]["songCount"];
+			count += d_tosync[keys[idx]]["songCount"].toNumber();
 		}
 		
 		// add songs to be downloaded

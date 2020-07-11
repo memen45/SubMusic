@@ -1,3 +1,7 @@
+Version 0.0.12
+- minor bug fixes
+- improved support for the Ampache API
+
 Version 0.0.11
 - fixes playback configuration
 

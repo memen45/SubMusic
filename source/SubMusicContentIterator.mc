@@ -126,8 +126,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 		}
 		
 		var availables = Media.getContentRefIter({:contentType => Media.CONTENT_TYPE_AUDIO});
-		if (availables == null)
-		{
+		if (availables == null) {
 			return;
 		}
 		
@@ -145,6 +144,13 @@ class SubMusicContentIterator extends Media.ContentIterator {
 	
 	// reorder the playlist randomly
 	function shufflePlaylist() {
+	
+		// check for empty playlist
+		if (d_playlist.size() == 0) {
+			d_songidx = 0;
+			return;
+		}
+		
 		// swap current to head of list
 		var tmp = d_playlist[0];
 		d_playlist[0] = d_playlist[d_songidx];

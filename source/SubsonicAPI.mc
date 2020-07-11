@@ -65,6 +65,7 @@ class SubsonicAPI {
 	 * returns a listing of files in a saved playlist
 	 */
 	function getPlaylist(callback, params) {
+		System.println("SubsonicAPI::getPlaylist(params: " + params + ")");
 	
 		d_callback = callback;
 		
@@ -82,7 +83,7 @@ class SubsonicAPI {
     }
     
     function onGetPlaylist(responseCode, data) {
-    	System.println("onGetPlaylist with responseCode: " + responseCode + ", payload " + data);
+    	System.println("Subsonic::onGetPlaylist(responseCode: " + responseCode + ", data: " + data);
     	
     	
 		// check if request was successful and response is ok
@@ -96,41 +97,6 @@ class SubsonicAPI {
 		}
     	
     	d_callback.invoke(data["subsonic-response"]["playlist"]);
-    }
-    
-    /**
-     * download
-     *
-     * downloads a given media file. Similar to stream, 
-     * but this method returns the original media data 
-     * without transcoding or downsampling
-     */
-    function download(id, encoding, callback, context) {
-    
-    	d_callback = callback;
-    
-		var url = d_base_url + "download";
-		var params = d_params;
-		params["id"] = id;
-		
-    	var options = {
-    		:method => Communications.HTTP_REQUEST_METHOD_GET,
-          	:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_AUDIO,
-          	:mediaEncoding => typeStringToEncoding(encoding),
-          	:context => context,
-   		};
-    	Communications.makeWebRequest(url, params, options, self.method(:onDownload));
-    }
-    
-    function onDownload(responseCode, data, context) {
-    	System.println("onDownload with responseCode: " + responseCode);
-    	
-		// check if request was successful and response is ok
-		if (responseCode != 200) {
-    		d_fallback.invoke(responseCode, data, context);
-			return;
-		}
-    	d_callback.invoke(data.getId(), context);
     }
     
     /**

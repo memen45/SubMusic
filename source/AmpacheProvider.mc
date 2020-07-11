@@ -30,8 +30,8 @@ class AmpacheProvider {
 	function getAllPlaylists(callback) {
 		d_callback = callback;
 
-		// create empty response
-		d_response = { "playlists" => [] };
+		// create empty array as initial response
+		d_response = [];
 		d_params = {
 			"limit" => 20,
 			"offset" => 0,
@@ -48,7 +48,7 @@ class AmpacheProvider {
 		d_callback = callback;
 
 		// create empty response
-		d_response = { "song" => [] };
+		d_response = [];
 		d_params = {
 			"filter" => id,
 			"limit" => 20,
@@ -82,25 +82,20 @@ class AmpacheProvider {
 		d_api.playlists(self.method(:on_do_playlists), d_params);
 	}
 
-	function on_do_playlists(response) {
-
-		// append result to stored response
-		d_response["total_count"] = response["total_count"];
-		
+	function on_do_playlists(response) {		
 		// append the standard playlist objects to the array
-		for (var idx = 0; idx < response["playlists"].size(); ++idx) {
-			var playlist = response["playlists"][idx];
-			d_response["playlists"].add({
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var playlist = response[idx];
+			d_response.add({
 				"id" => playlist["id"],
 				"name" => playlist["name"],
 				"songCount" => playlist["items"],
 			});
 		}
 
-		// if all collected, callback
-		var collected = d_response["playlists"].size();
-		if (collected >= d_response["total_count"]) {	
-			d_callback.invoke(playlists);
+		// if less than limit, no more requests required
+		if (response.size() < d_params["limit"]) {	
+			d_callback.invoke(d_response);
 			return;
 		}
 		d_params["offset"] += d_params["limit"];	// increase offset
@@ -115,22 +110,18 @@ class AmpacheProvider {
 		d_api.playlist_songs(self.method(:on_do_playlist_songs), d_params);
 	}
 
-	function on_do_playlist_songs(response) {
-	
-		d_response["total_count"] = response["total_count"];
-		
+	function on_do_playlist_songs(response) {		
 		// append the standard song objects to the array
-		for (var idx = 0; idx < response["song"].size(); ++idx) {
-			var song = response["song"][idx];
-			d_response["song"].add({
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var song = response[idx];
+			d_response.add({
 				"id" => song["id"],
 				"time" => song["time"],
 			});
 		}
 
-		var collected = d_response["song"].size();
-		if (collected >= d_response["total_count"]) {
-			d_callback.invoke(d_response["song"]);
+		if (response.size() < d_params["limit"]) {
+			d_callback.invoke(d_response);
 			return;
 		}
 		d_params["offset"] += d_params["limit"];	// increase offset

@@ -60,7 +60,7 @@ class AmpacheAPI {
 		// construct the auth
 		hasher.update(string_to_ba(timestamp));
 		hasher.update(string_to_ba(d_hash));
-		var auth = hasher.digest();
+		var auth = ba_to_hexstring(hasher.digest());
 		
 		var params = {
 			"action" => "handshake",
@@ -69,7 +69,7 @@ class AmpacheAPI {
 			"auth" => auth,
 		};
 		
-		System.println("AmpacheAPI::handshake with timestamp " + timestamp + " and auth " + ba_to_hexstring(auth));
+		System.println("AmpacheAPI::handshake with timestamp " + timestamp + " and auth " + auth);
 		
 		Communications.makeWebRequest(d_url, params, {}, self.method(:onHandshake));
 	}
@@ -101,6 +101,8 @@ class AmpacheAPI {
 	function playlists(callback, params) {
 		System.println("AmpacheAPI::playlists");
 		
+		d_callback = callback;
+		
 		if (params == null) {
 			params = {};
 		}
@@ -119,12 +121,14 @@ class AmpacheAPI {
 			d_fallback.invoke(responseCode, data);
 			return;
 		}
-	d_callback.invoke(data);
+		d_callback.invoke(data);
     }
 	
 	// returns single playlist info
 	function playlist(callback, params) {
-		System.println("AmpacheAPI::playlist id = " + params["id"]);
+		System.println("AmpacheAPI::playlist( id: " + params["id"] + ")");
+		
+		d_callback = callback;
 		
 		params.put("action", "playlist");
 		params.put("auth", d_session.get("auth"));
@@ -145,7 +149,9 @@ class AmpacheAPI {
 	
 	// returns array of song objects
 	function playlist_songs(callback, params) {
-		System.println("AmpacheAPI::playlist_songs " + params["id"]);
+		System.println("AmpacheAPI::playlist_songs( id: " + params["filter"] + ")");
+		
+		d_callback = callback;
 		
 		params.put("action", "playlist_songs");
 		params.put("auth", d_session.get("auth"));
@@ -195,6 +201,8 @@ class AmpacheAPI {
 	
 	// returns true if the current session is not expired (optionally pass in duration for session)
 	function session(duration) {
+		System.println("AmpacheAPI::session(duration: " + duration + ")");
+		
 		var now = new Time.Moment(Time.now().value());
 		if (duration != null) {
 			now.add(duration);
@@ -217,7 +225,7 @@ class AmpacheAPI {
 			return null;
 		}
 		
-		var moment = Gregorian.moment({
+		var moment = Time.Gregorian.moment({
 			:year	=> date.substring( 0,  4).toNumber(),
 			:month	=> date.substring( 5,  7).toNumber(),
 			:day	=> date.substring( 8, 10).toNumber(),
@@ -249,8 +257,8 @@ class AmpacheAPI {
 			if (suffix.length() - tz < 6) {
 				return null;
 			}
-			tzOffset = suffix.substring(tz + 1, tz + 3).toNumber() * Gregorian.SECONDS_PER_HOUR;
-			tzOffset += suffix.substring(tz + 4, tz + 6).toNumber() * Gregorian.SECONDS_PER_MINUTE;
+			tzOffset = suffix.substring(tz + 1, tz + 3).toNumber() * Time.Gregorian.SECONDS_PER_HOUR;
+			tzOffset += suffix.substring(tz + 4, tz + 6).toNumber() * Time.Gregorian.SECONDS_PER_MINUTE;
 		
 			var sign = suffix.substring(tz, tz + 1);
 			if (sign.equals("+")) {
