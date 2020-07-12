@@ -4,7 +4,7 @@
     <string id="AppVersionTitle">0.0.12-mu</string>
     <string id="ApiStandard">API backend</string>
     <string id="ApiStandardSubsonic">Subsonic API</string>
-    <string id="ApiStandardAmpache">Ampache API - alpha</string>
+    <string id="ApiStandardAmpache">Ampache API - beta</string>
     <string id="ServerAddress">Server Address</string>
     <string id="ServerUser">Username</string>
     <string id="ServerKey">API key</string>

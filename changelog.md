@@ -1,6 +1,6 @@
 Version 0.0.12
 - minor bug fixes
-- improved support for the Ampache API
+- improved support for the Ampache API (awaiting nextcloud/music update)
 
 Version 0.0.11
 - fixes playback configuration
