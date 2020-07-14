@@ -89,7 +89,7 @@ class AmpacheProvider {
 			d_response.add({
 				"id" => playlist["id"],
 				"name" => playlist["name"],
-				"songCount" => playlist["items"],
+				"songCount" => playlist["items"].toNumber(),
 			});
 		}
 
@@ -116,7 +116,7 @@ class AmpacheProvider {
 			var song = response[idx];
 			d_response.add({
 				"id" => song["id"],
-				"time" => song["time"],
+				"time" => song["time"].toNumber(),
 			});
 		}
 

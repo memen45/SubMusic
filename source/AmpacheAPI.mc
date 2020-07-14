@@ -99,7 +99,7 @@ class AmpacheAPI {
 	
 	// returns array of playlist objects
 	function playlists(callback, params) {
-		System.println("AmpacheAPI::playlists");
+		System.println("AmpacheAPI::playlists( params: " + params + ")");
 		
 		d_callback = callback;
 		
@@ -109,6 +109,7 @@ class AmpacheAPI {
 
 		params.put("action", "playlists");
 		params.put("auth", d_session.get("auth"));
+		
 		Communications.makeWebRequest(d_url, params, {}, self.method(:onPlaylists));
 	}
 	

@@ -1,5 +1,4 @@
 // Keys for Storage
-
 module Storage {
 	enum {
 		PLAYLIST,
@@ -17,5 +16,14 @@ module ApiStandard {
 	enum {
 		SUBSONIC = 0,
 		AMPACHE = 1,
+	}
+}
+
+// Menu keys - not stored persistently
+module SyncMenu {
+	enum {
+		START_SYNC,
+		PLAYLISTS,
+		TEST,
 	}
 }

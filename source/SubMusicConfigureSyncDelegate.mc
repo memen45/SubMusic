@@ -1,70 +1,33 @@
 using Toybox.WatchUi;
+using Toybox.Media;
 
-class SubMusicConfigureSyncDelegate extends WatchUi.BehaviorDelegate {
+class SubMusicConfigureSyncDelegate extends WatchUi.Menu2InputDelegate {
 
-	private var d_synclist = {};
-	private var d_todelete = {};
-	
-	private var d_liststore;
-	private var d_playlists;
+	private var d_provider;
 
-	function initialize(playlists) {
-		BehaviorDelegate.initialize();
+	function initialize(provider) {
+		Menu2InputDelegate.initialize();
 		
-		d_playlists = playlists;
-		d_liststore = new SubMusicPlaylistStore();
-    }
+		d_provider = provider;
+	}
     
-    function onSelect(item) {
-    	if (item.isChecked()) {
-    		d_synclist.put(item.getId(), true);
-    		d_todelete.put(item.getId(), false);
-    		return;
-    	}
-    	d_synclist.put(item.getId(), false);
-    	d_todelete.put(item.getId(), true);
-    }
-    
-    // store progress even when returning from menu
-    function onBack() {
-    	onDone();
-    }
-    
-    function onDone() {
-    
-    	// iterate over the synclist
-    	var keys = d_synclist.keys();
-    	for (var idx = 0; idx < keys.size(); ++idx) {
-    	
-    		// add to playlists tosync if true
-    		if (d_synclist[keys[idx]]) {
-    			d_liststore.add(findById(keys[idx], d_playlists));
-    		}
-    	}
-    	
-    	// iterate over the todelete
-    	keys = d_todelete.keys();
-    	for (var idx = 0; idx < keys.size(); ++idx) {
-    		
-    		// delete if true
-    		if (d_todelete[keys[idx]]) {
-    			d_liststore.delete(keys[idx]);
-    		}
-    	}
-    	WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
-    }
-
-	function findById(id, playlists) {
-		System.println("id = " + id);
-		System.println("playlists: " + playlists);
+	function onSelect(item) {
+		var id = item.getId();
 		
-		id = id.toNumber();
-		for (var idx = 0; idx < playlists.size(); ++idx) {
-			if (id == playlists[idx]["id"].toNumber()) {
-				return playlists[idx];
-			}
+		if (SyncMenu.PLAYLISTS == id) {
+			WatchUi.pushView(new SubMusicConfigureSyncPlaylistView(d_provider), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
+			return;
 		}
-		return null;
+		if (SyncMenu.TEST == id) {
+			WatchUi.pushView(new SubMusicConfigureSyncTestView(d_provider), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
+			return;
+		}
+		if (SyncMenu.START_SYNC == id) {
+			Media.startSync();
+			return;
+		}
+		WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+		return;
 	}
 
 }

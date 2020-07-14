@@ -105,6 +105,7 @@ class SubsonicAPI {
      * downloads a given media file
      */
     function stream(callback, params) {
+    	System.println("SubsonicAPI::stream( params: " + params + ")");
     
     	d_callback = callback;
     
