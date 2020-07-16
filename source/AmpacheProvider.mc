@@ -14,6 +14,10 @@ class AmpacheProvider {
 		d_api = new AmpacheAPI(settings, self.method(:onFailed));
 	}
 	
+	function onSettingsChanged(settings) {
+		d_api.update(settings);
+	}
+	
 	// functions:
 	// - getAllPlaylists - returns array of all playlists available for Ampache user
 	// - getPlaylistSongs - returns an array of songs on the playlist with id

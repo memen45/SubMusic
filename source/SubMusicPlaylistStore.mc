@@ -266,6 +266,11 @@ class SubMusicPlaylistSync extends SubMusicPlaylistsBase {
      * searches for "id" = id  in an array of objects
      */
     function findById(id, locals) {
+    
+    	if (locals == null) {
+    		return null;
+    	}
+    	
     	for (var idx = 0; idx < locals.size(); ++idx) {
     		if (locals[idx]["id"].equals(id)) {
     			return locals[idx];

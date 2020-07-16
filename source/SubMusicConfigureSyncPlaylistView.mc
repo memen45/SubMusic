@@ -100,7 +100,7 @@ class SubMusicConfigureSyncPlaylistView extends WatchUi.View {
     	var title = "Error: " + responseCode;
     	var detail = respCodeToString(responseCode) + "\n";
     	if (data != null) {
-    		detail += data["errorMessage"];
+    		detail += data;
     	}
 		WatchUi.switchToView(new ErrorView(title, detail), null, WatchUi.SLIDE_IMMEDIATE);
 		d_menushown = true;

@@ -33,7 +33,7 @@ class SubMusicConfigureSyncPlaylistDelegate extends WatchUi.BehaviorDelegate {
     
     function onDone() {
 	    storeChecks();
-	    Media.startSync();
+	    WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
     }
     
     function storeChecks() {

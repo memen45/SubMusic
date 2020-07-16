@@ -71,5 +71,10 @@ class SubMusicConfigureSyncTestView extends WatchUi.ProgressBar {
 		
 		WatchUi.pushView(new ErrorView("Test Failed", responseCode + "\n" + data), null, WatchUi.SLIDE_IMMEDIATE);
 	}
+	
+	function onError(error, message, dump) {
+		// future error reporting: ask for webpage opener and pass full error message into it (url encoded)
+		// https://jsonformatter.curiousconcept.com/?data={test}
+	}
 		
 }

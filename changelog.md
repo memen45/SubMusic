@@ -1,3 +1,13 @@
+Version 0.0.14
+- fixes reset session on settings changed (AmpacheAPI)
+- fixes potential bug from incompatible storage
+- fixes error reporting in "Server Info" tab
+- fixes sync - 'fake sync' bug
+- fixes crash on receiving error (AmpacheAPI)
+
+Version 0.0.13
+- added "Server Info" option to the menu to test connection
+
 Version 0.0.12
 - minor bug fixes
 - improved support for the Ampache API (awaiting nextcloud/music update)

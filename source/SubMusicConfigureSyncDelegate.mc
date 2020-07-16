@@ -23,7 +23,7 @@ class SubMusicConfigureSyncDelegate extends WatchUi.Menu2InputDelegate {
 			return;
 		}
 		if (SyncMenu.START_SYNC == id) {
-			Media.startSync();
+			WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
 			return;
 		}
 		WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
