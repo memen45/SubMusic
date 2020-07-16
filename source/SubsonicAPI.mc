@@ -26,7 +26,7 @@ class SubsonicAPI {
     	};
 		d_fallback = fallback;
 
-    	System.println("Initialize SubsonicAPI, url: " + d_base_url + " user: " + d_user + ", pass: " + d_pass + " client name: " + d_params["c"]);
+    	System.println("SubsonicAPI::initialize(client name: " + d_params["c"]);
 	}
 	
 	/**
@@ -105,6 +105,7 @@ class SubsonicAPI {
      * downloads a given media file
      */
     function stream(callback, params) {
+    	System.println("SubsonicAPI::stream( params: " + params + ")");
     
     	d_callback = callback;
     
@@ -134,6 +135,21 @@ class SubsonicAPI {
 			return;
 		}
     	d_callback.invoke(data.getId());
+    }
+    
+    function update(settings) {
+		System.println("SubsonicAPI::update(settings)");
+		
+    	// no persistent session info, so only update variables for future requests
+    	set(settings);
+   	}
+    
+    function set(settings) {
+    	System.println("SubsonicAPI::set(url: " + d_base_url + " user: " + d_user + ", pass: " + d_pass + ")");
+    	
+    	d_base_url = settings.get("api_url") + "/rest/";
+		d_user = settings.get("api_usr");
+		d_pass = settings.get("api_key");
     }
     
     function typeStringToEncoding(type) {

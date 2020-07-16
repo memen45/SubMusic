@@ -1,7 +1,7 @@
 <strings>
     <string id="AppName">SubMusic</string>
     
-    <string id="AppVersionTitle">0.0.12-mu</string>
+    <string id="AppVersionTitle">0.0.14 - xi</string>
     <string id="ApiStandard">API backend</string>
     <string id="ApiStandardSubsonic">Subsonic API</string>
     <string id="ApiStandardAmpache">Ampache API - beta</string>
@@ -9,10 +9,16 @@
     <string id="ServerUser">Username</string>
     <string id="ServerKey">API key</string>
 
-    <string id="configureSyncMessage">Configure\nSync</string>
+    <string id="confSync_Title">Start Sync</string>
+    <string id="confSync_startsync">Sync</string>
+    <string id="confSync_Playlists_title">Choose lists</string>
+    <string id="confSync_Playlists_label">Select Playlists</string>
+    <string id="confSync_Test_label">Server Info</string>
+    <string id="confSync_Test_sublabel">Test connection</string>
+    <string id="confSync_Test_start">Starting test...</string>
+    
     <string id="configurePlaybackMessage">Configure\nPlayback</string>
     
-    <string id="syncMenuTitle">Choose sync</string>
     <string id="fetchingSongs">Fetching Songs...</string>
     <string id="fetchingPlaylists">Fetching Playlists...</string>
     <string id="playbackMenuTitle">Playlists</string>

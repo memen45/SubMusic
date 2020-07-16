@@ -2,6 +2,7 @@ using Toybox.Time;
 using Toybox.Cryptography;
 using Toybox.StringUtil;
 using Toybox.Communications;
+using Toybox.Lang;
  
 class AmpacheAPI {
  
@@ -18,22 +19,13 @@ class AmpacheAPI {
 	
 	
 	function initialize(settings, fallback) {
-		d_url = settings.get("api_url") + "/server/json.server.php";
-		d_usr = settings.get("api_usr");
-		d_client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + WatchUi.loadResource(Rez.Strings.AppVersionTitle));
-	
-		// hash the password
-		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
-		hasher.update(string_to_ba(settings.get("api_key")));
-		d_hash = ba_to_hexstring(hasher.digest());
-
-		d_fallback = fallback;
+		set(settings);
 		
-		// print the configuration for debugging
-    	System.println("Initialize AmpacheAPI, url: " + d_url 
-    										+ ", user: " + d_usr 
-    										+ ", pass: " + d_hash
-    										+ ", client name: " + d_client);
+		// set name for this client
+		d_client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + WatchUi.loadResource(Rez.Strings.AppVersionTitle));
+    	System.println("Initialize AmpacheAPI(client name: " + d_client + ")");
+    	
+		d_fallback = fallback;
 		
 		// check if auth is expired, it may be usable!
 		d_expire = new Time.Moment(0);
@@ -47,6 +39,30 @@ class AmpacheAPI {
 			return;
 		}
 		d_expire = expire;
+	}
+	
+	function update(settings) {
+		System.println("AmpacheAPI::update(settings)");
+		
+		// update the settings
+		set(settings);
+		
+		// reset the session
+		d_expire = new Time.Moment(0);
+		Application.Storage.deleteValue("AMPACHE_API_SESSION");
+		d_session = null;
+	}
+	
+	function set(settings) {
+		d_url = settings.get("api_url") + "/server/json.server.php";
+		d_usr = settings.get("api_usr");
+		
+		// hash the password
+		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
+		hasher.update(string_to_ba(settings.get("api_key")));
+		d_hash = ba_to_hexstring(hasher.digest());
+		
+		System.println("AmpacheAPI::set(url: " + d_url + ", user: " + d_usr + ", pass: " + d_hash + ")");
 	}
 	
 	function handshake(callback) {
@@ -99,7 +115,7 @@ class AmpacheAPI {
 	
 	// returns array of playlist objects
 	function playlists(callback, params) {
-		System.println("AmpacheAPI::playlists");
+		System.println("AmpacheAPI::playlists( params: " + params + ")");
 		
 		d_callback = callback;
 		
@@ -109,6 +125,7 @@ class AmpacheAPI {
 
 		params.put("action", "playlists");
 		params.put("auth", d_session.get("auth"));
+		
 		Communications.makeWebRequest(d_url, params, {}, self.method(:onPlaylists));
 	}
 	
@@ -117,7 +134,8 @@ class AmpacheAPI {
 	
 		// check if request was successful and response is ok
 		if ((responseCode != 200) 
-				|| (data == null)) {
+				|| (data == null)
+				|| !(data instanceof Lang.Array)) {
 			d_fallback.invoke(responseCode, data);
 			return;
 		}
@@ -140,7 +158,8 @@ class AmpacheAPI {
 	
 		// check if request was successful and response is ok
 		if ((responseCode != 200) 
-				|| (data == null)) {
+				|| (data == null)
+				|| !(data instanceof Lang.Array)) {
 			d_fallback.invoke(responseCode, data);
 			return;
 		}
@@ -163,7 +182,8 @@ class AmpacheAPI {
 	
 		// check if request was successful and response is ok
 		if ((responseCode != 200) 
-				|| (data == null)) {
+				|| (data == null)
+				|| !(data instanceof Lang.Array)) {
 			d_fallback.invoke(responseCode, data);
 			return;
 		}
@@ -201,7 +221,7 @@ class AmpacheAPI {
 	
 	// returns true if the current session is not expired (optionally pass in duration for session)
 	function session(duration) {
-		System.println("AmpacheAPI::session(duration: " + duration + ")");
+		System.println("AmpacheAPI::session(duration: " + duration + ");" + " Time now: " + Time.now().value() + ", session expires: " + d_expire.value());
 		
 		var now = new Time.Moment(Time.now().value());
 		if (duration != null) {

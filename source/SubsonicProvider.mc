@@ -9,6 +9,12 @@ class SubsonicProvider {
 		d_api = new SubsonicAPI(settings, self.method(:onFailed));
 	}
 	
+	function onSettingsChanged(settings) {
+		System.println("SubsonicProvider:: onSettingsChanged");
+		
+		d_api.update(settings);
+	}
+	
 	// functions:
 	// - getAllPlaylists - returns array of all playlists available for Subsonic user
 	// - getPlaylistSongs - returns an array of songs on the playlist with id
@@ -66,7 +72,7 @@ class SubsonicProvider {
 			playlists.add({
 				"id" => response[idx]["id"],
 				"name" => response[idx]["name"],
-				"songCount" => response[idx]["songCount"],
+				"songCount" => response[idx]["songCount"].toNumber(),
 			});
 		}
 		d_callback.invoke(playlists);
@@ -81,7 +87,7 @@ class SubsonicProvider {
 			var song = response["entry"][idx];
 			songs.add({
 				"id" => song["id"],
-				"time" => song["duration"],
+				"time" => song["duration"].toNumber(),
 			});
 		}
 		d_callback.invoke(songs);
