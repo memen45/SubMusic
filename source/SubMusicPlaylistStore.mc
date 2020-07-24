@@ -114,19 +114,21 @@ class SubMusicPlaylistSync extends SubMusicPlaylistsBase {
 	
 	// update the given playlist on either locals or tosync
 	function update(id, songs) {
-		var locals;
+		var locals = null;
 		
 		// load local list, return if not available
 		if (d_locals.hasKey(id)) {
 			locals = d_locals[id]["songs"];
 		} else if (d_tosync.hasKey(id)) {
-			locals = [];
-			
 			// copy the playlist to the locals list
 			d_locals[id] = d_tosync.get(id);
 			d_locals[id]["songs"] = [];
 		} else {
 			return 0;
+		}
+		// set empty array if still null
+		if (locals == null) {
+			locals = [];
 		}
 		
 		var remotes = songs;

@@ -112,7 +112,9 @@ class SubMusicContentIterator extends Media.ContentIterator {
 		var playlist = Application.Storage.getValue(Storage.PLAYLIST);
 		var lists = Application.Storage.getValue(Storage.PLAYLIST_LOCAL);
 		
-		if ((playlist != null) && (lists[playlist] != null))
+		if ((playlist != null) 
+			&& (lists[playlist] != null)
+			&& (lists[playlist]["songs"] != null))
 		{
 			var songs = lists[playlist]["songs"];
 			var store = new SubMusicSongStore();

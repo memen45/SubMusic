@@ -1,6 +1,11 @@
-Version 0.0.14
+Version [0.0.15] - 
+- fixes crash on changing settings
+- fixes crash on initialize playlist before sync
+- fixes crash on sync with null local songs
+
+Version [0.0.14] - 2020-07-16
 - fixes reset session on settings changed (AmpacheAPI)
-- fixes potential bug from incompatible storage
+- fixes potential bug from outdated storage
 - fixes error reporting in "Server Info" tab
 - fixes sync - 'fake sync' bug
 - fixes crash on receiving error (AmpacheAPI)

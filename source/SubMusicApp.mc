@@ -24,6 +24,9 @@ class SubMusicApp extends Application.AudioContentProviderApp {
     	System.println("Settings changed");
     	
     	// reset the sessions for the provider
+    	if (d_provider == null) {
+    		return;
+    	}
     	d_provider.onSettingsChanged(getProviderSettings());
     }
 
