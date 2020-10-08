@@ -5,14 +5,11 @@ class SubMusicConfigureSyncPlaylistDelegate extends WatchUi.BehaviorDelegate {
 	private var d_synclist = {};
 	private var d_todelete = {};
 	
-	private var d_liststore;
-	private var d_playlists;
+	// private var d_liststore;
+	// private var d_playlists;
 
-	function initialize(playlists) {
+	function initialize() {
 		BehaviorDelegate.initialize();
-		
-		d_playlists = playlists;
-		d_liststore = new SubMusicPlaylistStore();
     }
     
     function onSelect(item) {
@@ -43,7 +40,9 @@ class SubMusicConfigureSyncPlaylistDelegate extends WatchUi.BehaviorDelegate {
     	
     		// add to playlists tosync if true
     		if (d_synclist[keys[idx]]) {
-    			d_liststore.add(findById(keys[idx], d_playlists));
+    			// d_liststore.add(findById(keys[idx], d_playlists));
+				var id = keys[idx];
+				(new IPlaylist(id)).setLocal(true);
     		}
     	}
     	
@@ -53,22 +52,24 @@ class SubMusicConfigureSyncPlaylistDelegate extends WatchUi.BehaviorDelegate {
     		
     		// delete if true
     		if (d_todelete[keys[idx]]) {
-    			d_liststore.delete(keys[idx]);
+    			// d_liststore.delete(keys[idx]);
+				var id = keys[idx];
+				(new IPlaylist(id)).setLocal(false);
     		}
     	}
     }
 
-	function findById(id, playlists) {
-		System.println("id = " + id);
-		System.println("playlists: " + playlists);
+	// function findById(id, playlists) {
+	// 	System.println("id = " + id);
+	// 	System.println("playlists: " + playlists);
 		
-		id = id.toNumber();
-		for (var idx = 0; idx < playlists.size(); ++idx) {
-			if (id == playlists[idx]["id"].toNumber()) {
-				return playlists[idx];
-			}
-		}
-		return null;
-	}
+	// 	id = id.toNumber();
+	// 	for (var idx = 0; idx < playlists.size(); ++idx) {
+	// 		if (id == playlists[idx]["id"].toNumber()) {
+	// 			return playlists[idx];
+	// 		}
+	// 	}
+	// 	return null;
+	// }
 
 }

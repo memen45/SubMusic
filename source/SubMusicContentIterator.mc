@@ -3,16 +3,42 @@ using Toybox.Math;
 
 class SubMusicContentIterator extends Media.ContentIterator {
 
-	private var d_songidx = 0;
 	private var d_playlist;
+
+	private var d_songidx = 0;
+	private var d_songs = [];		// array of refIds
 	
 	private var d_shuffle = false;
 
     function initialize() {
         ContentIterator.initialize();
     
-    	initializePlaylist();
+		initializePlaylist();
     }
+
+	function initializePlaylist() {
+
+		// get the current playlist id
+		var id = Application.Storage.getValue(Storage.PLAYLIST);
+		if (id != null) {
+			load(new IPlaylist(id));
+			return;
+		}
+
+		// just try the first playlist with songs
+		var ids = PlaylistStore.getIds();
+		var loaded = false;
+		for (var idx = 0; idx < ids.size(); ++idx) {
+			var  playlist = new IPlaylist(ids[idx]);
+			if (playlist.songs().size() != 0) {
+				load(playlist);
+				break;
+			}
+		}
+
+		// if everything fails, initialize from cached songs
+		loadEmpty();
+	}
 
     // Determine if the the current track can be skipped.
     function canSkip() {
@@ -21,7 +47,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
     // Get the current media content object.
     function get() {
-    	if (d_songidx >= d_playlist.size())
+    	if (d_songidx >= d_songs.size())
     	{
     		return null;
     	}
@@ -54,7 +80,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
     // Get the next media content object.
     function next() {
-    	if ((d_songidx + 1) >= d_playlist.size())
+    	if ((d_songidx + 1) >= d_songs.size())
     	{
     		return null;
     	}
@@ -64,7 +90,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
     // Get the next media content object without incrementing the iterator.
     function peekNext() {
-    	if ((d_songidx + 1) >= d_playlist.size())
+    	if ((d_songidx + 1) >= d_songs.size())
     	{
     		return null;
     	}
@@ -106,63 +132,63 @@ class SubMusicContentIterator extends Media.ContentIterator {
     }
 
 	// Load playlist from storage or create one from all songs available
-	function initializePlaylist() {
-		d_playlist = [];
+	function load(playlist) {
+
+		d_playlist = playlist;
+		d_songs = [];
+		d_songidx = 0;
 		
-		var playlist = Application.Storage.getValue(Storage.PLAYLIST);
-		var lists = Application.Storage.getValue(Storage.PLAYLIST_LOCAL);
-		
-		if ((playlist != null) 
-			&& (lists[playlist] != null)
-			&& (lists[playlist]["songs"] != null))
-		{
-			var songs = lists[playlist]["songs"];
-			var store = new SubMusicSongStore();
-			for (var idx = 0; idx < songs.size(); ++idx) {
-				var refId = store.getRefIdById(songs[idx]["id"]);
-				if (refId != null) {
-					d_playlist.add(refId);
-				}
+		// add all songs with a refId to list
+		var songs = d_playlist.songs();
+		for (var idx = 0; idx < songs.size(); ++idx) {
+			var isong = new ISong(songs[idx]);
+			var refId = isong.refId();
+			if (refId != null) {
+				d_songs.add(refId);
 			}
-			return;
 		}
-		
+	}
+
+	function loadEmpty() {
+		d_songs = [];
+
 		var availables = Media.getContentRefIter({:contentType => Media.CONTENT_TYPE_AUDIO});
 		if (availables == null) {
 			return;
 		}
 		
+		// add all songs available 
 		var song = availables.next();
 		while (song != null) {
-			d_playlist.add(song.getId());
+			d_songs.add(song.getId());
 			song = availables.next();
 		}
 	}
 	
 	// Retrieve the cached object from Media
 	function getObj(idx) {
-		return Media.getCachedContentObj(new Media.ContentRef(d_playlist[idx], Media.CONTENT_TYPE_AUDIO));
+		return Media.getCachedContentObj(new Media.ContentRef(d_songs[idx], Media.CONTENT_TYPE_AUDIO));
 	}
 	
 	// reorder the playlist randomly
 	function shufflePlaylist() {
 	
 		// check for empty playlist
-		if (d_playlist.size() == 0) {
+		if (d_songs.size() == 0) {
 			d_songidx = 0;
 			return;
 		}
 		
 		// swap current to head of list
-		var tmp = d_playlist[0];
-		d_playlist[0] = d_playlist[d_songidx];
-		d_playlist[d_songidx] = tmp;
+		var tmp = d_songs[0];
+		d_songs[0] = d_songs[d_songidx];
+		d_songs[d_songidx] = tmp;
 	
 		for (var idx = 1; idx < d_playlist.size(); ++idx) {
-			tmp = d_playlist[idx];
-			var other = (Math.rand() % (d_playlist.size() - idx)) + idx;
-			d_playlist[idx] = d_playlist[other];
-			d_playlist[other] = tmp;
+			tmp = d_songs[idx];
+			var other = (Math.rand() % (d_songs.size() - idx)) + idx;
+			d_songs[idx] = d_songs[other];
+			d_songs[other] = tmp;
 		}
 		
 		d_songidx = 0;

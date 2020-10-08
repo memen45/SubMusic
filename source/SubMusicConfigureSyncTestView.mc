@@ -35,7 +35,7 @@ class SubMusicConfigureSyncTestView extends WatchUi.ProgressBar {
 		// select a playlist that has a song
 		var playlist = null;
 		for (var idx = 0; idx < response.size(); ++idx) {
-			if (response[idx]["songCount"] != 0) {
+			if (response[idx].count() != 0) {
 				playlist = response[idx];
 				break;
 			}
@@ -49,7 +49,7 @@ class SubMusicConfigureSyncTestView extends WatchUi.ProgressBar {
 		}
 		
 		setDisplayString("Inlog OK");
-		d_provider.getPlaylistSongs(playlist["id"], method(:onGetPlaylistSongs));
+		d_provider.getPlaylistSongs(playlist.id(), method(:onGetPlaylistSongs));
 	}
 	
 	function onGetPlaylistSongs(response) {

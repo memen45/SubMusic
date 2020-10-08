@@ -28,14 +28,39 @@ class SubMusicConfigurePlaybackView extends WatchUi.View {
     	
     	d_menushown = true;
     	
-    	var playlist = Application.Storage.getValue(Storage.PLAYLIST_LOCAL);
-    	if (playlist == null || playlist.keys().size() == 0)
+        var playlists = PlaylistStore.getIds();
+
+        // try and build a menu of all local songs
+        var empty = true;
+        var menu = new WatchUi.Menu2({:title => Rez.Strings.playbackMenuTitle});
+        for (var idx = 0; idx < playlists.size(); ++idx) {
+			var id = playlists[idx];
+			var iplaylist = new IPlaylist(id);
+
+			// if not local, no menu entry is added
+			if (!iplaylist.local()) {
+				continue;
+			}
+			
+            // mark as not empty
+            empty = false; 
+
+            // create the menu item
+			var label = iplaylist.name();
+			var mins = (iplaylist.time() / 60).toNumber().toString();
+			var sublabel = mins + " mins";
+			if (!iplaylist.synced()) {
+				sublabel += " - needs sync";
+			}
+			menu.addItem(new WatchUi.MenuItem(label, sublabel, id, null));
+		}
+        if (empty)
     	{
     		d_msg = "No local playlists";
     		return;
     	}
     	
-    	WatchUi.pushView(new SubMusicConfigurePlaybackMenu(), new SubMusicConfigurePlaybackDelegate(), WatchUi.SLIDE_IMMEDIATE);
+    	WatchUi.pushView(menu, new SubMusicConfigurePlaybackDelegate(), WatchUi.SLIDE_IMMEDIATE);
     }
 
     // Update the view

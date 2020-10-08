@@ -95,7 +95,6 @@ class SubsonicAPI {
 			d_fallback.invoke(responseCode, data);
 			return;
 		}
-    	
     	d_callback.invoke(data["subsonic-response"]["playlist"]);
     }
     
@@ -104,7 +103,7 @@ class SubsonicAPI {
      *
      * downloads a given media file
      */
-    function stream(callback, params) {
+    function stream(callback, params, encoding) {
     	System.println("SubsonicAPI::stream( params: " + params + ")");
     
     	d_callback = callback;
@@ -113,15 +112,15 @@ class SubsonicAPI {
 
 		// construct parameters
 		var id = params["id"];
-		var encoding = params["format"];
+		var format = params["format"];
 		params = d_params;
 		params["id"] = id;
-		params["format"] = encoding;
+		params["format"] = format;
 		
     	var options = {
     		:method => Communications.HTTP_REQUEST_METHOD_GET,
           	:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_AUDIO,
-          	:mediaEncoding => typeStringToEncoding(encoding),
+          	:mediaEncoding => encoding,
    		};
     	Communications.makeWebRequest(url, params, options, self.method(:onStream));
     }
@@ -150,20 +149,5 @@ class SubsonicAPI {
     	d_base_url = settings.get("api_url") + "/rest/";
 		d_user = settings.get("api_usr");
 		d_pass = settings.get("api_key");
-    }
-    
-    function typeStringToEncoding(type) {
-        var encoding = Media.ENCODING_INVALID;
-        
-        if (type.equals("mp3")) {
-                encoding = Media.ENCODING_MP3;
-        } else if (type.equals("m4a")) {
-                encoding = Media.ENCODING_M4A;
-        } else if (type.equals("wav")) {
-                encoding = Media.ENCODING_WAV;
-        } else if (type.equals("adts")) {
-                encoding = Media.ENCODING_ADTS;
-        }
-        return encoding;
     }
 }

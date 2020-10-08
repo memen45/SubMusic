@@ -1,4 +1,15 @@
-Version [0.0.15] - 
+Version [0.0.16] - 2020-10-
+- added support for d2 delta series and Venu Mercedes-Benz Collection
+- fixed null handling (Nextcloud + SMB storage bug)
+- fixed incorrect progressbar
+- upgrade to storage, requires resync (no reinstall needed)
+- improved speed of playback selection
+- fixes syncing playlist metadata in background
+- fixed managing playlists that are no longer online ('local only')
+- fixed marking of incompletely synced playlist ('needs sync')
+- added support for adts, wav, mp4 file types (defaults to mp3)
+
+Version [0.0.15] - 2020-08-17
 - fixes crash on changing settings
 - fixes crash on initialize playlist before sync
 - fixes crash on sync with null local songs

@@ -6,7 +6,7 @@ using Toybox.Communications;
 // the configuration.
 class SubMusicConfigureSyncPlaylistView extends WatchUi.View {
 
-	private var d_playlists;
+	private var d_playlists = null;
 	private var d_menushown = false;
 	private var d_provider;
 
@@ -58,41 +58,78 @@ class SubMusicConfigureSyncPlaylistView extends WatchUi.View {
 
 	// handles the response on getplaylists API request
 	function onGetAllPlaylists(playlists) {
-		d_playlists = playlists;
+
+		var ids = PlaylistStore.getIds();
+
+		// update all infos on remote playlists
+		for (var idx = 0; idx < playlists.size(); ++idx) {
+        	var playlist = playlists[idx];
+			var id = playlist.id();
+			var iplaylist = new IPlaylist(id);
+			iplaylist.updateMeta(playlist);		// update stored info immediately
+			ids.remove(id);						// mark as updated
+		}
+
+		// update remote state if not found on remote lists
+		for (var idx = 0; idx < ids.size(); ++idx) {
+			var iplaylist = new IPlaylist(ids[idx]);
+			iplaylist.setRemote(false);
+		}
+
 		pushSyncMenu();
 		WatchUi.requestUpdate();
 	}
 	
 	// creates the sync menu with the playlists from the server
 	function pushSyncMenu() {
-        var prechecked = {};
+//        var prechecked = {};
+//        
+//        var liststore = new SubMusicPlaylistStore();
+//        
+//        // precheck local and tosync playlists
+//        var ids = liststore.getLocalIds();
+//        ids.addAll(liststore.getToSyncIds());
+//        for (var idx = 0; idx < ids.size(); ++idx) {
+//        	prechecked[ids[idx]] = true;
+//        }
+//        
+//        // uncheck the todelete lists
+//        ids = liststore.getToDeleteIds();
+//        for (var idx = 0; idx < ids.size(); ++idx) {
+//        	prechecked.remove(ids[idx]);
+//        }
+//
+//        // Create the menu, prechecking anything that is to be or has been synced
+//		var menu = new WatchUi.CheckboxMenu({:title => Rez.Strings.confSync_Playlists_title});
+//        for (var idx = 0; idx < d_playlists.size(); ++idx) {
+//            var item = new WatchUi.CheckboxMenuItem(d_playlists[idx]["name"],
+//                                                    d_playlists[idx]["songCount"].toString() + " songs",
+//                                                    d_playlists[idx]["id"],
+//                                                    prechecked.hasKey(d_playlists[idx]["id"]),
+//                                                    {});
+//            menu.addItem(item);
+//        } 
         
-        var liststore = new SubMusicPlaylistStore();
-        
-        // precheck local and tosync playlists
-        var ids = liststore.getLocalIds();
-        ids.addAll(liststore.getToSyncIds());
-        for (var idx = 0; idx < ids.size(); ++idx) {
-        	prechecked[ids[idx]] = true;
-        }
-        
-        // uncheck the todelete lists
-        ids = liststore.getToDeleteIds();
-        for (var idx = 0; idx < ids.size(); ++idx) {
-        	prechecked.remove(ids[idx]);
-        }
-
         // Create the menu, prechecking anything that is to be or has been synced
 		var menu = new WatchUi.CheckboxMenu({:title => Rez.Strings.confSync_Playlists_title});
-        for (var idx = 0; idx < d_playlists.size(); ++idx) {
-            var item = new WatchUi.CheckboxMenuItem(d_playlists[idx]["name"],
-                                                    d_playlists[idx]["songCount"].toString() + " songs",
-                                                    d_playlists[idx]["id"],
-                                                    prechecked.hasKey(d_playlists[idx]["id"]),
-                                                    {});
-            menu.addItem(item);
+        
+		// iterate over all stored playlists, including local ones that are not remote
+		var playlists = PlaylistStore.getIds();
+		for (var idx = 0; idx < playlists.size(); ++idx) {
+			var id = playlists[idx];
+			var iplaylist = new IPlaylist(id);
+        	
+			// create checkbox menuitem
+			var label = iplaylist.name();
+			var sublabel = iplaylist.count().toString() + " songs";
+			if (!iplaylist.remote()) {
+				sublabel += " - local only";
+			}
+			var checked = iplaylist.local();
+            menu.addItem(new WatchUi.CheckboxMenuItem(label, sublabel, id, checked, {}));
         }
-        WatchUi.pushView(menu, new SubMusicConfigureSyncPlaylistDelegate(d_playlists), WatchUi.SLIDE_IMMEDIATE);
+
+        WatchUi.pushView(menu, new SubMusicConfigureSyncPlaylistDelegate(), WatchUi.SLIDE_IMMEDIATE);
         d_menushown = true;
     }
     

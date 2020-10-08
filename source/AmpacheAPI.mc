@@ -91,7 +91,7 @@ class AmpacheAPI {
 	}
 	
 	function onHandshake(responseCode, data) {
-		System.println("AmpacheAPI: onHandshake with responseCode " + responseCode + " payload " + data);
+		System.println("AmpacheAPI::onHandshake with responseCode " + responseCode + " payload " + data);
 		
 		// check if request was successful 
 		if ((responseCode != 200)
@@ -144,7 +144,7 @@ class AmpacheAPI {
 	
 	// returns single playlist info
 	function playlist(callback, params) {
-		System.println("AmpacheAPI::playlist( id: " + params["id"] + ")");
+		System.println("AmpacheAPI::playlist( id: " + params["filter"] + ")");
 		
 		d_callback = callback;
 		
@@ -191,7 +191,9 @@ class AmpacheAPI {
     }
 	
 	// returns refId to the downloaded song
-	function stream(callback, params) {
+	function stream(callback, params, encoding) {
+		System.println("AmpacheAPI::stream( id : " + params["id"] + " )");
+
 		d_callback = callback;
 		
 		params.put("action", "stream");
@@ -203,7 +205,7 @@ class AmpacheAPI {
 		var options = {
 			:method => Communications.HTTP_REQUEST_METHOD_GET,
 			:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_AUDIO,
-			:mediaEncoding => Media.ENCODING_MP3,
+			:mediaEncoding => encoding,
 		};
 		Communications.makeWebRequest(d_url, params, options, self.method(:onStream));
 	}
@@ -213,7 +215,7 @@ class AmpacheAPI {
 		
 		// check if request was successful and response is ok
 		if (responseCode != 200) {
-		d_fallback.invoke(responseCode, data);
+			d_fallback.invoke(responseCode, data);
 			return;
 		}
 		d_callback.invoke(data.getId());

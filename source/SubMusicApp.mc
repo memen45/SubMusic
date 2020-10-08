@@ -9,7 +9,10 @@ class SubMusicApp extends Application.AudioContentProviderApp {
         AudioContentProviderApp.initialize();
         
         // in case variables need to be reset
-        // Application.Storage.clearValues();
+    //    Application.Storage.clearValues();
+
+        // perform storage check and fix if possible
+        Storage.check();
     }
 
     // onStart() is called on application start up
@@ -37,6 +40,7 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get a delegate that communicates sync status to the system for syncing media content to the device
     function getSyncDelegate() {
+    	// create provider if not yet available
     	if (d_provider == null) {
     		d_provider = providerFactory();
     	}
@@ -50,6 +54,7 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get the initial view for configuring sync
     function getSyncConfigurationView() {
+    	// create provider if not yet available
     	if (d_provider == null) {
     		d_provider = providerFactory();
     	}

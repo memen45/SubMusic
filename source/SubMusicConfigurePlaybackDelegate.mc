@@ -8,6 +8,7 @@ class SubMusicConfigurePlaybackDelegate extends WatchUi.BehaviorDelegate {
     }
     
     function onSelect(item) {
+        
     	// store selection as current playlist
     	Application.Storage.setValue(Storage.PLAYLIST, item.getId());
     	Media.startPlayback(null);
