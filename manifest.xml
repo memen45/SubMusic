@@ -12,6 +12,7 @@
             <iq:product id="fenix6xpro"/>
             <iq:product id="fr245m"/>
             <iq:product id="fr645m"/>
+            <iq:product id="fr745"/>
             <iq:product id="fr945"/>
             <iq:product id="legacyherocaptainmarvel"/>
             <iq:product id="legacyherofirstavenger"/>
@@ -24,6 +25,7 @@
             <iq:product id="marqcommander"/>
             <iq:product id="marqdriver"/>
             <iq:product id="marqexpedition"/>
+            <iq:product id="marqgolfer"/>
             <iq:product id="venu"/>
             <iq:product id="venud"/>
             <iq:product id="vivoactive3m"/>
