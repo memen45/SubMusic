@@ -1,4 +1,4 @@
-Version [0.0.16] - 2020-10-
+Version [0.0.16] - 2020-10-08
 - added support for d2 delta series and Venu Mercedes-Benz Collection
 - fixed null handling (Nextcloud + SMB storage bug)
 - fixed incorrect progressbar
