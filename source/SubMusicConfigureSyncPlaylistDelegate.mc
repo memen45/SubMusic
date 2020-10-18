@@ -35,41 +35,38 @@ class SubMusicConfigureSyncPlaylistDelegate extends WatchUi.BehaviorDelegate {
     
     function storeChecks() {
     	// iterate over the synclist
-    	var keys = d_synclist.keys();
-    	for (var idx = 0; idx < keys.size(); ++idx) {
-    	
+		var playlists = d_synclist.keys();
+    	for (var idx = 0; idx < playlists.size(); ++idx) {
+			var playlist = playlists[idx];
     		// add to playlists tosync if true
-    		if (d_synclist[keys[idx]]) {
-    			// d_liststore.add(findById(keys[idx], d_playlists));
-				var id = keys[idx];
-				(new IPlaylist(id)).setLocal(true);
-    		}
+			if (!d_synclist[playlist]) {
+				continue;
+			}
+			var id = playlist.id();
+			var iplaylist = new IPlaylist(id);
+
+			// new playlists need a name etc
+			if (!iplaylist.stored()) {
+				iplaylist.updateMeta(playlist);
+			}
+			iplaylist.setLocal(true);
     	}
     	
     	// iterate over the todelete
-    	keys = d_todelete.keys();
-    	for (var idx = 0; idx < keys.size(); ++idx) {
-    		
+    	playlists = d_todelete.keys();
+    	for (var idx = 0; idx < playlists.size(); ++idx) {
+    		var playlist = playlists[idx];
     		// delete if true
-    		if (d_todelete[keys[idx]]) {
-    			// d_liststore.delete(keys[idx]);
-				var id = keys[idx];
-				(new IPlaylist(id)).setLocal(false);
+    		if (d_todelete[playlist]) {
+				var id = playlist.id();
+				var iplaylist = new IPlaylist(id);
+
+				// if stored, remove
+				if (iplaylist.stored()) {
+					iplaylist.setLocal(false);
+				}
     		}
     	}
     }
-
-	// function findById(id, playlists) {
-	// 	System.println("id = " + id);
-	// 	System.println("playlists: " + playlists);
-		
-	// 	id = id.toNumber();
-	// 	for (var idx = 0; idx < playlists.size(); ++idx) {
-	// 		if (id == playlists[idx]["id"].toNumber()) {
-	// 			return playlists[idx];
-	// 		}
-	// 	}
-	// 	return null;
-	// }
 
 }

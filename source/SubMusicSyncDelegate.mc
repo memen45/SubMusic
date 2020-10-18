@@ -211,7 +211,8 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
     function onFail(responseCode, data) {
 
 		// check for playlist id not found error (setRemote(false))
-		if (responseCode == 200) {
+		if ((responseCode == 200) 				// general error
+				|| (responseCode == 400)) {		// Ampache error
 			d_failed = true;
 			onGetPlaylist([]);
 			return;

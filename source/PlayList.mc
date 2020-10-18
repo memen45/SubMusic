@@ -125,6 +125,10 @@ class IPlaylist extends Playlist {
 
 		Playlist.initialize(storage);
 	}
+
+	function stored() {
+		return d_stored;
+	}
 	
 	// setters
 	function addSong(id) {

@@ -1,6 +1,9 @@
 class AmpacheProvider {
 	
 	private var d_api;
+
+	// request variables needed to repeat the request if necessary
+	private var d_action = null;
 	private var d_params = {
 		"limit" => 20,			// defines the number of songs in single response
 		"offset" => 0,			// defines the offset for the last request
@@ -10,9 +13,16 @@ class AmpacheProvider {
 
 	private var d_callback;
 	private var d_fallback;
+
+	enum {
+		AMPACHE_ACTION_PLAYLIST,
+		AMPACHE_ACTION_PLAYLISTS,
+		AMPACHE_ACTION_PLAYLIST_SONGS,
+		AMPACHE_ACTION_STREAM,
+	}
 	
 	function initialize(settings) {
-		d_api = new AmpacheAPI(settings, self.method(:onFailed));
+		d_api = new AmpacheAPI(settings, self.method(:onError), self.method(:onFailed));
 	}
 	
 	function onSettingsChanged(settings) {
@@ -41,7 +51,9 @@ class AmpacheProvider {
 			"limit" => 20,
 			"offset" => 0,
 		};
-		do_playlists();
+		d_action = AMPACHE_ACTION_PLAYLISTS;
+		do_();
+		// do_playlists();
 	}
 
 	/**
@@ -57,7 +69,9 @@ class AmpacheProvider {
 		d_params = {
 			"filter" => id,
 		};
-		do_playlist();
+		d_action = AMPACHE_ACTION_PLAYLIST;
+		do_();
+		// do_playlist();
 	}
 	
 	/**
@@ -76,7 +90,9 @@ class AmpacheProvider {
 			"offset" => 0,
 		};
 
-		do_playlist_songs();
+		d_action = AMPACHE_ACTION_PLAYLIST_SONGS;
+		do_();
+		// do_playlist_songs();
 	}
 
 	/**
@@ -103,16 +119,43 @@ class AmpacheProvider {
 			"type" => type,
 			"format" => format,
 		};
-		do_stream();
+		d_action = AMPACHE_ACTION_STREAM;
+		do_();
+		// do_stream();
 	}
 
-	function do_playlist() {
-		if (!d_api.session(null)) {
-			d_api.handshake(self.method(:do_playlist));
-			return;
-		}
-		d_api.playlist(self.method(:on_do_playlist), d_params);
-	}
+	// function do_playlist() {
+	// 	if (!d_api.session(null)) {
+	// 		d_api.handshake(self.method(:do_playlist));
+	// 		return;
+	// 	}
+	// 	d_api.playlist(self.method(:on_do_playlist), d_params);
+	// }
+	
+	// function do_playlists() {
+	// 	if (!d_api.session(null)) {
+	// 		d_api.handshake(self.method(:do_playlists));
+	// 		return;
+	// 	}
+	// 	d_api.playlists(self.method(:on_do_playlists), d_params);
+	// }
+
+	// function do_playlist_songs() {
+	// 	if (!d_api.session(null)) {
+	// 		d_api.handshake(self.method(:do_playlist_songs));
+	// 		return;
+	// 	}
+	// 	d_api.playlist_songs(self.method(:on_do_playlist_songs), d_params);
+	// }
+
+	// function do_stream() {
+	// 	// check if session still valid
+	// 	if (!d_api.session(null)) {
+	// 		d_api.handshake(self.method(:do_stream));
+	// 		return;
+	// 	}
+	// 	d_api.stream(self.method(:on_do_stream), d_params, d_encoding);
+	// }
 
 	function on_do_playlist(response) {
 		// append the standard playlist objects to the array
@@ -129,15 +172,8 @@ class AmpacheProvider {
 				"remote" => true,
 			}));
 		}
+		d_action = null;
 		d_callback.invoke(d_response);
-	}
-	
-	function do_playlists() {
-		if (!d_api.session(null)) {
-			d_api.handshake(self.method(:do_playlists));
-			return;
-		}
-		d_api.playlists(self.method(:on_do_playlists), d_params);
 	}
 
 	function on_do_playlists(response) {		
@@ -157,20 +193,14 @@ class AmpacheProvider {
 		}
 
 		// if less than limit, no more requests required
-		if (response.size() < d_params["limit"]) {	
+		if (response.size() < d_params["limit"]) {
+			d_action = null;	
 			d_callback.invoke(d_response);
 			return;
 		}
 		d_params["offset"] += d_params["limit"];	// increase offset
-		do_playlists();
-	}
-
-	function do_playlist_songs() {
-		if (!d_api.session(null)) {
-			d_api.handshake(self.method(:do_playlist_songs));
-			return;
-		}
-		d_api.playlist_songs(self.method(:on_do_playlist_songs), d_params);
+		do_();
+		// do_playlists();
 	}
 
 	function on_do_playlist_songs(response) {		
@@ -191,27 +221,75 @@ class AmpacheProvider {
 		}
 
 		if (response.size() < d_params["limit"]) {
+			d_action = null;
 			d_callback.invoke(d_response);
 			return;
 		}
 		d_params["offset"] += d_params["limit"];	// increase offset
-		do_playlist_songs();
-	}
-
-	function do_stream() {
-		// check if session still valid
-		if (!d_api.session(null)) {
-			d_api.handshake(self.method(:do_stream));
-			return;
-		}
-		d_api.stream(self.method(:on_do_stream), d_params, d_encoding);
+		do_();
+		// do_playlist_songs();
 	}
 
 	function on_do_stream(refId) {
+		d_action = null;
 		d_callback.invoke(refId);
 	}
 
+	function do_() {
+		// check if session still valid
+		if (!d_api.session(null)) {
+			d_api.handshake(self.method(:do_));
+			return;
+		}
+
+		if (d_action == AMPACHE_ACTION_PLAYLIST) {
+			d_api.playlist(self.method(:on_do_playlist), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_PLAYLISTS) {
+			d_api.playlists(self.method(:on_do_playlists), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_PLAYLIST_SONGS) {
+			d_api.playlist_songs(self.method(:on_do_playlist_songs), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_STREAM) {
+			d_api.stream(self.method(:on_do_stream), d_params, d_encoding);
+			return;
+		}
+
+		// no valid action defined
+	}
+
+	function onError(code, message) {
+		System.println("AmpacheProvider::onError( code: " + code + " message: " + message + " )");
+		
+		// if session expired, reset
+		if (code == 401) {
+			d_api.deleteSession();
+			do_();
+			return;
+		}
+
+		// end current request
+		d_action = null;
+		d_fallback.invoke(code, message);
+	}
+
 	function onFailed(responseCode, data) {
+
+		// too large and response can be limited? Half the response
+		if ((responseCode == Communications.NETWORK_RESPONSE_TOO_LARGE)
+				&& (d_params["limit"] > 1)) {
+			d_params["limit"] = (d_params["limit"] / 2).toNumber();		// half the response
+			System.println("AmpacheProvider limit was lowered to " + d_params["limit"]);
+			do_();														// retry the request
+			return;
+		}
+
+		// end current request
+		d_action = null;
 		d_fallback.invoke(responseCode, data);
 	}
     
@@ -240,6 +318,13 @@ class AmpacheProvider {
 			|| mime.equals("audio/x-pn-wav")) {
 			return Media.ENCODING_WAV;
 		}
+
+		// known mime types, but not supported by the sdk
+		if (mime.equals("audio/x-flac")) {
+			return Media.ENCODING_INVALID;
+		}
+
+		// mime type not defined
 		return Media.ENCODING_INVALID;
 	}
 }

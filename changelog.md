@@ -1,3 +1,11 @@
+Version [0.0.17] - 2020-10-18
+- added dynamic limit for response size (Ampache API)
+- added handling 'session expired' error (Ampache API)
+- fixed progressbar during sync (remote playlists do not count)
+- fixed order of playlists, locals always first
+- fixed some crashes
+- added support for D2 Air, Sq. Music
+
 Version [0.0.16] - 2020-10-08
 - added support for d2 delta series and Venu Mercedes-Benz Collection
 - fixed null handling (Nextcloud + SMB storage bug)

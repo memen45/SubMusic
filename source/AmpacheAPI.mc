@@ -15,10 +15,11 @@ class AmpacheAPI {
 	private var d_expire;
 	
 	private var d_callback;
+	private var d_ecallback;
 	private var d_fallback;
 	
 	
-	function initialize(settings, fallback) {
+	function initialize(settings, ecallback, fallback) {
 		set(settings);
 		
 		// set name for this client
@@ -26,6 +27,7 @@ class AmpacheAPI {
     	System.println("Initialize AmpacheAPI(client name: " + d_client + ")");
     	
 		d_fallback = fallback;
+		d_ecallback = ecallback;
 		
 		// check if auth is expired, it may be usable!
 		d_expire = new Time.Moment(0);
@@ -47,6 +49,10 @@ class AmpacheAPI {
 		// update the settings
 		set(settings);
 		
+		deleteSession();
+	}
+
+	function deleteSession() {
 		// reset the session
 		d_expire = new Time.Moment(0);
 		Application.Storage.deleteValue("AMPACHE_API_SESSION");
@@ -126,21 +132,8 @@ class AmpacheAPI {
 		params.put("action", "playlists");
 		params.put("auth", d_session.get("auth"));
 		
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onPlaylists));
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onArrayResponse));
 	}
-	
-	function onPlaylists(responseCode, data) {
-		System.println("AmpacheAPI::onPlaylists with responseCode: " + responseCode + ", payload " + data);
-	
-		// check if request was successful and response is ok
-		if ((responseCode != 200) 
-				|| (data == null)
-				|| !(data instanceof Lang.Array)) {
-			d_fallback.invoke(responseCode, data);
-			return;
-		}
-		d_callback.invoke(data);
-    }
 	
 	// returns single playlist info
 	function playlist(callback, params) {
@@ -150,21 +143,8 @@ class AmpacheAPI {
 		
 		params.put("action", "playlist");
 		params.put("auth", d_session.get("auth"));
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onPlaylist));
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onArrayResponse));
 	}
-	
-	function onPlaylist(responseCode, data) {
-		System.println("AmpacheAPI::onPlaylist with responseCode: " + responseCode + ", payload " + data);
-	
-		// check if request was successful and response is ok
-		if ((responseCode != 200) 
-				|| (data == null)
-				|| !(data instanceof Lang.Array)) {
-			d_fallback.invoke(responseCode, data);
-			return;
-		}
-		d_callback.invoke(data);
-    }
 	
 	// returns array of song objects
 	function playlist_songs(callback, params) {
@@ -174,21 +154,8 @@ class AmpacheAPI {
 		
 		params.put("action", "playlist_songs");
 		params.put("auth", d_session.get("auth"));
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onPlaylist_songs));
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onArrayResponse));
 	}
-	
-	function onPlaylist_songs(responseCode, data) {
-		System.println("AmpacheAPI::onPlaylist_songs with responseCode: " + responseCode + ", payload " + data);
-	
-		// check if request was successful and response is ok
-		if ((responseCode != 200) 
-				|| (data == null)
-				|| !(data instanceof Lang.Array)) {
-			d_fallback.invoke(responseCode, data);
-			return;
-		}
-		d_callback.invoke(data);
-    }
 	
 	// returns refId to the downloaded song
 	function stream(callback, params, encoding) {
@@ -230,6 +197,32 @@ class AmpacheAPI {
 			now.add(duration);
 		}
 		return now.lessThan(d_expire);
+	}
+
+	function onArrayResponse(responseCode, data) {
+		System.println("AmpacheAPI::onArrayResponse with responseCode: " + responseCode + ", payload " + data);
+		
+		// watch Communication errors are filtered first
+		if ((responseCode != 200) 
+			|| (data == null)) {
+			d_fallback.invoke(responseCode, data);
+			return;
+		}
+
+		// callback when data is indeed an Array
+		if (data instanceof Lang.Array) {
+			d_callback.invoke(data);
+			return;
+		}
+
+		// error callback when data is an ampache error
+		if (data instanceof Lang.Dictionary) {
+			d_ecallback.invoke(data["error"]["code"], data["error"]["message"]);
+			return;
+		}
+
+		// unknown problem, call fallback
+		d_fallback.invoke(responseCode, data);
 	}
 	
 	// converts rfc3339 formatted timestamp to Time::Moment (null on error)

@@ -184,7 +184,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 		d_songs[0] = d_songs[d_songidx];
 		d_songs[d_songidx] = tmp;
 	
-		for (var idx = 1; idx < d_playlist.size(); ++idx) {
+		for (var idx = 1; idx < d_songs.size(); ++idx) {
 			tmp = d_songs[idx];
 			var other = (Math.rand() % (d_songs.size() - idx)) + idx;
 			d_songs[idx] = d_songs[other];
