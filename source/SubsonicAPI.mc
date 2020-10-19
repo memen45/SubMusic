@@ -5,25 +5,18 @@ using Toybox.WatchUi;
 class SubsonicAPI {
 
 	private var d_base_url;
-	private var d_user;
-	private var d_pass;
 	
-	private var d_params;
+	private var d_params = {};
 	
 	private var d_callback;
 	private var d_fallback;		// add null checks!
 	
 	function initialize(settings, fallback) {
-		d_base_url = settings.get("api_url") + "/rest/";
-		d_user = settings.get("api_usr");
-		d_pass = settings.get("api_key");
-		d_params = {
-    		"u" => d_user,
-    		"p" => d_pass,
-    		"c" => (WatchUi.loadResource(Rez.Strings.AppName) + " v" + WatchUi.loadResource(Rez.Strings.AppVersionTitle)),
-    		"v" => "1.10.2",
-    		"f" => "json",
-    	};
+		set(settings);
+		d_params.put("c", (WatchUi.loadResource(Rez.Strings.AppName) + " v" + WatchUi.loadResource(Rez.Strings.AppVersionTitle)));
+		d_params.put("v", "1.10.2");
+		d_params.put("f", "json");
+
 		d_fallback = fallback;
 
     	System.println("SubsonicAPI::initialize(client name: " + d_params["c"]);
@@ -144,10 +137,10 @@ class SubsonicAPI {
    	}
     
     function set(settings) {
-    	System.println("SubsonicAPI::set(url: " + d_base_url + " user: " + d_user + ", pass: " + d_pass + ")");
-    	
     	d_base_url = settings.get("api_url") + "/rest/";
-		d_user = settings.get("api_usr");
-		d_pass = settings.get("api_key");
+		d_params.put("u", settings.get("api_usr"));
+    	d_params.put("p", settings.get("api_key");
+
+    	System.println("SubsonicAPI::set(url: " + d_base_url + " user: " + d_params.get("u") + ", pass: " + d_params.get("p") + ")");
     }
 }
