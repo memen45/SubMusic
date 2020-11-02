@@ -181,7 +181,8 @@ class AmpacheAPI {
 		System.println("AmpacheAPI::onStream with responseCode: " + responseCode);
 		
 		// check if request was successful and response is ok
-		if (responseCode != 200) {
+		if ((responseCode != 200)
+			|| (data == null)) {
 			d_fallback.invoke(responseCode, data);
 			return;
 		}

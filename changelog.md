@@ -1,3 +1,6 @@
+Version [0.0.18] - 2020-
+- fixed updating settings with Subsonic API
+
 Version [0.0.17] - 2020-10-18
 - added dynamic limit for response size (Ampache API)
 - added handling 'session expired' error (Ampache API)

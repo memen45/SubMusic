@@ -139,7 +139,7 @@ class SubsonicAPI {
     function set(settings) {
     	d_base_url = settings.get("api_url") + "/rest/";
 		d_params.put("u", settings.get("api_usr"));
-    	d_params.put("p", settings.get("api_key");
+    	d_params.put("p", settings.get("api_key"));
 
     	System.println("SubsonicAPI::set(url: " + d_base_url + " user: " + d_params.get("u") + ", pass: " + d_params.get("p") + ")");
     }

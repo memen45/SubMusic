@@ -5,7 +5,7 @@ class Playlist {
 	
 	// required external playlist properties
 	hidden var d_id;
-	hidden var d_name;
+	hidden var d_name = "default";
 	hidden var d_songCount = 0;
 	
 	// optional external playlist properties
@@ -206,8 +206,13 @@ class IPlaylist extends Playlist {
 	}
 	
 	function setName(name) {
+	
+		if (name == null) {
+			return false;
+		}
+	
 		// nothing to do if not changed
-		if (name.equals(d_name)) {
+		if (d_name.equals(name)) {
 			return false;
 		}
 		d_name = name;

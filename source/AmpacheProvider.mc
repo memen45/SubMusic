@@ -31,6 +31,7 @@ class AmpacheProvider {
 	
 	// functions:
 	// - getAllPlaylists - returns array of all playlists available for Ampache user
+	// - getPlaylist - returns an array of one playlist object with id
 	// - getPlaylistSongs - returns an array of songs on the playlist with id
 	// - getRefId - returns a refId for a song by id (this downloads the song)
 	//
@@ -53,7 +54,6 @@ class AmpacheProvider {
 		};
 		d_action = AMPACHE_ACTION_PLAYLISTS;
 		do_();
-		// do_playlists();
 	}
 
 	/**
@@ -71,7 +71,6 @@ class AmpacheProvider {
 		};
 		d_action = AMPACHE_ACTION_PLAYLIST;
 		do_();
-		// do_playlist();
 	}
 	
 	/**
@@ -92,7 +91,6 @@ class AmpacheProvider {
 
 		d_action = AMPACHE_ACTION_PLAYLIST_SONGS;
 		do_();
-		// do_playlist_songs();
 	}
 
 	/**
@@ -121,41 +119,8 @@ class AmpacheProvider {
 		};
 		d_action = AMPACHE_ACTION_STREAM;
 		do_();
-		// do_stream();
 	}
 
-	// function do_playlist() {
-	// 	if (!d_api.session(null)) {
-	// 		d_api.handshake(self.method(:do_playlist));
-	// 		return;
-	// 	}
-	// 	d_api.playlist(self.method(:on_do_playlist), d_params);
-	// }
-	
-	// function do_playlists() {
-	// 	if (!d_api.session(null)) {
-	// 		d_api.handshake(self.method(:do_playlists));
-	// 		return;
-	// 	}
-	// 	d_api.playlists(self.method(:on_do_playlists), d_params);
-	// }
-
-	// function do_playlist_songs() {
-	// 	if (!d_api.session(null)) {
-	// 		d_api.handshake(self.method(:do_playlist_songs));
-	// 		return;
-	// 	}
-	// 	d_api.playlist_songs(self.method(:on_do_playlist_songs), d_params);
-	// }
-
-	// function do_stream() {
-	// 	// check if session still valid
-	// 	if (!d_api.session(null)) {
-	// 		d_api.handshake(self.method(:do_stream));
-	// 		return;
-	// 	}
-	// 	d_api.stream(self.method(:on_do_stream), d_params, d_encoding);
-	// }
 
 	function on_do_playlist(response) {
 		// append the standard playlist objects to the array
@@ -200,7 +165,6 @@ class AmpacheProvider {
 		}
 		d_params["offset"] += d_params["limit"];	// increase offset
 		do_();
-		// do_playlists();
 	}
 
 	function on_do_playlist_songs(response) {		
@@ -227,7 +191,6 @@ class AmpacheProvider {
 		}
 		d_params["offset"] += d_params["limit"];	// increase offset
 		do_();
-		// do_playlist_songs();
 	}
 
 	function on_do_stream(refId) {
