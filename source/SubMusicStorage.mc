@@ -41,14 +41,20 @@ module Storage {
 			Application.Storage.setValue(VERSION, current.toStorage());
 			return;
 		}
+		
 		var version = new SubMusicVersion(storage);
 		if (current.equals(version)) {
 			// same version, nothing to do
 			return;
 		}
+
+		// update stored version
+		Application.Storage.setValue(VERSION, current.toStorage());
+
 		// future should provide code here to update existing storages
 	}
 
+	// this can be removed in later versions as this translates storage from pre 0.0.16
 	function tryFixDeprecated() {
 		// check if any existing playlists
 		var playlists = Application.Storage.getValue(Storage_Deprecated.PLAYLIST_LOCAL);

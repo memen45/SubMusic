@@ -14,7 +14,7 @@ class SubsonicAPI {
 	function initialize(settings, fallback) {
 		set(settings);
 		
-		client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + (new SubMusicVersion(null).toString()));
+		var client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + (new SubMusicVersion(null).toString()));
 		d_params.put("c", client);
 		d_params.put("v", "1.10.2");		// subsonic api version
 		d_params.put("f", "json");			// request format

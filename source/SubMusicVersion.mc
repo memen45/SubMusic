@@ -13,7 +13,7 @@ class SubMusicVersion {
 		d_minor = storage["minor"];
 		d_patch = storage["patch"];
 
-        name = storage["name"];
+        var name = storage["name"];
         if (name == null) {
             d_name = "";
             return;
