@@ -1,6 +1,6 @@
-Version [0.0.18] - 2020-
+Version [0.0.18] - 2020-11-03
 - fixed updating settings with Subsonic API
-- fixes possible crash on received null values
+- fixed possible crash on received null values
 
 Version [0.0.17] - 2020-10-18
 - added dynamic limit for response size (Ampache API)

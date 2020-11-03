@@ -23,16 +23,19 @@ class Playlist {
 	
 	function initialize(storage) {
 		// System.println("Playlist::initialize( storage = " + storage + " )");
-		System.println("Playlist::initialize( id : " + storage.get("id") + " )");
+		System.println("Playlist::initialize( storage : " + storage + " )");
 
 		d_id = storage["id"];
 		fromStorage(storage);
 	}
 
-	function fromStorage(storage) {
-		d_name = storage["name"];
-		d_songCount = storage["songCount"];
-		
+	function fromStorage(storage) {		
+		if (storage["name"] != null) {
+			d_name = storage["name"];
+		}
+		if (storage["songCount"] != null) {
+			d_songCount = storage["songCount"];
+		}
 		if (storage["songs"] != null) {
 			d_songs = storage["songs"];
 		}
@@ -273,8 +276,8 @@ class IPlaylist extends Playlist {
 	}
 	
 	function updateMeta(playlist) {
-		// System.println("IPlaylist::updateMeta( playlist: " + playlist.toStorage() + " )");
-		System.println("IPlaylist::updateMeta( playlist )");
+		System.println("IPlaylist::updateMeta( playlist: " + playlist.toStorage() + " )");
+		// System.println("IPlaylist::updateMeta( playlist )");
 		
 		var changed = setName(playlist.name());
 		changed |= setCount(playlist.count());
