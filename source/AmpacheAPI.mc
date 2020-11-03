@@ -176,6 +176,37 @@ class AmpacheAPI {
 		};
 		Communications.makeWebRequest(d_url, params, options, self.method(:onStream));
 	}
+
+	function podcasts(callback, params) {
+		System.println("AmpacheAPI::podcasts( params: " + params + " )");
+
+		d_callback = callback;
+
+		params.put("action", "podcasts");
+		params.put("auth", d_session.get("auth"));
+
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onArrayResponse));
+	}
+
+	function podcast(callback, params) {
+		System.println("AmpacheAPI::podcast( id: " + params["filter"] + ")");
+		
+		d_callback = callback;
+		
+		params.put("action", "podcast");
+		params.put("auth", d_session.get("auth"));
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onArrayResponse));
+	}
+
+	function podcast_episodes(callback, params) {
+		System.println("AmpacheAPI::playlist_songs( id: " + params["filter"] + ")");
+		
+		d_callback = callback;
+		
+		params.put("action", "podcast_episodes");
+		params.put("auth", d_session.get("auth"));
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onArrayResponse));
+	}
 	
 	function onStream(responseCode, data) {
 		System.println("AmpacheAPI::onStream with responseCode: " + responseCode);

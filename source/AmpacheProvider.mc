@@ -19,6 +19,9 @@ class AmpacheProvider {
 		AMPACHE_ACTION_PLAYLISTS,
 		AMPACHE_ACTION_PLAYLIST_SONGS,
 		AMPACHE_ACTION_STREAM,
+		AMPACHE_ACTION_PODCASTS,
+		AMPACHE_ACTION_PODCAST,
+		AMPACHE_ACTION_PODCAST_EPISODES,
 	}
 	
 	function initialize(settings) {
@@ -34,6 +37,10 @@ class AmpacheProvider {
 	// - getPlaylist - returns an array of one playlist object with id
 	// - getPlaylistSongs - returns an array of songs on the playlist with id
 	// - getRefId - returns a refId for a song by id (this downloads the song)
+	// 
+	// - getPodcasts
+	// - getPodcast
+	// - getPodcastEpisodes
 	//
 	// to be added in the future:
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
@@ -121,6 +128,45 @@ class AmpacheProvider {
 		do_();
 	}
 
+	function getPodcasts(callback) {
+		d_callback = callback;
+
+		// create empty response
+		d_response = [];
+		d_params = {
+			"limit" => 20,
+			"offset" => 0,
+		};
+		d_action = AMPACHE_ACTION_PODCASTS;
+		do_();
+	}
+
+	function getPodcast(id, callback) {
+		d_callback = callback;
+
+		d_params = {
+			"filter" => id,
+		};
+		d_action = AMPACHE_ACTION_PODCAST;
+		do_();
+	}
+
+	function getPodcastEpisodes(id, callback) {
+		d_callback = callback;
+
+		// create empty response
+		d_response = [];
+		d_params = {
+			"filter" => id,
+			"limit" => 20,
+			"offset" => 0,
+		};
+		d_action = AMPACHE_ACTION_PODCAST_EPISODES;
+		do_();
+	}
+
+
+	// handlers
 
 	function on_do_playlist(response) {
 		// append the standard playlist objects to the array
@@ -198,6 +244,58 @@ class AmpacheProvider {
 		d_callback.invoke(refId);
 	}
 
+	function on_do_podcasts(response) {		
+		// append the standard podcast objects to the array
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var playlist = response[idx];
+			var items = playlist["items"];
+			if (items == null) {
+				items = 0;
+			}
+			d_response.add(new Playlist({
+				"id" => playlist["id"],
+				"name" => playlist["name"],
+				"songCount" => items.toNumber(),
+				"remote" => true,
+			}));
+		}
+
+		// if less than limit, no more requests required
+		if (response.size() < d_params["limit"]) {
+			d_action = null;	
+			d_callback.invoke(d_response);
+			return;
+		}
+		d_params["offset"] += d_params["limit"];	// increase offset
+		do_();
+	}
+
+	function on_do_podcast_episodes(response) {		
+		// append the standard song objects to the array
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var song = response[idx];
+
+			// new way of storing songs
+			var time = song["time"];
+			if (time == null) {
+				time = 0;
+			}
+			d_response.add(new Song({
+				"id" => song["id"],
+				"time" => time.toNumber(),
+				"mime" => song["mime"],
+			}));
+		}
+
+		if (response.size() < d_params["limit"]) {
+			d_action = null;
+			d_callback.invoke(d_response);
+			return;
+		}
+		d_params["offset"] += d_params["limit"];	// increase offset
+		do_();
+	}
+
 	function do_() {
 		// check if session still valid
 		if (!d_api.session(null)) {
@@ -219,6 +317,18 @@ class AmpacheProvider {
 		}
 		if (d_action == AMPACHE_ACTION_STREAM) {
 			d_api.stream(self.method(:on_do_stream), d_params, d_encoding);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_PODCASTS) {
+			d_api.podcasts(self.method(:on_do_podcasts), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_PODCAST) {
+			d_api.podcast(self.method(:on_do_podcast), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_PODCAST_EPISODES) {
+			d_api.podcast_episodes(self.method(:on_do_podcast_episodes), d_params);
 			return;
 		}
 

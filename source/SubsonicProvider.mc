@@ -86,6 +86,34 @@ class SubsonicProvider {
 		d_api.stream(self.method(:onStream), params, encoding);
 	}
 
+	function getPodcasts(callback) {
+		d_callback = callback;
+		var params = {
+			"includeEpisodes" => false,
+		};
+		d_api.getPodcasts(self.method(:onGetPodcasts), params);
+	}
+
+	function getPodcast(id, callback) {
+		d_callback = callback;
+		var params = {
+			"id" => id,
+			"includeEpisodes" => false,
+		};
+		d_api.getPodcasts(self.method(:onGetPodcast), params);
+	}
+
+	function getPodcastEpisodes(id, callback) {
+		d_callback = callback;
+		var params = {
+			"id" => id,
+			"includeEpisodes" => true,
+		};
+		d_api.getPodcasts(self.method(:onGetPodcastEpisodes), params);
+	}
+
+	// handlers
+
 	function onGetAllPlaylists(response) {
 		System.println("SubsonicProvider::onGetAllPlaylists( response = " + response + ")");
 		

@@ -128,7 +128,45 @@ class SubsonicAPI {
 		}
     	d_callback.invoke(data.getId());
     }
-    
+	
+	/**
+	 * getPodcasts
+	 *
+	 * returns all podcasts the user is allowed to play.
+	 */
+	function getPodcasts(callback, params) {
+		System.println("SubsonicAPI::getPodcasts");
+		
+		d_callback = callback;
+
+		// construct parameters
+		var tmp = params;
+		params = d_params;
+		if (tmp["id"] != null) {
+			params["id"] = tmp["id"];
+		}
+		if (tmp["includeEpisodes"] != null) {
+			params["includeEpisodes"] = tmp["includeEpisodes"];
+		}
+		var url = d_base_url + "getPodcasts";
+    	Communications.makeWebRequest(url, params, {}, self.method(:onGetPodcasts));
+	}
+	
+	function onGetPodcasts(responseCode, data) {
+		System.println("SubsonicAPI::onGetPodcasts( responseCode: " + responseCode + ", data: " + data + ")");		
+		
+		// check if request was successful and response is ok
+		if ((responseCode != 200) 
+				|| (data == null) 
+				|| (data["subsonic-response"] == null) 
+				|| (data["subsonic-response"]["status"] == null)
+				|| !(data["subsonic-response"]["status"].equals("ok"))) {
+			d_fallback.invoke(responseCode, data);
+			return;
+		}
+		d_callback.invoke(data["subsonic-response"]["podcasts"]["channel"]);
+	}
+
     function update(settings) {
 		System.println("SubsonicAPI::update(settings)");
 		

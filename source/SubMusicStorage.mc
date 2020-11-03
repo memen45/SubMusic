@@ -23,6 +23,7 @@ module Storage {
 		SONGS_DELETE,	// array of song ids of todelete songs (refCount == 0)
 		
 		PLAYLISTS,		// dictionary where playlist id is key
+		PODCASTS,		// dictionary where podcast id is key
 		
 		LAST_SYNC,		// dictionary with details on last sync 
 		VERSION = 200,	// version string of store
