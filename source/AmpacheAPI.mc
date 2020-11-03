@@ -23,7 +23,7 @@ class AmpacheAPI {
 		set(settings);
 		
 		// set name for this client
-		d_client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + WatchUi.loadResource(Rez.Strings.AppVersionTitle));
+		d_client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + (new SubMusicVersion(null).toString()));
     	System.println("Initialize AmpacheAPI(client name: " + d_client + ")");
     	
 		d_fallback = fallback;

@@ -13,13 +13,15 @@ class SubsonicAPI {
 	
 	function initialize(settings, fallback) {
 		set(settings);
-		d_params.put("c", (WatchUi.loadResource(Rez.Strings.AppName) + " v" + WatchUi.loadResource(Rez.Strings.AppVersionTitle)));
-		d_params.put("v", "1.10.2");
-		d_params.put("f", "json");
+		
+		client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + (new SubMusicVersion(null).toString()));
+		d_params.put("c", client);
+		d_params.put("v", "1.10.2");		// subsonic api version
+		d_params.put("f", "json");			// request format
 
 		d_fallback = fallback;
 
-    	System.println("SubsonicAPI::initialize(client name: " + d_params["c"]);
+    	System.println("SubsonicAPI::initialize(client name: " + d_params["c"] + " )");
 	}
 	
 	/**
