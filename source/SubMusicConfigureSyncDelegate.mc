@@ -14,7 +14,11 @@ class SubMusicConfigureSyncDelegate extends WatchUi.Menu2InputDelegate {
 	function onSelect(item) {
 		var id = item.getId();
 		
-		if (SyncMenu.PLAYLISTS == id) {
+		if (SyncMenu.SELECT_PLAYLISTS == id) {
+			WatchUi.pushView(new SubMusicConfigureSyncPlaylistView(d_provider), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
+			return;
+		}
+		if (SyncMenu.MANAGE_PLAYLISTS == id) {
 			WatchUi.pushView(new SubMusicConfigureSyncPlaylistView(d_provider), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
 			return;
 		}

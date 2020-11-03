@@ -142,7 +142,8 @@ module ApiStandard {
 module SyncMenu {
 	enum {
 		START_SYNC,
-		PLAYLISTS,
+		SELECT_PLAYLISTS,
+		MANAGE_PLAYLISTS,
 		TEST,
 	}
 }
