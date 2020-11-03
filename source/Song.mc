@@ -1,141 +1,12 @@
 using Toybox.Media;
 
-// class SongStore {
-
-// 	private var d_songs = {}; 		// dictionary by song id (all saved songs)
-// 	private var d_locals = [];
-// 	private var d_sync = [];
-// 	private var d_delete = [];
-	
-// 	function initialize() {
-	
-// 		// retrieve all saved songs
-// 		var songs = Application.Storage.getValue(Storage.SONGS);
-// 		if (songs != null) {
-// 			d_songs = songs;
-// 		}
-// 		var locals = Application.Storage.getValue(Storage.SONGS_LOCAL);
-// 		if (locals != null) {
-// 			d_locals = locals;
-// 		}
-// 		var sync = Application.Storage.getValue(Storage.SONGS_SYNC);
-// 		if (sync != null) {
-// 			d_sync = sync;
-// 		}
-// 		var delete = Application.Storage.getValue(Storage.SONGS_DELETE);
-// 		if (delete != null) {
-// 			d_delete = delete;
-// 		}
-// 	}
-	
-// 	function get(id) {
-// 		if (id == null) {
-// 			return null;
-// 		}
-// 		return d_songs[id];
-// 	}
-	
-// 	function save(song) {
-		
-// 		var id = song.id();
-// 		if (id == null) {
-// 			return false;
-// 		}
-		
-// 		// save details of the song
-// 		d_songs[id] = song.toStorage();
-// 		Application.Storage.setValue(Storage.SONGS, d_songs);
-		
-// 		// update tracking
-// 		track(song);
-		
-// 		// indicate successful save
-// 		return true;
-// 	}
-	
-// 	// removes songs on todelete list from storage
-// 	function flushDeletes() {
-// 		for (var idx = 0; idx < d_delete.size(); ++idx) {
-// 			var id = d_delete[idx];
-// 			var isong = new ISong(id);
-			
-// 			songRemove(isong);
-// 		}
-// 		d_delete = [];
-// 		Application.Storage.setValue(Storage.SONGS_DELETE, d_delete);
-// 	}
-	
-// 	// ?
-// 	function verifyStorage() {
-// 		var ids = d_songs.keys();
-// 		for (var idx = 0; idx < ids.size(); ++idx) {
-// 			var isong = new ISong(ids[idx]);
-// 			track(isong);
-// 			if (d_delete.indexOf(ids[idx]) >= 0) {
-// 				songRemove(isong);
-// 			}
-// 		}
-// 	}
-	
-// 	function track(song) {
-// 		var id = song.id();
-		
-// 		// update local tracking
-// 		var local = (song.refId() != null);
-// 		var onlocal = (d_locals.indexOf(id) >= 0);
-// 		if (local && !onlocal) {
-// 			d_locals.add(id);
-// 		} else if (!local && onlocal) {
-// 			d_locals.remove(id);
-// 		}
-// 		Application.Storage.setValue(Storage.SONGS_LOCAL, d_locals);
-		
-// 		// update delete tracking
-// 		var delete = (song.refCount() <= 0);
-// 		var ondelete = (d_delete.indexOf(id) >= 0);
-// 		if (delete && !ondelete) {
-// 			d_delete.add(id);
-// 		} else if (!delete && ondelete) {
-// 			d_delete.remove(id);
-// 		}
-// 		Application.Storage.setValue(Storage.SONGS_DELETE, d_delete);
-
-// 		// update sync tracking
-// 		var sync = !local && !delete;
-// 		var onsync = (d_sync.indexOf(id) >= 0);
-// 		if (sync && !onsync) {
-// 			d_sync.add(id);
-// 		} else if (!sync && onsync) {
-// 			d_sync.remove(id);
-// 		}
-// 		Application.Storage.setValue(Storage.SONGS_SYNC, d_sync);
-// 	}
-	
-// 	function songRemove(song) {
-// 		var id = song.id();
-
-// 		// remove from storage
-// 		d_songs.remove(id);
-// 		Application.Storage.setValue(Storage.SONGS, d_songs);
-		
-// 		// nothing to do if not stored
-// 		if (song.refId() == null) {
-// 			return;
-// 		}
-		
-// 		// remove from media cache
-// 		var contentRef = new Media.ContentRef(song.refId(), Media.CONTENT_TYPE_AUDIO);
-// 		Media.deleteCachedItem(contentRef);
-// 	}
-// }
-
 // 
 class Song {
 	
 	// required external song properties
 	hidden var d_id;				// id of the song
 	hidden var d_time = 0;			// duration of the song
-	hidden var d_mime = null;		// string e.g. "audio/mpeg"
+	hidden var d_mime = "";			// string e.g. "audio/mpeg"
 	
 	// required internal song properties
 	hidden var d_refId = null;		// null if no song file is present
@@ -237,8 +108,13 @@ class ISong extends Song {
 	
 	// returns true if changes saved
 	function setMime(mime) {
+
+		if (mime == null) {
+			return false;
+		}
+	
 		// nothing to do if not changed
-		if (mime.equals(d_mime)) {
+		if (d_mime.equals(mime)) {
 			return false;
 		}
 		d_mime = mime;
