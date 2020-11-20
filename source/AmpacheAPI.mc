@@ -19,7 +19,7 @@ class AmpacheAPI {
 	private var d_fallback;
 	
 	
-	function initialize(settings, ecallback, fallback) {
+	function initialize(settings, fallback) {
 		set(settings);
 		
 		// set name for this client
@@ -27,7 +27,6 @@ class AmpacheAPI {
     	System.println("Initialize AmpacheAPI(client name: " + d_client + ")");
     	
 		d_fallback = fallback;
-		d_ecallback = ecallback;
 		
 		// check if auth is expired, it may be usable!
 		d_expire = new Time.Moment(0);
@@ -99,12 +98,16 @@ class AmpacheAPI {
 	function onHandshake(responseCode, data) {
 		System.println("AmpacheAPI::onHandshake with responseCode " + responseCode + " payload " + data);
 		
-		// check if request was successful 
-		if ((responseCode != 200)
-				|| (data == null)
-				|| (data["error"] != null)) {
-			d_fallback.invoke(responseCode, data);
+		// errors are filtered first
+		var error = AmpacheError.is(responseCode, data);
+		if (error) {
+			d_fallback.invoke(error);
 			return;
+		}
+
+		// response should be dictionary
+		if (!(data instanceof Lang.Dictionary)) {
+			d_fallback.invoke(new SubMusic.Error(SubMusic.ApiError.BADRESPONSE));
 		}
 		
 		// store the session
@@ -183,7 +186,7 @@ class AmpacheAPI {
 		// check if request was successful and response is ok
 		if ((responseCode != 200)
 			|| (data == null)) {
-			d_fallback.invoke(responseCode, data);
+			d_fallback.invoke(new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE));
 			return;
 		}
 		d_callback.invoke(data.getId());
@@ -203,10 +206,10 @@ class AmpacheAPI {
 	function onArrayResponse(responseCode, data) {
 		System.println("AmpacheAPI::onArrayResponse with responseCode: " + responseCode + ", payload " + data);
 		
-		// watch Communication errors are filtered first
-		if ((responseCode != 200) 
-			|| (data == null)) {
-			d_fallback.invoke(responseCode, data);
+		// errors are filtered first
+		var error = AmpacheError.is(responseCode, data);
+		if (error) {
+			d_fallback.invoke(error);
 			return;
 		}
 
@@ -215,15 +218,8 @@ class AmpacheAPI {
 			d_callback.invoke(data);
 			return;
 		}
-
-		// error callback when data is an ampache error
-		if (data instanceof Lang.Dictionary) {
-			d_ecallback.invoke(data["error"]["code"], data["error"]["message"]);
-			return;
-		}
-
-		// unknown problem, call fallback
-		d_fallback.invoke(responseCode, data);
+		
+		d_fallback.invoke(new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE));
 	}
 	
 	// converts rfc3339 formatted timestamp to Time::Moment (null on error)

@@ -6,7 +6,7 @@ class SubsonicProvider {
 	private var d_fallback;
 	
 	function initialize(settings) {
-		d_api = new SubsonicAPI(settings, self.method(:onFailed));
+		d_api = new SubsonicAPI(settings, self.method(:onError));
 	}
 	
 	function onSettingsChanged(settings) {
@@ -91,14 +91,6 @@ class SubsonicProvider {
 		
 		// construct the standard array of playlist objects
 		var playlists = [];
-		// for (var idx = 0; idx < response.size(); ++idx) {
-		// 	var playlist = response[idx];
-		// 	playlists.add({
-		// 		"id" => playlist["id"],
-		// 		"name" => playlist["name"],
-		// 		"songCount" => playlist["songCount"].toNumber(),
-		// 	});
-		// }
 		
 		// construct the playlist instance
 		for (var idx = 0; idx < response.size(); ++idx) {
@@ -140,13 +132,6 @@ class SubsonicProvider {
 		
 		// construct the standard array of song objects
 		var songs = [];
-		// for (var idx = 0; idx < response["entry"].size(); ++idx) {
-		// 	var song = response["entry"][idx];
-		// 	songs.add({
-		// 		"id" => song["id"],
-		// 		"time" => song["duration"].toNumber(),
-		// 	});
-		// }
 		
 		// construct the song instances array
 		for (var idx = 0; idx < response["entry"].size(); ++idx) {
@@ -170,8 +155,8 @@ class SubsonicProvider {
 		d_callback.invoke(refId);
 	}
 	
-	function onFailed(responseCode, data) {
-		d_fallback.invoke(responseCode, data);
+	function onError(error) {
+		d_fallback.invoke(error);
 	}
     
     function setFallback(fallback) {

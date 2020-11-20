@@ -1,5 +1,7 @@
 using Toybox.Communications;
 using Toybox.WatchUi;
+using Toybox.System;
+using SubMusic;
 
 // class for interfacing with a subsonic API endpoint
 class SubsonicAPI {
@@ -9,7 +11,7 @@ class SubsonicAPI {
 	private var d_params = {};
 	
 	private var d_callback;
-	private var d_fallback;		// add null checks!
+	private var d_fallback;
 	
 	function initialize(settings, fallback) {
 		set(settings);
@@ -42,14 +44,11 @@ class SubsonicAPI {
 		System.println("SubsonicAPI::onGetPlaylists( responseCode: " + responseCode + ", data: " + data + ")");		
 		
 		// check if request was successful and response is ok
-		if ((responseCode != 200) 
-				|| (data == null) 
-				|| (data["subsonic-response"] == null) 
-				|| (data["subsonic-response"]["status"] == null)
-				|| !(data["subsonic-response"]["status"].equals("ok"))) {
-			d_fallback.invoke(responseCode, data);
-			return;
-		}
+    	var error = SubsonicError.is(responseCode, data);
+    	if (error) {
+    		d_fallback.invoke(error);	// add function name and variables available ?
+    		return;
+    	}
 		d_callback.invoke(data["subsonic-response"]["playlists"]["playlist"]);
 	}
 		
@@ -80,16 +79,12 @@ class SubsonicAPI {
     function onGetPlaylist(responseCode, data) {
     	System.println("Subsonic::onGetPlaylist(responseCode: " + responseCode + ", data: " + data);
     	
-    	
 		// check if request was successful and response is ok
-		if ((responseCode != 200) 
-				|| (data == null) 
-				|| (data["subsonic-response"] == null) 
-				|| (data["subsonic-response"]["status"] == null)
-				|| !(data["subsonic-response"]["status"].equals("ok"))) {
-			d_fallback.invoke(responseCode, data);
-			return;
-		}
+	   	var error = SubsonicError.is(responseCode, data);
+    	if (error) {
+    		d_fallback.invoke(error);	// add function name and variables available ?
+    		return;
+    	}
     	d_callback.invoke(data["subsonic-response"]["playlist"]);
     }
     
@@ -125,7 +120,9 @@ class SubsonicAPI {
     	
 		// check if request was successful and response is ok
 		if (responseCode != 200) {
-    		d_fallback.invoke(responseCode, data);
+			var error = SubMusic.SdkError.is(responseCode, data);
+			if (!error) { error = new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE); }
+    		d_fallback.invoke(error);
 			return;
 		}
     	d_callback.invoke(data.getId());

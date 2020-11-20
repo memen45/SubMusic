@@ -1,3 +1,9 @@
+Version [0.0.19] - 2020-11-20
+- refactor of sync engine
+- fixed stack overflow error (rare case)
+- fixed progress bar during sync
+- improved error handling and reporting 
+
 Version [0.0.18] - 2020-11-03
 - fixed updating settings with Subsonic API
 - fixed possible crash on received null values
