@@ -40,6 +40,10 @@ class SubsonicError extends SubMusic.ApiError {
 		return SubMusic.ApiError.shortString() + " " + d_code;
 	}
 	
+	function toString() {
+		return d_msg;
+	}
+	
 	static function is(responseCode, data) {
 	
     	// subsonic API errors have http code 200

@@ -45,6 +45,14 @@ class AmpacheError extends SubMusic.ApiError {
 		d_msg = msg;
 	}
 	
+	function shortString() {
+		return SubMusic.ApiError.shortString() + " " + d_code;
+	}
+	
+	function toString() {
+		return d_msg;
+	}
+	
 	function code() {
 		return d_code;
 	}
