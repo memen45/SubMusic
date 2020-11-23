@@ -28,49 +28,8 @@ module Storage {
 		VERSION = 200,	// version string of store
 	}
 
-	class Version {
-
-		private var d_major = 0;
-		private var d_minor = 0;
-		private var d_patch = 16;
-
-		function initialize(storage) {
-			if (storage == null) {
-				return;
-			}
-			d_major = storage["major"];
-			d_minor = storage["minor"];
-			d_patch = storage["patch"];
-		}
-
-		function equals(storage) {
-			if (storage == null) {
-				return false;
-			}
-			if (!(storage instanceof Lang.Dictionary)) {
-				return false;
-			}
-			return toString().equals(storage["version"]);
-		}
-
-		function toString() {
-			return d_major.toString() 
-					+ "." + d_minor.toString()
-					+ "." + d_patch.toString();
-		}
-
-		function toStorage() {
-			return {
-				"version" => toString(),
-				"major" => d_major,
-				"minor" => d_minor,
-				"patch" => d_patch,
-			};
-		}
-	}
-
 	function check() {
-		var current = new Version(null);
+		var current = new SubMusicVersion(null);
 		
 		var storage = Application.Storage.getValue(VERSION);
 		if (storage == null) {
@@ -82,14 +41,20 @@ module Storage {
 			Application.Storage.setValue(VERSION, current.toStorage());
 			return;
 		}
-		var version = new Version(storage);
+		
+		var version = new SubMusicVersion(storage);
 		if (current.equals(version)) {
 			// same version, nothing to do
 			return;
 		}
+
+		// update stored version
+		Application.Storage.setValue(VERSION, current.toStorage());
+
 		// future should provide code here to update existing storages
 	}
 
+	// this can be removed in later versions as this translates storage from pre 0.0.16
 	function tryFixDeprecated() {
 		// check if any existing playlists
 		var playlists = Application.Storage.getValue(Storage_Deprecated.PLAYLIST_LOCAL);

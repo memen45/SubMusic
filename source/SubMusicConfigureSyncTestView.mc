@@ -11,7 +11,7 @@ class SubMusicConfigureSyncTestView extends WatchUi.ProgressBar {
 		ProgressBar.initialize(WatchUi.loadResource(Rez.Strings.confSync_Test_start), null);
 		
 		d_provider = provider;
-		d_provider.setFallback(method(:onFail));
+		d_provider.setFallback(method(:onError));
 		
 		d_progress = 0;
 		setProgress(d_progress);
@@ -64,17 +64,12 @@ class SubMusicConfigureSyncTestView extends WatchUi.ProgressBar {
 		setDisplayString("Test Succeeded");
 	}
 	
-	function onFail(responseCode, data) {
+	function onError(error) {
 		System.println("Test Failed");
 		
-		setDisplayString("Test failed: " + responseCode + "\ndata:" + data);
+		setDisplayString("Test failed:\n" + error.shortString() + "\n" + error.toString());
 		
-		WatchUi.pushView(new ErrorView("Test Failed", responseCode + "\n" + data), null, WatchUi.SLIDE_IMMEDIATE);
-	}
-	
-	function onError(error, message, dump) {
-		// future error reporting: ask for webpage opener and pass full error message into it (url encoded)
-		// https://jsonformatter.curiousconcept.com/?data={test}
+		WatchUi.pushView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
 	}
 		
 }

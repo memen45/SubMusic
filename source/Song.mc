@@ -35,7 +35,7 @@ class Song {
 			d_time = storage["time"];
 			changed = true;
 		}
-		if (d_mime != storage["mime"]) {
+		if ((storage["mime"] != null) && (d_mime != storage["mime"])) {
 			d_mime = storage["mime"];
 			changed = true;
 		}

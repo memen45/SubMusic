@@ -22,7 +22,7 @@ class AmpacheProvider {
 	}
 	
 	function initialize(settings) {
-		d_api = new AmpacheAPI(settings, self.method(:onError), self.method(:onFailed));
+		d_api = new AmpacheAPI(settings, self.method(:onError));
 	}
 	
 	function onSettingsChanged(settings) {
@@ -224,36 +224,32 @@ class AmpacheProvider {
 
 		// no valid action defined
 	}
-
-	function onError(code, message) {
-		System.println("AmpacheProvider::onError( code: " + code + " message: " + message + " )");
-		
-		// if session expired, reset
-		if (code == 401) {
+	
+	function onError(error) {
+	
+		// if handshake error on otherwise valid session, delete session and retry handshake
+		if ((error instanceof AmpacheError)
+			&& (error.code() == AmpacheError.HANDSHAKE)
+			&& d_api.session(null)) {
+			
 			d_api.deleteSession();
 			do_();
 			return;
 		}
-
-		// end current request
-		d_action = null;
-		d_fallback.invoke(code, message);
-	}
-
-	function onFailed(responseCode, data) {
-
-		// too large and response can be limited? Half the response
-		if ((responseCode == Communications.NETWORK_RESPONSE_TOO_LARGE)
-				&& (d_params["limit"] > 1)) {
+		
+		// if response too large and limit is possible
+		if ((error instanceof SubMusic.SdkError)
+			&& (error.respCode() == Communications.NETWORK_RESPONSE_TOO_LARGE)
+			&& (d_params["limit"] > 1)) {
+			
 			d_params["limit"] = (d_params["limit"] / 2).toNumber();		// half the response
 			System.println("AmpacheProvider limit was lowered to " + d_params["limit"]);
 			do_();														// retry the request
 			return;
 		}
-
-		// end current request
+		
 		d_action = null;
-		d_fallback.invoke(responseCode, data);
+		d_fallback.invoke(error);
 	}
     
     function setFallback(fallback) {
