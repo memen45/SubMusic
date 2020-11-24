@@ -18,16 +18,12 @@ class SubMusicConfigureSyncDelegate extends WatchUi.Menu2InputDelegate {
 			WatchUi.pushView(new SubMusicConfigureSyncPlaylistView(d_provider), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
 			return;
 		}
-		if (SyncMenu.MANAGE_PLAYLISTS == id) {
-			WatchUi.pushView(new SubMusicConfigureSyncPlaylistView(d_provider), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
-			return;
-		}
-		if (SyncMenu.TEST == id) {
-			WatchUi.pushView(new SubMusicConfigureSyncTestView(d_provider), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
-			return;
-		}
 		if (SyncMenu.START_SYNC == id) {
 			WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+			return;
+		}
+		if (SyncMenu.DEBUG_INFO == id) {
+			WatchUi.pushView(new SubMusicConfigureSyncDebugView(), new SubMusicConfigureSyncDebugDelegate(d_provider), WatchUi.SLIDE_IMMEDIATE);
 			return;
 		}
 		WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);

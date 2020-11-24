@@ -13,21 +13,15 @@ class SubMusicConfigureSyncView extends WatchUi.Menu2 {
         	null
         ));
         addItem(new WatchUi.MenuItem(
-        	Rez.Strings.confSync_ManagePlaylists_label,		// label
-        	null,	// sublabel
-        	SyncMenu.MANAGE_PLAYLISTS,						// identifier
-        	null
-        ));
-        addItem(new WatchUi.MenuItem(
         	Rez.Strings.confSync_startsync,		// label
         	null,	// sublabel
         	SyncMenu.START_SYNC,				// identifier
         	null
         ));
         addItem(new WatchUi.MenuItem(
-        	Rez.Strings.confSync_Test_label,		// label
-        	Rez.Strings.confSync_Test_sublabel,		// sublabel
-        	SyncMenu.TEST,							// identifier
+        	Rez.Strings.confSync_DebugInfo_label,		// label
+        	null,		// sublabel
+        	SyncMenu.DEBUG_INFO,							// identifier
         	null
         ));
     }

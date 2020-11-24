@@ -1,7 +1,7 @@
 using Toybox.WatchUi;
 using Toybox.Media;
 
-class SubMusicConfigureSyncTestView extends WatchUi.ProgressBar {
+class SubMusicTestView extends WatchUi.ProgressBar {
 
 	private var d_provider;
 	private var d_progress;

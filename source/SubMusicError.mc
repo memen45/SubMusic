@@ -128,18 +128,18 @@ module SubMusic {
 		}
 	}
 	
-	class GarminSdkError {
+	class GarminSdkError extends Error {
 	
 		// enum for possible errors can be found in module Communications
 		private var d_responseCode;
 
 		function initialize(responseCode) {
-			Error.initialize(SubMusic.Error.HTTP);
+			Error.initialize(Error.HTTP);
 			
 			d_responseCode = responseCode;
 		}
 	
-		static function is(responseCode, data) {
+		static function is(responseCode) {
 		
 			// Sdk errors are always smaller or equal to zero
 			if (responseCode > 0) {
