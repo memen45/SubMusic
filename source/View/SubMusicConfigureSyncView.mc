@@ -7,9 +7,9 @@ class SubMusicConfigureSyncView extends WatchUi.Menu2 {
         Menu2.initialize({:title=>Rez.Strings.confSync_Title});
         
         addItem(new WatchUi.MenuItem(
-        	Rez.Strings.confSync_Playlists_label,		// label
+        	Rez.Strings.confSync_SelectPlaylists_label,		// label
         	null,	// sublabel
-        	SyncMenu.PLAYLISTS,							// identifier
+        	SyncMenu.SELECT_PLAYLISTS,							// identifier
         	null
         ));
         addItem(new WatchUi.MenuItem(
@@ -19,9 +19,9 @@ class SubMusicConfigureSyncView extends WatchUi.Menu2 {
         	null
         ));
         addItem(new WatchUi.MenuItem(
-        	Rez.Strings.confSync_Test_label,		// label
-        	Rez.Strings.confSync_Test_sublabel,		// sublabel
-        	SyncMenu.TEST,							// identifier
+        	Rez.Strings.confSync_DebugInfo_label,		// label
+        	null,		// sublabel
+        	SyncMenu.DEBUG_INFO,							// identifier
         	null
         ));
     }

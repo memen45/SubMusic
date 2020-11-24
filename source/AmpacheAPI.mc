@@ -99,15 +99,10 @@ class AmpacheAPI {
 		System.println("AmpacheAPI::onHandshake with responseCode " + responseCode + " payload " + data);
 		
 		// errors are filtered first
-		var error = AmpacheError.is(responseCode, data);
+		var error = checkHandshake(responseCode, data);
 		if (error) {
 			d_fallback.invoke(error);
 			return;
-		}
-
-		// response should be dictionary
-		if (!(data instanceof Lang.Dictionary)) {
-			d_fallback.invoke(new SubMusic.Error(SubMusic.ApiError.BADRESPONSE));
 		}
 		
 		// store the session
@@ -121,6 +116,18 @@ class AmpacheAPI {
 		}
 		d_callback.invoke();
 	}
+	
+	function checkHandshake(responseCode, data) {
+		var error = checkResponse(responseCode, data);
+		if (error) { return error; }
+		error = AmpacheError.is(responseCode, data);
+		if (error) { return error; }
+		
+		// finally, expecting dictionary
+		if (!(data instanceof Lang.Dictionary)) { return new AmpacheError(null); }
+		return null;
+	}
+		
 	
 	// returns array of playlist objects
 	function playlists(callback, params) {
@@ -184,14 +191,14 @@ class AmpacheAPI {
 		System.println("AmpacheAPI::onStream with responseCode: " + responseCode);
 		
 		// check if request was successful and response is ok
-		if ((responseCode != 200)
-			|| (data == null)) {
-			d_fallback.invoke(new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE));
+		var error = checkResponse(responseCode, data);
+		if (error) {
+			d_fallback.invoke(error);
 			return;
 		}
 		d_callback.invoke(data.getId());
     }
-	
+    
 	// returns true if the current session is not expired (optionally pass in duration for session)
 	function session(duration) {
 		System.println("AmpacheAPI::session(duration: " + duration + ");" + " Time now: " + Time.now().value() + ", session expires: " + d_expire.value());
@@ -207,19 +214,30 @@ class AmpacheAPI {
 		System.println("AmpacheAPI::onArrayResponse with responseCode: " + responseCode + ", payload " + data);
 		
 		// errors are filtered first
-		var error = AmpacheError.is(responseCode, data);
+		var error = checkArrayResponse(responseCode, data);
 		if (error) {
 			d_fallback.invoke(error);
 			return;
 		}
-
-		// callback when data is indeed an Array
-		if (data instanceof Lang.Array) {
-			d_callback.invoke(data);
-			return;
-		}
+		d_callback.invoke(data);
+	}
+	
+	function checkArrayResponse(responseCode, data) {
+		var error = checkResponse(responseCode, data);
+		if (error) { return error; }
 		
-		d_fallback.invoke(new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE));
+		// finally, expecting array
+		if (!(data instanceof Lang.Array)) { return new AmpacheError(null); }
+		return null;
+	}
+	
+	function checkResponse(responseCode, data) {
+		var error = SubMusic.HttpError.is(responseCode);
+		if (error) { return error; }
+		error = SubMusic.GarminSdkError.is(responseCode);
+		if (error) { return error; }
+		error = AmpacheError.is(responseCode, data);
+		return error;
 	}
 	
 	// converts rfc3339 formatted timestamp to Time::Moment (null on error)

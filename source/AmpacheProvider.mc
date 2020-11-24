@@ -238,7 +238,7 @@ class AmpacheProvider {
 		}
 		
 		// if response too large and limit is possible
-		if ((error instanceof SubMusic.SdkError)
+		if ((error instanceof SubMusic.GarminSdkError)
 			&& (error.respCode() == Communications.NETWORK_RESPONSE_TOO_LARGE)
 			&& (d_params["limit"] > 1)) {
 			

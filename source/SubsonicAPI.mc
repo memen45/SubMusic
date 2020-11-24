@@ -44,7 +44,7 @@ class SubsonicAPI {
 		System.println("SubsonicAPI::onGetPlaylists( responseCode: " + responseCode + ", data: " + data + ")");		
 		
 		// check if request was successful and response is ok
-    	var error = SubsonicError.is(responseCode, data);
+    	var error = checkResponse(responseCode, data);
     	if (error) {
     		d_fallback.invoke(error);	// add function name and variables available ?
     		return;
@@ -80,7 +80,7 @@ class SubsonicAPI {
     	System.println("Subsonic::onGetPlaylist(responseCode: " + responseCode + ", data: " + data);
     	
 		// check if request was successful and response is ok
-	   	var error = SubsonicError.is(responseCode, data);
+	   	var error = checkResponse(responseCode, data);
     	if (error) {
     		d_fallback.invoke(error);	// add function name and variables available ?
     		return;
@@ -119,14 +119,22 @@ class SubsonicAPI {
     	System.println("SubsonicAPI::onStream with responseCode: " + responseCode);
     	
 		// check if request was successful and response is ok
-		if (responseCode != 200) {
-			var error = SubMusic.SdkError.is(responseCode, data);
-			if (!error) { error = new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE); }
+		var error = checkResponse(responseCode, data);
+		if (error) {
     		d_fallback.invoke(error);
 			return;
 		}
     	d_callback.invoke(data.getId());
     }
+
+	function checkResponse(responseCode, data) {
+		var error = SubMusic.HttpError.is(responseCode);
+		if (error) { return error; }
+		error = SubMusic.GarminSdkError.is(responseCode);
+		if (error) { return error; }
+		error = SubsonicError.is(responseCode, data);
+		return error;
+	}
     
     function update(settings) {
 		System.println("SubsonicAPI::update(settings)");
