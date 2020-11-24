@@ -13,27 +13,34 @@ class SubsonicError extends SubMusic.ApiError {
 		TRIAL_OVER		= 60,		// 60 	The trial period for the Subsonic server is over. Please upgrade to Subsonic Premium. Visit subsonic.org for details.
 		NOT_FOUND		= 70,		// 70 	The requested data was not found.
 	}
-	private var d_code;
-	private var d_msg;
+	private var d_code = null;
+	private var d_msg = "";
 	
-	function initialize(code, msg) {
+	static private var s_name = "Subsonic";
+	
+	function initialize(error_obj) {
+	
+		// if null error_obj, response is malformed
+		if (error_obj) {
+			d_code = error_obj["code"];
+			d_msg = error_obj["message"];
+		}
 		
+		// default is unknown
 		var type = SubMusic.ApiError.UNKNOWN;
-		if ((code == WRONG_CREDS) || (code == TOKEN_SUPPORT) || (code == TRIAL_OVER)) {
+		if ((d_code == WRONG_CREDS) || (d_code == TOKEN_SUPPORT) || (d_code == TRIAL_OVER)) {
 			type = SubMusic.ApiError.LOGIN;
-		} else if (code == NOT_AUTHORIZED) {
+		} else if (d_code == NOT_AUTHORIZED) {
 			type = SubMusic.ApiError.ACCESS;
-		} else if (code == NOT_FOUND) {
+		} else if (d_code == NOT_FOUND) {
 			type = SubMusic.ApiError.NOTFOUND;
-		} else if ((code == INCOMPAT_CLIENT) || (code == INCOMPAT_SERVER)) {
+		} else if ((d_code == INCOMPAT_CLIENT) || (d_code == INCOMPAT_SERVER)) {
 			type = SubMusic.ApiError.SERVERCLIENT;
-		} else if (code == MISSING_PARAM) {
+		} else if (d_code == MISSING_PARAM) {
 			type = SubMusic.ApiError.BADREQUEST;
 		}
 		
-		SubMusic.ApiError.initialize("Subsonic", type);
-		d_code = code;
-		d_msg = msg;
+		SubMusic.ApiError.initialize(type);
 	}
 	
 	function shortString() {
@@ -46,32 +53,15 @@ class SubsonicError extends SubMusic.ApiError {
 	
 	static function is(responseCode, data) {
 	
-    	// subsonic API errors have http code 200
-		if (responseCode != 200) {
-			var error = SubMusic.SdkError.is(responseCode, data);
-			return error ? error : new SubMusic.ApiError("Subsonic", SubMusic.ApiError.BADRESPONSE);
-		}
-		
-		// check for incorrect structure
-		if ((data == null)
+    	// subsonic API errors have http code 200, status failed and an element 'error'
+		if ((responseCode != 200)
+			|| (data == null)
 			|| (data["subsonic-response"] == null)
-			|| (data["subsonic-response"]["status"] == null)) {
-			return new SubMusic.ApiError("Subsonic", SubMusic.ApiError.BADRESPONSE);
-		}
-		
-		// check if ok
-		if (data["subsonic-response"]["status"].equals("ok")) {
+			|| (data["subsonic-response"]["status"] == null)
+			|| !(data["subsonic-response"]["status"].equals("failed"))
+			|| (data["subsonic-response"]["error"] == null)) {
 			return null;
 		}
-		
-		// check for missing error element
-		if ((data["subsonic-response"]["error"] == null)) {
-			return new SubMusic.ApiError("Subsonic", SubMusic.ApiError.BADRESPONSE);
-		}
-		
-		var code = data["subsonic-response"]["error"]["code"];
-		var msg = data["subsonic-response"]["error"]["message"];
-		
-		return new SubsonicError(code, msg); 	
+		return new SubsonicError(data["subsonic-response"]["error"]); 	
 	}
 }

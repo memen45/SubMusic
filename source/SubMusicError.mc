@@ -2,9 +2,10 @@ module SubMusic {
 	
 	class Error {
 		enum {
-			SDK_NETWORK,
+			HTTP,
+			API,
 		}
-		hidden var d_type;
+		private var d_type;
 		
 		function initialize(type) {
 			d_type = type;
@@ -21,7 +22,6 @@ module SubMusic {
 	    function toString() {
 	    	return "";
 	    }
-	    	
 	}
 	
 	class ApiError extends Error {
@@ -34,18 +34,18 @@ module SubMusic {
 			BADREQUEST,
 			BADRESPONSE,
 			UNKNOWN,
-		}
+		}		
+		private var d_type;
+		static private var s_name = "API";
 		
-		private var d_apiname;
-		
-		function initialize(apiname, type) {
-			Error.initialize(type);
+		function initialize(type) {
+			Error.initialize(Error.API);
 			
-			d_apiname = apiname;
+			d_type = type;
 		}
 		
 		function shortString() {
-			var res = d_apiname + "API\n";
+			var res = "API::";
 			
 			if (d_type == LOGIN) {
 	    		res += "\"LOGIN\"";
@@ -66,25 +66,87 @@ module SubMusic {
 	    	}
 	    	return res + " " + Error.shortString();
 	    }
+	    
+	    function typeToString(type) {
+	    
+	    	if (d_type == LOGIN) {
+	    		return "\"LOGIN\"";
+	    	} else if (d_type == ACCESS) {
+	    		return "\"ACCESS\"";
+	    	} else if (d_type == NOTFOUND) {
+	    		return "\"NOTFOUND\"";
+	    	} else if (d_type == SERVERCLIENT) {
+	    		return "\"SERVERCLIENT\"";
+	    	} else if (d_type == BADREQUEST) {
+	    		return "\"BADREQUEST\"";
+	    	} else if (d_type == BADRESPONSE) {
+	    		return "\"BADRESPONSE\"";
+	    	} else if (d_type == UNKNOWN) {
+	    		return "\"UNKNOWN\"";
+	    	}
+	    	return "Unknown";
+	    }
 	}
 	
-	class SdkError extends Error {
+	class HttpError extends Error {
+		
+		enum {
+			BAD_REQUEST = 400,
+			NOT_FOUND = 404,
+		}
+		private var d_type;
+		static private var s_name = "HTTP";
+		
+		function initialize(type) {
+			Error.initialize(Error.HTTP);
+			
+			d_type = type;
+		}
+		
+		static function is(responseCode) {
+		
+			// only error if > 0 but not 200
+			if ((responseCode == 200)
+				|| (responseCode <= 0)) {
+				return null;
+			}
+			return new HttpError(responseCode);
+		}
+		
+		function shortString() {
+			return type.toString();
+		}
+		
+		function toString() {
+			
+			if (d_type == BAD_REQUEST) {
+				return "BAD_REQUEST";
+			} else if (d_type == NOT_FOUND) {
+				return "NOT_FOUND";
+			}
+			return "Unknown";
+		}
+	}
+	
+	class GarminSdkError {
+	
+		// enum for possible errors can be found in module Communications
 		private var d_responseCode;
 
 		function initialize(responseCode) {
-			Error.initialize(SubMusic.Error.SDK_NETWORK);
+			Error.initialize(SubMusic.Error.HTTP);
 			
 			d_responseCode = responseCode;
 		}
 	
 		static function is(responseCode, data) {
 		
-			// Sdk errors are always negative
+			// Sdk errors are always smaller or equal to zero
 			if (responseCode > 0) {
 				return null;
 			}
 			
-			return new SdkError(responseCode);
+			return new GarminSdkError(responseCode);
 		}
 		
 		function respCode() {

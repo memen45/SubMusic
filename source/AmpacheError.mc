@@ -2,6 +2,7 @@ using Toybox.Lang;
 
 class AmpacheError extends SubMusic.ApiError {
 	
+// 			Ampache5 error codes
 //	enum {
 //		ACCESS_CONTROL 	= 4700,
 //		HANDSHAKE		= 4701,
@@ -22,27 +23,37 @@ class AmpacheError extends SubMusic.ApiError {
 		BAD_REQUEST		= 410,
 		FAILED_ACCESS	= 442,
 	}
-	private var d_code;
-	private var d_msg;
+	private var d_code = null;
+	private var d_msg = "";
 	
-	function initialize(code, msg) {
+	static private var s_name = "Ampache";
+	
+	function initialize(error_obj) {
 		
+		// if null error_obj, response is malformed
+		if (error_obj) {
+			d_code = error_obj["code"];
+			d_msg = error_obj["message"];
+			// TODO for Ampache 5:
+//			d_code = error_obj["errorCode"];		// Ampache5
+//			d_msg = error_obj["errorMessage"];		// Ampache5
+		}
+		
+		// default is unknown
 		var type = SubMusic.ApiError.UNKNOWN;
-		if (code == HANDSHAKE) {
+		if (d_code == HANDSHAKE) {
 			type = SubMusic.ApiError.LOGIN;
-		} else if (code == FAILED_ACCESS) {
+		} else if (d_code == FAILED_ACCESS) {
 			type = SubMusic.ApiError.ACCESS;
-		} else if (code == NOT_FOUND) {
+		} else if (d_code == NOT_FOUND) {
 			type = SubMusic.ApiError.NOTFOUND;
-		} else if ((code == ACCESS_CONTROL) || (code == FEATURE_MISSING) || (code == METHOD_MISSING) || (code == METHOD_DPRCTD)) {
+		} else if ((d_code == ACCESS_CONTROL) || (d_code == FEATURE_MISSING) || (d_code == METHOD_MISSING) || (d_code == METHOD_DPRCTD)) {
 			type = SubMusic.ApiError.SERVERCLIENT;
-		} else if (code == BAD_REQUEST) {
+		} else if (d_code == BAD_REQUEST) {
 			type = SubMusic.ApiError.BADREQUEST;
 		}
 		
-		SubMusic.ApiError.initialize("Ampache", type);
-		d_code = code;
-		d_msg = msg;
+		SubMusic.ApiError.initialize(type);
 	}
 	
 	function shortString() {
@@ -58,23 +69,13 @@ class AmpacheError extends SubMusic.ApiError {
 	}
 	
 	static function is(responseCode, data) {
-		// ampache API errors have http code 200
-		if (responseCode != 200) {
-			var error = SubMusic.SdkError.is(responseCode, data);
-			return error ? error : new SubMusic.ApiError("Ampache", SubMusic.ApiError.BADRESPONSE);
+		// ampache API errors have http code 200 and a dictionary as body
+		if ((responseCode != 200) 
+			|| (data == null)
+			|| !(data instanceof Lang.Dictionary)
+			|| (data["error"] == null)) {
+			return null;
 		}
-		
-		// check for empty body
-		if (data == null) {
-			return new SubMusic.ApiError("Ampache", SubMusic.ApiError.BADRESPONSE);
-		}    		
-		
-		if ((data instanceof Lang.Dictionary)
-			&& (data["error"] != null)) {
-//			return new AmpacheError(data["error"]["errorCode"], data["error"]["errorMessage"]);
-			return new AmpacheError(data["error"]["code"], data["error"]["message"]);
-		}
-		
-		return null;
+		return new AmpacheError(data["error"]);
 	}
 }
