@@ -1,6 +1,7 @@
 using Toybox.Application;
 using Toybox.Communications;
 using Toybox.Media;
+using Toybox.Time;
 
 // Performs the sync with the music provider
 class SubMusicSyncDelegate extends Media.SyncDelegate {
@@ -49,6 +50,7 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
 
 		// finish sync
 		Media.notifySyncComplete(null);
+		Communications.notifySyncComplete(null);
 		return;
 	}
 	

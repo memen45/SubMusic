@@ -1,4 +1,5 @@
 - fixed hot reloading of settings
+- added last sync time record
 Version [0.0.19] - 2020-11-20
 - refactor of sync engine
 - fixed stack overflow error (rare case)
