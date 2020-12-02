@@ -12,13 +12,11 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
     private var d_loop;				// store deferred for loop
 
     // api access
-    private var d_provider;
+    private var d_provider = SubMusic.Provider.get();
 
     // Constructor
-    function initialize(provider) {
+    function initialize() {
         SyncDelegate.initialize();
-        
-        d_provider = provider;
     }
 
     // Starts the sync with the system

@@ -3,8 +3,6 @@ using Toybox.WatchUi;
 
 class SubMusicApp extends Application.AudioContentProviderApp {
 
-	private var d_provider = null;
-
     function initialize() {
         AudioContentProviderApp.initialize();
         
@@ -27,10 +25,7 @@ class SubMusicApp extends Application.AudioContentProviderApp {
     	System.println("Settings changed");
     	
     	// reset the sessions for the provider
-    	if (d_provider == null) {
-    		return;
-    	}
-    	d_provider.onSettingsChanged(getProviderSettings());
+    	SubMusic.Provider.onSettingsChanged();
     }
 
     // Get a Media.ContentDelegate for use by the system to get and iterate through media on the device
@@ -40,11 +35,7 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get a delegate that communicates sync status to the system for syncing media content to the device
     function getSyncDelegate() {
-    	// create provider if not yet available
-    	if (d_provider == null) {
-    		d_provider = providerFactory();
-    	}
-        return new SubMusicSyncDelegate(d_provider);
+        return new SubMusicSyncDelegate();
     }
 
     // Get the initial view for configuring playback
@@ -54,29 +45,6 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get the initial view for configuring sync
     function getSyncConfigurationView() {
-    	// create provider if not yet available
-    	if (d_provider == null) {
-    		d_provider = providerFactory();
-    	}
-        return [ new SubMusicConfigureSyncView(), new SubMusicConfigureSyncDelegate(d_provider) ];
-    }
-    
-    function getProviderSettings() {
-    	return {
-        	"api_url" => Application.Properties.getValue("subsonic_API_URL"),
-			"api_usr" => Application.Properties.getValue("subsonic_API_usr"),
-			"api_key" => Application.Properties.getValue("subsonic_API_key"),
-		};
-    }
-    
-    function providerFactory() {
-        // construct the selected provider
-        var settings = getProviderSettings();
-        
-        var type = Application.Properties.getValue("API_standard");
-        if (type == ApiStandard.AMPACHE) {
-        	return new AmpacheProvider(settings);
-        }
-        return new SubsonicProvider(settings);
+        return [ new SubMusicConfigureSyncView(), new SubMusicConfigureSyncDelegate() ];
     }
 }

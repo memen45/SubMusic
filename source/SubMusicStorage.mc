@@ -65,11 +65,14 @@ module Storage {
 
 		// check if any existing songs
 		var songs = Application.Storage.getValue(Storage_Deprecated.SONGS_LOCAL);
+		
+		// clear all persistent storage (we have copies now)
+		Application.Storage.clearValues();
+		
+		// if no songs to recover, return
 		if (songs == null) {
-			Application.Storage.clearValues();
 			return;
 		}
-		Application.Storage.clearValues();
 
 		// here we have both playlists and songs
 
