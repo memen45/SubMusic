@@ -56,11 +56,11 @@ class SubMusicConfigurePlaybackView extends WatchUi.View {
 		}
         if (empty)
     	{
-    		d_msg = "No local playlists";
+    		d_msg = "No local playlists\nTap to sync";
     		return;
     	}
     	
-    	WatchUi.pushView(menu, new SubMusicConfigurePlaybackDelegate(), WatchUi.SLIDE_IMMEDIATE);
+    	WatchUi.pushView(menu, new SubMusicConfigurePlaybackMenuDelegate(), WatchUi.SLIDE_IMMEDIATE);
     }
 
     // Update the view

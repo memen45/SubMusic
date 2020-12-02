@@ -40,11 +40,11 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get the initial view for configuring playback
     function getPlaybackConfigurationView() {
-        return [ new SubMusicConfigurePlaybackView(), new WatchUi.BehaviorDelegate() ];
+        return [ new SubMusicConfigurePlaybackView(), new SubMusicConfigurePlaybackDelegate() ];
     }
 
     // Get the initial view for configuring sync
     function getSyncConfigurationView() {
-        return [ new SubMusicConfigureSyncView(), new SubMusicConfigureSyncDelegate() ];
+        return [ new SubMusicConfigureSyncView(), new SubMusicConfigureSyncDelegate(true) ];
     }
 }

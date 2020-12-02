@@ -1,5 +1,13 @@
+Version [0.0.20] - 2020-
+- fixed progressbar - only count songs that are not yet local
+- fixed crash on sync empty playlist (progress divide by 0)
+- fixed initial Sync setup (removed deprecated methods)
+- fixed crashes on Error handling
 - fixed hot reloading of settings
+- refactor of menus
 - added last sync time record
+- added support for descentmk2 device
+
 Version [0.0.19] - 2020-11-20
 - refactor of sync engine
 - fixed stack overflow error (rare case)

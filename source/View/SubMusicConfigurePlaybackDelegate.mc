@@ -4,14 +4,13 @@ class SubMusicConfigurePlaybackDelegate extends WatchUi.BehaviorDelegate {
 
     function initialize() {
         BehaviorDelegate.initialize();
-        
     }
     
-    function onSelect(item) {
-        
-    	// store selection as current playlist
-    	Application.Storage.setValue(Storage.PLAYLIST, item.getId());
-    	Media.startPlayback(null);
+    function onSelect() {
+        // tap on the empty screen opens the sync menu
+        var view = new SubMusicConfigureSyncView();
+        var delegate = new SubMusicConfigureSyncDelegate(false);
+      	WatchUi.switchToView(view, delegate, WatchUi.SLIDE_IMMEDIATE);
     }
     
     function onBack() {

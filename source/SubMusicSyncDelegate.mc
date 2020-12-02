@@ -1,10 +1,9 @@
 using Toybox.Application;
 using Toybox.Communications;
-using Toybox.Media;
 using Toybox.Time;
 
 // Performs the sync with the music provider
-class SubMusicSyncDelegate extends Media.SyncDelegate {
+class SubMusicSyncDelegate extends Communications.SyncDelegate {
 
     // playlists to sync
     private var d_todo;				// array of playlist ids
@@ -25,7 +24,7 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
         System.println("Sync started...");
 
 		// show progress
-		Media.notifySyncProgress(0);
+		Communications.notifySyncProgress(0);
 		
 		// starting sync
         d_todo = PlaylistStore.getIds();
@@ -49,8 +48,8 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
     	System.println("Sync completed...");
 
 		// finish sync
-		Media.notifySyncComplete(null);
 		Communications.notifySyncComplete(null);
+		Application.Storage.setValue(Storage.LAST_SYNC, { "time" => Time.now().value(), });
 		return;
 	}
 	
@@ -61,7 +60,7 @@ class SubMusicSyncDelegate extends Media.SyncDelegate {
 		progress /= d_loop.end().toFloat();
 		
 		System.println(progress.toNumber());
-		Media.notifySyncProgress(progress.toNumber());
+		Communications.notifySyncProgress(progress.toNumber());
 	}
     
     function step(idx) {

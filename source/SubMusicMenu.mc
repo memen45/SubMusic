@@ -11,6 +11,8 @@ module SyncMenu {
 module SyncDebugMenu {
 	enum {
 		TEST_SERVER,
+		REMOVE_ALL,
+		SERVER_DETAIL,
 		LIST_ERRORS,
 		PLAYLIST_DETAIL,
 	}

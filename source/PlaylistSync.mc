@@ -74,35 +74,36 @@ class PlaylistSync extends Deferrable {
 	}
 	
 	function onGetPlaylistSongs(songs) {
-		// count the total number of songs on this playlist
-    	d_todo_total = songs.size();
-
 		// retrieve array of ids of non local songs
     	d_todo_songs = d_playlist.update(songs);
     	
-		// update fallback
-		d_provider.setFallback(method(:onError));
+		// count the number of songs on this playlist that need a download
+    	d_todo_total = d_todo_songs.size();
+    	
    		syncNextSong();
 	}
 	
-	function syncNextSong() {
+	function progress() {
 		var done = d_todo_total - d_todo_songs.size();
 		var progress = (100 * done) / d_todo_total.toFloat();
-		f_progress.invoke(progress);
+		return progress;
+	}
+	
+	function syncNextSong() {
 
-		// if songs not all finished, start the download
-		if (d_todo_songs.size() != 0) {
-			d_song = new ISong(d_todo_songs[0]);
-			d_provider.getRefId(d_song.id(), d_song.mime(), method(:onSongDownloaded));
+		// if songs all finished, complete this task
+		if (d_todo_songs.size() == 0) {
+			d_playlist.setSynced(!d_failed);	// not failed = successful sync
+	   		Deferrable.complete();				// set complete
 			return;
 		}
 
-		// reset the fallback
-		d_provider.setFallback(method(:onError));
-
-		// all songs finished
-		d_playlist.setSynced(!d_failed);	// not failed = successful sync
-   		Deferrable.complete();
+		// update progress
+		f_progress.invoke(progress());
+		
+		// start download
+		d_song = new ISong(d_todo_songs[0]);
+		d_provider.getRefId(d_song.id(), d_song.mime(), method(:onSongDownloaded));
 	}
 	
     // Callback for when a song is downloaded

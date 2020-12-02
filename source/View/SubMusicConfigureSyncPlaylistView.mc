@@ -8,12 +8,11 @@ class SubMusicConfigureSyncPlaylistView extends WatchUi.View {
 
 	private var d_playlists = null;
 	private var d_menushown = false;
-	private var d_provider;
+	private var d_provider = SubMusic.Provider.get();
 
-    function initialize(provider) {
+    function initialize() {
         View.initialize();
         
-        d_provider = provider;
         d_provider.setFallback(method(:onError));
     }
 

@@ -16,6 +16,10 @@
     <string id="confSync_ManagePlaylists_label">Manage Playlists</string>
     <string id="confSync_DebugInfo_label">Debug Info</string>
     <string id="confSync_DebugInfo_TestServer_label">Test Server</string>
+    <string id="confSync_DebugInfo_RemoveAll_label">Remove All</string>
+    <string id="confSync_DebugInfo_RemoveAll_sublabel">Reset application storage</string>
+    <string id="confSync_DebugInfo_ServerDetail_label">Server</string>
+    <string id="confSync_DebugInfo_ServerDetail_sublabel">Show server settings</string>
     <string id="confSync_PlaylistDetail_label">Playlist Detail</string>
     <string id="confSync_Test_start">Starting test...</string>
     
