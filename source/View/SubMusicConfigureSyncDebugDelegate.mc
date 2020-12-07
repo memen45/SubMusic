@@ -1,5 +1,5 @@
 using Toybox.WatchUi;
-using Toybox.Media;
+using Toybox.Communications;
 
 class SubMusicConfigureSyncDebugDelegate extends WatchUi.Menu2InputDelegate {
 
@@ -14,6 +14,11 @@ class SubMusicConfigureSyncDebugDelegate extends WatchUi.Menu2InputDelegate {
 		
 		if (SyncDebugMenu.TEST_SERVER == id) {
 			WatchUi.pushView(new SubMusicTestView(d_provider), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
+			return;
+		}
+		if (SyncDebugMenu.DONATE == id) {
+			onDonate();
+			WatchUi.pushView( new TextView("Open https://www.paypal.com/donate?hosted_button_id=HBUU64LT3QWA4 on your phone"), new TapDelegate(method(:onDonate)), WatchUi.SLIDE_IMMEDIATE);
 			return;
 		}
 		if (SyncDebugMenu.PLAYLIST_DETAIL == id) {
@@ -33,6 +38,12 @@ class SubMusicConfigureSyncDebugDelegate extends WatchUi.Menu2InputDelegate {
 		}
 		WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
 		return;
+	}
+	
+	function onDonate() {
+		var url = "https://www.paypal.com/donate";
+		var params = { "hosted_button_id" => "HBUU64LT3QWA4", };
+		Communications.openWebPage(url, params, null);
 	}
 	
 	function onRemoveAll() {

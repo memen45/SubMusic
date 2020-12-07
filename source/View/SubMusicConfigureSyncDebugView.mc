@@ -19,6 +19,12 @@ class SubMusicConfigureSyncDebugView extends WatchUi.Menu2 {
         	null
         ));
         addItem(new WatchUi.MenuItem(
+        	Rez.Strings.confSync_DebugInfo_Donate_label,		// label
+        	null,												// sublabel
+        	SyncDebugMenu.DONATE,								// identifier
+        	null
+        ));
+        addItem(new WatchUi.MenuItem(
         	Rez.Strings.confSync_DebugInfo_RemoveAll_label,		// label
         	Rez.Strings.confSync_DebugInfo_RemoveAll_sublabel,		// sublabel
         	SyncDebugMenu.REMOVE_ALL,								// identifier

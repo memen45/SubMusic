@@ -1,4 +1,11 @@
-Version [0.0.20] - 2020-
+Version [0.0.21] - 2020-
+- (tentative) added 'Manage...' option for more playlist options
+- (tentative) added alpha podcast implementation (feedback needed)
+- (tentative) added support for updating play count to server (scrobble/record_play)
+- fixed potential cause of onStream exception (Subsonic)
+- added donate link https://www.paypal.com/donate?hosted_button_id=HBUU64LT3QWA4
+
+Version [0.0.20] - 2020-12-02
 - fixed progressbar - only count songs that are not yet local
 - fixed crash on sync empty playlist (progress divide by 0)
 - fixed initial Sync setup (removed deprecated methods)
@@ -6,7 +13,7 @@ Version [0.0.20] - 2020-
 - fixed hot reloading of settings
 - refactor of menus
 - added last sync time record
-- added support for descentmk2 device
+- added support for descentmk2 devices
 
 Version [0.0.19] - 2020-11-20
 - refactor of sync engine
