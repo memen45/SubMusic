@@ -56,6 +56,7 @@ class SubsonicError extends SubMusic.ApiError {
     	// subsonic API errors have http code 200, status failed and an element 'error'
 		if ((responseCode != 200)
 			|| (data == null)
+			|| !(data instanceof Lang.Dictionary)
 			|| (data["subsonic-response"] == null)
 			|| (data["subsonic-response"]["status"] == null)
 			|| !(data["subsonic-response"]["status"].equals("failed"))
