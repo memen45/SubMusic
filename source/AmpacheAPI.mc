@@ -121,7 +121,9 @@ class AmpacheAPI {
 		d_callback.invoke();
 	}
 	
-	function ping() {
+	function ping(callback) {
+		d_callback = callback;
+		
 		var params = {};
 		params.put("action", "ping");
 		
@@ -143,7 +145,6 @@ class AmpacheAPI {
 		
 		d_callback.invoke(data);
 	}
-		
 	
 	// returns array of playlist objects
 	function playlists(callback, params) {

@@ -1,6 +1,9 @@
 class AmpacheProvider {
 	
 	private var d_api;
+	
+	private var d_callback;
+	private var d_fallback;
 
 	// request variables needed to repeat the request if necessary
 	private var d_action = null;
@@ -11,10 +14,8 @@ class AmpacheProvider {
 	private var d_encoding;		// encoding parameter needed for stream
 	private var d_response;		// construct full response
 
-	private var d_callback;
-	private var d_fallback;
-
 	enum {
+		AMPACHE_ACTION_PING,
 		AMPACHE_ACTION_PLAYLIST,
 		AMPACHE_ACTION_PLAYLISTS,
 		AMPACHE_ACTION_PLAYLIST_SONGS,
@@ -26,17 +27,32 @@ class AmpacheProvider {
 	}
 	
 	function onSettingsChanged(settings) {
+		System.println("AmpacheProvider::onSettingsChanged");
+		
 		d_api.update(settings);
 	}
 	
 	// functions:
-	// - getAllPlaylists - returns array of all playlists available for Ampache user
-	// - getPlaylist - returns an array of one playlist object with id
-	// - getPlaylistSongs - returns an array of songs on the playlist with id
-	// - getRefId - returns a refId for a song by id (this downloads the song)
+	// - ping				returns an object with server version
+	// - getAllPlaylists	returns array of all playlists available for Ampache user
+	// - getPlaylist		returns an array of one playlist object with id
+	// - getPlaylistSongs	returns an array of songs on the playlist with id
+	// - getRefId			returns a refId for a song by id (this downloads the song)
 	//
 	// to be added in the future:
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
+	
+	/**
+	 * ping
+	 *
+	 * returns an object with server version
+	 */
+	function ping(callback) {
+		d_callback = callback;
+
+		d_action = AMPACHE_ACTION_PING;
+		do_();
+	}
 	
 	/**
 	 * getAllPlaylists
@@ -121,6 +137,12 @@ class AmpacheProvider {
 		do_();
 	}
 
+	function on_do_ping(response) {
+		System.println("AmpacheProvider::on_do_ping( response = " + response + ")");
+		
+		
+		d_callback.invoke(response);
+	}
 
 	function on_do_playlist(response) {
 		// append the standard playlist objects to the array
@@ -198,6 +220,12 @@ class AmpacheProvider {
 		d_callback.invoke(refId);
 	}
 
+	/*
+	 * do_
+	 * 
+	 * dispatcher function from enum to api call
+	 * assumes required params are set, can be repeated
+	 */
 	function do_() {
 		// check if session still valid
 		if (!d_api.session(null)) {
@@ -205,6 +233,10 @@ class AmpacheProvider {
 			return;
 		}
 
+		if (d_action == AMPACHE_ACTION_PING) {
+			d_api.ping(self.method(:on_do_ping));
+			return;
+		}
 		if (d_action == AMPACHE_ACTION_PLAYLIST) {
 			d_api.playlist(self.method(:on_do_playlist), d_params);
 			return;

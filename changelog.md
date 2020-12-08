@@ -2,10 +2,11 @@ Version [0.0.21] - 2020-
 - (tentative) added 'Manage...' option for more playlist options
 - (tentative) added alpha podcast implementation (feedback needed)
 - (tentative) added support for updating play count to server (scrobble/record_play)
+- added ping to check server version
 - fixed duplicate check AmpacheError
 - fixed crash on display HttpError
 - fixed potential cause of onStream exception (Subsonic)
-- added donate link https://www.paypal.com/donate?hosted_button_id=HBUU64LT3QWA4
+- added donate link to menu: https://www.paypal.com/donate?hosted_button_id=HBUU64LT3QWA4
 
 Version [0.0.20] - 2020-12-02
 - fixed progressbar - only count songs that are not yet local

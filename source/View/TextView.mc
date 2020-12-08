@@ -4,7 +4,7 @@
 
     private var d_msg;
     
-    hidden var d_textarea;
+    private var d_textarea;
 
     // Constructor
     function initialize(msg) {
@@ -13,7 +13,7 @@
 		d_msg = msg;
     }
     
-    function onShow() {
+    function onLayout(dc) {
     	d_textarea = new WatchUi.TextArea({
     		:text => d_msg,
     		:color => Graphics.COLOR_WHITE,
@@ -21,11 +21,10 @@
     		:justification => Graphics.TEXT_JUSTIFY_CENTER,
     		:locX => WatchUi.LAYOUT_HALIGN_CENTER,
     		:locY => WatchUi.LAYOUT_VALIGN_CENTER,
-            :width=>160,
-            :height=>160,
+            :width => dc.getWidth() * 2 / 3,
+            :height => dc.getHeight() * 2 / 3,
     	});
     }
-    	
 
     // Update the View
     function onUpdate(dc) {
@@ -34,5 +33,17 @@
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
 
         d_textarea.draw(dc);
+    }
+    
+    function setText(msg) {
+    	d_msg = msg;
+    	d_textarea.setText(d_msg);
+    	WatchUi.requestUpdate();
+    }
+    
+    function appendText(msg) {
+    	d_msg += msg;
+    	d_textarea.setText(d_msg);
+    	WatchUi.requestUpdate();
     }
 }

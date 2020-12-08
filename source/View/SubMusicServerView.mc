@@ -1,45 +1,39 @@
 using Toybox.WatchUi;
 
-class SubMusicServerView extends WatchUi.View {
+class SubMusicServerView extends TextView {
 	
-	private var d_textarea;
+    // api access
+    private var d_provider = SubMusic.Provider.get();
 	
 	function initialize() {
-		View.initialize();
-	}
-
-    function onLayout(dc) {
-    	var settings = SubMusic.Provider.getProviderSettings();
-    	var msg = "";
+	
+		var settings = SubMusic.Provider.getProviderSettings();
+		var msg = "";
+    	
+    	msg += settings["api_url"];
+    	msg += "\n" + settings["api_usr"] + "\n";
+    	
     	if (settings["api_typ"] == ApiStandard.AMPACHE) {
     		msg += "Ampache";
     	} else {
     		msg += "Subsonic";
     	}
-    	msg += "\n" + settings["api_url"];
-    	msg += "\n" + settings["api_usr"];
     	
-    	d_textarea = new WatchUi.TextArea({
-    		:text => msg,
-    		:color => Graphics.COLOR_WHITE,
-    		:font => [ Graphics.FONT_SMALL, Graphics.FONT_TINY, Graphics.FONT_XTINY ],
-    		:justification => Graphics.TEXT_JUSTIFY_CENTER,
-    		:locX => WatchUi.LAYOUT_HALIGN_CENTER,
-    		:locY => WatchUi.LAYOUT_VALIGN_CENTER,
-            :width=> dc.getWidth() * 2 / 3,
-            :height=> dc.getHeight() * 2 / 3,
-    	});
-    }
-    	
-
-    // Update the View
-    function onUpdate(dc) {
-        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
-        dc.clear();
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-
-        d_textarea.draw(dc);
-    }
+		TextView.initialize(msg);
+		
+		d_provider.setFallback(method(:onError));
+		
+		d_provider.ping(method(:onPing));
+	}
 	
+	function onPing(response) {
+		System.println("onPing(" + response + ")");
+    	
+    	TextView.appendText("\nVersion: " + response["version"]);
+	}
+	
+	function onError(error) {
+		WatchUi.pushView(new ErrorView(error), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
+	}
 }
 		

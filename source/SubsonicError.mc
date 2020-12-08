@@ -59,7 +59,7 @@ class SubsonicError extends SubMusic.ApiError {
 			|| (data == null)
 			|| !(data instanceof Lang.Dictionary)
 			|| (data["subsonic-response"] == null)
-			|| (data["subsonic-response"]["status"] == null)
+			|| !(data["subsonic-response"]["status"] instanceof Lang.String)
 			|| !(data["subsonic-response"]["status"].equals("failed"))
 			|| (data["subsonic-response"]["error"] == null)) {
 			return null;

@@ -26,6 +26,26 @@ class SubsonicAPI {
     	System.println("SubsonicAPI::initialize(client name: " + d_params["c"] + " )");
 	}
 	
+	function ping(callback) {
+		d_callback = callback;
+		
+		var url = d_base_url + "ping";
+    	Communications.makeWebRequest(url, d_params, {}, self.method(:onPing));
+    }
+    
+    function onPing(responseCode, data) {
+    	System.println("SubsonicAPI::onPing( responseCode: " + responseCode + ", data: " + data + ")");		
+		
+		// check if request was successful and response is ok
+    	var error = checkResponse(responseCode, data);
+    	if (error) {
+    		d_fallback.invoke(error);	// add function name and variables available ?
+    		return;
+    	}
+		d_callback.invoke(data["subsonic-response"]);
+	}
+		
+	
 	/**
 	 * getPlaylists
 	 *

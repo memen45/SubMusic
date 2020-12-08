@@ -10,19 +10,31 @@ class SubsonicProvider {
 	}
 	
 	function onSettingsChanged(settings) {
-		System.println("SubsonicProvider:: onSettingsChanged");
+		System.println("SubsonicProvider::onSettingsChanged");
 		
 		d_api.update(settings);
 	}
 	
 	// functions:
-	// - getAllPlaylists - returns array of all playlists available for Subsonic user
-	// - getPlaylistSongs - returns an array of songs on the playlist with id
-	// - getRefId - returns a refId for a song by id (this downloads the song)
+	// - ping				returns an object with server version
+	// - getAllPlaylists	returns array of all playlists available for Subsonic user
+	// - getPlaylistSongs	returns an array of songs on the playlist with id
+	// - getRefId			returns a refId for a song by id (this downloads the song)
 	//
 	// to be added in the future (not possible for SubsonicAPI, so return allplaylists):
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
 	
+	/**
+	 * ping
+	 *
+	 * returns an object with server version
+	 */
+	function ping(callback) {
+		d_callback = callback;
+		
+		d_api.ping(self.method(:onPing));
+	}
+
 	/**
 	 * getAllPlaylists
 	 *
@@ -84,6 +96,13 @@ class SubsonicProvider {
 			"format" => format,
 		};
 		d_api.stream(self.method(:onStream), params, encoding);
+	}
+	
+	function onPing(response) {
+		System.println("SubsonicProvider::onPing( response = " + response + ")");
+		
+		
+		d_callback.invoke(response);
 	}
 
 	function onGetAllPlaylists(response) {
