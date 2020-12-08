@@ -1,4 +1,5 @@
 using Toybox.System;
+using Toybox.Lang;
 
 class SubsonicError extends SubMusic.ApiError {
     

@@ -114,7 +114,7 @@ module SubMusic {
 		}
 		
 		function shortString() {
-			return type.toString();
+			return Error.shortString() + "::" + s_name + "::" + d_type.toString();
 		}
 		
 		function toString() {
