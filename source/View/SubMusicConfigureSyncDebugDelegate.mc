@@ -3,8 +3,6 @@ using Toybox.Communications;
 
 class SubMusicConfigureSyncDebugDelegate extends WatchUi.Menu2InputDelegate {
 
-	private var d_provider = SubMusic.Provider.get();
-
 	function initialize() {
 		Menu2InputDelegate.initialize();
 	}
@@ -13,7 +11,7 @@ class SubMusicConfigureSyncDebugDelegate extends WatchUi.Menu2InputDelegate {
 		var id = item.getId();
 		
 		if (SyncDebugMenu.TEST_SERVER == id) {
-			WatchUi.pushView(new SubMusicTestView(d_provider), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
+			WatchUi.pushView(new SubMusicTestView(), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
 			return;
 		}
 		if (SyncDebugMenu.DONATE == id) {

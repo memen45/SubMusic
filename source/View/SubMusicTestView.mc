@@ -1,16 +1,16 @@
 using Toybox.WatchUi;
-using Toybox.Media;
 
 class SubMusicTestView extends WatchUi.ProgressBar {
 
-	private var d_provider;
+    // api access
+    private var d_provider = SubMusic.Provider.get();
+
 	private var d_progress;
 	private var d_step = (100 / 2).toNumber();
 
-	function initialize(provider) {
+	function initialize() {
 		ProgressBar.initialize(WatchUi.loadResource(Rez.Strings.confSync_Test_start), null);
 		
-		d_provider = provider;
 		d_provider.setFallback(method(:onError));
 		
 		d_progress = 0;

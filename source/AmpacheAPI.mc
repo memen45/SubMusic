@@ -11,8 +11,9 @@ class AmpacheAPI {
 	private var d_client;
 	private var d_hash;		// password hash, required for every handshake
 	
-	private var d_session;
-	private var d_expire;
+	private var d_server;	// ping response
+	private var d_session;	// handshake response
+	private var d_expire;	// Moment of session expire
 	
 	private var d_callback;
 	private var d_ecallback;
@@ -70,6 +71,9 @@ class AmpacheAPI {
 		System.println("AmpacheAPI::set(url: " + d_url + ", user: " + d_usr + ", pass: " + d_hash + ")");
 	}
 	
+	/*
+	 * API call 'handshake'
+	 */
 	function handshake(callback) {
 		d_callback = callback;
 
@@ -99,7 +103,7 @@ class AmpacheAPI {
 		System.println("AmpacheAPI::onHandshake with responseCode " + responseCode + " payload " + data);
 		
 		// errors are filtered first
-		var error = checkHandshake(responseCode, data);
+		var error = checkDictionaryResponse(responseCode, data);
 		if (error) {
 			d_fallback.invoke(error);
 			return;
@@ -117,15 +121,27 @@ class AmpacheAPI {
 		d_callback.invoke();
 	}
 	
-	function checkHandshake(responseCode, data) {
-		var error = checkResponse(responseCode, data);
-		if (error) { return error; }
-		error = AmpacheError.is(responseCode, data);
-		if (error) { return error; }
+	function ping() {
+		var params = {};
+		params.put("action", "ping");
 		
-		// finally, expecting dictionary
-		if (!(data instanceof Lang.Dictionary)) { return new AmpacheError(null); }
-		return null;
+		// auth is optional
+		// params.put("auth", d_session.get("auth"));
+		
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onPing));
+	}
+	
+	function onPing(responseCode, data) {
+		System.println("AmpacheAPI::onPing with responseCode " + responseCode + " payload " + data);
+		
+		// errors are filtered first
+		var error = checkDictionaryResponse(responseCode, data);
+		if (error) {
+			d_fallback.invoke(error);
+			return;
+		}
+		
+		d_callback.invoke(data);
 	}
 		
 	
@@ -228,6 +244,15 @@ class AmpacheAPI {
 		
 		// finally, expecting array
 		if (!(data instanceof Lang.Array)) { return new AmpacheError(null); }
+		return null;
+	}
+	
+	function checkDictionaryResponse(responseCode, data) {
+		var error = checkResponse(responseCode, data);
+		if (error) { return error; }
+		
+		// finally, expecting array
+		if (!(data instanceof Lang.Dictionary)) { return new AmpacheError(null); }
 		return null;
 	}
 	
