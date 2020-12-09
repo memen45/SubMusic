@@ -140,7 +140,7 @@ class AmpacheProvider {
 	function on_do_ping(response) {
 		System.println("AmpacheProvider::on_do_ping( response = " + response + ")");
 		
-		
+		d_action = null;
 		d_callback.invoke(response);
 	}
 
