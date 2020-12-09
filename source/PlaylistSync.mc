@@ -10,7 +10,7 @@ class PlaylistSync extends Deferrable {
 	private var f_progress; 		// callback on progress
 	
 	// store sync size
-	private var d_todo_songs = [];
+	private var d_todo_songs = null;
 	private var d_todo_total;		// the number of items that had to be synced
 
 	function initialize(provider, id, progress) {
@@ -84,7 +84,11 @@ class PlaylistSync extends Deferrable {
 	}
 	
 	function progress() {
-		var done = d_todo_total - d_todo_songs.size();
+		// determine what is left to do
+		var todo = 0;
+		if (d_todo_songs != null) { todo = d_todo_songs.size(); }
+		
+		var done = d_todo_total - todo;
 		var progress = (100 * done) / d_todo_total.toFloat();
 		return progress;
 	}
@@ -127,6 +131,7 @@ class PlaylistSync extends Deferrable {
     	if (d_song != null) {
     		// record the cause of failure
 //	    	d_song.setError(error);				TODO
+			d_song = null;
 	    	
 	    	// remove first element from todo list
 	    	d_todo_songs.remove(d_todo_songs[0]);

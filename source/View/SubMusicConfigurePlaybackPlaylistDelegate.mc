@@ -1,7 +1,7 @@
 using Toybox.WatchUi;
 using Toybox.Media;
 
-class SubMusicConfigurePlaybackMenuDelegate extends WatchUi.BehaviorDelegate {
+class SubMusicConfigurePlaybackPlaylistDelegate extends WatchUi.BehaviorDelegate {
 
     function initialize() {
         BehaviorDelegate.initialize();
@@ -18,5 +18,4 @@ class SubMusicConfigurePlaybackMenuDelegate extends WatchUi.BehaviorDelegate {
     function onBack() {
     	WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
     }
-
 }

@@ -50,7 +50,6 @@ class SubMusicSyncDelegate extends Communications.SyncDelegate {
 		// finish sync
 		Communications.notifySyncComplete(null);
 		Application.Storage.setValue(Storage.LAST_SYNC, { "time" => Time.now().value(), });
-		return;
 	}
 	
 	function onProgress(progress) {

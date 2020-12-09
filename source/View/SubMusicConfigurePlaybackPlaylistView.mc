@@ -1,6 +1,6 @@
 using Toybox.WatchUi;
 
-class SubMusicConfigurePlaybackView extends WatchUi.View {
+class SubMusicConfigurePlaybackPlaylistView extends WatchUi.View {
 
 	private var d_menushown = false;
 	private var d_msg = "";
@@ -56,11 +56,10 @@ class SubMusicConfigurePlaybackView extends WatchUi.View {
 		}
         if (empty)
     	{
-    		d_msg = "No local playlists\nTap to sync";
+    		d_msg = "No local playlists";
     		return;
     	}
-    	
-    	WatchUi.pushView(menu, new SubMusicConfigurePlaybackMenuDelegate(), WatchUi.SLIDE_IMMEDIATE);
+    	WatchUi.pushView(menu, new SubMusicConfigurePlaybackPlaylistDelegate(), WatchUi.SLIDE_IMMEDIATE);
     }
 
     // Update the view

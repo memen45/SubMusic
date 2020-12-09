@@ -45,43 +45,24 @@ module SubMusic {
 		}
 		
 		function shortString() {
-			var res = "API::";
-			
-			if (d_type == LOGIN) {
-	    		res += "\"LOGIN\"";
-	    	} else if (d_type == ACCESS) {
-	    		res += "\"ACCESS\"";
-	    	} else if (d_type == NOTFOUND) {
-	    		res += "\"NOTFOUND\"";
-	    	} else if (d_type == SERVERCLIENT) {
-	    		res += "\"SERVERCLIENT\"";
-	    	} else if (d_type == BADREQUEST) {
-	    		res += "\"BADREQUEST\"";
-	    	} else if (d_type == BADRESPONSE) {
-	    		res += "\"BADRESPONSE\"";
-	    	} else if (d_type == UNKNOWN) {
-	    		res += "\"UNKNOWN\"";
-	    	} else {
-	    		res += "Unknown";
-	    	}
-	    	return res + " " + Error.shortString();
+	    	return "API::" + typeToString(d_type) + " " + Error.shortString();
 	    }
 	    
 	    function typeToString(type) {
 	    
-	    	if (d_type == LOGIN) {
+	    	if (type == LOGIN) {
 	    		return "\"LOGIN\"";
-	    	} else if (d_type == ACCESS) {
+	    	} else if (type == ACCESS) {
 	    		return "\"ACCESS\"";
-	    	} else if (d_type == NOTFOUND) {
+	    	} else if (type == NOTFOUND) {
 	    		return "\"NOTFOUND\"";
-	    	} else if (d_type == SERVERCLIENT) {
+	    	} else if (type == SERVERCLIENT) {
 	    		return "\"SERVERCLIENT\"";
-	    	} else if (d_type == BADREQUEST) {
+	    	} else if (type == BADREQUEST) {
 	    		return "\"BADREQUEST\"";
-	    	} else if (d_type == BADRESPONSE) {
+	    	} else if (type == BADRESPONSE) {
 	    		return "\"BADRESPONSE\"";
-	    	} else if (d_type == UNKNOWN) {
+	    	} else if (type == UNKNOWN) {
 	    		return "\"UNKNOWN\"";
 	    	}
 	    	return "Unknown";

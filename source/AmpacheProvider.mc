@@ -227,14 +227,16 @@ class AmpacheProvider {
 	 * assumes required params are set, can be repeated
 	 */
 	function do_() {
+		
+		// ping does not need authentication
+		if (d_action == AMPACHE_ACTION_PING) {
+			d_api.ping(self.method(:on_do_ping));
+			return;
+		}
+		
 		// check if session still valid
 		if (!d_api.session(null)) {
 			d_api.handshake(self.method(:do_));
-			return;
-		}
-
-		if (d_action == AMPACHE_ACTION_PING) {
-			d_api.ping(self.method(:on_do_ping));
 			return;
 		}
 		if (d_action == AMPACHE_ACTION_PLAYLIST) {
