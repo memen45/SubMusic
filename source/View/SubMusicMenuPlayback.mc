@@ -9,6 +9,7 @@ module SubMusic {
 			enum {
 				SELECT_PLAYLIST,
 				OPEN_SYNC,
+				DONATE,
 			}			
 			var items = {
 				SELECT_PLAYLIST => { 
@@ -21,6 +22,11 @@ module SubMusic {
 					SUBLABEL => null, 
 					METHOD => method(:onOpenSync),
 				},
+				DONATE => {
+					LABEL => Rez.Strings.Donate_label, 
+					SUBLABEL => null, 
+					METHOD => method(:onDonate),
+				},
 			};
 			
 			function onSelectPlaylist() {
@@ -30,7 +36,11 @@ module SubMusic {
 			function onOpenSync() {
 				// pass false to indicate we are coming from another sync flow than normal
 				WatchUi.pushView(new SubMusic.Menu.SyncView(false), new SubMusic.Menu.Delegate(), WatchUi.SLIDE_IMMEDIATE);
-			} 
+			}
+			
+			function onDonate() {
+				WatchUi.pushView(new DonateView(), new DonateDelegate(), WatchUi.SLIDE_IMMEDIATE);
+			}
 		}
 		
 		class PlaybackView extends MenuView {

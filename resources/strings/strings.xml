@@ -20,9 +20,10 @@
     <string id="confSync_MoreInfo_TestServer_label">Test Server</string>
     <string id="confSync_MoreInfo_ServerDetail_label">Server</string>
     <string id="confSync_MoreInfo_ServerDetail_sublabel">Show server settings</string>
-    <string id="confSync_MoreInfo_Donate_label">Donate</string>
     <string id="confSync_MoreInfo_RemoveAll_label">Remove Data</string>
     <string id="confSync_MoreInfo_RemoveAll_sublabel">Reset application storage</string>
+    
+    <string id="Donate_label">Donate</string>
     
     <string id="confSync_PlaylistDetail_label">Playlist Detail</string>
     <string id="confSync_Test_start">Starting test...</string>

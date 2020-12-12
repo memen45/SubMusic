@@ -27,7 +27,7 @@ module SubMusic {
 					METHOD => method(:onServerDetail),
 				},
 				DONATE => {
-					LABEL => Rez.Strings.confSync_MoreInfo_Donate_label, 
+					LABEL => Rez.Strings.Donate_label, 
 					SUBLABEL => null, 
 					METHOD => method(:onDonate),
 				},
@@ -47,19 +47,12 @@ module SubMusic {
 			}
 			
 			function onDonate() {
-				openLink();
-				WatchUi.pushView( new TextView("Open https://www.paypal.com/donate?hosted_button_id=HBUU64LT3QWA4 on your phone"), new TapDelegate(method(:openLink)), WatchUi.SLIDE_IMMEDIATE);
+				WatchUi.pushView(new DonateView(), new DonateDelegate(), WatchUi.SLIDE_IMMEDIATE);
 			}
 			
 			function onRemoveAll() {
 				var msg = "Are you sure you want to delete all Application data?";
 				WatchUi.pushView(new WatchUi.Confirmation(msg), new SubMusicConfirmationDelegate(self.method(:removeAll)), WatchUi.SLIDE_IMMEDIATE);
-			}
-			
-			function openLink() {
-				var url = "https://www.paypal.com/donate";
-				var params = { "hosted_button_id" => "HBUU64LT3QWA4", };
-				Communications.openWebPage(url, params, null);
 			}
 			
 			function removeAll() {

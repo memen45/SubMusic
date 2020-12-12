@@ -38,12 +38,12 @@
     function setText(msg) {
     	d_msg = msg;
     	d_textarea.setText(d_msg);
-    	WatchUi.requestUpdate();
+    	WatchUi.requestUpdate(); // TODO test if requestUpdate is required
     }
     
     function appendText(msg) {
     	d_msg += msg;
     	d_textarea.setText(d_msg);
-    	WatchUi.requestUpdate();
+    	WatchUi.requestUpdate(); // TODO test if requestUpdate is required
     }
 }

@@ -4,7 +4,9 @@ Version [] -
 - (tentative) added support for updating play count to server (scrobble/record_play)
 
 Version [0.0.23] - 2020-12-
+- refactor in menus
 - fixes potential ampache crash 
+
 Version [0.0.22] - 2020-12-09
 - added 'More...' to playback configuration to open sync menu
 - fixed hanging sync (feedback required)
