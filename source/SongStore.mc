@@ -6,58 +6,40 @@ using Toybox.Application;
  * 
  * access to application storage for songs
  */
+ 
+class Id {
+ 	private var d_id;
+ 	
+ 	function initialize(id) {
+ 		d_id = id;
+ 	}
+ 	
+ 	function toStorage() {
+ 		return d_id;
+ 	}
+}
 
 module SongStore {
-	
-	// dictionary by song id (all saved song)
-	var d_songs = {};
-	var d_delete = [];		// deletes are deferred to account for changing refCount
-	var d_initialized = false;
 
-	function initialize() {
-		System.println("SongStore::initialize()");
-
-		var songs = Application.Storage.getValue(Storage.SONGS);
-		if (songs != null) {
-			d_songs = songs;
-		}
-		var delete = Application.Storage.getValue(Storage.SONGS_DELETE);
-		if (delete != null) {
-			d_delete = delete;
-		}
-		d_initialized = true;
-	}
+	var d_songs = new ObjectStore(Storage.SONGS);
+	var d_delete = new ArrayStore(Storage.SONGS_DELETE);
 
 	function get(id) {
 		System.println("SongStore::get( id : " + id + " )");
 
-		if (id == null)  {
-			return null;
-		}
-
-		if (!d_initialized) {
-			initialize();
-		}
-		return d_songs[id];
+		return d_songs.get(id);
 	}
 
 	function getIds() {
 		System.println("SongStore::getIds()");
 
-		if (!d_initialized) {
-			initialize();
-		}
-		return d_songs.keys();
+		return d_songs.getIds();
 	}
 
 	function getDeletes() {
-
-		if (!d_initialized) {
-			initialize();
-		}
 		var ret = new [d_delete.size()];
 		for (var idx = 0; idx < d_delete.size(); ++idx) {
-			ret[idx] = d_delete[idx];
+			ret[idx] = d_delete.get(idx);
 		}
 		return ret;
 	}
@@ -66,21 +48,8 @@ module SongStore {
 	function save(song) {
 		System.println("SongStore::save( song : " + song.toStorage() + " )");
 
-		// initialize if needed
-		if (!d_initialized) {
-			initialize();
-		}
-
-		var id = song.id();
-		if (id == null) {
-			return false;
-		}
-		
-		// save details of the song
-		d_songs.put(id, song.toStorage());
-		Application.Storage.setValue(Storage.SONGS, d_songs);
-		
 		// update delete tracking
+		var id = new Id(song.id());
 		var delete = (song.refCount() <= 0);
 		var ondelete = (d_delete.indexOf(id) >= 0);
 		if (delete && !ondelete) {
@@ -88,35 +57,23 @@ module SongStore {
 		} else if (!delete && ondelete) {
 			d_delete.remove(id);
 		}
-		Application.Storage.setValue(Storage.SONGS_DELETE, d_delete);
 
-		// indicate successful save
-		return true;
+		// save details of the song
+		return d_songs.save(song);
 	}
 
 	function remove(song) {
-        var id = song.id();
-
-		System.println("SongStore::remove( id : " + id + " )");
-		
-        if (id == null)  {
-			return;
-		}
-
-		if (!d_initialized) {
-			initialize();
-		}
 
 		// remove from storage
-		d_songs.remove(id);
-		Application.Storage.setValue(Storage.SONGS, d_songs);
+		d_songs.remove(song);
 
         // if not on delete, nothing to do
+        var id = new Id(id);
         if (d_delete.indexOf(id) < 0) {
             return;
         }
 
+		// remove from delete
         d_delete.remove(id);
-        Application.Storage.setValue(Storage.SONGS_DELETE, d_delete);
 	}
 }

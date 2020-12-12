@@ -2,7 +2,7 @@ using Toybox.System;
 using Toybox.Application;
 
 module PlaylistStore {
-    var d_store = new Store(Storage.PLAYLISTS);
+    var d_store = new ObjectStore(Storage.PLAYLISTS);
 
     function get(id) {
         return d_store.get(id);
