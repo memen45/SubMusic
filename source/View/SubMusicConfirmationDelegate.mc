@@ -11,9 +11,11 @@ class SubMusicConfirmationDelegate extends WatchUi.ConfirmationDelegate {
 	}
 	
 	function onResponse(response) {
-		if (response != WatchUi.CONFIRM_YES) {
+		if ((d_callback == null) 
+			|| (response == WatchUi.CONFIRM_NO)) { 
 			return;
 		}
+		
 		d_callback.invoke();
 	}
 }

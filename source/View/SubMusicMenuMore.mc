@@ -15,28 +15,30 @@ module SubMusic {
 				MANAGE_PLAYLISTS,
 				PLAYLIST_DETAIL,
 			}
-			var items = {
-				TEST_SERVER => {
-					LABEL => Rez.Strings.confSync_MoreInfo_TestServer_label, 
-					SUBLABEL => null, 
-					METHOD => method(:onTestServer),
-				},
-				SERVER_DETAIL => {
-					LABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_label,
-					SUBLABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_sublabel,
-					METHOD => method(:onServerDetail),
-				},
-				DONATE => {
-					LABEL => Rez.Strings.Donate_label, 
-					SUBLABEL => null, 
-					METHOD => method(:onDonate),
-				},
-				REMOVE_ALL => {
-					LABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_label, 
-					SUBLABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_sublabel,
-					METHOD => method(:onRemoveAll),
-				},
-			};
+			function getItems() {
+				return {
+					TEST_SERVER => {
+						LABEL => Rez.Strings.confSync_MoreInfo_TestServer_label, 
+						SUBLABEL => null, 
+						METHOD => method(:onTestServer),
+					},
+					SERVER_DETAIL => {
+						LABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_label,
+						SUBLABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_sublabel,
+						METHOD => method(:onServerDetail),
+					},
+					DONATE => {
+						LABEL => Rez.Strings.Donate_label, 
+						SUBLABEL => null, 
+						METHOD => method(:onDonate),
+					},
+					REMOVE_ALL => {
+						LABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_label, 
+						SUBLABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_sublabel,
+						METHOD => method(:onRemoveAll),
+					},
+				};
+			}
 			
 			function onTestServer() {
 				WatchUi.pushView(new SubMusicTestView(), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);

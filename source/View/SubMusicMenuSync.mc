@@ -13,28 +13,25 @@ module SubMusic {
 				START_SYNC,
 				MORE_INFO,
 			}
-			var items = {
-				SELECT_PLAYLISTS => {
-					LABEL => Rez.Strings.confSync_SelectPlaylists_label, 
-					SUBLABEL => null, 
-					METHOD => method(:onSelectPlaylists),
-				},
-				START_SYNC => {
-					LABEL => Rez.Strings.confSync_StartSync_label, 
-					SUBLABEL => getLastSyncString(), 
-					METHOD => method(:onStartSync),
-				},
-				MORE_INFO => {
-					LABEL => Rez.Strings.confSync_MoreInfo_label, 
-					SUBLABEL => null, 
-					METHOD => method(:onMoreInfo),
-				},
-			};
 			
-			private var d_syncauto;
-			
-			function initialize(syncauto) {
-				d_syncauto = syncauto;
+			function getItems() {
+				return {
+					SELECT_PLAYLISTS => {
+						LABEL => Rez.Strings.confSync_SelectPlaylists_label, 
+						SUBLABEL => null, 
+						METHOD => method(:onSelectPlaylists),
+					},
+					START_SYNC => {
+						LABEL => Rez.Strings.confSync_StartSync_label, 
+						SUBLABEL => getLastSyncString(), 
+						METHOD => method(:onStartSync),
+					},
+					MORE_INFO => {
+						LABEL => Rez.Strings.confSync_MoreInfo_label, 
+						SUBLABEL => null, 
+						METHOD => method(:onMoreInfo),
+					},
+				};
 			}
 			
 			function getLastSyncString() {
@@ -53,8 +50,7 @@ module SubMusic {
 			}
 			
 			function onStartSync() {
-				if (!d_syncauto) { Communications.startSync(); }
-				else { WatchUi.popView(WatchUi.SLIDE_IMMEDIATE); }
+				Communications.startSync();
 			}
 			
 			function onMoreInfo() {
@@ -63,8 +59,8 @@ module SubMusic {
 		}
 		
 		class SyncView extends MenuView {
-			function initialize(syncauto) {
-				MenuView.initialize(new Sync(syncauto));
+			function initialize() {
+				MenuView.initialize(new Sync());
 			}
 		}
 	}

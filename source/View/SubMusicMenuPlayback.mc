@@ -10,32 +10,35 @@ module SubMusic {
 				SELECT_PLAYLIST,
 				OPEN_SYNC,
 				DONATE,
-			}			
-			var items = {
-				SELECT_PLAYLIST => { 
-					LABEL => Rez.Strings.confPlayback_SelectPlaylist_label, 
-					SUBLABEL => null, 
-					METHOD => method(:onSelectPlaylist),
-				},
-				OPEN_SYNC => {
-					LABEL => Rez.Strings.confPlayback_OpenSync_label, 
-					SUBLABEL => null, 
-					METHOD => method(:onOpenSync),
-				},
-				DONATE => {
-					LABEL => Rez.Strings.Donate_label, 
-					SUBLABEL => null, 
-					METHOD => method(:onDonate),
-				},
-			};
+			}
+					
+			function getItems() {
+				return {
+					SELECT_PLAYLIST => { 
+						LABEL => Rez.Strings.confPlayback_SelectPlaylist_label, 
+						SUBLABEL => null, 
+						METHOD => method(:onSelectPlaylist),
+					},
+					OPEN_SYNC => {
+						LABEL => Rez.Strings.confPlayback_OpenSync_label, 
+						SUBLABEL => null, 
+						METHOD => method(:onOpenSync),
+					},
+					DONATE => {
+						LABEL => Rez.Strings.Donate_label, 
+						SUBLABEL => null, 
+						METHOD => method(:onDonate),
+					},
+				};
+			}
 			
 			function onSelectPlaylist() {
 				WatchUi.pushView(new SubMusicConfigurePlaybackPlaylistView(), null, WatchUi.SLIDE_IMMEDIATE);
 			}
 			
 			function onOpenSync() {
-				// pass false to indicate we are coming from another sync flow than normal
-				WatchUi.pushView(new SubMusic.Menu.SyncView(false), new SubMusic.Menu.Delegate(), WatchUi.SLIDE_IMMEDIATE);
+				// nothing to do on menu exit, so null
+				WatchUi.pushView(new SubMusic.Menu.SyncView(), new SubMusic.Menu.Delegate(null), WatchUi.SLIDE_IMMEDIATE);
 			}
 			
 			function onDonate() {

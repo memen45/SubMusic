@@ -15,10 +15,12 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // onStart() is called on application start up
     function onStart(state) {
+    	System.println("Start with state: " + state);
     }
 
     // onStop() is called when your application is exiting
     function onStop(state) {
+    	System.println("Stop with state: " + state);
     }
     
     function onSettingsChanged() {
@@ -30,6 +32,7 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get a Media.ContentDelegate for use by the system to get and iterate through media on the device
     function getContentDelegate(arg) {
+    	System.println("getContentDelegate with arg: " + arg);
         return new SubMusicContentDelegate();
     }
 
@@ -40,11 +43,20 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get the initial view for configuring playback
     function getPlaybackConfigurationView() {
-    	return [ new SubMusic.Menu.PlaybackView(), new SubMusic.Menu.Delegate() ];
+    	return [ new SubMusic.Menu.PlaybackView(), new SubMusic.Menu.Delegate(null) ];
     }
 
     // Get the initial view for configuring sync
     function getSyncConfigurationView() {
-    	return [ new SubMusic.Menu.SyncView(true), new SubMusic.Menu.Delegate() ];
+    	return [ new SubMusic.Menu.SyncView(), new SubMusic.Menu.Delegate(method(:onBack)) ];		// show note on exit
+    }
+    
+    function onBack() {
+    	var msg = "Note: \"Start syncing music\" might not complete on this device";
+    	WatchUi.switchToView(new TextView(msg), new TapDelegate(method(:popView)), WatchUi.SLIDE_IMMEDIATE);
+    }
+    
+    function popView() {
+    	WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
     }
 }

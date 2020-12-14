@@ -21,8 +21,8 @@ class Id {
 
 module SongStore {
 
-	var d_songs = new ObjectStore(Storage.SONGS);
-	var d_delete = new ArrayStore(Storage.SONGS_DELETE);
+	var d_songs = new ObjectStore(Storage.SONGS);			// allows fast indexing by id
+	var d_delete = new ArrayStore(Storage.SONGS_DELETE);	// allows fast access 
 
 	function get(id) {
 		System.println("SongStore::get( id : " + id + " )");
