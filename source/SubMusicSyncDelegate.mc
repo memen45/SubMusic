@@ -26,16 +26,25 @@ class SubMusicSyncDelegate extends Communications.SyncDelegate {
 		// show progress
 		Communications.notifySyncProgress(0);
 		
-		// starting sync
+		// first sync is on Scrobbles
+		startScrobbleSync();
+    }
+    
+    function startPlaylistSync() {
+    	// starting sync
         d_todo = PlaylistStore.getIds();
         d_todo_total = d_todo.size();
         
         // start async loop, provide callback to onLoopCompleted
-        d_loop = new DeferredFor(0, d_todo.size(), self.method(:step), self.method(:onComplete));
+        d_loop = new DeferredFor(0, d_todo.size(), self.method(:stepPlaylist), self.method(:onPlaylistsDone));
         d_loop.run();
     }
     
-    function onComplete() {
+    function stepPlaylist(idx) {
+    	return new PlaylistSync(d_provider, d_todo[idx], method(:onPlaylistProgress));
+    }
+    
+    function onPlaylistsDone() {
     	// finalize removals (deletes are deferred, to prevent redownloading)
 		var todelete = SongStore.getDeletes();
 		for (var idx = 0; idx < todelete.size(); ++idx) {
@@ -51,20 +60,31 @@ class SubMusicSyncDelegate extends Communications.SyncDelegate {
 		Communications.notifySyncComplete(null);
 		Application.Storage.setValue(Storage.LAST_SYNC, { "time" => Time.now().value(), });
 	}
+    
+    function startScrobbleSync() {
+    	var deferrable = new ScrobbleSync(d_provider, method(:onScrobbleProgress));
+    	deferrable.setCallback(method(:startPlaylistSync));
+    	if (deferrable.run()) {
+    		startPlaylistSync();		// continue with playlist sync afterwards
+    	}
+    	// not completed, so wait for callback
+    }
 	
-	function onProgress(progress) {
+	function onPlaylistProgress(progress) {
 		System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
 
-		progress += (100 * d_loop.idx());
+		progress += (100 * d_loop.idx());		// half of 100% for playlist progress
 		progress /= d_loop.end().toFloat();
 		
 		System.println(progress.toNumber());
 		Communications.notifySyncProgress(progress.toNumber());
 	}
-    
-    function step(idx) {
-    	return new PlaylistSync(d_provider, d_todo[idx], method(:onProgress));
-    }
+	
+	function onScrobbleProgress(progress) {
+		System.println("Sync Progress: scrobble is on " + progress + " %");
+		
+		
+	}
 
     // Sync always needed to verify new songs on the server
     function isSyncNeeded() {

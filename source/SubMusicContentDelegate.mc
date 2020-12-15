@@ -6,6 +6,8 @@ using Toybox.Media;
 class SubMusicContentDelegate extends Media.ContentDelegate {
 
 	private var d_iterator;
+	
+	enum { START, SKIP_NEXT, SKIP_PREVIOUS, PLAYBACK_NOTIFY, COMPLETE, STOP, PAUSE, RESUME, }
 	private var d_events = ["Start", "Skip Next", "Skip Previous", "Playback Notify", "Complete", "Stop", "Pause", "Resume"];
 
     function initialize() {
@@ -57,6 +59,7 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     function onMore() {
     	System.println("onMore is called");
     }
+    
     function onLibrary() {
     	System.println("onLibrary is called");
     }
@@ -65,7 +68,27 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     // been triggered for the given song
     function onSong(contentRefId, songEvent, playbackPosition) {
     	System.println("onSong Event (" + d_events[songEvent] + "): " + getSongName(contentRefId) + " at position " + playbackPosition);
+    	
+    	if (songEvent == PLAYBACK_NOTIFY) {
+    		var id = findIdByRefId(contentRefId);
+    		if (id == null) { return; }
+    		ScrobbleStore.add(new Scrobble({
+    			"id" => id,
+    		}));
+    		return;
+    	}
     }
+    
+    function findIdByRefId(refId) {
+		var ids = SongStore.getIds();
+		for (var idx = 0; idx < ids.size(); ++idx) {
+			var isong = new ISong(ids[idx]);
+			if (refId == isong.refId()) {
+				return ids[idx];
+			}
+		}
+		return null;
+	}
     
     function getSongName(refId) {
     	return Media.getCachedContentObj(new Media.ContentRef(refId, Media.CONTENT_TYPE_AUDIO)).getMetadata().title;

@@ -15,8 +15,4 @@ class TapDelegate extends WatchUi.BehaviorDelegate {
 			d_callback.invoke();
 		}
 	}
-	
-	function onBack() {
-		WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
-	}
 }

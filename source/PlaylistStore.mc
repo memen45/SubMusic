@@ -1,6 +1,3 @@
-using Toybox.System;
-using Toybox.Application;
-
 module PlaylistStore {
     var d_store = new ObjectStore(Storage.PLAYLISTS);
 

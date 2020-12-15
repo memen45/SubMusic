@@ -11,7 +11,6 @@ class AmpacheAPI {
 	private var d_client;
 	private var d_hash;		// password hash, required for every handshake
 	
-	private var d_server;	// ping response
 	private var d_session;	// handshake response
 	private var d_expire;	// Moment of session expire
 	
@@ -41,34 +40,6 @@ class AmpacheAPI {
 			return;
 		}
 		d_expire = expire;
-	}
-	
-	function update(settings) {
-		System.println("AmpacheAPI::update(settings)");
-		
-		// update the settings
-		set(settings);
-		
-		deleteSession();
-	}
-
-	function deleteSession() {
-		// reset the session
-		d_expire = new Time.Moment(0);
-		Application.Storage.deleteValue("AMPACHE_API_SESSION");
-		d_session = null;
-	}
-	
-	function set(settings) {
-		d_url = settings.get("api_url") + "/server/json.server.php";
-		d_usr = settings.get("api_usr");
-		
-		// hash the password
-		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
-		hasher.update(string_to_ba(settings.get("api_key")));
-		d_hash = ba_to_hexstring(hasher.digest());
-		
-		System.println("AmpacheAPI::set(url: " + d_url + ", user: " + d_usr + ", pass: " + d_hash + ")");
 	}
 	
 	/*
@@ -130,20 +101,29 @@ class AmpacheAPI {
 		// auth is optional
 		// params.put("auth", d_session.get("auth"));
 		
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onPing));
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onDictionaryResponse));
 	}
 	
-	function onPing(responseCode, data) {
-		System.println("AmpacheAPI::onPing with responseCode " + responseCode + " payload " + data);
+	function record_play(callback, params) {
+		System.println("AmpacheAPI::record_play( params: " + params + ")");
 		
-		// errors are filtered first
-		var error = checkDictionaryResponse(responseCode, data);
-		if (error) {
-			d_fallback.invoke(error);
-			return;
-		}
+		d_callback = callback;
+
+		params.put("action", "record_play");
+		params.put("auth", d_session.get("auth"));
 		
-		d_callback.invoke(data);
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onDictionaryResponse));
+	}
+	
+	function scrobble(callback, params) {
+		System.println("AmpacheAPI::scrobble( params: " + params + ")");
+		
+		d_callback = callback;
+
+		params.put("action", "scrobble");
+		params.put("auth", d_session.get("auth"));
+		
+		Communications.makeWebRequest(d_url, params, {}, self.method(:onDictionaryResponse));
 	}
 	
 	// returns array of playlist objects
@@ -151,10 +131,6 @@ class AmpacheAPI {
 		System.println("AmpacheAPI::playlists( params: " + params + ")");
 		
 		d_callback = callback;
-		
-		if (params == null) {
-			params = {};
-		}
 
 		params.put("action", "playlists");
 		params.put("auth", d_session.get("auth"));
@@ -227,6 +203,11 @@ class AmpacheAPI {
 		return now.lessThan(d_expire);
 	}
 
+	/*
+	 * onArrayResponse
+	 * 
+	 * default handler for actions that return an array
+	 */
 	function onArrayResponse(responseCode, data) {
 		System.println("AmpacheAPI::onArrayResponse with responseCode: " + responseCode + ", payload " + data);
 		
@@ -248,6 +229,24 @@ class AmpacheAPI {
 		return null;
 	}
 	
+	/*
+	 * onDictionaryResponse
+	 *
+	 * Default handler for actions that return a dictionary
+	 */
+	function onDictionaryResponse(responseCode, data) {
+		System.println("AmpacheAPI::onDictionaryResponse with responseCode " + responseCode + " payload " + data);
+		
+		// errors are filtered first
+		var error = checkDictionaryResponse(responseCode, data);
+		if (error) {
+			d_fallback.invoke(error);
+			return;
+		}
+		
+		d_callback.invoke(data);
+	}
+	
 	function checkDictionaryResponse(responseCode, data) {
 		var error = checkResponse(responseCode, data);
 		if (error) { return error; }
@@ -257,6 +256,11 @@ class AmpacheAPI {
 		return null;
 	}
 	
+	/*
+	 * checkResponse
+	 *
+	 * returns response / api errors if found
+	 */
 	function checkResponse(responseCode, data) {
 		var error = SubMusic.HttpError.is(responseCode);
 		if (error) { return error; }
@@ -341,5 +345,37 @@ class AmpacheAPI {
 			:toRepresentation => StringUtil.REPRESENTATION_STRING_HEX,
 		};
 		return StringUtil.convertEncodedString(ba, options);
+	}
+	
+	function update(settings) {
+		System.println("AmpacheAPI::update(settings)");
+		
+		// update the settings
+		set(settings);
+		
+		deleteSession();
+	}
+	
+	function set(settings) {
+		d_url = settings.get("api_url") + "/server/json.server.php";
+		d_usr = settings.get("api_usr");
+		
+		// hash the password
+		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
+		hasher.update(string_to_ba(settings.get("api_key")));
+		d_hash = ba_to_hexstring(hasher.digest());
+		
+		System.println("AmpacheAPI::set(url: " + d_url + ", user: " + d_usr + ", pass: " + d_hash + ")");
+	}
+
+	function deleteSession() {
+		// reset the session
+		d_expire = new Time.Moment(0);
+		Application.Storage.deleteValue("AMPACHE_API_SESSION");
+		d_session = null;
+	}
+
+	function client() {
+		return d_client;
 	}
 }

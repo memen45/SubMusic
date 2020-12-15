@@ -71,8 +71,8 @@ class SubMusicContentIterator extends Media.ContentIterator {
 			PLAYBACK_CONTROL_SKIP_FORWARD,
 			PLAYBACK_CONTROL_SKIP_BACKWARD,
         ];
-        profile.playbackNotificationThreshold = 1;
-        profile.requirePlaybackNotification = false;
+        profile.playbackNotificationThreshold = 30;
+        profile.requirePlaybackNotification = true;		// notify played
         profile.skipPreviousThreshold = 5;
         profile.supportsPlaylistPreview = true;
         return profile;
@@ -167,7 +167,12 @@ class SubMusicContentIterator extends Media.ContentIterator {
 	
 	// Retrieve the cached object from Media
 	function getObj(idx) {
-		return Media.getCachedContentObj(new Media.ContentRef(d_songs[idx], Media.CONTENT_TYPE_AUDIO));
+		var contentRef = new Media.ContentRef(d_songs[idx], Media.CONTENT_TYPE_AUDIO);
+		var content = Media.getCachedContentObj(contentRef);
+		
+		var metadata = content.getMetadata();
+		var playbackStartPos = 0;														// current playback position is 0, TODO load from storage if podcast
+		return new Media.ActiveContent(contentRef, metadata, playbackStartPos);
 	}
 	
 	// reorder the playlist randomly

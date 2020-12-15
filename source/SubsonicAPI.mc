@@ -7,6 +7,7 @@ using SubMusic;
 class SubsonicAPI {
 
 	private var d_base_url;
+	private var d_client;
 	
 	private var d_params = {};
 	
@@ -16,8 +17,8 @@ class SubsonicAPI {
 	function initialize(settings, fallback) {
 		set(settings);
 		
-		var client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + (new SubMusicVersion(null).toString()));
-		d_params.put("c", client);
+		d_client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + (new SubMusicVersion(null).toString()));
+		d_params.put("c", d_client);
 		d_params.put("v", "1.10.2");		// subsonic api version
 		d_params.put("f", "json");			// request format
 
@@ -44,7 +45,35 @@ class SubsonicAPI {
     	}
 		d_callback.invoke(data["subsonic-response"]);
 	}
+	
+	function scrobble(callback, params) {
+		System.println("SubsonicAPI::scrobble(params: " + params + ")");
+	
+		d_callback = callback;
 		
+		var url = d_base_url + "scrobble";
+		
+		// construct parameters
+		var id = params["id"];
+		var time = params["time"];
+		params = d_params;
+		params["id"] = id;			// set id for scrobble
+		params["time"] = time;		// set time for scrobble
+		
+    	Communications.makeWebRequest(url, params, {}, self.method(:onGetPlaylist));
+    }
+    
+    function onScrobble(responseCode, data) {
+    	System.println("SubsonicAPI::onScrobble( responseCode: " + responseCode + ", data: " + data + ")");		
+		
+		// check if request was successful and response is ok
+    	var error = checkResponse(responseCode, data);
+    	if (error) {
+    		d_fallback.invoke(error);	// add function name and variables available ?
+    		return;
+    	}
+		d_callback.invoke(data["subsonic-response"]);		// empty response on success
+    }
 	
 	/**
 	 * getPlaylists
@@ -159,8 +188,10 @@ class SubsonicAPI {
     function update(settings) {
 		System.println("SubsonicAPI::update(settings)");
 		
-    	// no persistent session info, so only update variables for future requests
+		// update the settings
     	set(settings);
+
+		// no persistent session info, so only update variables for future requests
    	}
     
     function set(settings) {
@@ -170,4 +201,8 @@ class SubsonicAPI {
 
     	System.println("SubsonicAPI::set(url: " + d_base_url + " user: " + d_params.get("u") + ", pass: " + d_params.get("p") + ")");
     }
+
+	function client() {
+		return d_client;
+	}
 }

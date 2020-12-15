@@ -10,7 +10,7 @@ class ArrayStore extends Store {
 
 	// returns a connected item
 	function get(idx) {
-		System.println("Store::get( idx : " + idx + " )");
+//		System.println("ArrayStore::get( idx : " + idx + " )");
 
 		var items = Store.value();
 		if ((idx == null)
@@ -31,7 +31,7 @@ class ArrayStore extends Store {
 	}
 	
 	function add(item) {
-		System.println("Store::save( item : " + item.toStorage() + " )");
+		System.println("ArrayStore::add( item : " + item.toStorage() + " )");
 
 		// return false if failed save
 		if (item == null) {
@@ -45,12 +45,19 @@ class ArrayStore extends Store {
 
 	// returns true if item id entry removed from storage or is not in storage
 	function remove(item) {        
-		System.println("Store::remove( item : " + item + " )");
+		System.println("ArrayStore::remove( item : " + item + " )");
 		if (item == null)  {
 			return true;
 		}
 
-		Store.value().remove(item);
+		Store.value().remove(item.toStorage());
+		return Store.update();
+	}
+	
+	function removeAll() {
+		System.println("ArrayStore::removeAll()");
+		
+		setValue([]);
 		return Store.update();
 	}
 }

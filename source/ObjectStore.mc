@@ -11,7 +11,7 @@ class ObjectStore extends Store {
 
 	// returns a connected item
 	function get(id) {
-		System.println("ObjectStore::get( id : " + id + " )");
+//		System.println("ObjectStore::get( id : " + id + " )");
 
 		var items = Store.value();
 		if (id == null)  {
@@ -21,7 +21,7 @@ class ObjectStore extends Store {
 	}
 
 	function getIds() {
-		System.println("ObjectStore::getIds()");
+//		System.println("ObjectStore::getIds()");
 		
 		return Store.value().keys();
 	}

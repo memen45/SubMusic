@@ -52,6 +52,10 @@ class SubsonicError extends SubMusic.ApiError {
 		return d_msg;
 	}
 	
+	function code() {
+		return d_code;
+	}
+	
 	static function is(responseCode, data) {
 	
     	// subsonic API errors have http code 200, status failed and an element 'error'

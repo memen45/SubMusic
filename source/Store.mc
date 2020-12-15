@@ -7,8 +7,6 @@ class Store {
 	private var d_value = null;	// variable that is reflected in the Application.Storage
 
 	function initialize(key, value) {
-		System.println("Store::initialize()");
-
 		d_key = key;
 
 		var stored = Application.Storage.getValue(d_key);
@@ -22,9 +20,18 @@ class Store {
 	function value() {
 		return d_value;
 	}
+	
+	function setValue(value) {
+		d_value = value;
+	}
 
 	function update() {
-		Application.Storage.setValue(d_key, d_value);
-		return true;		// true if successful
+		var success = true;
+		try {
+			Application.Storage.setValue(d_key, d_value);
+		} catch (exception instanceof Toybox.Lang.StorageFullException) {
+			success = false;
+		}
+		return success;
 	}
 }

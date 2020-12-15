@@ -17,6 +17,7 @@ class SubsonicProvider {
 	
 	// functions:
 	// - ping				returns an object with server version
+	// - recordPlay			submit a play
 	// - getAllPlaylists	returns array of all playlists available for Subsonic user
 	// - getPlaylistSongs	returns an array of songs on the playlist with id
 	// - getRefId			returns a refId for a song by id (this downloads the song)
@@ -33,6 +34,16 @@ class SubsonicProvider {
 		d_callback = callback;
 		
 		d_api.ping(self.method(:onPing));
+	}
+	
+	function recordPlay(id, time, callback) {
+		d_callback = callback;
+		
+		var params = {
+			"id" => id,
+			"time" => time,
+		};
+		d_api.scrobble(self.method(:onRecordPlay), params);		// scrobble is only way to submit a play
 	}
 
 	/**
@@ -103,6 +114,12 @@ class SubsonicProvider {
 		
 		
 		d_callback.invoke(response);
+	}
+	
+	function onRecordPlay(response) {
+		System.println("SubsonicProvider::onRecordPlay( response = " + response + ")");
+		
+		d_callback.invoke(response); // expected empty element
 	}
 
 	function onGetAllPlaylists(response) {

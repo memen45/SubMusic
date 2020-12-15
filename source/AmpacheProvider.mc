@@ -16,6 +16,7 @@ class AmpacheProvider {
 
 	enum {
 		AMPACHE_ACTION_PING,
+		AMPACHE_ACTION_RECORD_PLAY,
 		AMPACHE_ACTION_PLAYLIST,
 		AMPACHE_ACTION_PLAYLISTS,
 		AMPACHE_ACTION_PLAYLIST_SONGS,
@@ -34,6 +35,7 @@ class AmpacheProvider {
 	
 	// functions:
 	// - ping				returns an object with server version
+	// - recordPlay			submit a play
 	// - getAllPlaylists	returns array of all playlists available for Ampache user
 	// - getPlaylist		returns an array of one playlist object with id
 	// - getPlaylistSongs	returns an array of songs on the playlist with id
@@ -51,6 +53,19 @@ class AmpacheProvider {
 		d_callback = callback;
 
 		d_action = AMPACHE_ACTION_PING;
+		do_();
+	}
+	
+	function recordPlay(id, time, callback) {
+		d_callback = callback;
+		
+		d_params = {
+			"id" => id,
+			"client" => d_api.client(),
+			"date" =>  time,
+		};
+		
+		d_action = AMPACHE_ACTION_RECORD_PLAY;
 		do_();
 	}
 	
@@ -142,6 +157,13 @@ class AmpacheProvider {
 		
 		d_action = null;
 		d_callback.invoke(response);
+	}
+
+	function on_do_record_play(response) {
+		System.println("AmpacheProvider::on_do_record_play( response = " + response + ")");
+		
+		d_action = null;
+		d_callback.invoke(response["success"]); // expected success string
 	}
 
 	function on_do_playlist(response) {
@@ -237,6 +259,10 @@ class AmpacheProvider {
 		// check if session still valid
 		if (!d_api.session(null)) {
 			d_api.handshake(self.method(:do_));
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_RECORD_PLAY) {
+			d_api.record_play(self.method(:on_do_record_play), d_params);
 			return;
 		}
 		if (d_action == AMPACHE_ACTION_PLAYLIST) {

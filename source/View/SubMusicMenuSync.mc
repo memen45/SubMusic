@@ -54,7 +54,7 @@ module SubMusic {
 			}
 			
 			function onMoreInfo() {
-				WatchUi.pushView(new SubMusic.Menu.MoreView(), new SubMusic.Menu.Delegate(), WatchUi.SLIDE_IMMEDIATE);
+				WatchUi.pushView(new SubMusic.Menu.MoreView(), new SubMusic.Menu.Delegate(null), WatchUi.SLIDE_IMMEDIATE);
 			}
 		}
 		

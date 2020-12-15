@@ -79,6 +79,7 @@ module SubMusic {
 			
 			function onBack() {
 				if (d_callback) { d_callback.invoke(); }
+				else { Menu2InputDelegate.onBack(); }
 			}
 		}
 		

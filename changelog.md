@@ -1,9 +1,10 @@
 Version [] - 
 - (tentative) added 'Manage...' option for more playlist options
 - (tentative) added alpha podcast implementation (feedback needed)
-- (tentative) added support for updating play count to server (scrobble/record_play)
 
-Version [0.0.23] - 2020-12-
+Version [0.0.23] - 2020-12-15
+- added support for updating play count to server (feedback required)
+- added warning for possibly hanging sync
 - update last sync in menu
 - refactor in menus
 - fixes potential ampache crash 

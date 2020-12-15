@@ -21,10 +21,12 @@ module Storage {
 
 		SONGS,			// dictionary where song id is key
 		SONGS_DELETE,	// array of song ids of todelete songs (refCount == 0)
-		
 		PLAYLISTS,		// dictionary where playlist id is key
 		
 		LAST_SYNC,		// dictionary with details on last sync 
+
+		PLAY_RECORDS,	// array with play_record objects
+
 		VERSION = 200,	// version string of store
 	}
 

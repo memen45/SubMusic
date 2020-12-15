@@ -141,7 +141,8 @@ class PlaylistSync extends Deferrable {
     	}
     	
     	// update playlist info if not found
-    	if (error.type() == SubMusic.ApiError.NOTFOUND) {
+    	if ((error instanceof SubMusic.ApiError)
+    		&& (error.type() == SubMusic.ApiError.NOTFOUND)) {
     		d_playlist.setRemote(false);
     	}
     	
