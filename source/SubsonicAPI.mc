@@ -4,38 +4,52 @@ using Toybox.System;
 using SubMusic;
 
 // class for interfacing with a subsonic API endpoint
-class SubsonicAPI {
+class SubsonicAPI extends Api {
 
-	private var d_base_url;
-	private var d_client;
-	
 	private var d_params = {};
 	
-	private var d_callback;
-	private var d_fallback;
-	
-	function initialize(settings, fallback) {
-		set(settings);
-		
-		d_client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + (new SubMusicVersion(null).toString()));
-		d_params.put("c", d_client);
+	function initialize(settings, progress, fallback) {
+		Api.initialize("/rest/");
+		Api.update(settings);
+
+		// set callbacks
+		Api.setProgressCallback(progress);
+		Api.setFallback(fallback);
+
+    	System.println("SubsonicAPI::initialize(client name: " + client() + " )");
+
+		d_params.put("c", client());
 		d_params.put("v", "1.10.2");		// subsonic api version
 		d_params.put("f", "json");			// request format
-
-		d_fallback = fallback;
-
-    	System.println("SubsonicAPI::initialize(client name: " + d_params["c"] + " )");
+		// params "u" and "p" are set through updateUsr and updateKey respectively
 	}
 	
 	function ping(callback) {
-		d_callback = callback;
+		Api.setCallback(callback);
 		
-		var url = d_base_url + "ping";
-    	Communications.makeWebRequest(url, d_params, {}, self.method(:onPing));
+		var url = url() + "ping";
+    	Communications.makeWebRequest(url, d_params, {}, self.method(:onResponse));
     }
-    
-    function onPing(responseCode, data) {
-    	System.println("SubsonicAPI::onPing( responseCode: " + responseCode + ", data: " + data + ")");		
+	
+	function scrobble(callback, params) {
+		System.println("SubsonicAPI::scrobble(params: " + params + ")");
+	
+		Api.setCallback(callback);
+		
+		var url = url() + "scrobble";
+		
+		// construct parameters
+		var id = params["id"];
+		var time = params["time"];
+		params = d_params;
+		params["id"] = id;			// set id for scrobble
+		params["time"] = time;		// set time for scrobble
+		
+    	Communications.makeWebRequest(url, params, {}, self.method(:onResponse));
+    }
+
+	function onResponse(responseCode, data) {
+		System.println("SubsonicAPI::onResponse( responseCode: " + responseCode + ", data: " + data + ")");		
 		
 		// check if request was successful and response is ok
     	var error = checkResponse(responseCode, data);
@@ -46,35 +60,6 @@ class SubsonicAPI {
 		d_callback.invoke(data["subsonic-response"]);
 	}
 	
-	function scrobble(callback, params) {
-		System.println("SubsonicAPI::scrobble(params: " + params + ")");
-	
-		d_callback = callback;
-		
-		var url = d_base_url + "scrobble";
-		
-		// construct parameters
-		var id = params["id"];
-		var time = params["time"];
-		params = d_params;
-		params["id"] = id;			// set id for scrobble
-		params["time"] = time;		// set time for scrobble
-		
-    	Communications.makeWebRequest(url, params, {}, self.method(:onGetPlaylist));
-    }
-    
-    function onScrobble(responseCode, data) {
-    	System.println("SubsonicAPI::onScrobble( responseCode: " + responseCode + ", data: " + data + ")");		
-		
-		// check if request was successful and response is ok
-    	var error = checkResponse(responseCode, data);
-    	if (error) {
-    		d_fallback.invoke(error);	// add function name and variables available ?
-    		return;
-    	}
-		d_callback.invoke(data["subsonic-response"]);		// empty response on success
-    }
-	
 	/**
 	 * getPlaylists
 	 *
@@ -83,9 +68,9 @@ class SubsonicAPI {
 	function getPlaylists(callback) {
 		System.println("SubsonicAPI::getPlaylists");
 		
-		d_callback = callback;
+		Api.setCallback(callback);
 		
-		var url = d_base_url + "getPlaylists";
+		var url = url() + "getPlaylists";
     	Communications.makeWebRequest(url, d_params, {}, self.method(:onGetPlaylists));
 	}
 	
@@ -110,9 +95,9 @@ class SubsonicAPI {
 	function getPlaylist(callback, params) {
 		System.println("SubsonicAPI::getPlaylist(params: " + params + ")");
 	
-		d_callback = callback;
+		Api.setCallback(callback);
 		
-		var url = d_base_url + "getPlaylist";
+		var url = url() + "getPlaylist";
 		
 		// construct parameters
 		var id = params["id"];
@@ -145,9 +130,9 @@ class SubsonicAPI {
     function stream(callback, params, encoding) {
     	System.println("SubsonicAPI::stream( params: " + params + ")");
     
-    	d_callback = callback;
+    	Api.setCallback(callback);
     
-		var url = d_base_url + "stream";
+		var url = url() + "stream";
 
 		// construct parameters
 		var id = params["id"];
@@ -160,6 +145,7 @@ class SubsonicAPI {
     		:method => Communications.HTTP_REQUEST_METHOD_GET,
           	:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_AUDIO,
           	:mediaEncoding => encoding,
+			:fileDownloadProgressCallback => method(:onProgress),
    		};
     	Communications.makeWebRequest(url, params, options, self.method(:onStream));
     }
@@ -177,32 +163,37 @@ class SubsonicAPI {
     }
 
 	function checkResponse(responseCode, data) {
-		var error = SubMusic.HttpError.is(responseCode);
+		var error = Api.checkResponse(responseCode, data);
 		if (error) { return error; }
-		error = SubMusic.GarminSdkError.is(responseCode);
-		if (error) { return error; }
-		error = SubsonicError.is(responseCode, data);
-		return error;
+		return SubsonicError.is(responseCode, data);
 	}
     
-    function update(settings) {
-		System.println("SubsonicAPI::update(settings)");
+    // function update(settings) {
+	// 	System.println("SubsonicAPI::update(settings)");
 		
-		// update the settings
-    	set(settings);
+	// 	// update the settings
+    // 	set(settings);
 
-		// no persistent session info, so only update variables for future requests
-   	}
-    
-    function set(settings) {
-    	d_base_url = settings.get("api_url") + "/rest/";
-		d_params.put("u", settings.get("api_usr"));
-    	d_params.put("p", settings.get("api_key"));
+	// 	// no persistent session info, so only update variables for future requests
+   	// }
 
-    	System.println("SubsonicAPI::set(url: " + d_base_url + " user: " + d_params.get("u") + ", pass: " + d_params.get("p") + ")");
-    }
-
-	function client() {
-		return d_client;
+	// @override
+	function updateUsr(usr) {
+		Api.updateUsr(usr);
+		d_params.put("u", usr);
 	}
+
+	// @override
+	function updateKey(key) {
+		Api.updateKey(key);
+		d_params.put("p", key);
+	}
+    
+    // function set(settings) {
+    // 	d_base_url = settings.get("api_url") + "/rest/";
+	// 	d_params.put("u", settings.get("api_usr"));
+    // 	d_params.put("p", settings.get("api_key"));
+
+    // 	System.println("SubsonicAPI::set(url: " + d_base_url + " user: " + d_params.get("u") + ", pass: " + d_params.get("p") + ")");
+    // }
 }

@@ -4,29 +4,20 @@ using Toybox.StringUtil;
 using Toybox.Communications;
 using Toybox.Lang;
  
-class AmpacheAPI {
+class AmpacheAPI extends Api {
  
-	private var d_url;
-	private var d_usr;
-	private var d_client;
-	private var d_hash;		// password hash, required for every handshake
-	
 	private var d_session;	// handshake response
 	private var d_expire;	// Moment of session expire
 	
-	private var d_callback;
-	private var d_ecallback;
-	private var d_fallback;
-	
-	
-	function initialize(settings, fallback) {
-		set(settings);
-		
-		// set name for this client
-		d_client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + (new SubMusicVersion(null).toString()));
-    	System.println("Initialize AmpacheAPI(client name: " + d_client + ")");
-    	
-		d_fallback = fallback;
+	function initialize(settings, progress, fallback) {
+		Api.initialize("/server/json.server.php");
+		Api.update(settings);		// update settings without destroying session
+
+		// set callbacks
+		Api.setProgressCallback(progress);
+		Api.setFallback(fallback);
+
+    	System.println("AmpacheAPI::initialize(client name: " + client() + " )");
 		
 		// check if auth is expired, it may be usable!
 		d_expire = new Time.Moment(0);
@@ -46,7 +37,7 @@ class AmpacheAPI {
 	 * API call 'handshake'
 	 */
 	function handshake(callback) {
-		d_callback = callback;
+		Api.setCallback(callback);
 
 		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
 		
@@ -55,19 +46,20 @@ class AmpacheAPI {
 		
 		// construct the auth
 		hasher.update(string_to_ba(timestamp));
-		hasher.update(string_to_ba(d_hash));
+		var hash = key();
+		hasher.update(string_to_ba(hash));
 		var auth = ba_to_hexstring(hasher.digest());
 		
 		var params = {
 			"action" => "handshake",
-			"user" => d_usr,
+			"user" => usr(),
 			"timestamp" => timestamp,
 			"auth" => auth,
 		};
 		
 		System.println("AmpacheAPI::handshake with timestamp " + timestamp + " and auth " + auth);
 		
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onHandshake));
+		Communications.makeWebRequest(url(), params, {}, self.method(:onHandshake));
 	}
 	
 	function onHandshake(responseCode, data) {
@@ -93,7 +85,7 @@ class AmpacheAPI {
 	}
 	
 	function ping(callback) {
-		d_callback = callback;
+		Api.setCallback(callback);
 		
 		var params = {};
 		params.put("action", "ping");
@@ -101,70 +93,70 @@ class AmpacheAPI {
 		// auth is optional
 		// params.put("auth", d_session.get("auth"));
 		
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onDictionaryResponse));
+		Communications.makeWebRequest(url(), params, {}, self.method(:onDictionaryResponse));
 	}
 	
 	function record_play(callback, params) {
 		System.println("AmpacheAPI::record_play( params: " + params + ")");
 		
-		d_callback = callback;
+		Api.setCallback(callback);
 
 		params.put("action", "record_play");
 		params.put("auth", d_session.get("auth"));
 		
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onDictionaryResponse));
+		Communications.makeWebRequest(url(), params, {}, self.method(:onDictionaryResponse));
 	}
 	
 	function scrobble(callback, params) {
 		System.println("AmpacheAPI::scrobble( params: " + params + ")");
 		
-		d_callback = callback;
+		Api.setCallback(callback);
 
 		params.put("action", "scrobble");
 		params.put("auth", d_session.get("auth"));
 		
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onDictionaryResponse));
+		Communications.makeWebRequest(url(), params, {}, self.method(:onDictionaryResponse));
 	}
 	
 	// returns array of playlist objects
 	function playlists(callback, params) {
 		System.println("AmpacheAPI::playlists( params: " + params + ")");
 		
-		d_callback = callback;
+		Api.setCallback(callback);
 
 		params.put("action", "playlists");
 		params.put("auth", d_session.get("auth"));
 		
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onArrayResponse));
+		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
 	}
 	
 	// returns single playlist info
 	function playlist(callback, params) {
 		System.println("AmpacheAPI::playlist( id: " + params["filter"] + ")");
 		
-		d_callback = callback;
+		Api.setCallback(callback);
 		
 		params.put("action", "playlist");
 		params.put("auth", d_session.get("auth"));
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onArrayResponse));
+		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
 	}
 	
 	// returns array of song objects
 	function playlist_songs(callback, params) {
 		System.println("AmpacheAPI::playlist_songs( id: " + params["filter"] + ")");
 		
-		d_callback = callback;
+		Api.setCallback(callback);
 		
 		params.put("action", "playlist_songs");
 		params.put("auth", d_session.get("auth"));
-		Communications.makeWebRequest(d_url, params, {}, self.method(:onArrayResponse));
+		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
 	}
 	
 	// returns refId to the downloaded song
 	function stream(callback, params, encoding) {
 		System.println("AmpacheAPI::stream( id : " + params["id"] + " )");
 
-		d_callback = callback;
+		Api.setCallback(callback);
 		
 		params.put("action", "stream");
 		params.put("auth", d_session.get("auth"));
@@ -176,8 +168,9 @@ class AmpacheAPI {
 			:method => Communications.HTTP_REQUEST_METHOD_GET,
 			:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_AUDIO,
 			:mediaEncoding => encoding,
+			:fileDownloadProgressCallback => method(:onProgress),
 		};
-		Communications.makeWebRequest(d_url, params, options, self.method(:onStream));
+		Communications.makeWebRequest(url(), params, options, self.method(:onStream));
 	}
 	
 	function onStream(responseCode, data) {
@@ -251,7 +244,7 @@ class AmpacheAPI {
 		var error = checkResponse(responseCode, data);
 		if (error) { return error; }
 		
-		// finally, expecting array
+		// finally, expecting Dictionary
 		if (!(data instanceof Lang.Dictionary)) { return new AmpacheError(null); }
 		return null;
 	}
@@ -262,12 +255,9 @@ class AmpacheAPI {
 	 * returns response / api errors if found
 	 */
 	function checkResponse(responseCode, data) {
-		var error = SubMusic.HttpError.is(responseCode);
+		var error = Api.checkResponse(responseCode, data);
 		if (error) { return error; }
-		error = SubMusic.GarminSdkError.is(responseCode);
-		if (error) { return error; }
-		error = AmpacheError.is(responseCode, data);
-		return error;
+		return AmpacheError.is(responseCode, data);
 	}
 	
 	// converts rfc3339 formatted timestamp to Time::Moment (null on error)
@@ -347,25 +337,41 @@ class AmpacheAPI {
 		return StringUtil.convertEncodedString(ba, options);
 	}
 	
+	// function update(settings) {
+	// 	System.println("AmpacheAPI::update(settings)");
+		
+	// 	// update the settings
+	// 	set(settings);
+		
+	// 	deleteSession();
+	// }
+	
+	// function set(settings) {
+	// 	d_url = settings.get("api_url") + "/server/json.server.php";
+	// 	d_usr = settings.get("api_usr");
+		
+	// 	// hash the password
+	// 	var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
+	// 	hasher.update(string_to_ba(settings.get("api_key")));
+	// 	d_hash = ba_to_hexstring(hasher.digest());
+		
+	// 	System.println("AmpacheAPI::set(url: " + d_url + ", user: " + d_usr + ", pass: " + d_hash + ")");
+	// }
+
+	// @override
 	function update(settings) {
-		System.println("AmpacheAPI::update(settings)");
-		
-		// update the settings
-		set(settings);
-		
+		Api.update(settings);
+
 		deleteSession();
 	}
-	
-	function set(settings) {
-		d_url = settings.get("api_url") + "/server/json.server.php";
-		d_usr = settings.get("api_usr");
-		
+
+	// @override
+	function updateKey(key) {
 		// hash the password
 		var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
-		hasher.update(string_to_ba(settings.get("api_key")));
-		d_hash = ba_to_hexstring(hasher.digest());
-		
-		System.println("AmpacheAPI::set(url: " + d_url + ", user: " + d_usr + ", pass: " + d_hash + ")");
+		hasher.update(string_to_ba(key));
+		var hash = ba_to_hexstring(hasher.digest());
+		Api.updateKey(hash);
 	}
 
 	function deleteSession() {
@@ -373,9 +379,5 @@ class AmpacheAPI {
 		d_expire = new Time.Moment(0);
 		Application.Storage.deleteValue("AMPACHE_API_SESSION");
 		d_session = null;
-	}
-
-	function client() {
-		return d_client;
 	}
 }

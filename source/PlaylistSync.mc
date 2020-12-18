@@ -21,6 +21,7 @@ class PlaylistSync extends Deferrable {
 		
 		d_provider = provider;
         d_provider.setFallback(method(:onError));
+		d_provider.setProgressCallback(method(:onProgress));
         
 		d_playlist = new IPlaylist(id);
 		d_todo_total = d_playlist.count();
@@ -45,11 +46,6 @@ class PlaylistSync extends Deferrable {
 		return Deferrable.complete();		// indicate completed
 	}
 	
-	function onProgress() {
-		// TODO: progress callback in requests, since v3.2
-		return ;
-	}
-	
 	function onGetPlaylist(response) {
 		
 		if (response.size() == 0) {
@@ -71,7 +67,7 @@ class PlaylistSync extends Deferrable {
     	}
     	
 		d_playlist.setSynced(!d_failed);	// not failed = successful sync
-   		Deferrable.complete();
+   		Deferrable.complete();				// set sync complete
 	}
 	
 	function onGetPlaylistSongs(songs) {
@@ -92,6 +88,12 @@ class PlaylistSync extends Deferrable {
 		var done = d_todo_total - todo;
 		var progress = (100 * done) / d_todo_total.toFloat();
 		return progress;
+	}
+
+	// handle callback on intermediate progress
+	function onProgress(progress) {
+		progress /= d_todo_total.toFloat();
+		f_progress.invoke(progress() + progress);
 	}
 	
 	function syncNextSong() {

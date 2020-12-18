@@ -2,8 +2,10 @@ class AmpacheProvider {
 	
 	private var d_api;
 	
-	private var d_callback;
-	private var d_fallback;
+    // callbacks
+    private var d_callback;  // callback for finished request
+    private var d_fallback;  // fallback for failed request
+    private var d_progress;  // intermediate callback to update request progress
 
 	// request variables needed to repeat the request if necessary
 	private var d_action = null;
@@ -24,7 +26,11 @@ class AmpacheProvider {
 	}
 	
 	function initialize(settings) {
-		d_api = new AmpacheAPI(settings, self.method(:onError));
+		d_api = new AmpacheAPI(
+			settings, 
+			self.method(:onProgress),
+			self.method(:onError)
+		);
 	}
 	
 	function onSettingsChanged(settings) {
@@ -311,10 +317,18 @@ class AmpacheProvider {
 		d_action = null;
 		d_fallback.invoke(error);
 	}
+
+	function onProgress(progress) {
+		d_progress.invoke(progress);
+	}
     
     function setFallback(fallback) {
     	d_fallback = fallback;
     }
+
+	function setProgressCallback(progress) {
+		d_progress = progress;
+	}
 
 	function mimeToEncoding(mime) {
 		// mime should be a string

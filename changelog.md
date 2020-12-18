@@ -2,6 +2,10 @@ Version [] -
 - (tentative) added 'Manage...' option for more playlist options
 - (tentative) added alpha podcast implementation (feedback needed)
 
+Version [0.1.0] - 2020-12-
+- fixes Subsonic scrobble 
+- added granular progress during sync 
+
 Version [0.0.24] - 2020-12-18
 - fixed sync issues (delete after sync)
 - added interrupting syncs on errors that cannot be skipped/handled

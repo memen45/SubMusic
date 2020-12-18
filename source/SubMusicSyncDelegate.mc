@@ -30,6 +30,14 @@ class SubMusicSyncDelegate extends Communications.SyncDelegate {
 		// first sync is on Scrobbles
 		startScrobbleSync();
     }
+
+	// stops the sync
+	function onStopSync() {
+		Communications.cancelAllRequests();
+
+		var errorMessage = "Sync stopped";
+		Communications.notifySyncComplete(errorMessage);
+	}
     
     function startPlaylistSync() {
     	// starting sync
@@ -72,7 +80,7 @@ class SubMusicSyncDelegate extends Communications.SyncDelegate {
     }
 	
 	function onPlaylistProgress(progress) {
-		System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
+		// System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
 
 		progress += (100 * d_loop.idx());
 		progress /= d_loop.end().toFloat();
@@ -80,7 +88,7 @@ class SubMusicSyncDelegate extends Communications.SyncDelegate {
 		progress /= 2;
 		progress += 50;		// add 50% done as that was the scrobble part
 		
-		System.println(progress.toNumber());
+		// System.println(progress.toNumber());
 		Communications.notifySyncProgress(progress.toNumber());
 	}
 	
