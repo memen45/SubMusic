@@ -8,6 +8,7 @@ class PlaylistSync extends Deferrable {
 	private var d_failed = false;	// true if anything failed
 	
 	private var f_progress; 		// callback on progress
+	private var d_fallback;			// fallback on unhandled error
 	
 	// store sync size
 	private var d_todo_songs = null;
@@ -140,13 +141,18 @@ class PlaylistSync extends Deferrable {
     		return;
     	}
     	
+	    d_playlist.setSynced(!d_failed);
+    	
     	// update playlist info if not found
     	if ((error instanceof SubMusic.ApiError)
     		&& (error.type() == SubMusic.ApiError.NOTFOUND)) {
     		d_playlist.setRemote(false);
+	    	Deferrable.complete();
+	    	return; 	
     	}
     	
-    	d_playlist.setSynced(!d_failed);
-    	Deferrable.complete(); 	
+    	// other errors will break the sync by default
+    	Deferrable.cancel(error);
+    	return;
     }
 }

@@ -120,7 +120,7 @@ class SubMusicConfigureSyncPlaylistView extends WatchUi.View {
     }
     
     function onError(error) {    	
- 		WatchUi.switchToView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
+ 		WatchUi.switchToView(new ErrorView(error), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
 		d_menushown = true;
 		WatchUi.requestUpdate();
 	}

@@ -1,6 +1,7 @@
 using Toybox.Application;
 using Toybox.Communications;
 using Toybox.Time;
+using Toybox.WatchUi;
 
 // Performs the sync with the music provider
 class SubMusicSyncDelegate extends Communications.SyncDelegate {
@@ -36,7 +37,7 @@ class SubMusicSyncDelegate extends Communications.SyncDelegate {
         d_todo_total = d_todo.size();
         
         // start async loop, provide callback to onLoopCompleted
-        d_loop = new DeferredFor(0, d_todo.size(), self.method(:stepPlaylist), self.method(:onPlaylistsDone));
+        d_loop = new DeferredFor(0, d_todo.size(), self.method(:stepPlaylist), self.method(:onPlaylistsDone), self.method(:onError));
         d_loop.run();
     }
     
@@ -73,8 +74,11 @@ class SubMusicSyncDelegate extends Communications.SyncDelegate {
 	function onPlaylistProgress(progress) {
 		System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
 
-		progress += (100 * d_loop.idx());		// half of 100% for playlist progress
+		progress += (100 * d_loop.idx());
 		progress /= d_loop.end().toFloat();
+		
+		progress /= 2;
+		progress += 50;		// add 50% done as that was the scrobble part
 		
 		System.println(progress.toNumber());
 		Communications.notifySyncProgress(progress.toNumber());
@@ -83,7 +87,17 @@ class SubMusicSyncDelegate extends Communications.SyncDelegate {
 	function onScrobbleProgress(progress) {
 		System.println("Sync Progress: scrobble is on " + progress + " %");
 		
+		progress /= 2;
 		
+		System.println(progress.toNumber());
+		Communications.notifySyncProgress(progress.toNumber());
+	}
+	
+	function onError(error) {
+		System.println("SubMusicSyncDelegate::onError( " + error.shortString() + " " + error.toString() + ")");
+		
+		// notify short error during sync
+		Communications.notifySyncComplete(error.shortString());
 	}
 
     // Sync always needed to verify new songs on the server

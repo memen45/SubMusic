@@ -25,7 +25,7 @@ module SongStore {
 	var d_delete = new ArrayStore(Storage.SONGS_DELETE);	// allows fast access 
 
 	function get(id) {
-		System.println("SongStore::get( id : " + id + " )");
+//		System.println("SongStore::get( id : " + id + " )");
 
 		return d_songs.get(id);
 	}
@@ -63,12 +63,13 @@ module SongStore {
 	}
 
 	function remove(song) {
+		System.println("SongStore::remove( " + song.toStorage() + ")");
 
 		// remove from storage
 		d_songs.remove(song);
 
         // if not on delete, nothing to do
-        var id = new Id(id);
+        var id = new Id(song.id());
         if (d_delete.indexOf(id) < 0) {
             return;
         }

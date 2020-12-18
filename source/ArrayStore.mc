@@ -26,8 +26,8 @@ class ArrayStore extends Store {
 		return Store.value().size();
 	}
 
-	function indexOf(object) {
-		return Store.value().indexOf(object);
+	function indexOf(item) {
+		return Store.value().indexOf(item.toStorage());
 	}
 	
 	function add(item) {
@@ -45,7 +45,7 @@ class ArrayStore extends Store {
 
 	// returns true if item id entry removed from storage or is not in storage
 	function remove(item) {        
-		System.println("ArrayStore::remove( item : " + item + " )");
+		System.println("ArrayStore::remove( item : " + item.toStorage() + " )");
 		if (item == null)  {
 			return true;
 		}

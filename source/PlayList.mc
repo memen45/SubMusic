@@ -261,6 +261,7 @@ class IPlaylist extends Playlist {
 	// links all related songs
 	function link() {
 		System.println("IPlaylist::link()");
+		
 		// nothing to do if already linked
 		if (linked()) {
 			return;
@@ -268,8 +269,8 @@ class IPlaylist extends Playlist {
 	
 		// link each of the songs
 		for (var idx = 0; idx < d_songs.size(); ++idx) {
-			var song = new ISong(d_songs[idx]);
-			song.incRefCount();
+			var isong = new ISong(d_songs[idx]);
+			isong.incRefCount();
 		}
 		setLinked(true);
 		save();

@@ -27,7 +27,7 @@ class ObjectStore extends Store {
 	}
 	
 	function save(item) {
-		System.println("Store::save( item : " + item.toStorage() + " )");
+		System.println("ObjectStore::save( item : " + item.toStorage() + " )");
 
 		// return false if failed save
 		var id = item.id();
@@ -42,7 +42,7 @@ class ObjectStore extends Store {
 
 	// returns true if item id entry removed from storage or is not in storage
 	function remove(item) {        
-		System.println("Store::remove( id : " + item.id() + " )");
+		System.println("ObjectStore::remove( " + item.toStorage() + " )");
 		
 		var id = item.id();
         if (id == null)  {

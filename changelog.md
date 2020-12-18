@@ -2,6 +2,10 @@ Version [] -
 - (tentative) added 'Manage...' option for more playlist options
 - (tentative) added alpha podcast implementation (feedback needed)
 
+Version [0.0.24] - 2020-12-18
+- fixed sync issues (delete after sync)
+- added interrupting syncs on errors that cannot be skipped/handled
+
 Version [0.0.23] - 2020-12-15
 - added support for updating play count to server (feedback required)
 - added warning for possibly hanging sync

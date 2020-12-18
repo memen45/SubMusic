@@ -69,7 +69,7 @@ class SubMusicTestView extends WatchUi.ProgressBar {
 		
 		setDisplayString("Test failed:\n" + error.shortString() + "\n" + error.toString());
 		
-		WatchUi.pushView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
+		WatchUi.pushView(new ErrorView(error), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
 	}
 		
 }
