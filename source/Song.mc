@@ -70,6 +70,14 @@ class Song {
 	function refCount() {
 		return d_refCount;
 	}
+
+	function metadata() {
+		// metadata only available when refId != null
+		if (d_refId == null) {
+			return null;
+		}
+		return Media.getCachedContentObj(new Media.ContentRef(d_refId, Media.CONTENT_TYPE_AUDIO)).getMetadata();
+	}
 }
 
 // interface song storage object

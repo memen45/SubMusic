@@ -43,12 +43,12 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get the initial view for configuring playback
     function getPlaybackConfigurationView() {
-    	return [ new SubMusic.Menu.PlaybackView(), new SubMusic.Menu.Delegate(null) ];
+    	return [ new SubMusic.Menu.PlaybackView(), new SubMusic.Menu.PlaybackDelegate() ];
     }
 
     // Get the initial view for configuring sync
     function getSyncConfigurationView() {
-    	return [ new SubMusic.Menu.SyncView(), new SubMusic.Menu.Delegate(method(:onBack)) ];		// show note on exit
+    	return [ new SubMusic.Menu.SyncView(), new SubMusic.Menu.SyncDelegate(method(:onBack)) ];		// show note on exit
     }
     
     function onBack() {

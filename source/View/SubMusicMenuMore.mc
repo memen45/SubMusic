@@ -15,29 +15,49 @@ module SubMusic {
 				MANAGE_PLAYLISTS,
 				PLAYLIST_DETAIL,
 			}
-			function getItems() {
-				return {
-					TEST_SERVER => {
-						LABEL => Rez.Strings.confSync_MoreInfo_TestServer_label, 
-						SUBLABEL => null, 
-						METHOD => method(:onTestServer),
-					},
-					SERVER_DETAIL => {
-						LABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_label,
-						SUBLABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_sublabel,
-						METHOD => method(:onServerDetail),
-					},
-					DONATE => {
-						LABEL => Rez.Strings.Donate_label, 
-						SUBLABEL => null, 
-						METHOD => method(:onDonate),
-					},
-					REMOVE_ALL => {
-						LABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_label, 
-						SUBLABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_sublabel,
-						METHOD => method(:onRemoveAll),
-					},
-				};
+
+			private var d_items = {
+				TEST_SERVER => {
+					LABEL => Rez.Strings.confSync_MoreInfo_TestServer_label, 
+					SUBLABEL => null, 
+					METHOD => method(:onTestServer),
+				},
+				SERVER_DETAIL => {
+					LABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_label,
+					SUBLABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_sublabel,
+					METHOD => method(:onServerDetail),
+				},
+				DONATE => {
+					LABEL => Rez.Strings.Donate_label, 
+					SUBLABEL => null, 
+					METHOD => method(:onDonate),
+				},
+				REMOVE_ALL => {
+					LABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_label, 
+					SUBLABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_sublabel,
+					METHOD => method(:onRemoveAll),
+				},
+			};
+
+			// returns null if menu idx not found
+			function getItem(idx) {
+
+				// check if item exists
+				var item = d_items.get(idx);
+				if (item == null) {
+					return null;
+				}
+
+				return new WatchUi.MenuItem(
+					item[LABEL],		// label
+					item[SUBLABEL],		// sublabel
+					item[METHOD],		// identifier (use method for simple callback)
+					null				// options
+			    );
+			}
+
+			function loaded() {
+				return true;
 			}
 			
 			function onTestServer() {
@@ -78,6 +98,13 @@ module SubMusic {
 		class MoreView extends MenuView {
 			function initialize() {
 				MenuView.initialize(new More());
+			}
+		}
+
+		class MoreDelegate extends MenuDelegate {
+			function initialize() {
+				MenuDelegate.initialize(null, null);
+				// all ids are methods and no action on Back
 			}
 		}
 	}

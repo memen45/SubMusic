@@ -31,6 +31,8 @@
     <string id="configurePlaybackMessage">Configure\nPlayback</string>
     
     <string id="confPlayback_Title">Play</string>
+    <string id="confPlayback_NowPlaying_title">Now Playing</string>
+    <string id="confPlayback_NowPlaying_label">Now Playing</string>
     <string id="confPlayback_SelectPlaylist_label">Choose Playlist</string>
     <string id="confPlayback_OpenSync_label">More...</string>
     

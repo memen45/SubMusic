@@ -18,10 +18,28 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
 	function initializePlaylist() {
 
-		// get the current playlist id
-		var id = Application.Storage.getValue(Storage.PLAYLIST);
-		if (id != null) {
-			load(new IPlaylist(id));
+		// reset current array of refIds
+		d_songs = [];
+
+		// load new 
+		var refIds = SubMusic.NowPlaying.getRefIds();
+		var song_ids = refIds.keys();
+
+		// add all songs to the list
+		for (var idx = 0; idx != song_ids.size(); ++idx) {
+			d_songs.add(refIds.get(song_ids[idx]));
+		}
+
+		// start from playback state if available
+		var song_id = SubMusic.NowPlaying.songId();
+		var idx = song_ids.indexOf(song_id);
+		if (idx >= 0) {
+			d_songidx = idx;
+			return;
+		}
+
+		// if something on the list, done
+		if (d_songs.size() != 0) {
 			return;
 		}
 
@@ -32,7 +50,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 			var  playlist = new IPlaylist(ids[idx]);
 			if (playlist.songs().size() != 0) {
 				load(playlist);
-				break;
+				return;
 			}
 		}
 

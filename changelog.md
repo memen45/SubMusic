@@ -2,7 +2,8 @@ Version [] -
 - (tentative) added 'Manage...' option for more playlist options
 - (tentative) added alpha podcast implementation (feedback needed)
 
-Version [0.1.0] - 2020-12-
+Version [0.1.0] - 2020-12-28
+- added Now Playing option to play per song
 - fixes Subsonic scrobble 
 - added granular progress during sync 
 
