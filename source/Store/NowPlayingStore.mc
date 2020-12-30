@@ -7,6 +7,10 @@ module SubMusic {
         var d_id = Application.Storage.getValue(Storage.PLAYLIST);
         var d_songid = null;
 
+        // playlist id (for name, number of songs, playback position (songid))
+        // songs list 
+        //      song {id, refId, playback position (number in seconds)}
+
         // returns a dictionary with a refId for each id
         function getRefIds() {
 

@@ -3,15 +3,16 @@ using Toybox.WatchUi;
 module SubMusic {
     module Menu {
 
-        class SongsLocal {
-
-            var title;
+        class SongsLocal extends MenuBase {
 
             private var d_ids;
 
             function initialize(title, ids) {
-                self.title = title;
+                MenuBase.initialize(title, true);
+
+                // load the menu items
                 d_ids = ids;
+                load();
             }
 
             function getItem(idx) {
@@ -33,7 +34,7 @@ module SubMusic {
                 );
             }
 
-            function loaded() {
+            function load() {
 
                 // remove the non local songs
                 var todelete = [];
@@ -49,9 +50,6 @@ module SubMusic {
                 for (var idx = 0; idx != todelete.size(); ++idx) {
                     d_ids.remove(todelete[idx]);
                 }
-
-                // always return true, as everything is loaded
-                return true;
             }
         }
 

@@ -4,15 +4,17 @@ using Toybox.Application;
 module SubMusic {
     module Menu {
 
-        class PlaylistsLocal {
-
-            var title;
+        class PlaylistsLocal extends MenuBase {
 
             // items are known at creation
             private var d_ids;
 
             function initialize(title) {
-                self.title = title;
+                // initialize base as loaded
+                MenuBase.initialize(title, true);
+
+                // load the items
+                load();
             }
             
             function getItem(idx) {
@@ -42,7 +44,7 @@ module SubMusic {
             }
 
             // reload the ids on request
-			function loaded() {
+			function load() {
                 d_ids = PlaylistStore.getIds();
 
                 // remove the non local playlists
@@ -59,9 +61,6 @@ module SubMusic {
                 for (var idx = 0; idx != todelete.size(); ++idx) {
                     d_ids.remove(todelete[idx]);
                 }
-
-                // always return true, as everything is loaded from here
-				return true;
 			}
         }
 

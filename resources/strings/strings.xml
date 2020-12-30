@@ -36,6 +36,9 @@
     <string id="confPlayback_SelectPlaylist_label">Choose Playlist</string>
     <string id="confPlayback_OpenSync_label">More...</string>
     
+    <string id="placeholder_noMenuItems">Nothing to show</string>
+    <string id="placeholder_loading">Loading..</string>
+    <string id="placeholder_noRemotePlaylists">No Remote Playlists</string>
     <string id="fetchingSongs">Fetching Songs...</string>
     <string id="fetchingPlaylists">Fetching Playlists...</string>
     <string id="playbackMenuTitle">Playlists</string>

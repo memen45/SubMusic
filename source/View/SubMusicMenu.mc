@@ -86,7 +86,7 @@ module SubMusic {
 			 * function setOnLoaded(callback)	- sets :onLoaded as the callback function
 			 */
 			function initialize(menu) {
-				Menu2.initialize({:title => menu.title});
+				Menu2.initialize({:title => menu.title()});
 	        	
 			   	d_menu = menu;
 		    }
@@ -94,7 +94,7 @@ module SubMusic {
 		    // update the created menu with new values
 		    function updateMenu() {
 				// set title
-				setTitle(d_menu.title);
+				setTitle(d_menu.title());
 
 				// load the items
 				var idx = 0;
@@ -111,7 +111,7 @@ module SubMusic {
 			// create the menu by adding the items
 			function createMenu() {
 				// set title
-				setTitle(d_menu.title);
+				setTitle(d_menu.title());
 
 				// load the items
 				var idx = 0;
@@ -128,24 +128,7 @@ module SubMusic {
 		    	d_created = true;
 			}
 		    
-		    // returns a WatchUi.MenuItem from object
-		    // function makeMenuItem(item) {
-		    // 	return new WatchUi.MenuItem(
-			//     		item[LABEL],		// label
-			//         	item[SUBLABEL],		// sublabel
-			//         	item[METHOD],		// identifier (use method for simple callback)
-			//         	null				// options
-			//     );
-			// }
-		    
 		    function onShow() {
-
-				// show placeholder if not loaded yet
-				if (!d_menu.loaded()) {
-					d_menu.setOnLoaded(method(:onLoaded)); // subscribe to loaded complete
-					WatchUi.pushView(new TextView(d_menu.placeholder()), null, WatchUi.SLIDE_IMMEDIATE);
-					return;
-				}
 
 				// create if not created
 				if (!d_created) {
@@ -155,13 +138,7 @@ module SubMusic {
 
 				// update otherwise
 				updateMenu();
-		    }
-
-			function onLoaded() {
-				// if it is now loaded, show the menu, pop the placeholder
-				WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
-			}
-		
+		    }		
 		}
 		
 		class MenuDelegate extends WatchUi.Menu2InputDelegate {
@@ -194,6 +171,108 @@ module SubMusic {
 				else { Menu2InputDelegate.onBack(); }
 			}
 		}
-		
+
+		class MenuBase {
+			private var d_title;
+			private var d_loaded;
+			private var f_loaded = null;
+			private var d_error = null;
+
+			function initialize(title, loaded) {
+				d_title = title;
+				d_loaded = loaded;
+			}
+
+			function loaded() {
+				return d_loaded;
+			}
+
+			function title() {
+				return d_title;
+			}
+
+			function error() {
+				return d_error;
+			}
+
+			function setOnLoaded(callback) {
+				System.println("MenuBase::setOnLoaded");
+				f_loaded = callback;
+			}
+
+			function onLoaded(error) {
+				System.println("MenuBase::onLoaded");
+				
+				d_error = error;
+				d_loaded = true;
+				if (f_loaded) { f_loaded.invoke(error); }
+			}
+
+			function placeholder() {
+				if (d_loaded) {
+					return Rez.Strings.placeholder_noMenuItems;
+				}
+				return Rez.Strings.placeholder_loading;
+			}
+
+		}
+
+		// helper class for menus that require loading and can error
+		// loaded menus can use a simple MenuView
+		class MenuLoader {
+
+			private var d_menu = null;
+			private var d_delegate = null;
+
+			function initialize(menu, delegate) {
+				System.println("MenuLoader::initialize(" + WatchUi.loadResource(menu.title()) + ")");
+
+				// store variables if needed for non-loaded menu
+				if (!menu.loaded()) {
+					// reference the menu and delegate for onLoaded
+					d_menu = menu;
+					d_delegate = delegate;	
+
+					menu.setOnLoaded(method(:onLoaded));
+				}
+
+				// for loaded menus: check error
+				var error = menu.error();
+				if (error) {
+					WatchUi.pushView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
+					return;
+				}
+
+				// for empty menus, use placeholder
+				if (menu.getItem(0) == null) {	
+					WatchUi.pushView(new TextView(menu.placeholder()), null, WatchUi.SLIDE_IMMEDIATE);
+					return;
+				}
+
+				// load the menu
+				WatchUi.pushView(new MenuView(menu), delegate, WatchUi.SLIDE_IMMEDIATE);
+				return;
+			}
+
+			function onLoaded(error) {
+				System.println("MenuLoader::onLoaded( " + (error instanceof SubMusic.Error) + ")");
+				// switch to error view on error
+				if (error instanceof SubMusic.Error) {
+					WatchUi.switchToView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
+					return;
+				}
+
+				// only show menu if there are items to show
+				if (d_menu.getItem(0) == null) {
+					WatchUi.switchToView(new TextView(d_menu.placeholder()), null, WatchUi.SLIDE_IMMEDIATE);
+				} else {
+					WatchUi.switchToView(new MenuView(d_menu), d_delegate, WatchUi.SLIDE_IMMEDIATE);
+				}
+
+				// allow garbage collection / reference count to zero
+				d_menu = null;
+				d_delegate = null;
+			}
+		}
 	}
 }

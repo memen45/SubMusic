@@ -3,8 +3,7 @@ using SubMusic.Menu;
 
 module SubMusic {
 	module Menu {
-		class Playback {
-			var title = Rez.Strings.confPlayback_Title;
+		class Playback extends MenuBase {
 			enum {
 				NOW_PLAYING,
 				SELECT_PLAYLIST,
@@ -35,6 +34,10 @@ module SubMusic {
 				},
 			};
 
+			function initialize() {
+				MenuBase.initialize(Rez.Strings.confPlayback_Title, true);
+			}
+
 			// returns null if menu idx not found
 			function getItem(idx) {
 
@@ -52,15 +55,16 @@ module SubMusic {
 			    );
 			}
 
-			function loaded() {
-				return true;
-			}
-
 			function onNowPlaying() {
-				WatchUi.pushView(
-					new SubMusic.Menu.NowPlayingView(),
-					new SubMusic.Menu.NowPlayingDelegate(),
-					WatchUi.SLIDE_IMMEDIATE
+				// WatchUi.pushView(
+				// 	new SubMusic.Menu.NowPlayingView(),
+				// 	new SubMusic.Menu.NowPlayingDelegate(),
+				// 	WatchUi.SLIDE_IMMEDIATE
+				// );
+				System.println("Playback::onNowPlaying");
+				var loader = new MenuLoader(
+					new SubMusic.Menu.NowPlaying(),
+					new SubMusic.Menu.NowPlayingDelegate()
 				);
 			}
 			

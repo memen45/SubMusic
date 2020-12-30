@@ -3,21 +3,21 @@ using Toybox.WatchUi;
 module SubMusic {
     module Menu {
 
-        class PlaylistsRemote {
-
-            var title;
+        class PlaylistsRemote extends MenuBase {
 
             // items not known at creation
             private var d_items = null;
 
 	        private var d_provider = SubMusic.Provider.get();
             private var d_loading = false;
-            private var f_onLoaded;
 
             function initialize(title) {
-                self.title = title;
+                MenuBase.initialize(title, false);
 
                 d_provider.setFallback(method(:onError));
+
+                // load the items
+                load();
             }
 
             function getItem(idx) {
@@ -44,19 +44,16 @@ module SubMusic {
                 return new WatchUi.ToggleMenuItem(label, sublabel, playlist, enabled, {});
             }
 
-            function loaded() {
-                if (d_items != null) {
-                    return true;
-                }
+            function load() {
 
+                // if already loading, do nothing, wait for response
                 if (d_loading) {
-                    return false;
+                    return;
                 }
 
                 // start loading
                 d_loading = true;
                 d_provider.getAllPlaylists(method(:onGetAllPlaylists));
-                return false;    // not yet loaded
             }
 
             function onGetAllPlaylists(playlists) {
@@ -99,28 +96,28 @@ module SubMusic {
 
                 // loading finished
                 d_loading = false;
-
-                f_onLoaded.invoke();
+                MenuBase.onLoaded(null);
             }
 
             function placeholder() {
-                return "Fetching remote playlists";
+                if (loaded()) {
+                    return Rez.Strings.placeholder_noRemotePlaylists;
+                }
+                return Rez.Strings.fetchingPlaylists;
             }
 
-            function setOnLoaded(callback) {
-                f_onLoaded = callback;
-            }
-
-            function onError(error) {    	
-                WatchUi.switchToView(new ErrorView(error), new WatchUi.BehaviorDelegate(), WatchUi.SLIDE_IMMEDIATE);
+            function onError(error) {
+                // loading finished
+                d_loading = false;
+                MenuBase.onLoaded(error);
             }
         }
 
-        class PlaylistsRemoteView extends MenuView {
-            function initialize(title) {
-                MenuView.initialize(new PlaylistsRemote(title));
-            }
-        }
+        // class PlaylistsRemoteView extends MenuView {
+        //     function initialize(title) {
+        //         MenuView.initialize(new PlaylistsRemote(title));
+        //     }
+        // }
 
         class PlaylistsRemoteDelegate extends MenuDelegate {
             function initialize() {

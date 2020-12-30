@@ -5,8 +5,7 @@ using SubMusic.Menu;
 
 module SubMusic {
 	module Menu {
-		class Sync {
-			var title = Rez.Strings.confSync_Title;
+		class Sync extends MenuBase {
 			
 			enum {
 				SELECT_PLAYLISTS,
@@ -31,6 +30,10 @@ module SubMusic {
 					METHOD => method(:onMoreInfo),
 				},
 			};
+
+			function initialize() {
+				MenuBase.initialize(Rez.Strings.confSync_Title, true);
+			}
 			
 			// returns null if menu idx not found
 			function getItem(idx) {
@@ -53,10 +56,6 @@ module SubMusic {
 					null				// options
 			    );
 			}
-
-			function loaded() {
-				return true;
-			}
 			
 			function getLastSyncString() {
 				var lastsync = Application.Storage.getValue(Storage.LAST_SYNC);
@@ -70,12 +69,11 @@ module SubMusic {
 			}
 			
 			function onSelectPlaylists() {
-				WatchUi.pushView(
-					new SubMusic.Menu.PlaylistsRemoteView(Rez.Strings.confSync_Playlists_title),
-					new SubMusic.Menu.PlaylistsRemoteDelegate(),
-					WatchUi.SLIDE_IMMEDIATE
+				// load the menu as it might be empty and or not ready
+				var loader = new MenuLoader(
+					new SubMusic.Menu.PlaylistsRemote(Rez.Strings.confSync_Playlists_title),
+					new SubMusic.Menu.PlaylistsRemoteDelegate()
 				);
-				// WatchUi.pushView(new SubMusicConfigureSyncPlaylistView(), null, WatchUi.SLIDE_IMMEDIATE);
 			}
 			
 			function onStartSync() {
@@ -83,7 +81,17 @@ module SubMusic {
 			}
 			
 			function onMoreInfo() {
-				WatchUi.pushView(new SubMusic.Menu.MoreView(), new SubMusic.Menu.MoreDelegate(), WatchUi.SLIDE_IMMEDIATE);
+				WatchUi.pushView(
+					new SubMusic.Menu.MoreView(),
+					new SubMusic.Menu.MoreDelegate(),
+					WatchUi.SLIDE_IMMEDIATE
+				);
+				// equivalent:
+				// 
+				// new MenuLoader(
+				// 	new SubMusic.Menu.More(),
+				// 	new SubMusic.Menu.MoreDelegate()
+				// );
 			}
 		}
 		

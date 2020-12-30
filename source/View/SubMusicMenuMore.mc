@@ -4,9 +4,7 @@ using Toybox.Application;
 
 module SubMusic {
 	module Menu {
-		class More {
-			var title = Rez.Strings.confSync_MoreInfo_title;
-			
+		class More extends MenuBase {			
 			enum {
 				TEST_SERVER,
 				SERVER_DETAIL,
@@ -39,6 +37,10 @@ module SubMusic {
 				},
 			};
 
+			function initialize() {
+				MenuBase.initialize(Rez.Strings.confSync_MoreInfo_title, true);
+			}
+
 			// returns null if menu idx not found
 			function getItem(idx) {
 
@@ -54,10 +56,6 @@ module SubMusic {
 					item[METHOD],		// identifier (use method for simple callback)
 					null				// options
 			    );
-			}
-
-			function loaded() {
-				return true;
 			}
 			
 			function onTestServer() {
