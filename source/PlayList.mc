@@ -20,6 +20,8 @@ class Playlist {
 	hidden var d_linked = false;	// true if all songs are referenced in their refCount
 	hidden var d_local = false;		// true if should be locally available, false if should not
 
+	hidden var d_podcast = false;	// true if playback position is stored, 
+
 	
 	function initialize(storage) {
 		// System.println("Playlist::initialize( storage = " + storage + " )");
@@ -54,6 +56,9 @@ class Playlist {
 		if (storage["linked"] != null) {
 			d_linked = storage["linked"];
 		}
+		if (storage["podcast"] != null) {
+			d_podcast = storage["podcast"];
+		}
 	}
 	
 	function toStorage() {
@@ -69,6 +74,8 @@ class Playlist {
 			"remote" => d_remote,
 			"synced" => d_synced,
 			"local" => d_local,
+
+			"podcast" => d_podcast,
 		};
 	}
 	
@@ -107,6 +114,10 @@ class Playlist {
 	
 	function time() {
 		return d_time;
+	}
+
+	function podcast() {
+		return d_podcast;
 	}
 	
 }
@@ -220,6 +231,20 @@ class IPlaylist extends Playlist {
 		}
 		d_name = name;
 		
+		// nothing to do if not stored
+		if (d_stored) {
+			save();
+		}
+		return true;
+	}
+
+	function setPodcast(podcast) {
+		// nothing to do if not changed
+		if (d_podcast == podcast) {
+			return false;
+		}
+		d_podcast = podcast;
+
 		// nothing to do if not stored
 		if (d_stored) {
 			save();

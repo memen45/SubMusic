@@ -79,9 +79,10 @@ module SubMusic {
             function onPlaylistSelect(item) {
                 var id = item.getId();
 
-                // store selection as current playlist
-                Application.Storage.setValue(Storage.PLAYLIST, id);
-                Media.startPlayback(null);
+                var loader = new MenuLoader(
+                    new PlaylistSettings(id),
+                    new PlaylistSettingsDelegate()
+                );
             }
         }
     }

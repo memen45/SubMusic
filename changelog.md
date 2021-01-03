@@ -2,6 +2,10 @@ Version [] -
 - (tentative) added 'Manage...' option for more playlist options
 - (tentative) added alpha podcast implementation (feedback needed)
 
+Version [0.1.2] - 2021-01-03
+- fixes 'choose playlist'
+- added start play by song (Playlists -> playlist1 -> Songs)
+
 Version [0.1.1] - 2020-12-30
 - fixed broken error report views
 - bug fixes and improvements

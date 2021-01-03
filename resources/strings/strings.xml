@@ -42,4 +42,9 @@
     <string id="fetchingSongs">Fetching Songs...</string>
     <string id="fetchingPlaylists">Fetching Playlists...</string>
     <string id="playbackMenuTitle">Playlists</string>
+
+    <string id="Menu_PlaylistSongs_title">Songs</string>
+    <string id="Menu_PlayNow_label">Play Now</string>
+    <string id="Menu_PodcastMode_label">Podcast Mode</string>
+    <string id="Menu_Songs_label">Songs</string>
 </strings>

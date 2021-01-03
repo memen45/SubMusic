@@ -65,8 +65,14 @@ module SubMusic {
                 // ids are ids, so have to be handled, no onBack action
             }
 
-            function onSongSelect(id) {
-                System.println("SongsLocalDelegate::onSongSelect( id: " + id + ")");
+            function onSongSelect(item) {
+                var id = item.getId();
+
+                // store selection as current playlist/song
+                SubMusic.NowPlaying.setSongId(id);
+
+				// start the playback of this song
+                Media.startPlayback(null);
             }
         }
     }

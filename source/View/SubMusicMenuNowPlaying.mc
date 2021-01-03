@@ -19,21 +19,10 @@ module SubMusic {
 			}
 		}
 
-        class NowPlayingDelegate extends MenuDelegate {
-            function initialize() {
-                MenuDelegate.initialize(method(:onSongSelect), null);
-                // ids are ids, so have to be handled, no onBack action
-            }
-
-            function onSongSelect(item) {
-                var id = item.getId();
-
-                // store selection as current playlist
-                SubMusic.NowPlaying.setSongId(id);
-
-				// start the playback of this song
-                Media.startPlayback(null);
-            }
-        }
+        class NowPlayingDelegate extends SongsLocalDelegate {
+			function initialize() {
+				SongsLocalDelegate.initialize();
+			}
+		}
 	}
 }

@@ -20,6 +20,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
 		// reset current array of refIds
 		d_songs = [];
+		d_songidx = 0;
 
 		// load new 
 		var refIds = SubMusic.NowPlaying.getRefIds();

@@ -225,7 +225,11 @@ module SubMusic {
 			private var d_delegate = null;
 
 			function initialize(menu, delegate) {
-				System.println("MenuLoader::initialize(" + WatchUi.loadResource(menu.title()) + ")");
+				var title = menu.title();
+				if (!(menu.title() instanceof Lang.String)) {
+					title = WatchUi.loadResource(title);
+				}
+				System.println("MenuLoader::initialize(" + title + ")");
 
 				// store variables if needed for non-loaded menu
 				if (!menu.loaded()) {
