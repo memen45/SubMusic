@@ -2,6 +2,11 @@ Version [] -
 - (tentative) added 'Manage...' option for more playlist options
 - (tentative) added alpha podcast implementation (feedback needed)
 
+Version [0.1.3] - 2021-01-11
+- fixes playlist order - now reflecting server changes
+- fixes bluetooth headphone 'skip' behaviour (feedback required)
+- fixes empty screen when no local playlists are available
+
 Version [0.1.2] - 2021-01-03
 - fixes 'choose playlist'
 - added start play by song (Playlists -> playlist1 -> Songs)

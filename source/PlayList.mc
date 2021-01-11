@@ -316,11 +316,17 @@ class IPlaylist extends Playlist {
 	// updates song list, returns array of song ids that are not yet locally available
 	function update(songs) {
 		
+		// keep track of current songs
 		var songs_now = new [d_songs.size()];
 		for (var idx = 0; idx < songs_now.size(); ++idx) {
 			songs_now[idx] = d_songs[idx];
 		}
+
+		// keep track of newly added songs
 		var songs_new = [];
+
+		// keep track of order of remote playlist
+		var songs_ord = [];
 		
 		// calculate time of the new playlist
 		var time = 0;
@@ -332,6 +338,9 @@ class IPlaylist extends Playlist {
 			if (id == null) {
 				continue;
 			}
+
+			// add it to the new song ids (order preserved)
+			songs_ord.add(id);
 			
 			// update information of the song
 			var isong = new ISong(id);
@@ -374,6 +383,10 @@ class IPlaylist extends Playlist {
 			// remove from playlist
 			removeSong(id);
 		}
+
+		// order of songs should be copied from server
+		d_songs = songs_ord;
+
 		save();
 		return songs_new;
 	}

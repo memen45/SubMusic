@@ -69,12 +69,15 @@ module SubMusic {
 			}
 			
 			function onSelectPlaylist() {
-				WatchUi.pushView(
-					new SubMusic.Menu.PlaylistsLocalView(Rez.Strings.playbackMenuTitle), 
-					new SubMusic.Menu.PlaylistsLocalDelegate(), 
-					WatchUi.SLIDE_IMMEDIATE
+				// WatchUi.pushView(
+				// 	new SubMusic.Menu.PlaylistsLocalView(Rez.Strings.playbackMenuTitle), 
+				// 	new SubMusic.Menu.PlaylistsLocalDelegate(), 
+				// 	WatchUi.SLIDE_IMMEDIATE
+				// );
+				var loader = new MenuLoader(
+					new SubMusic.Menu.PlaylistsLocal(Rez.Strings.playbackMenuTitle),
+					new SubMusic.Menu.PlaylistsLocalDelegate()
 				);
-				//WatchUi.pushView(new SubMusicConfigurePlaybackPlaylistView(), null, WatchUi.SLIDE_IMMEDIATE);
 			}
 			
 			function onOpenSync() {

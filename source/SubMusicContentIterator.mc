@@ -3,8 +3,6 @@ using Toybox.Math;
 
 class SubMusicContentIterator extends Media.ContentIterator {
 
-	private var d_playlist;
-
 	private var d_songidx = 0;
 	private var d_songs = [];		// array of refIds
 	
@@ -22,29 +20,17 @@ class SubMusicContentIterator extends Media.ContentIterator {
 		d_songs = [];
 		d_songidx = 0;
 
-		// load new 
-		var refIds = SubMusic.NowPlaying.getRefIds();
-		var song_ids = refIds.keys();
-
-		// add all songs to the list
-		for (var idx = 0; idx != song_ids.size(); ++idx) {
-			d_songs.add(refIds.get(song_ids[idx]));
-		}
-
-		// start from playback state if available
-		var song_id = SubMusic.NowPlaying.songId();
-		var idx = song_ids.indexOf(song_id);
-		if (idx >= 0) {
-			d_songidx = idx;
-			return;
-		}
+		// retrieve now playing
+		var playable = SubMusic.NowPlaying.getPlayable();
+		d_songs = playable.getRefIds();
+		d_songidx = playable.getSongIdx();
 
 		// if something on the list, done
 		if (d_songs.size() != 0) {
 			return;
 		}
 
-		// just try the first playlist with songs
+		// otherwise, just try the first playlist with songs
 		var ids = PlaylistStore.getIds();
 		var loaded = false;
 		for (var idx = 0; idx < ids.size(); ++idx) {
@@ -61,7 +47,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
     // Determine if the the current track can be skipped.
     function canSkip() {
-        return false;
+        return true;			// probably behaviour should depend on podcast/playlist type
     }
 
     // Get the current media content object.
@@ -152,13 +138,11 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
 	// Load playlist from storage or create one from all songs available
 	function load(playlist) {
-
-		d_playlist = playlist;
 		d_songs = [];
 		d_songidx = 0;
 		
 		// add all songs with a refId to list
-		var songs = d_playlist.songs();
+		var songs = playlist.songs();
 		for (var idx = 0; idx < songs.size(); ++idx) {
 			var isong = new ISong(songs[idx]);
 			var refId = isong.refId();

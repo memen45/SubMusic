@@ -1,6 +1,58 @@
 using Toybox.Application;
 using Toybox.System;
 
+class Playable {
+    private var d_songids = [];
+    private var d_refids = [];
+    private var d_songidx = 0;
+
+    function loadPlaylist(id, songid) {
+        // return empty array if no id available
+        if (id == null) {
+            return;
+        }
+
+        var iplaylist = new IPlaylist(id);
+        var ids = iplaylist.songs();
+        var songidx = 0;
+
+        // only add the songs that are available for playing
+        for (var idx = 0; idx != ids.size(); ++idx) {
+            var isong = new ISong(ids[idx]);
+
+            // check for songid match
+            if (isong.id() == songid) {
+                d_songidx = songidx;
+            }
+
+            // not added if no refId
+            if (isong.refId() == null) {
+                continue;
+            }
+
+            d_songids.add(isong.id());
+            d_refids.add(isong.refId());
+            songidx++;
+        }
+    }
+
+    function getSongIds() {
+        return d_songids;
+    }
+
+    function getRefIds() {
+        return d_refids;
+    }
+
+    function getSongIdx() {
+        return d_songidx;
+    }
+
+    function getPlaybackPosition() {
+        return 0;
+    }
+}
+
 module SubMusic {
     module NowPlaying {
 
@@ -10,30 +62,6 @@ module SubMusic {
         // playlist id (for name, number of songs, playback position (songid))
         // songs list 
         //      song {id, refId, playback position (number in seconds)}
-
-        // returns a dictionary with a refId for each id
-        function getRefIds() {
-
-            var refIds = {};
-            if (d_id == null) {
-                return refIds;
-            }
-
-            var iplaylist = new IPlaylist(d_id);
-            var ids = iplaylist.songs();
-
-            for (var idx = 0; idx != ids.size(); ++idx) {
-                var isong = new ISong(ids[idx]);
-                if (isong.refId() != null) {
-                    refIds.put(isong.id(), isong.refId());
-                }
-            }
-            return refIds;
-        }
-
-        function getSongIds() {
-            return getRefIds().keys();
-        }
 
         function setSongId(id) {
             System.println("NowPlaying::setSongId(" + id + ")");
@@ -56,6 +84,12 @@ module SubMusic {
 
         function songId() {
             return d_songid;
+        }
+
+        function getPlayable() {
+            var playable = new Playable();
+            playable.loadPlaylist(d_id, d_songid);
+            return playable;
         }
 
     }
