@@ -1,6 +1,13 @@
 Version [] - 
-- (tentative) added 'Manage...' option for more playlist options
-- (tentative) added alpha podcast implementation (feedback needed)
+- (future) added 'Manage...' option for more playlist options
+- (future) added alpha podcast implementation (feedback needed)
+
+Version [0.1.4] - 2021-01-19
+- fixed charge blocked on auto sync hang (Garmin bug workaround)
+- added playables to store state in between sessions
+- added shuffle to stored state
+- added shuffle option to playlist options
+- added podcast mode to play with persistent playback position
 
 Version [0.1.3] - 2021-01-11
 - fixes playlist order - now reflecting server changes

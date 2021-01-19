@@ -23,6 +23,17 @@ module SubMusic {
 			function initialize() {
 				SongsLocalDelegate.initialize();
 			}
+
+			// @Override
+			function onSongSelect(item) {
+				var songid = item.getId();
+
+				// start playback with new songid
+				var playable = SubMusic.NowPlaying.getPlayable();
+				playable.setSongId(songid);
+				SubMusic.NowPlaying.setPlayable(playable);
+				Media.startPlayback(null);
+			}
 		}
 	}
 }

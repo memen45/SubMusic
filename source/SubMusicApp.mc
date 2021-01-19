@@ -33,12 +33,19 @@ class SubMusicApp extends Application.AudioContentProviderApp {
     // Get a Media.ContentDelegate for use by the system to get and iterate through media on the device
     function getContentDelegate(arg) {
     	System.println("getContentDelegate with arg: " + arg);
+        
         return new SubMusicContentDelegate();
     }
 
     // Get a delegate that communicates sync status to the system for syncing media content to the device
     function getSyncDelegate() {
-        return new SubMusicSyncDelegate();
+        var syncrequest = Application.Storage.getValue(Storage.SYNC_REQUEST);
+        System.println("SubMusicApp syncrequest " + syncrequest);
+        // return deprecated if sync was not started from the menu (i.e. autostart)
+        if (syncrequest != true) {
+            return new SubMusic.SyncDelegate_deprecated();
+        }
+        return new SubMusic.SyncDelegate();
     }
 
     // Get the initial view for configuring playback

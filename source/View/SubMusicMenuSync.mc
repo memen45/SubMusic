@@ -77,6 +77,12 @@ module SubMusic {
 			}
 			
 			function onStartSync() {
+				// store sync request, refer to bug https://forums.garmin.com/developer/connect-iq/i/bug-reports/bug-media-communications-syncdelegate-blocks-charging
+				Application.Storage.setValue(Storage.SYNC_REQUEST, true);
+				var syncrequest  = Application.Storage.getValue(Storage.SYNC_REQUEST);
+				System.println(syncrequest);
+				
+				// start the sync
 				Communications.startSync();
 			}
 			

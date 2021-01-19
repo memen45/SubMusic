@@ -12,7 +12,7 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
 
     function initialize() {
         ContentDelegate.initialize();
-        
+
         resetContentIterator();
     }
 
@@ -70,21 +70,38 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     	System.println("onSong Event (" + d_events[songEvent] + "): " + getSongName(contentRefId) + " at position " + playbackPosition);
     	
     	if (songEvent == PLAYBACK_NOTIFY) {
-    		var id = findIdByRefId(contentRefId);
-    		if (id == null) { return; }
+    		var isong = findSongByRefId(contentRefId);
+    		if (isong == null) { return; }
     		ScrobbleStore.add(new Scrobble({
-    			"id" => id,
+    			"id" => isong.id(),
     		}));
     		return;
     	}
+    	
+    	// record time if podcast mode
+    	var playable = SubMusic.NowPlaying.getPlayable();
+    	if (!playable.podcast()) {
+    		return;
+    	}
+    	
+    	var isong = findSongByRefId(contentRefId);
+    	if (isong == null) { return; }
+    	
+    	if ((songEvent == SKIP_NEXT)
+			|| (songEvent == SKIP_PREVIOUS)
+			|| (songEvent == STOP)
+			|| (songEvent == PAUSE)
+			|| (songEvent == COMPLETE)) {
+    		isong.setPlayback(playbackPosition);
+    	}   		
     }
     
-    function findIdByRefId(refId) {
+    function findSongByRefId(refId) {
 		var ids = SongStore.getIds();
 		for (var idx = 0; idx < ids.size(); ++idx) {
 			var isong = new ISong(ids[idx]);
 			if (refId == isong.refId()) {
-				return ids[idx];
+				return isong;
 			}
 		}
 		return null;

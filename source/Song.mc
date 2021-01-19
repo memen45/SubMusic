@@ -11,7 +11,8 @@ class Song {
 	// required internal song properties
 	hidden var d_refId = null;		// null if no song file is present
 	hidden var d_refCount = 0;		// count the number of playlists this song is on
-	
+	hidden var d_playback = 0;		// last playback position
+
 	function initialize(storage) {
 		System.println("Song::initialize( storage = " + storage + " )");
 		d_id = storage["id"];
@@ -26,6 +27,7 @@ class Song {
 			
 			"refId" => d_refId,
 			"refCount" => d_refCount,
+			"playback" => d_playback,
 		};
 	}
 	
@@ -45,6 +47,10 @@ class Song {
 		}
 		if ((storage["refCount"] != null) && (d_refCount != storage["refCount"])) {
 			d_refCount = storage["refCount"];
+			changed = true;
+		}
+		if ((storage["playback"] != null) && (d_playback != storage["playback"])) {
+			d_playback = storage["playback"];
 			changed = true;
 		}
 		return changed;
@@ -69,6 +75,10 @@ class Song {
 	
 	function refCount() {
 		return d_refCount;
+	}
+
+	function playback() {
+		return d_playback;
 	}
 
 	function metadata() {
@@ -165,6 +175,16 @@ class ISong extends Song {
 	function decRefCount() {
 		d_refCount -= 1;
 		
+		// nothing to do if not stored
+		if (d_stored) {
+			save();
+		}
+		return true;
+	}
+
+	function setPlayback(position) {
+		d_playback = position;
+
 		// nothing to do if not stored
 		if (d_stored) {
 			save();

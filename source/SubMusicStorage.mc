@@ -17,7 +17,7 @@ module Storage_Deprecated {
 
 module Storage {
 	enum {
-		PLAYLIST,		// playlist id of current playist
+		PLAYABLE,		// playable dictionary 
 
 		SONGS,			// dictionary where song id is key
 		SONGS_DELETE,	// array of song ids of todelete songs (refCount == 0)
@@ -25,7 +25,9 @@ module Storage {
 		
 		LAST_SYNC,		// dictionary with details on last sync 
 
-		PLAY_RECORDS,	// array with play_record objects
+		PLAY_RECORDS,	// array with play_record objects (scrobble)
+
+		SYNC_REQUEST,	// stores boolean true if sync was requested by user
 
 		VERSION = 200,	// version string of store
 	}
@@ -44,10 +46,16 @@ module Storage {
 			return;
 		}
 		
-		var version = new SubMusicVersion(storage);
-		if (current.equals(version)) {
+		var previous = new SubMusicVersion(storage);
+		if (current.compare(previous) == 0) {
 			// same version, nothing to do
 			return;
+		}
+
+		// below 0.1.3, playable was playlist id
+		var version = new SubMusicVersion({"major" => 0, "minor" => 1, "patch" => 3});
+		if (previous.lessthan(version)) {
+			Application.Storage.setValue(PLAYABLE, null);
 		}
 
 		// update stored version

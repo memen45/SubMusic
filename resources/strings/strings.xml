@@ -45,6 +45,8 @@
 
     <string id="Menu_PlaylistSongs_title">Songs</string>
     <string id="Menu_PlayNow_label">Play Now</string>
+    <string id="Menu_PlayShuffle_label">Shuffle</string>
     <string id="Menu_PodcastMode_label">Podcast Mode</string>
+    <string id="Menu_PodcastMode_sublabel">Stores play state</string>
     <string id="Menu_Songs_label">Songs</string>
 </strings>

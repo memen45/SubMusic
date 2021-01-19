@@ -1,9 +1,25 @@
+module SubMusic {
+	module Utils {
+		// for numbers only
+		function compare(left, right) {
+			var diff = left - right;
+			if (diff < 0) {
+				return -1;
+			}
+			if (diff > 0) {
+				return 1;
+			}
+			return 0;
+		}
+	}
+}
+
 class SubMusicVersion {
 
 	private var d_major = 0;
 	private var d_minor = 1;
-	private var d_patch = 3;
-	private var d_name = "delta";
+	private var d_patch = 4;
+	private var d_name = "echo";
 
 	function initialize(storage) {
 		if (storage == null) {
@@ -21,14 +37,25 @@ class SubMusicVersion {
         d_name = name;
 	}
 
-	function equals(storage) {
-		if (storage == null) {
+	function compare(version) {
+		if ((version == null) 
+			|| (!(version instanceof SubMusicVersion))) {
 			return false;
 		}
-		if (!(storage instanceof Lang.Dictionary)) {
-			return false;
+		var cmp = SubMusic.Utils.compare(d_major, version.major());
+		if (cmp != 0) {
+			return cmp;
 		}
-		return toString().equals(storage["version"]);
+		cmp = SubMusic.Utils.compare(d_minor, version.minor());
+		if (cmp != 0) {
+			return cmp;
+		}
+		cmp = SubMusic.Utils.compare(d_patch, version.patch());
+		return cmp;
+	}
+
+	function lessthan(version) {
+		return (compare(version) < 0);
 	}
 
 	function toString() {
@@ -47,4 +74,8 @@ class SubMusicVersion {
             "name" => d_name
 		};
 	}
+
+	function major() { return d_major; }
+	function minor() { return d_minor; }
+	function patch() { return d_patch; }
 }

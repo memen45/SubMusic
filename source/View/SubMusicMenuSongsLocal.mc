@@ -67,12 +67,14 @@ module SubMusic {
 
             function onSongSelect(item) {
                 var id = item.getId();
+                // action onSongSelect should be defined by implementer classes
+                // future: default start playable with only this song
 
                 // store selection as current playlist/song
-                SubMusic.NowPlaying.setSongId(id);
+                // SubMusic.NowPlaying.setSongId(id); // deprecated
 
 				// start the playback of this song
-                Media.startPlayback(null);
+                // Media.startPlayback(null);    // nothing to start
             }
         }
     }

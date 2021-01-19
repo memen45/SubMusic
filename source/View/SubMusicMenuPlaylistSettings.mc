@@ -9,6 +9,7 @@ module SubMusic {
 
             enum {
                 PLAY,
+                SHUFFLE,
                 PODCAST_MODE,
                 SONGS,
             }
@@ -18,9 +19,14 @@ module SubMusic {
                     SUBLABEL => null,
                     METHOD => method(:onPlay),
                 },
+                SHUFFLE => {
+                    LABEL => Rez.Strings.Menu_PlayShuffle_label,
+                    SUBLABEL => null,
+                    METHOD => method(:onShuffle),
+                },
                 PODCAST_MODE => {
                     LABEL => Rez.Strings.Menu_PodcastMode_label,
-                    SUBLABEL => null,
+                    SUBLABEL => Rez.Strings.Menu_PodcastMode_sublabel,
                     METHOD => method(:onPodcastMode)
                 },
                 SONGS => {
@@ -64,13 +70,20 @@ module SubMusic {
             }
 
             function onPlay() {
-                SubMusic.NowPlaying.setPlaylistId(d_id);
+            	SubMusic.NowPlaying.setPlayable(new PlaylistPlayable(d_id, null));
+                Media.startPlayback(null);
+            }
+
+            function onShuffle() {
+                // start playback with playlist 
+                var playable = new PlaylistPlayable(d_id, null);
+                playable.shuffleIdcs(true);
+                SubMusic.NowPlaying.setPlayable(playable);
                 Media.startPlayback(null);
             }
 
             function onPodcastMode() {
-                var iplaylist = new IPlaylist(d_id);
-                iplaylist.setPodcast(!iplaylist.podcast());     // flip podcast mode
+                d_iplaylist.setPodcast(!d_iplaylist.podcast());     // flip podcast mode
             }
 
             function onSongs() {
@@ -99,11 +112,11 @@ module SubMusic {
 
             // @Override
             function onSongSelect(item) {
-                // set playlist 
-                SubMusic.NowPlaying.setPlaylistId(d_id);
+                var songid = item.getId();
 
-                // perform default action
-                SongsLocalDelegate.onSongSelect(item);
+                // start playback with playlist and song combination
+                SubMusic.NowPlaying.setPlayable(new PlaylistPlayable(d_id, songid));
+                Media.startPlayback(null);
             }
         }
     }
