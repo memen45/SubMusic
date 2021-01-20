@@ -6,6 +6,7 @@ module SubMusic {
 		class Playback extends MenuBase {
 			enum {
 				NOW_PLAYING,
+				PLAY_ALL,
 				SELECT_PLAYLIST,
 				OPEN_SYNC,
 				DONATE,
@@ -16,6 +17,11 @@ module SubMusic {
 					LABEL => Rez.Strings.confPlayback_NowPlaying_label, 
 					SUBLABEL => null, 
 					METHOD => method(:onNowPlaying),
+				},
+				PLAY_ALL => {
+					LABEL => Rez.Strings.confPlayback_PlayAll_label,
+					SUBLABEL => null,
+					METHOD => method(:onPlayAll),
 				},
 				SELECT_PLAYLIST => { 
 					LABEL => Rez.Strings.confPlayback_SelectPlaylist_label, 
@@ -66,6 +72,12 @@ module SubMusic {
 					new SubMusic.Menu.NowPlaying(),
 					new SubMusic.Menu.NowPlayingDelegate()
 				);
+			}
+
+			// plays all songs
+			function onPlayAll() {
+				SubMusic.NowPlaying.setPlayable(new SongsPlayable(SongStore.getIds()));
+				Media.startPlayback(null);
 			}
 			
 			function onSelectPlaylist() {

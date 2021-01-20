@@ -52,8 +52,8 @@ module Storage {
 			return;
 		}
 
-		// below 0.1.3, playable was playlist id
-		var version = new SubMusicVersion({"major" => 0, "minor" => 1, "patch" => 3});
+		// below 0.1.4, playable was playlist id, due to bug in 0.1.4, this is now set to 0.1.5
+		var version = new SubMusicVersion({"major" => 0, "minor" => 1, "patch" => 5});
 		if (previous.lessthan(version)) {
 			Application.Storage.setValue(PLAYABLE, null);
 		}

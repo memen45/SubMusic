@@ -3,22 +3,22 @@ using Toybox.WatchUi;
 /* 
 Planned menu:
 
-Library
+LLibrary
   - Now Playing
    - Song 1
   - Play All Songs
   - Playlists
    - Playlist 1
      - Play Now
+     - Shuffle
      - Podcast Mode (toggle)
+     - Songs
   - Podcasts
    - Podcast 1
      - Play Now
-     - Podcast Mode (toggle)
      - Episodes
       - Episode 1
        - Play Now
-     
   - Sync Settings
     - Sync Now
     - Playlists
@@ -30,8 +30,10 @@ Library
  - About
   - SubMusic Version
   - Donate
+  - Settings
+    - Disable 30s skip
 
-Pretty (https://tree.nathanfriend.io/?s=(%27options!(%27fancy!true~fullPath!false~trailingSlash!true)~H(%27H%27LibraryGNow%204ing62SongCG4%20AllOongsG9s6290G5s62506Bs*3BC*F.47*FGSyncOettingsJSync7J9sJ%7B5s%7DJ8*3.8%20Info*3.Test%208JAbout%2FK%202AboutGSubMusic%20VQsionGDonate%27)~vQsion!%271%27)*K3.320C6.476.5%20Mode%20%7Btoggle%7D2-%20F%204Play5Podcast6*%207%20Now8SQvQ94listB.EpisodeC%201F3%20G*2Hsource!J*.K%5CnO%20SQer%01QOKJHGFCB987654320.*): 
+Pretty: https://tree.nathanfriend.io/?s=(%27optiRs!(%27fancy!true~fullPath!false~trailingSlash!true)~H(%27H%27LibraryQNow%205ing42SRgBQ5%20All%20_Fs42FOShuffleZ6%20ModU%7Btoggle%7DZ_6s426OJs48JB4%20857QSynWKSync7YFsY%7B6s%7DY9489%20Info48Test%209YAbout%2FG2AboutQSubMusiWVXsiRQDRateQKDisablU30s%20skip%27)~vXsiR!%271%27)*G8%20%2022-%204*%205Play6Podcast7%20Now8%20.9SXvXB%201Cngs*F5listG%5Cn%20Hsource!JEpisodeKSettiC.OBZ57ZQ*2RonUe%20Wc%20XerY*.Z4._SoC2%01_ZYXWURQOKJHGFCB9876542.*
 .
 └── Library/
     ├── Now Playing/
@@ -40,11 +42,12 @@ Pretty (https://tree.nathanfriend.io/?s=(%27options!(%27fancy!true~fullPath!fals
     ├── Playlists/
     │   └── Playlist 1/
     │       ├── Play Now
-    │       └── Podcast Mode (toggle)
+    │       ├── Shuffle
+    │       ├── Podcast Mode (toggle)
+    │       └── Songs
     ├── Podcasts/
     │   └── Podcast 1/
     │       ├── Play Now
-    │       ├── Podcast Mode (toggle)
     │       └── Episodes/
     │           └── Episode 1/
     │               └── Play Now
@@ -58,7 +61,9 @@ Pretty (https://tree.nathanfriend.io/?s=(%27options!(%27fancy!true~fullPath!fals
     │   └── About/
     └── About/
         ├── SubMusic Version
-        └── Donate
+        ├── Donate
+        └── Settings/
+            └── Disable 30s skip
 */
 
 module SubMusic {

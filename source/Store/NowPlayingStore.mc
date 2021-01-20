@@ -4,7 +4,7 @@ using Toybox.System;
 class Playable {
 
     hidden var d_songids = [];
-    hidden var d_refids = [];
+    // hidden var d_refids = [];
 
     hidden var d_songidcs = [];
     hidden var d_songidx = 0;       // suggested start index
@@ -21,7 +21,7 @@ class Playable {
     	}
     	
         d_songids = storage["songids"];
-        d_refids = storage["refids"];
+        // d_refids = storage["refids"];
 
         d_songidcs = storage["songidcs"];
         d_songidx = storage["songidx"];
@@ -33,7 +33,7 @@ class Playable {
     function toStorage() {
         return {
             "songids" => d_songids,
-            "refids" => d_refids,
+            // "refids" => d_refids,
 
             "songidcs" => d_songidcs,
             "songidx" => d_songidx,
@@ -51,9 +51,9 @@ class Playable {
         return d_songids[d_songidcs[idx]];
     }
 
-    function getRefId(idx) {
-        return d_refids[d_songidcs[idx]];
-    }
+    // function getRefId(idx) {
+    //     return d_refids[d_songidcs[idx]];
+    // }
 
     function shuffle() {
         return d_shuffle;
@@ -67,15 +67,20 @@ class Playable {
 
         d_shuffle = shuffle;
 
+        System.println("Playable::shuffleIdcs() Before: " + d_songidcs);
+        System.println("Playable::shuffleIdcs() songids: " + d_songids);
+        System.println("Playable::shuffleIdcs() songidx: " + d_songidx);
+
         // if not shuffle, generate 0:n array for idcs
         if (!shuffle) {
             // store the current real index
             d_songidx = d_songidcs[d_songidx];
 
-            d_songidcs = [d_songids.size()];
+            d_songidcs = new[d_songids.size()];
             for (var idx = 0; idx != d_songidcs.size(); ++idx) {
                 d_songidcs[idx] = idx;
             }
+            System.println("Playable::shuffleIdcs() After unshuffle:" + d_songidcs);
             return;
         }
 
@@ -87,26 +92,31 @@ class Playable {
         d_songidcs[0] = d_songidcs[d_songidx];
         d_songidcs[d_songidx] = tmp;
 
-        for (var idx = 0; idx != d_songidcs.size(); ++idx) {
+        for (var idx = 1; idx != d_songidcs.size(); ++idx) {
             tmp = d_songidcs[idx];
 			var other = (Math.rand() % (d_songidcs.size() - idx)) + idx;
 			d_songidcs[idx] = d_songidcs[other];
 			d_songidcs[other] = tmp;
         }
+        
+        System.println("Playable::shuffleIdcs() After shuffle:" + d_songidcs);
 
         // slice last songs and prepend to account for songidx
-        var end = d_songidcs.slice(0, -d_songidx);
-        d_songidcs = d_songidcs.slice(-d_songidx, null);
+        var splitidx = d_songidx;
+        var end = d_songidcs.slice(0, -splitidx);
+        d_songidcs = d_songidcs.slice(-splitidx, null);
         d_songidcs.addAll(end);
+        
+        System.println("Playable::shuffleIdcs() After shuffle:" + d_songidcs);
     } 
 
     function getSongIds() {
         return d_songids;
     }
 
-    function getRefIds() {
-        return d_refids;
-    }
+    // function getRefIds() {
+    //     return d_refids;
+    // }
 
     function songIdx() {
         return d_songidx;
@@ -181,10 +191,22 @@ class PlaylistPlayable extends Playable {
 
             // store id, refid and index
             d_songids.add(isong.id());
-            d_refids.add(isong.refId());
+            // d_refids.add(isong.refId());
             d_songidcs.add(songidx);
 
             songidx++;
+        }
+    }
+}
+
+// creates a playable object based on some song ids
+class SongsPlayable extends Playable {
+    function initialize(ids) {
+        Playable.initialize();
+
+        for (var idx = 0; idx != ids.size(); ++idx) {
+            d_songids.add(ids[idx]);
+            d_songidcs.add(idx);
         }
     }
 }

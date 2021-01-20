@@ -2,6 +2,11 @@ Version [] -
 - (future) added 'Manage...' option for more playlist options
 - (future) added alpha podcast implementation (feedback needed)
 
+Version [0.1.5] - 2021-01-20
+- fixed crash on unshuffle
+- fixed update storage (if old version is less than current)
+- added Play All menu option to play all stored songs at once without playlist
+
 Version [0.1.4] - 2021-01-19
 - fixed charge blocked on auto sync hang (Garmin bug workaround)
 - added playables to store state in between sessions
