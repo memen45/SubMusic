@@ -3,9 +3,7 @@ using Toybox.Math;
 
 class SubMusicContentIterator extends Media.ContentIterator {
 
-	private var d_songidx = 0;
 	private var d_songcount;
-	
 	private var d_playable;
 
     function initialize() {
@@ -13,40 +11,8 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
 		// retrieve now playing start object
 		d_playable = SubMusic.NowPlaying.getPlayable();
-		d_songidx = d_playable.songIdx();
 		d_songcount = d_playable.size();
     }
-
-	// function initializePlaylist() {
-
-	// 	// reset current array of refIds
-	// 	d_songs = [];
-	// 	d_songidx = 0;
-
-	// 	// retrieve now playing
-	// 	var playable = SubMusic.NowPlaying.getPlayable();
-	// 	d_songs = playable.getRefIds();
-	// 	d_songidx = playable.getSongIdx();
-
-	// 	// if something on the list, done
-	// 	if (d_songs.size() != 0) {
-	// 		return;
-	// 	}
-
-	// 	// otherwise, just try the first playlist with songs
-	// 	var ids = PlaylistStore.getIds();
-	// 	var loaded = false;
-	// 	for (var idx = 0; idx < ids.size(); ++idx) {
-	// 		var  playlist = new IPlaylist(ids[idx]);
-	// 		if (playlist.songs().size() != 0) {
-	// 			load(playlist);
-	// 			return;
-	// 		}
-	// 	}
-
-	// 	// if everything fails, initialize from cached songs
-	// 	loadEmpty();
-	// }
 
     // Determine if the the current track can be skipped.
     function canSkip() {
@@ -55,11 +21,11 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
     // Get the current media content object.
     function get() {
-    	if (d_songidx >= d_songcount)
+    	if (d_playable.songIdx() >= d_songcount)
     	{
     		return null;
     	}
-        return getObj(d_songidx);
+        return getObj(d_playable.songIdx());
     }
 
     // Get the current media content playback profile
@@ -87,44 +53,40 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
     // Get the next media content object.
     function next() {
-    	if ((d_songidx + 1) >= d_songcount)
+    	if ((d_playable.songIdx() + 1) >= d_songcount)
     	{
     		return null;
     	}
-
-    	d_songidx++;
 		d_playable.incSongIdx();
-
-    	return getObj(d_songidx);
+    	return getObj(d_playable.songIdx());
     }
 
     // Get the next media content object without incrementing the iterator.
     function peekNext() {
-    	if ((d_songidx + 1) >= d_songcount)
+    	if ((d_playable.songIdx() + 1) >= d_songcount)
     	{
     		return null;
     	}
-    	return getObj(d_songidx + 1);
+    	return getObj(d_playable.songIdx() + 1);
     }
 
     // Get the previous media content object without decrementing the iterator.
     function peekPrevious() {
-    	if (d_songidx == 0)
+    	if (d_playable.songIdx() == 0)
     	{
     		return null;
     	}
-    	return getObj(d_songidx - 1);
+    	return getObj(d_playable.songIdx() - 1);
     }
 
     // Get the previous media content object.
     function previous() {
-    	if (d_songidx == 0)
+    	if (d_playable.songIdx() == 0)
     	{
     		return null;
     	}
-    	d_songidx--;
 		d_playable.decSongIdx();
-    	return getObj(d_songidx);
+    	return getObj(d_playable.songIdx());
     }
 
     // Determine if playback is currently set to shuffle.
@@ -136,38 +98,6 @@ class SubMusicContentIterator extends Media.ContentIterator {
 		d_playable.shuffleIdcs(!d_playable.shuffle());
     }
 
-	// // Load playlist from storage or create one from all songs available
-	// function load(playlist) {
-	// 	d_songs = [];
-	// 	d_songidx = 0;
-		
-	// 	// add all songs with a refId to list
-	// 	var songs = playlist.songs();
-	// 	for (var idx = 0; idx < songs.size(); ++idx) {
-	// 		var isong = new ISong(songs[idx]);
-	// 		var refId = isong.refId();
-	// 		if (refId != null) {
-	// 			d_songs.add(refId);
-	// 		}
-	// 	}
-	// }
-
-	// function loadEmpty() {
-	// 	d_songs = [];
-
-	// 	var availables = Media.getContentRefIter({:contentType => Media.CONTENT_TYPE_AUDIO});
-	// 	if (availables == null) {
-	// 		return;
-	// 	}
-		
-	// 	// add all songs available 
-	// 	var song = availables.next();
-	// 	while (song != null) {
-	// 		d_songs.add(song.getId());
-	// 		song = availables.next();
-	// 	}
-	// }
-	
 	// Retrieve the cached object from Media
 	function getObj(idx) {
 
@@ -190,28 +120,4 @@ class SubMusicContentIterator extends Media.ContentIterator {
 		// return content
 		return new Media.ActiveContent(contentRef, metadata, playbackStartPos);
 	}
-	
-	// reorder the playlist randomly
-	// function shufflePlaylist() {
-	
-	// 	// check for empty playlist
-	// 	if (d_songs.size() == 0) {
-	// 		d_songidx = 0;
-	// 		return;
-	// 	}
-		
-	// 	// swap current to head of list
-	// 	var tmp = d_songs[0];
-	// 	d_songs[0] = d_songs[d_songidx];
-	// 	d_songs[d_songidx] = tmp;
-	
-	// 	for (var idx = 1; idx < d_songs.size(); ++idx) {
-	// 		tmp = d_songs[idx];
-	// 		var other = (Math.rand() % (d_songs.size() - idx)) + idx;
-	// 		d_songs[idx] = d_songs[other];
-	// 		d_songs[other] = tmp;
-	// 	}
-		
-	// 	d_songidx = 0;
-	// }
 }
