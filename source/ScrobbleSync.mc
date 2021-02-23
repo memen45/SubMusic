@@ -20,7 +20,8 @@ class ScrobbleSync extends Deferrable {
    	
    	function sync() {
    		if (d_todo == 0) {
-   			return Deferrable.complete();
+   			var complete = Deferrable.complete();
+   			return complete;
    		}
    		
    		// update progress
@@ -52,14 +53,12 @@ class ScrobbleSync extends Deferrable {
    		// some problem with the network - we can skip this and try again later
    		if ((error instanceof SubMusic.HttpError)
    			|| (error instanceof SubMusic.GarminSdkError)) {
-	   		// decrement todos
-	   		d_todo -= 1;
+   			
+   			// to prevent unwanted OOM errors, better remove the scrobble
+	   		onRecordPlay(null);
 	   		
-	   		// increment idx as first is stored, but not reported yet
-	   		d_idx += 1;
+	   		// ideally, save scrobble and continue with next scrobble
 	   		
-	   		// sync next
-	   		sync();
 	   		return;
 	   	}
 	   	

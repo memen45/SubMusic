@@ -83,7 +83,13 @@ class SubsonicAPI extends Api {
     		d_fallback.invoke(error);	// add function name and variables available ?
     		return;
     	}
-		d_callback.invoke(data["subsonic-response"]["playlists"]["playlist"]);
+    	
+    	var response = data["subsonic-response"]["playlists"]["playlist"];
+    	
+    	// finally, expecting array as response
+		if (!(response instanceof Lang.Array)) { d_fallback.invoke(new SubsonicError(null)); }
+		
+		d_callback.invoke(response);
 	}
 		
 	

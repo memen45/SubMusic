@@ -204,9 +204,17 @@ class SongsPlayable extends Playable {
     function initialize(ids) {
         Playable.initialize();
 
+		var songidx = 0;
         for (var idx = 0; idx != ids.size(); ++idx) {
-            d_songids.add(ids[idx]);
-            d_songidcs.add(idx);
+        	var isong = new ISong(ids[idx]);
+        	
+        	// not added if no refId
+            if (isong.refId() == null) {
+                continue;
+            }
+            
+            d_songids.add(isong.id());
+            d_songidcs.add(songidx);
         }
     }
 }
