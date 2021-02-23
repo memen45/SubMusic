@@ -2,6 +2,11 @@ Version [] -
 - (future) added 'Manage...' option for more playlist options
 - (future) added alpha podcast implementation (feedback needed)
 
+Version [0.1.6] - 2021-02-23
+- fixed Error on malformed response (subsonic)
+- fixed filtering nonlocal songs in Play All feature
+- fixed potential out of memory error when scrobble sync fails
+
 Version [0.1.5] - 2021-01-20
 - fixed crash on unshuffle
 - fixed update storage (if old version is less than current)
