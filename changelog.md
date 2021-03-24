@@ -2,6 +2,10 @@ Version [] -
 - (future) added 'Manage...' option for more playlist options
 - (future) added alpha podcast implementation (feedback needed)
 
+Version [0.1.7] - 2021 03-24
+- fixed error catching (subsonic get playlist)
+- fixed shuffle on empty playlist
+
 Version [0.1.6] - 2021-02-23
 - fixed Error on malformed response (subsonic)
 - fixed filtering nonlocal songs in Play All feature

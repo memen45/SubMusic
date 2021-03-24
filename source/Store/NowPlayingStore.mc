@@ -60,12 +60,17 @@ class Playable {
     }
 
     function shuffleIdcs(shuffle) {
-        // nothing to do if same
+        // nothing to do if same or no songs on list
         if (d_shuffle == shuffle) {
             return;
         }
 
         d_shuffle = shuffle;
+        
+       	// empty list cannot be shuffled
+        if (size() == 0) {
+        	return;
+        }
 
         System.println("Playable::shuffleIdcs() Before: " + d_songidcs);
         System.println("Playable::shuffleIdcs() songids: " + d_songids);
