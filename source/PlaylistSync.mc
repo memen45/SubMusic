@@ -117,6 +117,24 @@ class PlaylistSync extends Deferrable {
 	function onSongDownloaded(refId) {
 		// update refId
 		d_song.setRefId(refId);
+
+		// if no artwork or already present, continue to next song
+		if ((d_song.art_id() == null)
+			|| (d_song.artwork() != null)) {
+			// continue to next song
+			d_todo_songs.remove(d_todo_songs[0]);
+		
+			syncNextSong();
+			return;
+		}
+		
+		// start artwork download
+		d_provider.getArtwork(d_song.art_id(), method(:onArtworkDownloaded));
+	}
+
+	function onArtworkDownloaded(artwork) {
+		// update artwork
+		d_song.setArtwork(artwork);
 		
 		// continue to next song
 		d_todo_songs.remove(d_todo_songs[0]);
@@ -125,7 +143,8 @@ class PlaylistSync extends Deferrable {
 	}
     
     function onError(error) {
-    	
+    	System.println("PlaylistSync::onError(" + error.shortString() + ")");
+
     	// indicate failed sync
 //   	d_playlist.setError(error); TODO
     	d_failed = true;

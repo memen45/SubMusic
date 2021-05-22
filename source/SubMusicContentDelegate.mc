@@ -68,10 +68,18 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     // been triggered for the given song
     function onSong(contentRefId, songEvent, playbackPosition) {
     	System.println("onSong Event (" + d_events[songEvent] + "): " + getSongName(contentRefId) + " at position " + playbackPosition);
-    	
+	
+		var isong = findSongByRefId(contentRefId);
+		if (isong == null) { return; }
+		
+		if (songEvent == START) {
+			// set the artwork
+			Media.setAlbumArt(isong.artwork());
+			return;
+		}
+
     	if (songEvent == PLAYBACK_NOTIFY) {
-    		var isong = findSongByRefId(contentRefId);
-    		if (isong == null) { return; }
+			// record a play
     		ScrobbleStore.add(new Scrobble({
     			"id" => isong.id(),
     		}));
@@ -84,14 +92,13 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     		return;
     	}
     	
-    	var isong = findSongByRefId(contentRefId);
-    	if (isong == null) { return; }
-    	
     	if ((songEvent == SKIP_NEXT)
 			|| (songEvent == SKIP_PREVIOUS)
 			|| (songEvent == STOP)
 			|| (songEvent == PAUSE)
 			|| (songEvent == COMPLETE)) {
+
+			// record playback position
     		isong.setPlayback(playbackPosition);
     	}   		
     }

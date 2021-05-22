@@ -2,7 +2,11 @@ Version [] -
 - (future) added 'Manage...' option for more playlist options
 - (future) added alpha podcast implementation (feedback needed)
 
-Version [0.1.7] - 2021 03-24
+Version [0.1.8] - 2021-05-22
+- added artwork for both Subsonic and Ampache backends
+- added support for descentmk2s, venu2 and venu2s
+
+Version [0.1.7] - 2021-03-24
 - fixed error catching (subsonic get playlist)
 - fixed shuffle on empty playlist
 

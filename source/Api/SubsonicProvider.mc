@@ -27,6 +27,7 @@ class SubsonicProvider {
 	// - getAllPlaylists	returns array of all playlists available for Subsonic user
 	// - getPlaylistSongs	returns an array of songs on the playlist with id
 	// - getRefId			returns a refId for a song by id (this downloads the song)
+	// - getArtwork			returns a BitmapResource for a song id
 	//
 	// to be added in the future (not possible for SubsonicAPI, so return allplaylists):
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
@@ -114,6 +115,20 @@ class SubsonicProvider {
 		};
 		d_api.stream(self.method(:onStream), params, encoding);
 	}
+
+	/**
+	 * getArtwork
+	 *
+	 *  returns artwork for a song by id
+	 */	
+	function getArtwork(id, callback) {
+		d_callback = callback;
+
+		var params = {
+			"id" => id,
+		};
+		d_api.getCoverArt(self.method(:onGetCoverArt), params);
+	}
 	
 	function onPing(response) {
 		System.println("SubsonicProvider::onPing( response = " + response + ")");
@@ -187,6 +202,7 @@ class SubsonicProvider {
 				"id" => song["id"],
 				"time" => time.toNumber(),
 				"mime" => song["contentType"],
+				"art_id" => song["coverArt"],
 			}));
 		}
 		
@@ -195,6 +211,10 @@ class SubsonicProvider {
 
 	function onStream(refId) {
 		d_callback.invoke(refId);
+	}
+
+	function onGetCoverArt(artwork) {
+		d_callback.invoke(artwork);
 	}
 	
 	function onError(error) {

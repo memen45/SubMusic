@@ -172,6 +172,25 @@ class AmpacheAPI extends Api {
 		};
 		Communications.makeWebRequest(url(), params, options, self.method(:onStream));
 	}
+
+	function get_art(callback, params) {
+		System.println("AmpacheAPI::get_art( id : " + params["id"] + " )");
+
+		Api.setCallback(callback);
+
+		params.put("action", "get_art");
+		params.put("auth", d_session.get("auth"));
+		
+		if (!params.hasKey("type")) {
+			params.put("type", "song");
+		}
+		var options = {
+			:maxWidth => 100,
+			:maxHeight => 100,
+			:fileDownloadProgressCallback => method(:onProgress),
+		};
+		Communications.makeImageRequest(url(), params, options, self.method(:onGet_art));
+	}
 	
 	function onStream(responseCode, data) {
 		System.println("AmpacheAPI::onStream with responseCode: " + responseCode);
@@ -184,6 +203,18 @@ class AmpacheAPI extends Api {
 		}
 		d_callback.invoke(data.getId());
     }
+
+	function onGet_art(responseCode, data) {
+		System.println("AmpacheAPI::onGet_art with responseCode: " + responseCode + " and " + data);
+		
+		// check if request was successful and response is ok
+		var error = checkResponse(responseCode, data);
+		if (error) {
+			d_fallback.invoke(error);
+			return;
+		}
+		d_callback.invoke(data);
+	}
     
 	// returns true if the current session is not expired (optionally pass in duration for session)
 	function session(duration) {

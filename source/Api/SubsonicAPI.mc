@@ -41,7 +41,7 @@ class SubsonicAPI extends Api {
 		// construct parameters
 		var id = params["id"];
 		var time = params["time"];
-		params = d_params;
+		params = copy(d_params);
 		params["id"] = id;			// set id for scrobble
 		params["time"] = time;		// set time for scrobble
 		
@@ -110,7 +110,7 @@ class SubsonicAPI extends Api {
 		
 		// construct parameters
 		var id = params["id"];
-		params = d_params;
+		params = copy(d_params);
 		params["id"] = id;			// set id for playlist
 		
     	var options = {
@@ -146,7 +146,7 @@ class SubsonicAPI extends Api {
 		// construct parameters
 		var id = params["id"];
 		var format = params["format"];
-		params = d_params;
+		params = copy(d_params);
 		params["id"] = id;
 		params["format"] = format;
 		
@@ -170,11 +170,61 @@ class SubsonicAPI extends Api {
 		}
     	d_callback.invoke(data.getId());
     }
+    
+    /**
+     * getCoverArt
+     *
+     * downloads artwork for given media id
+     */
+    function getCoverArt(callback, params) {
+    	System.println("SubsonicAPI::getCoverArt( params: " + params + ")");
+    	
+    	System.println("d_params = " + d_params);
+    
+    	Api.setCallback(callback);
+    
+		var url = url() + "getCoverArt";
+
+		// construct parameters
+		var id = params["id"];
+		params = copy(d_params);
+		params["id"] = id;
+
+		params["size"] = 100;
+		
+		var options = {
+			:maxWidth => 100,
+			:maxHeight => 100,
+			:fileDownloadProgressCallback => method(:onProgress),
+		};
+    	Communications.makeImageRequest(url, params, options, self.method(:onGetCoverArt));
+    }
+    
+    function onGetCoverArt(responseCode, data) {
+    	System.println("SubsonicAPI::onGetCoverArt with responseCode: " + responseCode + " and " + data);
+    	
+		// check if request was successful and response is ok
+		var error = checkResponse(responseCode, data);
+		if (error) {
+    		d_fallback.invoke(error);
+			return;
+		}
+    	d_callback.invoke(data);
+    }
 
 	function checkResponse(responseCode, data) {
 		var error = Api.checkResponse(responseCode, data);
 		if (error) { return error; }
 		return SubsonicError.is(responseCode, data);
+	}
+
+	function copy(dict) {
+		var ret = {};
+		for (var idx = 0; idx < dict.keys().size(); ++idx) {
+			var key = dict.keys()[idx];
+			ret.put(key, dict.get(key));
+		}
+		return ret;
 	}
     
     // function update(settings) {

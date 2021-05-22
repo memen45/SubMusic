@@ -29,6 +29,10 @@ module Storage {
 
 		SYNC_REQUEST,	// stores boolean true if sync was requested by user
 
+		ARTWORK,		// dictionary where art id is key
+		ARTWORK_DELETE,	// array of artwork ids of todelete artwork (refCount == 0)
+		ARTWORK_PREFIX,	// starting code for all artwork storage keys (max size per key)
+
 		VERSION = 200,	// version string of store
 	}
 

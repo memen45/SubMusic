@@ -45,7 +45,7 @@ class ArrayStore extends Store {
 
 	// returns true if item id entry removed from storage or is not in storage
 	function remove(item) {        
-		System.println("ArrayStore::remove( item : " + item.toStorage() + " )");
+		// System.println("ArrayStore::remove( item : " + item.toStorage() + " )");
 		if (item == null)  {
 			return true;
 		}

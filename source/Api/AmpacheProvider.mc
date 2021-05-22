@@ -23,6 +23,7 @@ class AmpacheProvider {
 		AMPACHE_ACTION_PLAYLISTS,
 		AMPACHE_ACTION_PLAYLIST_SONGS,
 		AMPACHE_ACTION_STREAM,
+		AMPACHE_ACTION_GET_ART,
 	}
 	
 	function initialize(settings) {
@@ -46,6 +47,7 @@ class AmpacheProvider {
 	// - getPlaylist		returns an array of one playlist object with id
 	// - getPlaylistSongs	returns an array of songs on the playlist with id
 	// - getRefId			returns a refId for a song by id (this downloads the song)
+	// - getArtwork			returns a BitmapResource for a song id
 	//
 	// to be added in the future:
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
@@ -158,6 +160,24 @@ class AmpacheProvider {
 		do_();
 	}
 
+	/**
+	 * getArtwork
+	 *
+	 *  returns a BitmapResource for a song by id
+	 */	
+	function getArtwork(id, callback) {
+		d_callback = callback;
+
+		var type = "song";
+		d_params = {
+			"id" => id,
+			"type" => type,
+		};
+
+		d_action = AMPACHE_ACTION_GET_ART;
+		do_();
+	}
+
 	function on_do_ping(response) {
 		System.println("AmpacheProvider::on_do_ping( response = " + response + ")");
 		
@@ -231,6 +251,7 @@ class AmpacheProvider {
 				"id" => song["id"],
 				"time" => time.toNumber(),
 				"mime" => song["mime"],
+				"art_id" => song["id"],
 			}));
 		}
 
@@ -246,6 +267,11 @@ class AmpacheProvider {
 	function on_do_stream(refId) {
 		d_action = null;
 		d_callback.invoke(refId);
+	}
+
+	function on_do_get_art(artwork) {
+		d_action = null;
+		d_callback.invoke(artwork);
 	}
 
 	/*
@@ -285,6 +311,10 @@ class AmpacheProvider {
 		}
 		if (d_action == AMPACHE_ACTION_STREAM) {
 			d_api.stream(self.method(:on_do_stream), d_params, d_encoding);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_GET_ART) {
+			d_api.get_art(self.method(:on_do_get_art), d_params);
 			return;
 		}
 

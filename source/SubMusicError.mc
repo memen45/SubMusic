@@ -48,6 +48,10 @@ module SubMusic {
 	    	return "API::" + typeToString(d_type) + " " + Error.shortString();
 	    }
 	    
+	    function type() {
+	    	return d_type;
+	    }
+	    
 	    function typeToString(type) {
 	    
 	    	if (type == LOGIN) {

@@ -81,7 +81,6 @@ module SubMusic {
 				for (var idx = 0; idx != ids.size(); ++idx) {
 					var id = ids[idx];
 					var isong = new ISong(id);
-					isong.setRefId(null);			// delete from cache
 					isong.remove();					// remove from Store
 				}
 				

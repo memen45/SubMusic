@@ -16,7 +16,7 @@ class Api {
 
     function initialize(url_add) {
         d_url_add = url_add;
-        d_client = (WatchUi.loadResource(Rez.Strings.AppName) + " v" + (new SubMusicVersion(null).toString()));
+        d_client = (WatchUi.loadResource(Rez.Strings.AppName) + "-v" + (new SubMusicVersion(null).toString()));
     }
 
     function client() {

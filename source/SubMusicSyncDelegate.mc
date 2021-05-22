@@ -85,8 +85,13 @@ module SubMusic {
 			for (var idx = 0; idx < todelete.size(); ++idx) {
 				var id = todelete[idx];
 				var isong = new ISong(id);
-				isong.setRefId(null);			// delete from cache
 				isong.remove();					// remove from Store
+			}
+			todelete = ArtworkStore.getDeletes();
+			for (var idx = 0; idx < todelete.size(); ++idx) {
+				var id = todelete[idx];
+				var iartwork = new IArtwork(id);
+				iartwork.remove();				// remove from Storage
 			}
 
 			System.println("Sync completed...");

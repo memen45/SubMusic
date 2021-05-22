@@ -44,7 +44,7 @@ module SongStore {
 		return ret;
 	}
 
-    // these functions should be used only by ISong class
+    // these functions should be used only internally by ISong class
 	function save(song) {
 		System.println("SongStore::save( song : " + song.toStorage() + " )");
 
