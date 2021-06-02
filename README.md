@@ -29,11 +29,11 @@ Should be supported now. Just choose Subsonic API in the Connect IQ app settings
 ## Known issues 
 Below a list of known 'issues'. These are problems that cannot be fixed by design of either the watch software or the API backends chosen.
 
-**SubSonic API** - synchronization of large playlists (above ~25 depending on metadata) is not supported, due to how the Subsonic API is designed and how the watch works. Remove some songs from the playlist if you receive the -402 error during sync.
+**SubSonic API** - no more than ~25 songs on a playlist, due to Subsonic API and watch limitations. Do you get 'Error -402' during sync? Remove some songs from the playlist.
 
-**Nextcloud** - does not support transcoding, so supported file types are MP3, MP4, ADTS and WAV files. Please report issues related to the file types!
+**Nextcloud** - does not support transcoding, so supported file types are MP3, MP4, ADTS and WAV files. Other file types will be skipped (shows a 'need sync' in playlist overview).
 
-**General** - self-signed certificates are not supported by the watch (Sync Error: 0). Either use http or proper https certificates.
+**General** - 'Error -300' or 'Error 0': check the server address. Any typos? Are you using HTTP? Enable HTTPS on your server. Do you use self-signed certificates? Install certificates signed by a certificate authority (CA) e.g. Let's Encrypt. 
 
 ## == Support ==
 
