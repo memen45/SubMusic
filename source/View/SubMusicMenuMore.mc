@@ -16,29 +16,29 @@ module SubMusic {
 
 			private var d_items = {
 				TEST_SERVER => {
-					LABEL => Rez.Strings.confSync_MoreInfo_TestServer_label, 
+					LABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_TestServer_label), 
 					SUBLABEL => null, 
 					METHOD => method(:onTestServer),
 				},
 				SERVER_DETAIL => {
-					LABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_label,
-					SUBLABEL => Rez.Strings.confSync_MoreInfo_ServerDetail_sublabel,
+					LABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_ServerDetail_label),
+					SUBLABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_ServerDetail_sublabel),
 					METHOD => method(:onServerDetail),
 				},
 				DONATE => {
-					LABEL => Rez.Strings.Donate_label, 
+					LABEL => WatchUi.loadResource(Rez.Strings.Donate_label), 
 					SUBLABEL => null, 
 					METHOD => method(:onDonate),
 				},
 				REMOVE_ALL => {
-					LABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_label, 
-					SUBLABEL => Rez.Strings.confSync_MoreInfo_RemoveAll_sublabel,
+					LABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_RemoveAll_label), 
+					SUBLABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_RemoveAll_sublabel),
 					METHOD => method(:onRemoveAll),
 				},
 			};
 
 			function initialize() {
-				MenuBase.initialize(Rez.Strings.confSync_MoreInfo_title, true);
+				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_title), true);
 			}
 
 			// returns null if menu idx not found

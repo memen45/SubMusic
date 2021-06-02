@@ -7,7 +7,7 @@ module SubMusic {
 
 			function initialize() {
 				SongsLocal.initialize(
-					Rez.Strings.confPlayback_NowPlaying_title, 
+					WatchUi.loadResource(Rez.Strings.confPlayback_NowPlaying_title), 
 					SubMusic.NowPlaying.getPlayable().getSongIds()
 				);
 			}

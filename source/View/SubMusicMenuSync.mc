@@ -15,24 +15,24 @@ module SubMusic {
 
 			private var d_items = {
 				SELECT_PLAYLISTS => {
-					LABEL => Rez.Strings.confSync_SelectPlaylists_label, 
+					LABEL => WatchUi.loadResource(Rez.Strings.confSync_SelectPlaylists_label), 
 					SUBLABEL => null, 
 					METHOD => method(:onSelectPlaylists),
 				},
 				START_SYNC => {
-					LABEL => Rez.Strings.confSync_StartSync_label, 
+					LABEL => WatchUi.loadResource(Rez.Strings.confSync_StartSync_label), 
 					SUBLABEL => getLastSyncString(), 
 					METHOD => method(:onStartSync),
 				},
 				MORE_INFO => {
-					LABEL => Rez.Strings.confSync_MoreInfo_label, 
+					LABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_label), 
 					SUBLABEL => null, 
 					METHOD => method(:onMoreInfo),
 				},
 			};
 
 			function initialize() {
-				MenuBase.initialize(Rez.Strings.confSync_Title, true);
+				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.confSync_Title), true);
 			}
 			
 			// returns null if menu idx not found
@@ -71,7 +71,7 @@ module SubMusic {
 			function onSelectPlaylists() {
 				// load the menu as it might be empty and or not ready
 				var loader = new MenuLoader(
-					new SubMusic.Menu.PlaylistsRemote(Rez.Strings.confSync_Playlists_title),
+					new SubMusic.Menu.PlaylistsRemote(WatchUi.loadResource(Rez.Strings.confSync_Playlists_title)),
 					new SubMusic.Menu.PlaylistsRemoteDelegate()
 				);
 			}

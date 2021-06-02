@@ -2,6 +2,9 @@ Version [] -
 - (future) added 'Manage...' option for more playlist options
 - (future) added alpha podcast implementation (feedback needed)
 
+Version [0.1.9] - 2021-06-02
+- fixed support for venu2s (Garmin bug with loading resource strings)
+
 Version [0.1.8] - 2021-05-22
 - added artwork for both Subsonic and Ampache backends
 - added support for descentmk2s, venu2 and venu2s

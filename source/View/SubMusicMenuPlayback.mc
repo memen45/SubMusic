@@ -14,34 +14,34 @@ module SubMusic {
 			
 			private var d_items = {
 				NOW_PLAYING => { 
-					LABEL => Rez.Strings.confPlayback_NowPlaying_label, 
+					LABEL => WatchUi.loadResource(Rez.Strings.confPlayback_NowPlaying_label), 
 					SUBLABEL => null, 
 					METHOD => method(:onNowPlaying),
 				},
 				PLAY_ALL => {
-					LABEL => Rez.Strings.confPlayback_PlayAll_label,
+					LABEL => WatchUi.loadResource(Rez.Strings.confPlayback_PlayAll_label),
 					SUBLABEL => null,
 					METHOD => method(:onPlayAll),
 				},
 				SELECT_PLAYLIST => { 
-					LABEL => Rez.Strings.confPlayback_SelectPlaylist_label, 
+					LABEL => WatchUi.loadResource(Rez.Strings.confPlayback_SelectPlaylist_label), 
 					SUBLABEL => null, 
 					METHOD => method(:onSelectPlaylist),
 				},
 				OPEN_SYNC => {
-					LABEL => Rez.Strings.confPlayback_OpenSync_label, 
+					LABEL => WatchUi.loadResource(Rez.Strings.confPlayback_OpenSync_label), 
 					SUBLABEL => null, 
 					METHOD => method(:onOpenSync),
 				},
 				DONATE => {
-					LABEL => Rez.Strings.Donate_label, 
+					LABEL => WatchUi.loadResource(Rez.Strings.Donate_label), 
 					SUBLABEL => null, 
 					METHOD => method(:onDonate),
 				},
 			};
 
 			function initialize() {
-				MenuBase.initialize(Rez.Strings.confPlayback_Title, true);
+				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.confPlayback_Title), true);
 			}
 
 			// returns null if menu idx not found
@@ -82,12 +82,12 @@ module SubMusic {
 			
 			function onSelectPlaylist() {
 				// WatchUi.pushView(
-				// 	new SubMusic.Menu.PlaylistsLocalView(Rez.Strings.playbackMenuTitle), 
+				// 	new SubMusic.Menu.PlaylistsLocalView(WatchUi.loadResource(Rez.Strings.playbackMenuTitle)), 
 				// 	new SubMusic.Menu.PlaylistsLocalDelegate(), 
 				// 	WatchUi.SLIDE_IMMEDIATE
 				// );
 				var loader = new MenuLoader(
-					new SubMusic.Menu.PlaylistsLocal(Rez.Strings.playbackMenuTitle),
+					new SubMusic.Menu.PlaylistsLocal(WatchUi.loadResource(Rez.Strings.playbackMenuTitle)),
 					new SubMusic.Menu.PlaylistsLocalDelegate()
 				);
 			}

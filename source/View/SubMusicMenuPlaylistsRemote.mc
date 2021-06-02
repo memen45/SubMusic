@@ -101,9 +101,9 @@ module SubMusic {
 
             function placeholder() {
                 if (loaded()) {
-                    return Rez.Strings.placeholder_noRemotePlaylists;
+                    return WatchUi.loadResource(Rez.Strings.placeholder_noRemotePlaylists);
                 }
-                return Rez.Strings.fetchingPlaylists;
+                return WatchUi.loadResource(Rez.Strings.fetchingPlaylists);
             }
 
             function onError(error) {

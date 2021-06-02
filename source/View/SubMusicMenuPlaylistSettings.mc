@@ -15,22 +15,22 @@ module SubMusic {
             }
             private var d_items = {
                 PLAY => {
-                    LABEL => Rez.Strings.Menu_PlayNow_label,
+                    LABEL => WatchUi.loadResource(Rez.Strings.Menu_PlayNow_label),
                     SUBLABEL => null,
                     METHOD => method(:onPlay),
                 },
                 SHUFFLE => {
-                    LABEL => Rez.Strings.Menu_PlayShuffle_label,
+                    LABEL => WatchUi.loadResource(Rez.Strings.Menu_PlayShuffle_label),
                     SUBLABEL => null,
                     METHOD => method(:onShuffle),
                 },
                 PODCAST_MODE => {
-                    LABEL => Rez.Strings.Menu_PodcastMode_label,
-                    SUBLABEL => Rez.Strings.Menu_PodcastMode_sublabel,
+                    LABEL => WatchUi.loadResource(Rez.Strings.Menu_PodcastMode_label),
+                    SUBLABEL => WatchUi.loadResource(Rez.Strings.Menu_PodcastMode_sublabel),
                     METHOD => method(:onPodcastMode)
                 },
                 SONGS => {
-                    LABEL => Rez.Strings.Menu_Songs_label,
+                    LABEL => WatchUi.loadResource(Rez.Strings.Menu_Songs_label),
                     SUBLABEL => null,
                     METHOD => method(:onSongs),
                 },
@@ -88,7 +88,7 @@ module SubMusic {
 
             function onSongs() {
                 var loader = new MenuLoader(
-                    new SubMusic.Menu.SongsLocal(Rez.Strings.Menu_PlaylistSongs_title, d_iplaylist.songs()),
+                    new SubMusic.Menu.SongsLocal(WatchUi.loadResource(Rez.Strings.Menu_PlaylistSongs_title), d_iplaylist.songs()),
                     new SubMusic.Menu.PlaylistSongsDelegate(d_id)
                 );
             }

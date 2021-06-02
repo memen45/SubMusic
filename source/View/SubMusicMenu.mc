@@ -215,9 +215,9 @@ module SubMusic {
 
 			function placeholder() {
 				if (d_loaded) {
-					return Rez.Strings.placeholder_noMenuItems;
+					return WatchUi.loadResource(Rez.Strings.placeholder_noMenuItems);
 				}
-				return Rez.Strings.placeholder_loading;
+				return WatchUi.loadResource(Rez.Strings.placeholder_loading);
 			}
 
 		}
