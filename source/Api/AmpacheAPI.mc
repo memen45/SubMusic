@@ -192,18 +192,6 @@ class AmpacheAPI extends Api {
 		};
 		Communications.makeImageRequest(url(), params, options, self.method(:onGet_art));
 	}
-	
-	// function onStream(responseCode, data) {
-	// 	System.println("AmpacheAPI::onStream with responseCode: " + responseCode);
-		
-	// 	// check if request was successful and response is ok
-	// 	var error = checkResponse(responseCode, data);
-	// 	if (error) {
-	// 		d_fallback.invoke(error);
-	// 		return;
-	// 	}
-	// 	d_callback.invoke(data.getId());
-    // }
 
 	function onGet_art(responseCode, data) {
 		System.println("AmpacheAPI::onGet_art with responseCode: " + responseCode + " and " + data);
@@ -245,15 +233,6 @@ class AmpacheAPI extends Api {
 		d_callback.invoke(data);
 	}
 	
-	// function checkArrayResponse(responseCode, data) {
-	// 	var error = checkResponse(responseCode, data);
-	// 	if (error) { return error; }
-		
-	// 	// finally, expecting array
-	// 	if (!(data instanceof Lang.Array)) { return new AmpacheError(null); }
-	// 	return null;
-	// }
-	
 	/*
 	 * onDictionaryResponse
 	 *
@@ -271,15 +250,6 @@ class AmpacheAPI extends Api {
 		d_callback.invoke(data);
 	}
 	
-	// function checkDictionaryResponse(responseCode, data) {
-	// 	var error = checkResponse(responseCode, data);
-	// 	if (error) { return error; }
-		
-	// 	// finally, expecting Dictionary
-	// 	if (!(data instanceof Lang.Dictionary)) { return new AmpacheError(null); }
-	// 	return null;
-	// }
-	
 	/*
 	 * onContentResponse
 	 *
@@ -296,17 +266,6 @@ class AmpacheAPI extends Api {
 		}
 		d_callback.invoke(data);
 	}
-	
-	// /*
-	//  * checkResponse
-	//  *
-	//  * returns response / api errors if found
-	//  */
-	// function checkResponse(responseCode, data) {
-	// 	var error = Api.checkResponse(responseCode, data);
-	// 	if (error) { return error; }
-	// 	return AmpacheError.is(responseCode, data);
-	// }
 
 	/*
 	 * @override Api.checkApiError
@@ -394,27 +353,6 @@ class AmpacheAPI extends Api {
 		};
 		return StringUtil.convertEncodedString(ba, options);
 	}
-	
-	// function update(settings) {
-	// 	System.println("AmpacheAPI::update(settings)");
-		
-	// 	// update the settings
-	// 	set(settings);
-		
-	// 	deleteSession();
-	// }
-	
-	// function set(settings) {
-	// 	d_url = settings.get("api_url") + "/server/json.server.php";
-	// 	d_usr = settings.get("api_usr");
-		
-	// 	// hash the password
-	// 	var hasher = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
-	// 	hasher.update(string_to_ba(settings.get("api_key")));
-	// 	d_hash = ba_to_hexstring(hasher.digest());
-		
-	// 	System.println("AmpacheAPI::set(url: " + d_url + ", user: " + d_usr + ", pass: " + d_hash + ")");
-	// }
 
 	// @override
 	function update(settings) {

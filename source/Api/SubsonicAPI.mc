@@ -204,7 +204,6 @@ class SubsonicAPI extends Api {
     	System.println("SubsonicAPI::onGetCoverArt with responseCode: " + responseCode + " and " + data);
     	
 		// check if request was successful and response is ok
-		// var error = checkResponse(responseCode, data);
 		var error = Api.checkImageResponse(responseCode, data);
 		if (error) {
 			d_fallback.invoke(error);
@@ -212,12 +211,6 @@ class SubsonicAPI extends Api {
 		}
     	d_callback.invoke(data);
     }
-
-	// function checkResponse(responseCode, data) {
-	// 	var error = Api.checkResponse(responseCode, data);
-	// 	if (error) { return error; }
-	// 	return SubsonicError.is(responseCode, data);
-	// }
 
 	// @override
 	function checkApiError(responseCode, data) {
@@ -232,15 +225,6 @@ class SubsonicAPI extends Api {
 		}
 		return ret;
 	}
-    
-    // function update(settings) {
-	// 	System.println("SubsonicAPI::update(settings)");
-		
-	// 	// update the settings
-    // 	set(settings);
-
-	// 	// no persistent session info, so only update variables for future requests
-   	// }
 
 	// @override
 	function updateUsr(usr) {
@@ -253,12 +237,4 @@ class SubsonicAPI extends Api {
 		Api.updateKey(key);
 		d_params.put("p", key);
 	}
-    
-    // function set(settings) {
-    // 	d_base_url = settings.get("api_url") + "/rest/";
-	// 	d_params.put("u", settings.get("api_usr"));
-    // 	d_params.put("p", settings.get("api_key"));
-
-    // 	System.println("SubsonicAPI::set(url: " + d_base_url + " user: " + d_params.get("u") + ", pass: " + d_params.get("p") + ")");
-    // }
 }

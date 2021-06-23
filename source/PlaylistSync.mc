@@ -164,13 +164,6 @@ class PlaylistSync extends Deferrable {
     	
 	    d_playlist.setSynced(!d_failed);
     	
-    	// update playlist info if not found
-    	// if ((error instanceof SubMusic.ApiError)
-    	// 	&& (error.type() == SubMusic.ApiError.NOTFOUND)) {
-    	// 	d_playlist.setRemote(false);
-	    // 	Deferrable.complete();
-	    // 	return; 	
-    	// }
 		if (!(error instanceof SubMusic.ApiError)) {
 
 			// other errors will break the sync by default
@@ -178,6 +171,7 @@ class PlaylistSync extends Deferrable {
     		return;
 		}
 		
+    	// update playlist info if not found
 		var apiError as SubMusic.ApiError = error;
 		if (apiError.api_type() == SubMusic.ApiError.NOTFOUND) {
 			d_playlist.setRemote(false);
