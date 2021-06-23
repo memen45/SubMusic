@@ -13,7 +13,7 @@ class AmpacheError extends SubMusic.ApiError {
 //		BAD_REQUEST		= 4710,
 //		FAILED_ACCESS	= 4742,
 //	}
-	enum {
+	static enum {
 		ACCESS_CONTROL 	= 400,
 		HANDSHAKE		= 401,
 		FEATURE_MISSING	= 403,
@@ -23,16 +23,16 @@ class AmpacheError extends SubMusic.ApiError {
 		BAD_REQUEST		= 410,
 		FAILED_ACCESS	= 442,
 	}
-	private var d_code = null;
+	private var d_type = null;
 	private var d_msg = "";
 	
-	static private var s_name = "Ampache";
+	static private var s_name = "AmpacheError";
 	
 	function initialize(error_obj) {
 		
 		// if null error_obj, response is malformed
 		if (error_obj) {
-			d_code = error_obj["code"];
+			d_type = error_obj["code"].toNumber();
 			d_msg = error_obj["message"];
 			// TODO for Ampache 5:
 //			d_code = error_obj["errorCode"];		// Ampache5
@@ -40,32 +40,37 @@ class AmpacheError extends SubMusic.ApiError {
 		}
 		
 		// default is unknown
-		var type = SubMusic.ApiError.UNKNOWN;
-		if (d_code == HANDSHAKE) {
-			type = SubMusic.ApiError.LOGIN;
-		} else if (d_code == FAILED_ACCESS) {
-			type = SubMusic.ApiError.ACCESS;
-		} else if (d_code == NOT_FOUND) {
-			type = SubMusic.ApiError.NOTFOUND;
-		} else if ((d_code == ACCESS_CONTROL) || (d_code == FEATURE_MISSING) || (d_code == METHOD_MISSING) || (d_code == METHOD_DPRCTD)) {
-			type = SubMusic.ApiError.SERVERCLIENT;
-		} else if (d_code == BAD_REQUEST) {
-			type = SubMusic.ApiError.BADREQUEST;
+		var apitype = SubMusic.ApiError.UNKNOWN;
+		if (d_type == HANDSHAKE) {
+			apitype= SubMusic.ApiError.LOGIN;
+		} else if (d_type == FAILED_ACCESS) {
+			apitype= SubMusic.ApiError.ACCESS;
+		} else if (d_type == NOT_FOUND) {
+			apitype = SubMusic.ApiError.NOTFOUND;
+		} else if ((d_type == ACCESS_CONTROL) || (d_type == FEATURE_MISSING) || (d_type == METHOD_MISSING) || (d_type == METHOD_DPRCTD)) {
+			apitype = SubMusic.ApiError.SERVERCLIENT;
+		} else if (d_type == BAD_REQUEST) {
+			apitype = SubMusic.ApiError.BADREQUEST;
 		}
 		
-		SubMusic.ApiError.initialize(type);
+		SubMusic.ApiError.initialize(apitype);
+
+		System.println(s_name + "::" + AmpacheError.typeToString(d_type));
 	}
-	
+
 	function shortString() {
-		return SubMusic.ApiError.shortString() + " " + d_code;
+		return s_name + "::" + d_type;
 	}
-	
+
 	function toString() {
-		return d_msg;
+		return SubMusic.ApiError.toString() + 
+				" --> " + 
+				s_name + "::" + AmpacheError.typeToString(d_type) + 
+				": " + d_msg;
 	}
 	
-	function code() {
-		return d_code;
+	function type() {
+		return d_type;
 	}
 	
 	static function is(responseCode, data) {
@@ -77,5 +82,26 @@ class AmpacheError extends SubMusic.ApiError {
 			return null;
 		}
 		return new AmpacheError(data["error"]);
+	}
+
+	static function typeToString(type) {
+		if (type == ACCESS_CONTROL) {
+			return "ACCESS_CONTROL";
+		} else if (type == HANDSHAKE) {
+			return "HANDSHAKE";
+		} else if (type == FEATURE_MISSING) {
+			return "FEATURE_MISSING";
+		} else if (type == NOT_FOUND) {
+			return "NOT_FOUND";
+		} else if (type == METHOD_MISSING) {
+			return "METHOD_MISSING";
+		} else if (type == METHOD_DPRCTD) {
+			return "METHOD_DPRCTD";
+		} else if (type == BAD_REQUEST) {
+			return "BAD_REQUEST";
+		} else if (type == FAILED_ACCESS) {
+			return "FAILED_ACCESS";
+		}
+		return "Unknown";
 	}
 }

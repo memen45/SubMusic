@@ -3,6 +3,7 @@ using Toybox.Cryptography;
 using Toybox.StringUtil;
 using Toybox.Communications;
 using Toybox.Lang;
+using Toybox.Media;
  
 class AmpacheAPI extends Api {
  
@@ -66,7 +67,7 @@ class AmpacheAPI extends Api {
 		System.println("AmpacheAPI::onHandshake with responseCode " + responseCode + " payload " + data);
 		
 		// errors are filtered first
-		var error = checkDictionaryResponse(responseCode, data);
+		var error = Api.checkDictionaryResponse(responseCode, data);
 		if (error) {
 			d_fallback.invoke(error);
 			return;
@@ -170,7 +171,7 @@ class AmpacheAPI extends Api {
 			:mediaEncoding => encoding,
 			:fileDownloadProgressCallback => method(:onProgress),
 		};
-		Communications.makeWebRequest(url(), params, options, self.method(:onStream));
+		Communications.makeWebRequest(url(), params, options, self.method(:onContentResponse));
 	}
 
 	function get_art(callback, params) {
@@ -192,23 +193,23 @@ class AmpacheAPI extends Api {
 		Communications.makeImageRequest(url(), params, options, self.method(:onGet_art));
 	}
 	
-	function onStream(responseCode, data) {
-		System.println("AmpacheAPI::onStream with responseCode: " + responseCode);
+	// function onStream(responseCode, data) {
+	// 	System.println("AmpacheAPI::onStream with responseCode: " + responseCode);
 		
-		// check if request was successful and response is ok
-		var error = checkResponse(responseCode, data);
-		if (error) {
-			d_fallback.invoke(error);
-			return;
-		}
-		d_callback.invoke(data.getId());
-    }
+	// 	// check if request was successful and response is ok
+	// 	var error = checkResponse(responseCode, data);
+	// 	if (error) {
+	// 		d_fallback.invoke(error);
+	// 		return;
+	// 	}
+	// 	d_callback.invoke(data.getId());
+    // }
 
 	function onGet_art(responseCode, data) {
 		System.println("AmpacheAPI::onGet_art with responseCode: " + responseCode + " and " + data);
 		
 		// check if request was successful and response is ok
-		var error = checkResponse(responseCode, data);
+		var error = Api.checkImageResponse(responseCode, data);
 		if (error) {
 			d_fallback.invoke(error);
 			return;
@@ -236,7 +237,7 @@ class AmpacheAPI extends Api {
 		System.println("AmpacheAPI::onArrayResponse with responseCode: " + responseCode + ", payload " + data);
 		
 		// errors are filtered first
-		var error = checkArrayResponse(responseCode, data);
+		var error = Api.checkArrayResponse(responseCode, data);
 		if (error) {
 			d_fallback.invoke(error);
 			return;
@@ -244,14 +245,14 @@ class AmpacheAPI extends Api {
 		d_callback.invoke(data);
 	}
 	
-	function checkArrayResponse(responseCode, data) {
-		var error = checkResponse(responseCode, data);
-		if (error) { return error; }
+	// function checkArrayResponse(responseCode, data) {
+	// 	var error = checkResponse(responseCode, data);
+	// 	if (error) { return error; }
 		
-		// finally, expecting array
-		if (!(data instanceof Lang.Array)) { return new AmpacheError(null); }
-		return null;
-	}
+	// 	// finally, expecting array
+	// 	if (!(data instanceof Lang.Array)) { return new AmpacheError(null); }
+	// 	return null;
+	// }
 	
 	/*
 	 * onDictionaryResponse
@@ -262,34 +263,60 @@ class AmpacheAPI extends Api {
 		System.println("AmpacheAPI::onDictionaryResponse with responseCode " + responseCode + " payload " + data);
 		
 		// errors are filtered first
-		var error = checkDictionaryResponse(responseCode, data);
+		var error = Api.checkDictionaryResponse(responseCode, data);
 		if (error) {
 			d_fallback.invoke(error);
 			return;
 		}
-		
 		d_callback.invoke(data);
 	}
 	
-	function checkDictionaryResponse(responseCode, data) {
-		var error = checkResponse(responseCode, data);
-		if (error) { return error; }
+	// function checkDictionaryResponse(responseCode, data) {
+	// 	var error = checkResponse(responseCode, data);
+	// 	if (error) { return error; }
 		
-		// finally, expecting Dictionary
-		if (!(data instanceof Lang.Dictionary)) { return new AmpacheError(null); }
-		return null;
-	}
+	// 	// finally, expecting Dictionary
+	// 	if (!(data instanceof Lang.Dictionary)) { return new AmpacheError(null); }
+	// 	return null;
+	// }
 	
 	/*
-	 * checkResponse
+	 * onContentResponse
 	 *
-	 * returns response / api errors if found
+	 * Default handler for actions that return a ContentRef
 	 */
-	function checkResponse(responseCode, data) {
-		var error = Api.checkResponse(responseCode, data);
-		if (error) { return error; }
+	function onContentResponse(responseCode, data) {
+		System.println("AmpacheAPI::onContentResponse with responseCode " + responseCode + " payload " + data);
+		
+		// errors are filtered first
+		var error = Api.checkContentResponse(responseCode, data);
+		if (error) {
+			d_fallback.invoke(error);
+			return;
+		}
+		d_callback.invoke(data);
+	}
+	
+	// /*
+	//  * checkResponse
+	//  *
+	//  * returns response / api errors if found
+	//  */
+	// function checkResponse(responseCode, data) {
+	// 	var error = Api.checkResponse(responseCode, data);
+	// 	if (error) { return error; }
+	// 	return AmpacheError.is(responseCode, data);
+	// }
+
+	/*
+	 * @override Api.checkApiError
+	 *
+	 * returns ampache api error if found (used from base class Api)
+	 */
+	function checkApiError(responseCode, data) {
 		return AmpacheError.is(responseCode, data);
 	}
+
 	
 	// converts rfc3339 formatted timestamp to Time::Moment (null on error)
 	function parseISODate(date) {
@@ -406,6 +433,7 @@ class AmpacheAPI extends Api {
 	}
 
 	function deleteSession() {
+		System.println("AmpacheAPI::deleteSession()");
 		// reset the session
 		d_expire = new Time.Moment(0);
 		Application.Storage.deleteValue("AMPACHE_API_SESSION");

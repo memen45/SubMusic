@@ -18,8 +18,8 @@ class SubMusicVersion {
 
 	private var d_major = 0;
 	private var d_minor = 1;
-	private var d_patch = 9;
-	private var d_name = "juliett";
+	private var d_patch = 10;
+	private var d_name = "kilo";
 
 	function initialize(storage) {
 		if (storage == null) {

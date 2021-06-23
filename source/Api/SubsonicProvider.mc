@@ -209,8 +209,8 @@ class SubsonicProvider {
 		d_callback.invoke(songs);
 	}
 
-	function onStream(refId) {
-		d_callback.invoke(refId);
+	function onStream(contentRef) {
+		d_callback.invoke(contentRef.getId());
 	}
 
 	function onGetCoverArt(artwork) {

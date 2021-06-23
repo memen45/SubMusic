@@ -1,13 +1,17 @@
+using Toybox.Communications;
+
 module SubMusic {
 	
 	class Error {
-		enum {
+		static enum {
 			HTTP,
 			API,
 		}
+		static private var s_name = "Error";
 		private var d_type;
 		
 		function initialize(type) {
+			System.println(s_name + "::" + Error.typeToString(type));
 			d_type = type;
 		}
 		
@@ -16,17 +20,26 @@ module SubMusic {
 		}
 		
 		function shortString() {
-			return "Error";
+			return s_name + " " + Error.typeToString(d_type);
 	    }
 	    
 	    function toString() {
-	    	return "";
+	    	return s_name + " " + Error.typeToString(d_type);
 	    }
+
+		static function typeToString(type) {
+			if (type == HTTP) {
+				return "HTTP";
+			} else if (type == API) {
+				return "API";
+			}
+			return "Unknown Error";
+		}
 	}
 	
 	class ApiError extends Error {
 		
-		enum {
+		static enum {
 			LOGIN,
 			ACCESS,
 			NOTFOUND,
@@ -36,23 +49,35 @@ module SubMusic {
 			UNKNOWN,
 		}		
 		private var d_type;
-		static private var s_name = "API";
+		static private var s_name = "ApiError";
 		
 		function initialize(type) {
 			Error.initialize(Error.API);
+
+			System.println(s_name + "::" + ApiError.typeToString(type));
 			
 			d_type = type;
 		}
 		
 		function shortString() {
-	    	return "API::" + typeToString(d_type) + " " + Error.shortString();
+	    	return s_name + "::" + ApiError.typeToString(d_type);
 	    }
+
+		function toString() {
+			return SubMusic.Error.toString() + 
+					" --> " + 
+					s_name + "::" + ApiError.typeToString(d_type);
+		}
 	    
 	    function type() {
 	    	return d_type;
 	    }
+
+		function api_type() {
+			return ApiError.type();
+		}
 	    
-	    function typeToString(type) {
+	    static function typeToString(type) {
 	    
 	    	if (type == LOGIN) {
 	    		return "\"LOGIN\"";
@@ -69,23 +94,24 @@ module SubMusic {
 	    	} else if (type == UNKNOWN) {
 	    		return "\"UNKNOWN\"";
 	    	}
-	    	return "Unknown";
+	    	return "Unknown ApiError";
 	    }
 	}
 	
 	class HttpError extends Error {
 		
-		enum {
+		static enum {
 			BAD_REQUEST = 400,
 			NOT_FOUND = 404,
 		}
 		private var d_type;
-		static private var s_name = "HTTP";
+		static private var s_name = "HttpError";
 		
 		function initialize(type) {
 			Error.initialize(Error.HTTP);
-			
 			d_type = type;
+
+			System.println(HttpError.toString());
 		}
 		
 		static function is(responseCode) {
@@ -99,17 +125,23 @@ module SubMusic {
 		}
 		
 		function shortString() {
-			return Error.shortString() + "::" + s_name + "::" + d_type.toString();
+			return s_name + "::" + d_type.toString();
+		}
+
+		function toString() {
+			return Error.toString() +
+					" --> " + 
+					s_name + "::" + HttpError.typeToString(d_type);
 		}
 		
-		function toString() {
+		static function typeToString(type) {
 			
-			if (d_type == BAD_REQUEST) {
+			if (type == BAD_REQUEST) {
 				return "BAD_REQUEST";
-			} else if (d_type == NOT_FOUND) {
+			} else if (type == NOT_FOUND) {
 				return "NOT_FOUND";
 			}
-			return "Unknown";
+			return "Unknown HttpError";
 		}
 	}
 	
@@ -117,11 +149,13 @@ module SubMusic {
 	
 		// enum for possible errors can be found in module Communications
 		private var d_responseCode;
+		static private var s_name = "GarminSdkError";
 
 		function initialize(responseCode) {
 			Error.initialize(Error.HTTP);
-			
 			d_responseCode = responseCode;
+
+			System.println(GarminSdkError.toString());
 		}
 	
 		static function is(responseCode) {
@@ -139,15 +173,17 @@ module SubMusic {
 		}
 		
 		function shortString() {
-			return d_responseCode.toString();
+			return s_name + "::" + d_responseCode.toString();
 		}
 		
 		function toString() {
-			return respCodeToString(d_responseCode);
+			return Error.toString() + 
+					" --> " + 
+					s_name + "::" + GarminSdkError.respCodeToString(d_responseCode);
 		}
 	
 		// move to somewhere else later, but now this is one of the two places this is used
-	    function respCodeToString(responseCode) {
+	    static function respCodeToString(responseCode) {
 	    	if (responseCode == Communications.UNKNOWN_ERROR) {
 	    		return "\"UNKNOWN_ERROR\"";
 	    	} else if (responseCode == Communications.BLE_ERROR) {
@@ -188,8 +224,20 @@ module SubMusic {
 	    		return "\"STORAGE_FULL\"";
 	    	} else if (responseCode == Communications.SECURE_CONNECTION_REQUIRED) {
 	    		return "\"SECURE_CONNECTION_REQUIRED\"";
+	    	} else if (responseCode == Communications.UNSUPPORTED_CONTENT_TYPE_IN_RESPONSE) {
+	    		return "\"UNSUPPORTED_CONTENT_TYPE_IN_RESPONSE\"";
+	    	} else if (responseCode == Communications.REQUEST_CANCELLED) {
+	    		return "\"REQUEST_CANCELLED\"";
+	    	} else if (responseCode == Communications.REQUEST_CONNECTION_DROPPED) {
+	    		return "\"REQUEST_CONNECTION_DROPPED\"";
+	    	} else if (responseCode == Communications.UNABLE_TO_PROCESS_MEDIA) {
+	    		return "\"UNABLE_TO_PROCESS_MEDIA\"";
+	    	} else if (responseCode == Communications.UNABLE_TO_PROCESS_IMAGE) {
+	    		return "\"UNABLE_TO_PROCESS_IMAGE\"";
+	    	} else if (responseCode == Communications.UNABLE_TO_PROCESS_HLS) {
+	    		return "\"UNABLE_TO_PROCESS_HLS\"";
 	    	}
-	    	return "Unknown";
+	    	return "Unknown GarminSdkError";
 	    }
 	}
 }

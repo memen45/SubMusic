@@ -264,9 +264,9 @@ class AmpacheProvider {
 		do_();
 	}
 
-	function on_do_stream(refId) {
+	function on_do_stream(contentRef) {
 		d_action = null;
-		d_callback.invoke(refId);
+		d_callback.invoke(contentRef.getId());
 	}
 
 	function on_do_get_art(artwork) {
@@ -325,7 +325,7 @@ class AmpacheProvider {
 	
 		// if handshake error on otherwise valid session, delete session and retry handshake
 		if ((error instanceof AmpacheError)
-			&& (error.code() == AmpacheError.HANDSHAKE)
+			&& (error.type() == AmpacheError.HANDSHAKE)
 			&& d_api.session(null)) {
 			
 			d_api.deleteSession();

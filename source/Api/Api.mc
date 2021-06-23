@@ -1,3 +1,9 @@
+using Toybox.Lang;
+using Toybox.Media;
+using Toybox.System;
+using Toybox.WatchUi;
+using SubMusic;
+
 class Api {
 
     private var d_client;    // the client name
@@ -61,10 +67,53 @@ class Api {
 	 *
 	 * returns http/sdk errors if found
 	 */
-	static function checkResponse(responseCode, data) {
+	function checkResponse(responseCode, data) {
 		var error = SubMusic.HttpError.is(responseCode);
 		if (error) { return error; }
-		return SubMusic.GarminSdkError.is(responseCode);
+		error = SubMusic.GarminSdkError.is(responseCode);
+        if (error) { return error; }
+        return self.checkApiError(responseCode, data);
+    }
+
+    function checkApiError(responseCode, data) {
+        System.println("WARNING: Api::checkApiError() was called, but should not be called");
+        return null;
+    }
+
+    function checkDictionaryResponse(responseCode, data) {
+        var error = checkResponse(responseCode, data);
+        if (error) { return error; }
+
+        // check type of received object
+        if (data instanceof Lang.Dictionary) { return null; }
+        return new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE);
+    }
+
+    function checkArrayResponse(responseCode, data) {
+        var error = checkResponse(responseCode, data);
+        if (error) { return error; }
+
+        // check type of received object
+        if (data instanceof Lang.Array) { return null; }
+        return new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE);
+    }
+
+    function checkContentResponse(responseCode, data) {
+        var error = checkResponse(responseCode, data);
+        if (error) { return error; }
+
+        // check type of received object
+        if (data instanceof Media.ContentRef) { return null; }
+        return new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE);
+    }
+
+    function checkImageResponse(responseCode, data) {
+        var error = checkResponse(responseCode, data);
+        if (error) { return error; }
+
+        // check type of received object
+        if (data instanceof WatchUi.BitmapResource) { return null; }
+        return new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE);
     }
 
 	function onProgress(totalBytesTransferred, fileSize) {

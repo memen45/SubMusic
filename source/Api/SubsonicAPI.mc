@@ -52,7 +52,7 @@ class SubsonicAPI extends Api {
 		System.println("SubsonicAPI::onResponse( responseCode: " + responseCode + ", data: " + data + ")");		
 		
 		// check if request was successful and response is ok
-    	var error = checkResponse(responseCode, data);
+    	var error = Api.checkDictionaryResponse(responseCode, data);
     	if (error) {
     		d_fallback.invoke(error);	// add function name and variables available ?
     		return;
@@ -78,7 +78,7 @@ class SubsonicAPI extends Api {
 		System.println("SubsonicAPI::onGetPlaylists( responseCode: " + responseCode + ", data: " + data + ")");		
 		
 		// check if request was successful and response is ok
-    	var error = checkResponse(responseCode, data);
+    	var error = Api.checkDictionaryResponse(responseCode, data);
     	if (error) {
     		d_fallback.invoke(error);	// add function name and variables available ?
     		return;
@@ -123,7 +123,7 @@ class SubsonicAPI extends Api {
     	System.println("Subsonic::onGetPlaylist(responseCode: " + responseCode + ", data: " + data);
     	
 		// check if request was successful and response is ok
-	   	var error = checkResponse(responseCode, data);
+	   	var error = Api.checkDictionaryResponse(responseCode, data);
     	if (error) {
     		d_fallback.invoke(error);	// add function name and variables available ?
     		return;
@@ -163,12 +163,12 @@ class SubsonicAPI extends Api {
     	System.println("SubsonicAPI::onStream with responseCode: " + responseCode);
     	
 		// check if request was successful and response is ok
-		var error = checkResponse(responseCode, data);
+		var error = Api.checkContentResponse(responseCode, data);
 		if (error) {
     		d_fallback.invoke(error);
 			return;
 		}
-    	d_callback.invoke(data.getId());
+    	d_callback.invoke(data);
     }
     
     /**
@@ -204,17 +204,23 @@ class SubsonicAPI extends Api {
     	System.println("SubsonicAPI::onGetCoverArt with responseCode: " + responseCode + " and " + data);
     	
 		// check if request was successful and response is ok
-		var error = checkResponse(responseCode, data);
+		// var error = checkResponse(responseCode, data);
+		var error = Api.checkImageResponse(responseCode, data);
 		if (error) {
-    		d_fallback.invoke(error);
+			d_fallback.invoke(error);
 			return;
 		}
     	d_callback.invoke(data);
     }
 
-	function checkResponse(responseCode, data) {
-		var error = Api.checkResponse(responseCode, data);
-		if (error) { return error; }
+	// function checkResponse(responseCode, data) {
+	// 	var error = Api.checkResponse(responseCode, data);
+	// 	if (error) { return error; }
+	// 	return SubsonicError.is(responseCode, data);
+	// }
+
+	// @override
+	function checkApiError(responseCode, data) {
 		return SubsonicError.is(responseCode, data);
 	}
 

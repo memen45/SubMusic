@@ -2,6 +2,11 @@ Version [] -
 - (future) added 'Manage...' option for more playlist options
 - (future) added alpha podcast implementation (feedback needed)
 
+Version [0.1.10] - 2021-06-23
+- fixed response checking (rare crash on some metadata)
+- improved error reporting
+- added support for forerunner 945 LTE
+
 Version [0.1.9] - 2021-06-02
 - fixed support for venu2s (Garmin bug with loading resource strings)
 

@@ -143,7 +143,7 @@ class PlaylistSync extends Deferrable {
 	}
     
     function onError(error) {
-    	System.println("PlaylistSync::onError(" + error.shortString() + ")");
+    	System.println("PlaylistSync::onError(" + error.shortString() + " : " + error.toString() + ")");
 
     	// indicate failed sync
 //   	d_playlist.setError(error); TODO
@@ -165,15 +165,27 @@ class PlaylistSync extends Deferrable {
 	    d_playlist.setSynced(!d_failed);
     	
     	// update playlist info if not found
-    	if ((error instanceof SubMusic.ApiError)
-    		&& (error.type() == SubMusic.ApiError.NOTFOUND)) {
-    		d_playlist.setRemote(false);
-	    	Deferrable.complete();
-	    	return; 	
-    	}
-    	
-    	// other errors will break the sync by default
-    	Deferrable.cancel(error);
-    	return;
+    	// if ((error instanceof SubMusic.ApiError)
+    	// 	&& (error.type() == SubMusic.ApiError.NOTFOUND)) {
+    	// 	d_playlist.setRemote(false);
+	    // 	Deferrable.complete();
+	    // 	return; 	
+    	// }
+		if (!(error instanceof SubMusic.ApiError)) {
+
+			// other errors will break the sync by default
+    		Deferrable.cancel(error);
+    		return;
+		}
+		
+		var apiError as SubMusic.ApiError = error;
+		if (apiError.api_type() == SubMusic.ApiError.NOTFOUND) {
+			d_playlist.setRemote(false);
+			Deferrable.complete();
+			return;
+		}
+
+		Deferrable.cancel(error);
+		return;
     }
 }

@@ -3,7 +3,7 @@ using Toybox.Lang;
 
 class SubsonicError extends SubMusic.ApiError {
     
-	enum {
+	static enum {
 		GENERIC 		= 0,		// 0 	A generic error.
 		MISSING_PARAM 	= 10,		// 10 	Required parameter is missing.
 		INCOMPAT_CLIENT = 20,		// 20 	Incompatible Subsonic REST protocol version. Client must upgrade.
@@ -14,46 +14,51 @@ class SubsonicError extends SubMusic.ApiError {
 		TRIAL_OVER		= 60,		// 60 	The trial period for the Subsonic server is over. Please upgrade to Subsonic Premium. Visit subsonic.org for details.
 		NOT_FOUND		= 70,		// 70 	The requested data was not found.
 	}
-	private var d_code = null;
+	private var d_type = null;
 	private var d_msg = "";
 	
-	static private var s_name = "Subsonic";
+	static private var s_name = "SubsonicError";
 	
 	function initialize(error_obj) {
 	
 		// if null error_obj, response is malformed
 		if (error_obj) {
-			d_code = error_obj["code"];
+			d_type = error_obj["code"];
 			d_msg = error_obj["message"];
 		}
 		
 		// default is unknown
-		var type = SubMusic.ApiError.UNKNOWN;
-		if ((d_code == WRONG_CREDS) || (d_code == TOKEN_SUPPORT) || (d_code == TRIAL_OVER)) {
-			type = SubMusic.ApiError.LOGIN;
-		} else if (d_code == NOT_AUTHORIZED) {
-			type = SubMusic.ApiError.ACCESS;
-		} else if (d_code == NOT_FOUND) {
-			type = SubMusic.ApiError.NOTFOUND;
-		} else if ((d_code == INCOMPAT_CLIENT) || (d_code == INCOMPAT_SERVER)) {
-			type = SubMusic.ApiError.SERVERCLIENT;
-		} else if (d_code == MISSING_PARAM) {
-			type = SubMusic.ApiError.BADREQUEST;
+		var apitype = SubMusic.ApiError.UNKNOWN;
+		if ((d_type == WRONG_CREDS) || (d_type == TOKEN_SUPPORT) || (d_type == TRIAL_OVER)) {
+			apitype = SubMusic.ApiError.LOGIN;
+		} else if (d_type == NOT_AUTHORIZED) {
+			apitype = SubMusic.ApiError.ACCESS;
+		} else if (d_type == NOT_FOUND) {
+			apitype = SubMusic.ApiError.NOTFOUND;
+		} else if ((d_type == INCOMPAT_CLIENT) || (d_type == INCOMPAT_SERVER)) {
+			apitype = SubMusic.ApiError.SERVERCLIENT;
+		} else if (d_type == MISSING_PARAM) {
+			apitype = SubMusic.ApiError.BADREQUEST;
 		}
 		
-		SubMusic.ApiError.initialize(type);
+		SubMusic.ApiError.initialize(apitype);
+
+		System.println(s_name + "::" + SubsonicError.typeToString(d_type));
 	}
 	
 	function shortString() {
-		return SubMusic.ApiError.shortString() + " " + d_code;
+		return s_name + "::" + d_type;
 	}
 	
 	function toString() {
-		return d_msg;
+		return SubMusic.ApiError.toString() + 
+				" --> " + 
+				s_name + "::" + SubsonicError.typeToString(d_type) + 
+				": " + d_msg;
 	}
 	
-	function code() {
-		return d_code;
+	function type() {
+		return d_type;
 	}
 	
 	static function is(responseCode, data) {
@@ -69,5 +74,28 @@ class SubsonicError extends SubMusic.ApiError {
 			return null;
 		}
 		return new SubsonicError(data["subsonic-response"]["error"]); 	
+	}
+
+	static function typeToString(type) {
+		if (type == GENERIC) {
+			return "GENERIC";
+		} else if (type == MISSING_PARAM) {
+			return "MISSING_PARAM";
+		} else if (type == INCOMPAT_CLIENT) {
+			return "INCOMPAT_CLIENT";
+		} else if (type == INCOMPAT_SERVER) {
+			return "INCOMPAT_SERVER";
+		} else if (type == WRONG_CREDS) {
+			return "WRONG_CREDS";
+		} else if (type == TOKEN_SUPPORT) {
+			return "TOKEN_SUPPORT";
+		} else if (type == NOT_AUTHORIZED) {
+			return "NOT_AUTHORIZED";
+		} else if (type == TRIAL_OVER) {
+			return "TRIAL_OVER";
+		} else if (type == NOT_FOUND) {
+			return "NOT_FOUND";
+		}
+		return "Unknown";
 	}
 }
