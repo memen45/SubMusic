@@ -1,5 +1,6 @@
 using Toybox.Media;
 using Toybox.Math;
+using SubMusic;
 
 class SubMusicContentIterator extends Media.ContentIterator {
 
@@ -10,7 +11,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
         ContentIterator.initialize();
 
 		// retrieve now playing start object
-		d_playable = SubMusic.NowPlaying.getPlayable();
+		d_playable = new SubMusic.IPlayable();
 		d_songcount = d_playable.size();
     }
 

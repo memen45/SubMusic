@@ -1,5 +1,6 @@
 using Toybox.WatchUi;
 using SubMusic.Menu;
+using SubMusic;
 
 module SubMusic {
 	module Menu {
@@ -76,7 +77,8 @@ module SubMusic {
 
 			// plays all songs
 			function onPlayAll() {
-				SubMusic.NowPlaying.setPlayable(new SongsPlayable(SongStore.getIds()));
+				var iplayable = new SubMusic.IPlayable();
+				iplayable.loadSongIds(SongStore.getIds());
 				Media.startPlayback(null);
 			}
 			

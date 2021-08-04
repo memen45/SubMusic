@@ -1,4 +1,5 @@
 using Toybox.WatchUi;
+using SubMusic;
 
 module SubMusic {
     module Menu {
@@ -70,15 +71,17 @@ module SubMusic {
             }
 
             function onPlay() {
-            	SubMusic.NowPlaying.setPlayable(new PlaylistPlayable(d_id, null));
+                // start playback with playlist
+                var iplayable = new SubMusic.IPlayable();
+                iplayable.loadPlaylist(d_id, null);
                 Media.startPlayback(null);
             }
 
             function onShuffle() {
-                // start playback with playlist 
-                var playable = new PlaylistPlayable(d_id, null);
-                playable.shuffleIdcs(true);
-                SubMusic.NowPlaying.setPlayable(playable);
+                // start playback with playlist in shuffle mode
+                var iplayable = new SubMusic.IPlayable();
+                iplayable.loadPlaylist(d_id, null);
+                iplayable.shuffleIdcs(true);
                 Media.startPlayback(null);
             }
 
@@ -115,7 +118,8 @@ module SubMusic {
                 var songid = item.getId();
 
                 // start playback with playlist and song combination
-                SubMusic.NowPlaying.setPlayable(new PlaylistPlayable(d_id, songid));
+                var iplayable = new SubMusic.IPlayable();
+                iplayable.loadPlaylist(d_id, songid);
                 Media.startPlayback(null);
             }
         }

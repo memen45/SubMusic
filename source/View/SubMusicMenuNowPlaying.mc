@@ -1,14 +1,16 @@
 using Toybox.WatchUi;
 using SubMusic.Menu;
+using SubMusic;
 
 module SubMusic {
 	module Menu {
 		class NowPlaying extends SongsLocal {
 
 			function initialize() {
+				var iplayable = new SubMusic.IPlayable();
 				SongsLocal.initialize(
 					WatchUi.loadResource(Rez.Strings.confPlayback_NowPlaying_title), 
-					SubMusic.NowPlaying.getPlayable().getSongIds()
+					iplayable.getSongIds()
 				);
 			}
 		}
@@ -29,9 +31,8 @@ module SubMusic {
 				var songid = item.getId();
 
 				// start playback with new songid
-				var playable = SubMusic.NowPlaying.getPlayable();
-				playable.setSongId(songid);
-				SubMusic.NowPlaying.setPlayable(playable);
+				var iplayable = new SubMusic.IPlayable();
+				iplayable.setSongId(songid);
 				Media.startPlayback(null);
 			}
 		}

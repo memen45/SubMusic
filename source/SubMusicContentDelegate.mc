@@ -1,4 +1,5 @@
 using Toybox.Media;
+using SubMusic;
 
 // This class handles events from the system's media
 // player. getContentIterator() returns an iterator
@@ -87,8 +88,8 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     	}
     	
     	// record time if podcast mode
-    	var playable = SubMusic.NowPlaying.getPlayable();
-    	if (!playable.podcast()) {
+		var iplayable = new SubMusic.IPlayable();
+    	if (!iplayable.podcast()) {
     		return;
     	}
     	
