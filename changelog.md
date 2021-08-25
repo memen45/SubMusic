@@ -2,6 +2,9 @@ Version [] -
 - (future) added 'Manage...' option for more playlist options
 - (future) added alpha podcast implementation (feedback needed)
 
+Version [0.1.12] -  2021-08-25
+- fixed Media Error when song removed from playlist fix
+
 Version [0.1.11] - 2021-08-04
 - fixed Media Error when song removed from playlist
 - fixed Now Playing persistence between sessions

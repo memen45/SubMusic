@@ -62,21 +62,19 @@ module SubMusic {
                 var id = d_songids[idx];
                 var isong = new ISong(id);
 
-                // if no refid, add to removed songs
+                // if no refid, add id and idx to removed songs
                 if (isong.refId() == null){ 
-                    removed.add(idx);
+                	// add id to removed array
+                    removed.add(id);
+                    
+                	// remove idx from idcs 
+                    d_songidcs.remove(idx);
                 }
             }
 
-            // remove the unavailable from the current playlist
+            // remove ids from current songids
             for (var idx = 0; idx != removed.size(); ++idx) {
-                var songidx = removed[idx];
-
-                // remove from id list
-                d_songids.remove(d_songids[songidx]);
-
-                // remove from idcs
-                d_songidcs.remove(songidx);
+                d_songids.remove(removed[idx]);
             }
 
             // reset songidx if exceeding the new size
