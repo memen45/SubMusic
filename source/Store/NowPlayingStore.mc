@@ -1,6 +1,6 @@
 using Toybox.Application;
 using Toybox.System;
-//using SubMusic;
+using SubMusic.Utils;
 
 module SubMusic {
     class Playable {
@@ -76,6 +76,16 @@ module SubMusic {
             for (var idx = 0; idx != removed.size(); ++idx) {
                 d_songids.remove(removed[idx]);
             }
+            
+            System.println(d_songidcs.toString());
+            
+            // fix idcs, first get sorting, then fill in 0...N given the sort order
+			var sorted_idcs = SubMusic.Utils.sort_idcs(d_songidcs);
+			for (var idx = 0; idx != sorted_idcs.size(); ++idx) {
+	    		d_songidcs[sorted_idcs[idx]] = idx;
+	    	}
+	    	
+	    	System.println(d_songidcs.toString());
 
             // reset songidx if exceeding the new size
             if (d_songidx >= d_songidcs.size()) {
@@ -220,8 +230,9 @@ module SubMusic {
             var iplaylist = new IPlaylist(id);
             d_podcast = iplaylist.podcast();
             var ids = iplaylist.songs();
+            d_shuffle = false;
+            
             var songidx = 0;
-
             d_songids = [];
             d_songidcs = [];
             d_songidx = 0;

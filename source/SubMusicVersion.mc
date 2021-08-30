@@ -1,25 +1,9 @@
-module SubMusic {
-	module Utils {
-		// for numbers only
-		function compare(left, right) {
-			var diff = left - right;
-			if (diff < 0) {
-				return -1;
-			}
-			if (diff > 0) {
-				return 1;
-			}
-			return 0;
-		}
-	}
-}
-
 class SubMusicVersion {
 
 	private var d_major = 0;
 	private var d_minor = 1;
-	private var d_patch = 12;
-	private var d_name = "mike";
+	private var d_patch = 13;
+	private var d_name = "november";
 
 	function initialize(storage) {
 		if (storage == null) {

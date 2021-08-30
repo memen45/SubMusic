@@ -2,7 +2,11 @@ Version [] -
 - (future) added 'Manage...' option for more playlist options
 - (future) added alpha podcast implementation (feedback needed)
 
-Version [0.1.12] -  2021-08-25
+Version [0.1.13] - 2021-08-30
+- fixed Media Error when song removed from playlist (before end)
+- fixed reset initial shuffle state on 'Play' playlist
+
+Version [0.1.12] - 2021-08-25
 - fixed Media Error when song removed from playlist fix
 
 Version [0.1.11] - 2021-08-04
