@@ -24,6 +24,16 @@
     <string id="confSync_MoreInfo_RemoveAll_sublabel">Reset application storage</string>
     
     <string id="Donate_label">Donate</string>
+    <string id="Browse_label">Browse</string>
+    <string id="More_label">More...</string>
+    <string id="About_label">About</string>
+    <string id="Version_label">Version</string>
+    <string id="Settings_label">Settings</string>
+
+    <string id="Playlists_label">Playlists</string>
+    <string id="Podcasts_label">Podcasts</string>
+    <string id="Songs_label">Songs</string>
+    <string id="Episodes_label">Episodes</string>
     
     <string id="confSync_PlaylistDetail_label">Playlist Detail</string>
     <string id="confSync_Test_start">Starting test...</string>
@@ -35,13 +45,21 @@
     <string id="confPlayback_NowPlaying_label">Now Playing</string>
     <string id="confPlayback_PlayAll_label">Play All</string>
     <string id="confPlayback_SelectPlaylist_label">Playlists</string>
-    <string id="confPlayback_OpenSync_label">More...</string>
+    <string id="confPlayback_SelectPodcast_label">Podcasts</string>
+    <string id="confPlayback_SelectRadiostation_label">Radiostations</string>
+    <string id="confPlayback_SelectSong_label">Songs</string>
+    <string id="confPlayback_More_label">More...</string>
     
     <string id="placeholder_noMenuItems">Nothing to show</string>
     <string id="placeholder_loading">Loading..</string>
     <string id="placeholder_noRemotePlaylists">No Remote Playlists</string>
+    <string id="placeholder_noRemotePodcasts">No Remote Podcasts</string>
+    <string id="placeholder_noRemoteEpisodes">No Remote Episodes</string>
+    <string id="placeholder_noRemoteSongs">No Remote Songs</string>
     <string id="fetchingSongs">Fetching Songs...</string>
     <string id="fetchingPlaylists">Fetching Playlists...</string>
+    <string id="fetchingPodcasts">Fetching Podcasts...</string>
+    <string id="fetchingEpisodes">Fetching Episodes...</string>
     <string id="playbackMenuTitle">Playlists</string>
 
     <string id="Menu_PlaylistSongs_title">Songs</string>

@@ -3,19 +3,21 @@ using SubMusic.Menu;
 
 module SubMusic {
     module Menu {
-        class PlaylistsRemote extends MenuBase {
+        class SongsRemote extends MenuBase {
 
             // menu items will be loaded in here 
             hidden var d_items = [];
 
-	        private var d_provider = SubMusic.Provider.get();
             private var d_loading = false;
+	        private var d_provider = SubMusic.Provider.get();
+            private var d_id;       // store id of podcast channel
 
-            function initialize(title) {
+            function initialize(title, id) {
                 // initialize base as not loaded
                 MenuBase.initialize(title, false);
 
                 d_provider.setFallback(method(:onError));
+                d_id = id;
 
                 // items should be lazy loaded by a menu loader
                 // this prevents multiple concurrent requests
@@ -30,15 +32,20 @@ module SubMusic {
 
                 // start loading
                 d_loading = true;
-                d_provider.getAllPlaylists(method(:onGetAllPlaylists));
+                d_provider.getPlaylistSongs(d_id, method(:onGetPlaylistSongs));
             }
 
-            function onGetAllPlaylists(playlists) {
+            function onGetPlaylistSongs(songs) {
 
                 // store in class
                 d_items = [];
-                for (var idx = 0; idx != playlists.size(); ++idx) {
-                    d_items.add(new Menu.PlaylistSettingsRemote(playlists[idx]));
+                for (var idx = 0; idx != songs.size(); ++idx) {
+                    //d_items.add(new Menu.SongSettingsRemote(songs[idx]));
+                    d_items.add({
+                        LABEL => songs[idx].title(),
+                        SUBLABEL => songs[idx].artist(),
+                        METHOD => songs[idx].id(),
+                    });
                 }
 
                 // loading finished
@@ -48,9 +55,9 @@ module SubMusic {
 
             function placeholder() {
                 if (d_loading) {
-                    return WatchUi.loadResource(Rez.Strings.fetchingPlaylists);
+                    return WatchUi.loadResource(Rez.Strings.fetchingSongs);
                 }
-                return WatchUi.loadResource(Rez.Strings.placeholder_noRemotePlaylists);
+                return WatchUi.loadResource(Rez.Strings.placeholder_noRemoteSongs);
             }
 
             function onError(error) {

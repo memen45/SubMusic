@@ -8,8 +8,10 @@ class Deferrable {
 	private var d_deferred = false;		// true: task is deferred and will be continued later
 	private var d_complete = false;		// true: task is completed
 	
-	function initialize(run) {
+	function initialize(run, done, fail) {
 		d_run = run;
+		d_callback = done;
+		d_fallback = fail;
 	}
 	
 	// perform the task, return task status
@@ -17,13 +19,13 @@ class Deferrable {
 		return d_run.invoke();
 	}
 	
-	function setCallback(callback) {
-		d_callback = callback;
-	}
+	// function setCallback(callback) {
+	// 	d_callback = callback;
+	// }
 	
-	function setFallback(fallback) {
-		d_fallback = fallback;
-	}
+	// function setFallback(fallback) {
+	// 	d_fallback = fallback;
+	// }
 	
 	// use in derived classes:
 	
@@ -45,43 +47,42 @@ class Deferrable {
 	// mark as completed task, invokes callback if task was previously deferred
 	function complete() {
 		d_complete = true;
-		if (d_deferred) { 
+		if (d_deferred) { 		// why only when deferred?
 			d_callback.invoke();
 		}
 		return d_complete;
 	}
 }
 
-class DeferredFor {
+class DeferredFor extends Deferrable {
 
 	private var d_idx = 0;
 	private var d_end = 0;
-	
+
 	private var d_fac;		// function to retrieve deferrable by idx
-	private var d_callback;	// function to callback after completion of the loop
-	private var d_fallback;	// function to fallback after cancelling the loop
 
 	function initialize(idx, end, fac, callback, fallback) {
+		Deferrable.initialize(method(:run), callback, fallback);
 		d_idx = idx;
 		d_end = end;
 		d_fac = fac;
-		d_callback = callback;
-		d_fallback = fallback;
 	}
 
 	// iterates until received false (not complete)
 	function run() {
 		for (; d_idx != d_end; ++d_idx) {
-			var deferrable = d_fac.invoke(d_idx);		// create task
-			deferrable.setCallback(method(:proceed));	// request to continue run() after completion
-			deferrable.setFallback(method(:cancel));	// request to break the for loop immediately
+			var deferrable = d_fac.invoke(d_idx, method(:proceed), method(:cancel));		// create task
+			// deferrable.setCallback(method(:proceed));	// request to continue run() after completion
+			// deferrable.setFallback(method(:cancel));	// request to break the for loop immediately
 			
 			// only continue to next task if current completed
 			if (!deferrable.run()) {
-				return;		
+				// not completed, so return from function and proceed is called when done
+				return Deferrable.defer();		
 			}
 		}
-		d_callback.invoke();
+		// for loop completed, so done
+		return Deferrable.complete();
 	}
 	
 	function proceed() {
@@ -93,8 +94,11 @@ class DeferredFor {
 		// if this is called, break the running for loop
 		d_idx = d_end;
 		
-		// execute fallback
-		d_fallback.invoke(error);
+		// // execute fallback
+		// d_fallback.invoke(error);
+
+		// let deferrable class handle the cancel properly
+		Deferrable.cancel(error);
 	}
 	
 	function idx() {

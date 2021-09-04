@@ -3,7 +3,7 @@ using SubMusic.Menu;
 
 module SubMusic {
     module Menu {
-        class PlaylistsRemote extends MenuBase {
+        class PodcastsRemote extends MenuBase {
 
             // menu items will be loaded in here 
             hidden var d_items = [];
@@ -30,15 +30,15 @@ module SubMusic {
 
                 // start loading
                 d_loading = true;
-                d_provider.getAllPlaylists(method(:onGetAllPlaylists));
+                d_provider.getAllPodcasts(method(:onGetAllPodcasts));
             }
 
-            function onGetAllPlaylists(playlists) {
+            function onGetAllPodcasts(podcasts) {
 
                 // store in class
                 d_items = [];
-                for (var idx = 0; idx != playlists.size(); ++idx) {
-                    d_items.add(new Menu.PlaylistSettingsRemote(playlists[idx]));
+                for (var idx = 0; idx != podcasts.size(); ++idx) {
+                    d_items.add(new Menu.PodcastSettingsRemote(podcasts[idx]));
                 }
 
                 // loading finished
@@ -48,15 +48,25 @@ module SubMusic {
 
             function placeholder() {
                 if (d_loading) {
-                    return WatchUi.loadResource(Rez.Strings.fetchingPlaylists);
-                }
-                return WatchUi.loadResource(Rez.Strings.placeholder_noRemotePlaylists);
+                    return WatchUi.loadResource(Rez.Strings.fetchingPodcasts);
+                    }
+                return WatchUi.loadResource(Rez.Strings.placeholder_noRemotePodcasts);
             }
 
             function onError(error) {
                 // loading finished
                 d_loading = false;
                 MenuBase.onLoaded(error);
+            }
+
+            function onBack() {
+                // try and cancel the outstanding requests
+                Communications.cancelAllRequests();
+                return false;
+            }
+
+            function delegate() {
+                return new MenuDelegate(null, method(:onBack));
             }
         }
     }

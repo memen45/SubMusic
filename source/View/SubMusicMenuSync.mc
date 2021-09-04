@@ -7,54 +7,24 @@ module SubMusic {
 	module Menu {
 		class Sync extends MenuBase {
 			
-			enum {
-				SELECT_PLAYLISTS,
-				START_SYNC,
-				MORE_INFO,
-			}
+			// enum {
+			// 	SELECT_PLAYLISTS,
+			// 	START_SYNC,
+			// 	BROWSE,
+			// }
 
-			private var d_items = {
-				SELECT_PLAYLISTS => {
-					LABEL => WatchUi.loadResource(Rez.Strings.confSync_SelectPlaylists_label), 
-					SUBLABEL => null, 
-					METHOD => method(:onSelectPlaylists),
-				},
-				START_SYNC => {
+			private var d_items = [
+				new Menu.PlaylistsRemoteToggle(WatchUi.loadResource(Rez.Strings.confSync_SelectPlaylists_label)),		// Temporarily here, future: use browse
+				{
 					LABEL => WatchUi.loadResource(Rez.Strings.confSync_StartSync_label), 
-					SUBLABEL => getLastSyncString(), 
+					SUBLABEL => method(:getLastSyncString), 
 					METHOD => method(:onStartSync),
 				},
-				MORE_INFO => {
-					LABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_label), 
-					SUBLABEL => null, 
-					METHOD => method(:onMoreInfo),
-				},
-			};
+				new Menu.Browse(),
+			];
 
 			function initialize() {
 				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.confSync_Title), true);
-			}
-			
-			// returns null if menu idx not found
-			function getItem(idx) {
-
-				// check if item exists
-				var item = d_items.get(idx);
-				if (item == null) {
-					return null;
-				}
-
-				// update the sublabel
-				if (idx == START_SYNC) {
-					item[SUBLABEL] = getLastSyncString();
-				}
-
-				return new WatchUi.MenuItem(
-					item[LABEL],		// label
-					item[SUBLABEL],		// sublabel
-					item[METHOD],		// identifier (use method for simple callback)
-					null				// options
-			    );
 			}
 			
 			function getLastSyncString() {
@@ -68,14 +38,6 @@ module SubMusic {
 	        	return sublabel;
 			}
 			
-			function onSelectPlaylists() {
-				// load the menu as it might be empty and or not ready
-				var loader = new MenuLoader(
-					new SubMusic.Menu.PlaylistsRemote(WatchUi.loadResource(Rez.Strings.confSync_Playlists_title)),
-					new SubMusic.Menu.PlaylistsRemoteDelegate()
-				);
-			}
-			
 			function onStartSync() {
 				// store sync request, refer to bug https://forums.garmin.com/developer/connect-iq/i/bug-reports/bug-media-communications-syncdelegate-blocks-charging
 				Application.Storage.setValue(Storage.SYNC_REQUEST, true);
@@ -85,25 +47,16 @@ module SubMusic {
 				// start the sync
 				Communications.startSync();
 			}
-			
-			function onMoreInfo() {
-				WatchUi.pushView(
-					new SubMusic.Menu.MoreView(),
-					new SubMusic.Menu.MoreDelegate(),
-					WatchUi.SLIDE_IMMEDIATE
-				);
-				// equivalent:
-				// 
-				// new MenuLoader(
-				// 	new SubMusic.Menu.More(),
-				// 	new SubMusic.Menu.MoreDelegate()
-				// );
+
+			// 
+			function delegate() {
+				return new SyncDelegate(method(:onBack));
 			}
-		}
-		
-		class SyncView extends MenuView {
-			function initialize() {
-				MenuView.initialize(new Sync());
+			
+    
+			function onBack() {
+				var msg = "Note: \"Start syncing music\" might not complete. Use Playback > More.";
+				WatchUi.switchToView(new TextView(msg), new TapDelegate(method(:popView)), WatchUi.SLIDE_IMMEDIATE);
 			}
 		}
 

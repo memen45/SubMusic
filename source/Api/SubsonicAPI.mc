@@ -94,6 +94,45 @@ class SubsonicAPI extends Api {
 		
 		d_callback.invoke(response);
 	}
+	
+	/**
+	 * getPodcasts
+	 *
+	 * returns all podcasts the user is allowed to play.
+	 */
+	function getPodcasts(callback, params) {
+		System.println("SubsonicAPI::getPodcasts(params: " + params + ")");
+		
+		Api.setCallback(callback);
+		
+		var url = url() + "getPodcasts";
+
+		// construct parameters 
+		params = merge(d_params, params);
+
+    	Communications.makeWebRequest(url, params, {}, self.method(:onGetPodcasts));
+	}
+	
+	function onGetPodcasts(responseCode, data) {
+		System.println("SubsonicAPI::onGetPodcasts( responseCode: " + responseCode + ", data: " + data + ")");		
+		
+		// check if request was successful and response is ok
+    	var error = Api.checkDictionaryResponse(responseCode, data);
+    	if (error) {
+    		d_fallback.invoke(error);	// add function name and variables available ?
+    		return;
+    	}
+    	
+    	var response = data["subsonic-response"]["podcasts"]["channel"];
+    	
+    	// finally, expecting array as response
+		if (!(response instanceof Lang.Array)) { 
+			d_fallback.invoke(new SubsonicError(null));
+			return;
+		 }
+		
+		d_callback.invoke(response);
+	}
 		
 	
 	/**
@@ -222,6 +261,17 @@ class SubsonicAPI extends Api {
 		for (var idx = 0; idx < dict.keys().size(); ++idx) {
 			var key = dict.keys()[idx];
 			ret.put(key, dict.get(key));
+		}
+		return ret;
+	}
+
+	// merge two dictionaries, maybe improve by filtering keys e.g.
+	// function merge(dict, dict2, keystocopy)
+	function merge(dict, dict2) {
+		var ret = copy(dict);
+		for (var idx = 0; dict2.keys.size(); ++idx) {
+			var key = dict2.keys()[idx];
+			ret.put(key, dict2.get(key));
 		}
 		return ret;
 	}

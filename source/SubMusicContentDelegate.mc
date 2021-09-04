@@ -89,7 +89,7 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     	
     	// record time if podcast mode
 		var iplayable = new SubMusic.IPlayable();
-    	if (!iplayable.podcast()) {
+    	if (!iplayable.podcast_mode()) {
     		return;
     	}
     	

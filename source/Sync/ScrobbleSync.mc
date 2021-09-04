@@ -1,20 +1,19 @@
 class ScrobbleSync extends Deferrable {
 	
-	private var d_provider;
+	private var d_provider = SubMusic.Provider.get();
 	
 	private var f_progress;
 	
 	private var d_scrobble = null;
 	private var d_idx = 0;
 	private var d_todo = ScrobbleStore.size();
-	private var d_todo_total = ScrobbleStore.size();
+	private var d_todo_total = ScrobbleStore.size();	// store initial size
 	
-	function initialize(provider, progress) {
-		Deferrable.initialize(method(:sync));		// make sync the deferred task
+	function initialize(progress, done, fail) {
+		Deferrable.initialize(method(:sync), done, fail);		// make sync the deferred task
 		
 		f_progress = progress;
 		
-		d_provider = provider;
         d_provider.setFallback(method(:onError));
    	}
    	

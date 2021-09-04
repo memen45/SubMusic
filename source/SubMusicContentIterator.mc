@@ -22,11 +22,11 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
     // Get the current media content object.
     function get() {
-    	if (d_playable.songIdx() >= d_songcount)
+    	if (d_playable.songidx() >= d_songcount)
     	{
     		return null;
     	}
-        return getObj(d_playable.songIdx());
+        return getObj(d_playable.songidx());
     }
 
     // Get the current media content playback profile
@@ -54,40 +54,40 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
     // Get the next media content object.
     function next() {
-    	if ((d_playable.songIdx() + 1) >= d_songcount)
+    	if ((d_playable.songidx() + 1) >= d_songcount)
     	{
     		return null;
     	}
 		d_playable.incSongIdx();
-    	return getObj(d_playable.songIdx());
+    	return getObj(d_playable.songidx());
     }
 
     // Get the next media content object without incrementing the iterator.
     function peekNext() {
-    	if ((d_playable.songIdx() + 1) >= d_songcount)
+    	if ((d_playable.songidx() + 1) >= d_songcount)
     	{
     		return null;
     	}
-    	return getObj(d_playable.songIdx() + 1);
+    	return getObj(d_playable.songidx() + 1);
     }
 
     // Get the previous media content object without decrementing the iterator.
     function peekPrevious() {
-    	if (d_playable.songIdx() == 0)
+    	if (d_playable.songidx() == 0)
     	{
     		return null;
     	}
-    	return getObj(d_playable.songIdx() - 1);
+    	return getObj(d_playable.songidx() - 1);
     }
 
     // Get the previous media content object.
     function previous() {
-    	if (d_playable.songIdx() == 0)
+    	if (d_playable.songidx() == 0)
     	{
     		return null;
     	}
 		d_playable.decSongIdx();
-    	return getObj(d_playable.songIdx());
+    	return getObj(d_playable.songidx());
     }
 
     // Determine if playback is currently set to shuffle.
@@ -104,8 +104,9 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
 		// retrieve content reference
 		var songid = d_playable.getSongId(idx);
-		var isong = new ISong(songid);
-		var contentRef = new Media.ContentRef(isong.refId(), Media.CONTENT_TYPE_AUDIO);
+		var type = d_playable.type();
+		var audio = new Audio(songid, type);
+		var contentRef = new Media.ContentRef(audio.refId(), Media.CONTENT_TYPE_AUDIO);
 		
 		// retrieve metadata
 		var content = Media.getCachedContentObj(contentRef);
@@ -113,9 +114,9 @@ class SubMusicContentIterator extends Media.ContentIterator {
 
 		// default playback is 0, unless in podcast mode, some position is stored before and position is not within five seconds of the end
 		var playbackStartPos = 0;	
-		if (d_playable.podcast()
-			&& (isong.playback() != null)) {
-			playbackStartPos = isong.playback();
+		if (d_playable.podcast_mode()
+			&& (audio.playback() != null)) {
+			playbackStartPos = audio.playback();
 		}
 
 		// return content

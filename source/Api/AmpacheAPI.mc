@@ -131,6 +131,42 @@ class AmpacheAPI extends Api {
 		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
 	}
 	
+	// returns array of podcast objects
+	function podcasts(callback, params) {
+		System.println("AmpacheAPI::podcasts( params: " + params + ")");
+		
+		Api.setCallback(callback);
+
+		params.put("action", "podcasts");
+		params.put("auth", d_session.get("auth"));
+		
+		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
+	}
+	
+	// returns array of podcast objects
+	function podcast(callback, params) {
+		System.println("AmpacheAPI::podcast( id: " + params["filter"] + ")");
+		
+		Api.setCallback(callback);
+
+		params.put("action", "podcast");
+		params.put("auth", d_session.get("auth"));
+		
+		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
+	}
+	
+	// returns array of podcast objects
+	function podcast_episodes(callback, params) {
+		System.println("AmpacheAPI::podcast_episodes( params: " + params + ")");
+		
+		Api.setCallback(callback);
+
+		params.put("action", "podcast_episodes");
+		params.put("auth", d_session.get("auth"));
+		
+		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
+	}
+	
 	// returns single playlist info
 	function playlist(callback, params) {
 		System.println("AmpacheAPI::playlist( id: " + params["filter"] + ")");
@@ -155,7 +191,7 @@ class AmpacheAPI extends Api {
 	
 	// returns refId to the downloaded song
 	function stream(callback, params, encoding) {
-		System.println("AmpacheAPI::stream( id : " + params["id"] + " )");
+		System.println("AmpacheAPI::stream( id : " + params["id"] + " type: " + params["type"] + " )");
 
 		Api.setCallback(callback);
 		
@@ -175,7 +211,7 @@ class AmpacheAPI extends Api {
 	}
 
 	function get_art(callback, params) {
-		System.println("AmpacheAPI::get_art( id : " + params["id"] + " )");
+		System.println("AmpacheAPI::get_art( id : " + params["id"] + " type: " + params["type"] + " )");
 
 		Api.setCallback(callback);
 

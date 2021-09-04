@@ -1,26 +1,24 @@
 using Toybox.Media;
 using Toybox.Application;
 
-// 
-class Song extends Storable {
+class Episode extends Storable {
 
 	hidden var d_storage = {
-		// required external song properties
-		"id" => null,			// id of the song
-		"title" => "",			// title of the song
-		"artist" => "",			// artist of the song
-		"time" => 0,			// duration of the song
+		// required external episode properties
+		"id" => null,			// id of the episode
+		"title" => "",			// title of the episode
+		"time" => 0,			// duration of the episode
 		"mime" => "",			// string e.g. "audio/mpeg"
 		"art_id" => null,		// null if no art_id available
 
-		// required internal song properties
+		// required internal episode properties
 		"refId" => null,		// null if no audio file is local
-		"refCount" => 0,		// count the number of playlists this song is on
 		"playback" => 0,		// last playback position
 	};
+
 	function initialize(storage) {
-		System.println("Song::initialize( storage = " + storage + " )");
-		
+		System.println("Episode::initialize( storage = " + storage + " )");
+
 		Storable.initialize(storage);
 	}
 	
@@ -32,10 +30,6 @@ class Song extends Storable {
 	function title() {
 		return d_storage["title"];
 	}
-
-	function artist() {
-		return d_storage["artist"];
-	}
 	
 	function time() {
 		return d_storage["time"];
@@ -44,21 +38,17 @@ class Song extends Storable {
 	function mime() {
 		return d_storage["mime"];
 	}
+
+	function art_id() {
+		return d_storage["art_id"];
+	}
 	
 	function refId() {
 		return d_storage["refId"];
 	}
-	
-	function refCount() {
-		return d_storage["refCount"];
-	}
 
 	function playback() {
 		return d_storage["playback"];
-	}
-
-	function art_id() {
-		return d_storage["art_id"];
 	}
 
 	function artwork() {
@@ -79,32 +69,32 @@ class Song extends Storable {
 	}
 }
 
-// interface song storage object
-class ISong extends Song {
+// interface episode storage object
+class IEpisode extends Episode {
 	
 	// storage access
 	private var d_stored = false;						// true if song metadata is in storage
 	
 	function initialize(id) {
-		System.println("ISong::initialize( id : " + id + " )");
-		var storage = SongStore.get(id);
+		System.println("IEpisode::initialize( id : " + id + " )");
+		var storage = EpisodeStore.get(id);
 		if (storage != null) {
 			d_stored = true;
 		} else {
 			storage = {"id" => id};		// nothing known yet except for id
 		}
-		Song.initialize(storage);
+		Episode.initialize(storage);
 	}
 	
 	// setters
-	
-	// returns true if changes saved 
-	function setTime(time) {
+	// use for == comparison only
+	function set(key, value) {
+		
 		// nothing to do if not changed
-		if (time() == time) {
+		if (d_storage[key] == value) {
 			return false;
 		}
-		d_storage["time"] = time;
+		d_storage[key] = value;
 		
 		// nothing to do if not stored
 		if (d_stored) {
@@ -112,27 +102,57 @@ class ISong extends Song {
 		}
 		return true;
 	}
-	
-	// returns true if changes saved
-	function setMime(mime) {
 
-		// new mime should not be null
-		if (mime == null) {
+	function setString(key, string) {
+		// not a valid string? do not update
+		if (string == null) {
 			return false;
 		}
-	
+
 		// nothing to do if not changed
-		if (mime().equals(mime)) {
+		if (d_storage[key].equals(string)) {
 			return false;
 		}
-		d_storage["mime"] = mime;
-		
+		d_storage[key] = string;
+
 		// nothing to do if not stored
 		if (d_stored) {
 			save();
 		}
 		return true;
 	}
+
+	function setTitle(title) {
+		return set("title", title);
+	}
+	
+	function setTime(time) {
+		return set("time", time);
+	}
+	
+	function setMime(mime) {
+		return setString("mime", mime);
+	}
+	
+// 	// returns true if changes saved
+// 	function setMime(mime) {
+
+// 		if (mime == null) {
+// 			return false;
+// 		}
+	
+// 		// nothing to do if not changed
+// 		if (d_mime.equals(mime)) {
+// 			return false;
+// 		}
+// 		d_mime = mime;
+		
+// 		// nothing to do if not stored
+// 		if (d_stored) {
+// 			save();
+// 		}
+// 		return true;
+// 	}
 	 
 	function setRefId(refId) {
 		// if equal, nothing to do
@@ -152,25 +172,25 @@ class ISong extends Song {
 		return save();		// always saved, due to responsibility for refId
 	}
 	
-	function incRefCount() {
-		d_storage["refCount"] += 1;
+// 	function incRefCount() {
+// 		d_refCount += 1;
 		
-		// nothing to do if not stored
-		if (d_stored) {
-			save();
-		}
-		return true;
-	}
+// 		// nothing to do if not stored
+// 		if (d_stored) {
+// 			save();
+// 		}
+// 		return true;
+// 	}
 	
-	function decRefCount() {
-		d_storage["refCount"] -= 1;
+// 	function decRefCount() {
+// 		d_refCount -= 1;
 		
-		// nothing to do if not stored
-		if (d_stored) {
-			save();
-		}
-		return true;
-	}
+// 		// nothing to do if not stored
+// 		if (d_stored) {
+// 			save();
+// 		}
+// 		return true;
+// 	}
 
 	function setPlayback(position) {
 		d_storage["playback"] = position;
@@ -213,26 +233,31 @@ class ISong extends Song {
 	}
 
 	function save() {
-		d_stored = SongStore.save(self);
+		d_stored = EpisodeStore.save(self);
 		return d_stored;
 	}
 
-	// removes the song from the SongStore
+	// removes the episode from the EpisodeStore
 	function remove() {
+		if (!d_stored) {
+			return;
+		}
+
 		setRefId(null);				// delete from cache
 		setArt_id(null);			// remove reference to art_id
-		SongStore.remove(self);		// remove self from storage
+		EpisodeStore.remove(self);		// remove self from storage
 		d_stored = false;
 		return;
 	}
 	
 	// saves the new item to application storage
-	function updateMeta(song) {
-		System.println("ISong::updateMeta( song : " + song.toStorage() + " )");
+	function updateMeta(episode) {
+		System.println("IEpisode::updateMeta( episode : " + episode.toStorage() + " )");
 		
-		var changed = setTime(song.time());
-		changed |= setMime(song.mime());
-		changed |= setArt_id(song.art_id());
+		var changed = setTime(episode.time());
+		changed |= setTitle(episode.title());
+		changed |= setMime(episode.mime());
+		changed |= setArt_id(episode.art_id());
 		if (changed) {
 			d_stored = save();
 		}

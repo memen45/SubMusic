@@ -13,8 +13,10 @@ class AmpacheProvider {
 		"limit" => 20,			// defines the number of songs in single response
 		"offset" => 0,			// defines the offset for the last request
 	};
-	private var d_encoding;		// encoding parameter needed for stream
-	private var d_response;		// construct full response
+	private var d_encoding;				// encoding parameter needed for stream
+	enum { MAX_COUNT = 10000, }			// define max count in response
+	private var d_count = MAX_COUNT;	// count objects for ranged requests
+	private var d_response;				// construct full response
 
 	enum {
 		AMPACHE_ACTION_PING,
@@ -24,6 +26,9 @@ class AmpacheProvider {
 		AMPACHE_ACTION_PLAYLIST_SONGS,
 		AMPACHE_ACTION_STREAM,
 		AMPACHE_ACTION_GET_ART,
+		AMPACHE_ACTION_PODCAST,
+		AMPACHE_ACTION_PODCASTS,
+		AMPACHE_ACTION_EPISODES,
 	}
 	
 	function initialize(settings) {
@@ -48,6 +53,8 @@ class AmpacheProvider {
 	// - getPlaylistSongs	returns an array of songs on the playlist with id
 	// - getRefId			returns a refId for a song by id (this downloads the song)
 	// - getArtwork			returns a BitmapResource for a song id
+	// - getAllPodcasts		returns array of all podcasts available for Ampache user
+	// - getAllEpisodes		returns array of all episodes available for Ampache user
 	//
 	// to be added in the future:
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
@@ -105,6 +112,8 @@ class AmpacheProvider {
 
 		// create empty array as initial response
 		d_response = [];
+		d_count = 1;		// expect only 1 object
+
 		d_params = {
 			"filter" => id,
 		};
@@ -137,7 +146,7 @@ class AmpacheProvider {
 	 *
 	 *  returns a refId for a song by id (this downloads the song)
 	 */	
-	function getRefId(id, mime, callback) {
+	function getRefId(id, mime, type, callback) {
 		d_callback = callback;
 
 		d_encoding = mimeToEncoding(mime);
@@ -149,7 +158,6 @@ class AmpacheProvider {
 			// if mime is supported, request raw
 			format = "raw";
 		}
-		var type = "song";
 
 		d_params = {
 			"id" => id,
@@ -163,18 +171,75 @@ class AmpacheProvider {
 	/**
 	 * getArtwork
 	 *
-	 *  returns a BitmapResource for a song by id
+	 *  returns a BitmapResource for a song/podcast by id
 	 */	
-	function getArtwork(id, callback) {
+	function getArtwork(id, type, callback) {
 		d_callback = callback;
 
-		var type = "song";
 		d_params = {
 			"id" => id,
 			"type" => type,
 		};
 
 		d_action = AMPACHE_ACTION_GET_ART;
+		do_();
+	}
+	
+	/**
+	 * getAllPodcasts
+	 *
+	 * returns array of all podcasts available for Ampache user
+	 */
+	function getAllPodcasts(callback) {
+		d_callback = callback;
+
+		// create empty array as initial response
+		d_response = [];
+		d_params = {
+			"limit" => 5,		// use lower limit due to description
+			"offset" => 0,
+		};
+		d_action = AMPACHE_ACTION_PODCASTS;
+		do_();
+	}
+	
+	/**
+	 * getPodcast
+	 *
+	 * returns array of all podcasts available for Ampache user
+	 */
+	function getPodcast(id, callback) {
+		d_callback = callback;
+
+		// create empty array as initial response
+		d_response = [];
+		d_count = 1;
+
+		d_params = {
+			"filter" => id,
+		};
+		d_action = AMPACHE_ACTION_PODCAST;
+		do_();
+	}
+	
+	/**
+	 * getEpisodes
+	 *
+	 * returns array of episodes available for Ampache user
+	 */
+	function getEpisodes(id, range, callback) {
+		d_callback = callback;
+
+		d_count = range[1] - range[0];
+
+		// create empty array as initial response
+		d_response = [];
+		d_params = {
+			"filter" => id,
+			"limit" => 5,			// use lower limit due to description
+			"offset" => range[0],	// first in range is starting point
+		};
+		d_action = AMPACHE_ACTION_EPISODES;
 		do_();
 	}
 
@@ -192,7 +257,7 @@ class AmpacheProvider {
 		d_callback.invoke(response["success"]); // expected success string
 	}
 
-	function on_do_playlist(response) {
+	function on_do_playlists(response) {
 		// append the standard playlist objects to the array
 		for (var idx = 0; idx < response.size(); ++idx) {
 			var playlist = response[idx];
@@ -207,34 +272,73 @@ class AmpacheProvider {
 				"remote" => true,
 			}));
 		}
+		checkDone(response);
+	}
+
+	function checkDone(response) {
+		// if response less than limit, or collected count objects
+		// - no more requests required
+		var limit = d_params["limit"];
+		if (limit == null) {
+			limit = 0;
+		}
+		System.println(d_response.size());
+		System.println(response.size());
+		System.println(d_count);
+		System.println(limit);
+		if ((d_response.size() < d_count)		// count not reached 
+			&& (response.size() >= limit)) {	// limit reached
+			// request required, since response was full and count not reached
+			System.println("AmpacheAPI::checkDone - next request");
+			d_params["offset"] += d_params["limit"];	// increase offset
+			do_();
+			return;
+		}
+		
+		// no more requests needed, reset and callback
 		d_action = null;
+		d_count = MAX_COUNT;		// reset to max count for next request
 		d_callback.invoke(d_response);
 	}
 
-	function on_do_playlists(response) {		
-		// append the standard playlist objects to the array
+	function on_do_podcasts(response) {		
+		// append the standard podcast objects to the array
 		for (var idx = 0; idx < response.size(); ++idx) {
-			var playlist = response[idx];
-			var items = playlist["items"];
-			if (items == null) {
-				items = 0;
-			}
-			d_response.add(new Playlist({
-				"id" => playlist["id"],
-				"name" => playlist["name"],
-				"songCount" => items.toNumber(),
+			var podcast = response[idx];
+
+			d_response.add(new Podcast({
+				"id" => podcast["id"],
+				"name" => podcast["name"],
+				"description" => podcast["description"],
+				"copyright" => podcast["copyright"],
 				"remote" => true,
 			}));
 		}
+		checkDone(response);
+	}
 
-		// if less than limit, no more requests required
-		if (response.size() < d_params["limit"]) {
-			d_action = null;	
-			d_callback.invoke(d_response);
-			return;
+	function on_do_episodes(response) {
+
+		// count nr of episodes to add
+		var count = d_count - d_response.size();
+		if (response.size() < count) {
+			count = response.size();
 		}
-		d_params["offset"] += d_params["limit"];	// increase offset
-		do_();
+
+		// append the standard episode objects to the array
+		for (var idx = 0; idx < count; ++idx) {
+			var episode = response[idx];
+
+			d_response.add(new Episode({
+				"id" => episode["id"],
+				"title" => episode["title"],
+				"time" => episode["filelength"],		// string, should be int
+				"mime" => episode["mime"],
+				"art_id" => episode["id"],
+				"description" => episode["description"],
+			}));
+		}
+		checkDone(response);
 	}
 
 	function on_do_playlist_songs(response) {		
@@ -249,19 +353,14 @@ class AmpacheProvider {
 			}
 			d_response.add(new Song({
 				"id" => song["id"],
+				"title" => song["title"],
+				"artist" => song["artist"]["name"],
 				"time" => time.toNumber(),
 				"mime" => song["mime"],
 				"art_id" => song["id"],
 			}));
 		}
-
-		if (response.size() < d_params["limit"]) {
-			d_action = null;
-			d_callback.invoke(d_response);
-			return;
-		}
-		d_params["offset"] += d_params["limit"];	// increase offset
-		do_();
+		checkDone(response);
 	}
 
 	function on_do_stream(contentRef) {
@@ -298,7 +397,7 @@ class AmpacheProvider {
 			return;
 		}
 		if (d_action == AMPACHE_ACTION_PLAYLIST) {
-			d_api.playlist(self.method(:on_do_playlist), d_params);
+			d_api.playlist(self.method(:on_do_playlists), d_params);
 			return;
 		}
 		if (d_action == AMPACHE_ACTION_PLAYLISTS) {
@@ -315,6 +414,18 @@ class AmpacheProvider {
 		}
 		if (d_action == AMPACHE_ACTION_GET_ART) {
 			d_api.get_art(self.method(:on_do_get_art), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_PODCAST) {
+			d_api.podcast(self.method(:on_do_podcasts), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_PODCASTS) {
+			d_api.podcasts(self.method(:on_do_podcasts), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_EPISODES) {
+			d_api.podcast_episodes(self.method(:on_do_episodes), d_params);
 			return;
 		}
 

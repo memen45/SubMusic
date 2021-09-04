@@ -2,6 +2,7 @@ class Artwork {
 
     hidden var d_id;                   // the id of the artwork
     hidden var d_refCount = 0;         // count of usage
+    hidden var d_type = "song";                  // song / podcast / playlist, string
 
     function initialize(storage) {
         System.println("Artwork::initialize( storage = " + storage + ")");
@@ -34,6 +35,10 @@ class Artwork {
 	function refCount() {
 		return d_refCount;
 	}
+
+    function type() {
+        return d_type;
+    }
 
     function get() {
         return Application.Storage.getValue(Storage.ARTWORK_PREFIX + d_id.toString());
@@ -71,6 +76,10 @@ class IArtwork extends Artwork {
 		d_refCount -= 1;
 		return save();
 	}
+
+    function setType(type) {
+        d_type = type;
+    }
 
 	function save() {
 		d_stored = ArtworkStore.save(self);

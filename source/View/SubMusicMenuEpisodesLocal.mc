@@ -3,20 +3,20 @@ using Toybox.WatchUi;
 module SubMusic {
     module Menu {
 
-        class SongsLocal extends MenuBase {
+        class EpisodesLocal extends MenuBase {
 
             private var d_ids;
 
-            // performs the action on choice of song id
+            // performs the action on choice of episode id
             private var d_handler = null;
 
             // the actual menu items
             hidden var d_items = [];
 
-            function initialize(title, song_ids, handler) {
+            function initialize(title, episode_ids, handler) {
                 MenuBase.initialize(title, true);
 
-                d_ids = song_ids;
+                d_ids = episode_ids;
                 d_handler = handler;
 
                 // load the menu items
@@ -25,14 +25,14 @@ module SubMusic {
 
             function load() {
 
-                // remove the non local songs
+                // remove the non local episodes
                 var todelete = [];
                 for (var idx = 0; idx != d_ids.size(); ++idx) {
                     var id = d_ids[idx];
-                    var isong = new ISong(id);
+                    var iepisode = new IEpisode(id);
 
                     // if not local, no menu entry is added
-                    if (isong.refId() == null) {
+                    if (iepisode.refId() == null) {
                         todelete.add(id);
                     }
                 }
@@ -44,8 +44,8 @@ module SubMusic {
                 for (var idx = 0; idx != d_ids.size(); ++idx) {
                     // load the menuitem
                     var id = d_ids[idx];
-                    var isong = new ISong(id);
-                    var meta = isong.metadata();
+                    var iepisode = new IEpisode(id);
+                    var meta = iepisode.metadata();
                     d_items.add({
                         LABEL => meta.title,
                         SUBLABEL => meta.artist,
@@ -54,21 +54,21 @@ module SubMusic {
                 }
             }
 
-            function onSongSelect(item) {
+            function onEpisodeSelect(item) {
                 var id = item.getId();
-                // action onSongSelect should be defined by implementer classes
+                // action onEpisodeSelect should be defined by implementer classes
                 if (d_handler) { d_handler.invoke(id); }
-                // future: default start playable with only this song
+                // future: default start playable with only this episode
 
-                // store selection as current playlist/song
-                // SubMusic.NowPlaying.setSongId(id); // deprecated
+                // store selection as current playlist/episode
+                // SubMusic.NowPlaying.setEpisodeId(id); // deprecated
 
-				// start the playback of this song
+				// start the playback of this episode
                 // Media.startPlayback(null);    // nothing to start
             }
 
             function delegate() {
-                return new MenuDelegate(method(:onSongSelect), null);
+                return new MenuDelegate(method(:onEpisodeSelect), null);
             }
         }
     }

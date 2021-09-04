@@ -13,15 +13,13 @@ module SubMusic {
 		private var d_notifySyncProgress;
 		private var d_notifySyncComplete;
 
-		// playlists to sync
-		private var d_todo;				// array of playlist ids
-		private var d_todo_total = 0;
-		
-		private var d_loop;				// store deferred for loop
+		// playlists/podcasts to sync
+		private var d_ids;				// array of playlist/podcast ids
+		private var d_ids_total = 0;	// nr of ids in beginning
+		private var d_last = 0;			// last idx
 
-		// api access
-		private var d_provider = SubMusic.Provider.get();
-
+		enum { START, SCROBBLE = START, PLAYLISTS, PODCASTS, AUDIO, ARTWORK, END}
+		private var d_syncstage = START;	// track the stage for sync process
 
 		function initialize(notifySyncProgress, notifySyncComplete) {
 			d_notifySyncProgress = notifySyncProgress;
@@ -36,7 +34,7 @@ module SubMusic {
 			d_notifySyncProgress.invoke(0);
 			
 			// first sync is on Scrobbles
-			startScrobbleSync();
+			doSync();
 		}
 
 		// stops the sync
@@ -47,13 +45,53 @@ module SubMusic {
 			d_notifySyncComplete.invoke(errorMessage);
 		}
 
-		function startScrobbleSync() {
-			var deferrable = new ScrobbleSync(d_provider, method(:onScrobbleProgress));
-			deferrable.setCallback(method(:startPlaylistSync));
-			if (deferrable.run()) {
-				startPlaylistSync();		// continue with playlist sync afterwards
+		function onCompleteSync() {
+			System.println("Sync completed...");
+
+			// finish sync
+			d_notifySyncComplete.invoke(null);
+			Application.Storage.setValue(Storage.LAST_SYNC, { "time" => Time.now().value(), });
+		}
+
+		function doSync() {
+			var deferrable = getSync(d_syncstage);
+			if (deferrable == null) {
+				// this means no more syncs available
+				onCompleteSync();
+				return;
 			}
-			// not completed, so wait for callback
+			if (deferrable.run()) {
+				onDone();
+			}
+			// if not completed, do nothing and wait for calback
+		}
+
+		function getSync(idx) {
+			var progress = method(:onProgress);
+			var done = method(:onDone);
+			var fail = method(:onError);
+			if (idx == SCROBBLE) {
+				return new ScrobbleSync(progress, done, fail);
+			} else if (idx == PLAYLISTS) {
+				d_ids = PlaylistStore.getIds();
+				var step = method(:stepPlaylist);
+				return new DeferredFor(0, d_ids.size(), step, done, fail);
+			} else if (idx == PODCASTS) {
+				d_ids = PodcastStore.getIds();
+				var step = method(:stepPodcast);
+				return new DeferredFor(0, d_ids.size(), step, done, fail);
+			} else if (idx == AUDIO) {
+				return new AudioSync(progress, done, fail);
+			} else if (idx == ARTWORK) {
+				return new ArtworkSync(progress, done, fail);
+			}
+			return null;
+		}
+
+		function onDone() {
+			// go to next stage
+			d_syncstage += 1;
+			doSync();
 		}
 	
 		function onScrobbleProgress(progress) {
@@ -64,51 +102,42 @@ module SubMusic {
 			System.println(progress.toNumber());
 			d_notifySyncProgress.invoke(progress.toNumber());
 		}
-
-		function startPlaylistSync() {
-			// starting sync
-			d_todo = PlaylistStore.getIds();
-			d_todo_total = d_todo.size();
-			
-			// start async loop, provide callback to onLoopCompleted
-			d_loop = new DeferredFor(0, d_todo.size(), self.method(:stepPlaylist), self.method(:onPlaylistsDone), self.method(:onError));
-			d_loop.run();
+		
+		function stepPlaylist(idx, done, fail) {
+			d_last = idx;
+			return new PlaylistSync(d_ids[idx], method(:onPlaylistProgress), done, fail);
 		}
 		
-		function stepPlaylist(idx) {
-			return new PlaylistSync(d_provider, d_todo[idx], method(:onPlaylistProgress));
+		function stepPodcast(idx, done, fail) {
+			d_last = idx;
+			return new PodcastSync(d_ids[idx], method(:onPodcastProgress), done, fail);
 		}
-		
-		function onPlaylistsDone() {
-			// finalize removals (deletes are deferred, to prevent redownloading)
-			var todelete = SongStore.getDeletes();
-			for (var idx = 0; idx < todelete.size(); ++idx) {
-				var id = todelete[idx];
-				var isong = new ISong(id);
-				isong.remove();					// remove from Store
-			}
-			todelete = ArtworkStore.getDeletes();
-			for (var idx = 0; idx < todelete.size(); ++idx) {
-				var id = todelete[idx];
-				var iartwork = new IArtwork(id);
-				iartwork.remove();				// remove from Storage
-			}
 
-			System.println("Sync completed...");
-
-			// finish sync
-			d_notifySyncComplete.invoke(null);
-			Application.Storage.setValue(Storage.LAST_SYNC, { "time" => Time.now().value(), });
+		function onProgress(progress) {
+			d_notifySyncProgress.invoke(progress.toNumber());
 		}
 		
 		function onPlaylistProgress(progress) {
 			// System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
 
-			progress += (100 * d_loop.idx());
-			progress /= d_loop.end().toFloat();
+			// progress += (100 * d_last);
+			// progress /= d_ids_total.toFloat();
 			
-			progress /= 2;
-			progress += 50;		// add 50% done as that was the scrobble part
+			// progress /= 2;
+			// progress += 50;		// add 50% done as that was the scrobble part
+			
+			// System.println(progress.toNumber());
+			d_notifySyncProgress.invoke(progress.toNumber());
+		}
+		
+		function onPodcastProgress(progress) {
+			// System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
+
+			// progress += (100 * d_last);
+			// progress /= d_ids_total.toFloat();
+			
+			// progress /= 2;
+			// progress += 50;		// add 50% done as that was the scrobble part
 			
 			// System.println(progress.toNumber());
 			d_notifySyncProgress.invoke(progress.toNumber());

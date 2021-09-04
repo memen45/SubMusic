@@ -3,7 +3,7 @@ using Toybox.WatchUi;
 /* 
 Planned menu:
 
-LLibrary
+Library
   - Now Playing
    - Song 1
   - Play All Songs
@@ -13,27 +13,45 @@ LLibrary
      - Shuffle
      - Podcast Mode (toggle)
      - Songs
+     - Remove on next sync (confirm)
   - Podcasts
    - Podcast 1
      - Play Now
      - Episodes
       - Episode 1
        - Play Now
+     - Remove on next sync (confirm)
   - Sync Settings
+    - Browse
+      - Playlists
+        - <playlist1>
+          - [] Offline available
+          - Songs
+      - Podcasts
+        - <podcast1>
+          - [] Offline available (latest only)
+          - Episodes
+            - <episode1>
+        - ...
+      - Radiostations
+        - <radiostation1>
+          - Play now ?
     - Sync Now
-    - Playlists
-    - (Podcasts)
     - Server
       - Server Info
       - Test Server
     - About/
  - About
   - SubMusic Version
+  - Server Version
   - Donate
   - Settings
     - Disable 30s skip
+    - Remove cached metadata
+    - Remove all data
 
-Pretty: https://tree.nathanfriend.io/?s=(%27optiRs!(%27fancy!true~fullPath!false~trailingSlash!true)~H(%27H%27LibraryQNow%205ing42SRgBQ5%20All%20_Fs42FOShuffleZ6%20ModU%7Btoggle%7DZ_6s426OJs48JB4%20857QSynWKSync7YFsY%7B6s%7DY9489%20Info48Test%209YAbout%2FG2AboutQSubMusiWVXsiRQDRateQKDisablU30s%20skip%27)~vXsiR!%271%27)*G8%20%2022-%204*%205Play6Podcast7%20Now8%20.9SXvXB%201Cngs*F5listG%5Cn%20Hsource!JEpisodeKSettiC.OBZ57ZQ*2RonUe%20Wc%20XerY*.Z4._SoC2%01_ZYXWURQOKJHGFCB9876542.*
+Pretty: https://tree.nathanfriend.io/?s=(%27optiKs!(%27fancy!true~fullPath!false~trailingSlash!true)~q(%27q%27Library_Now%207ing26j%201_7%20All%20js_7Xs267XWShuffle2*6P8%20Mod9%7Btoggle%7D2*6js_P8s26P8WEHesxEH91567C4Sync%20ZBrowsex7XUplayXJz%5B%5D%20Ge5zjsxP8Up8JzG9%7Blatest%20Kly%7D5zEHes5*z%3CeHeJF...xRYUrYJz7%20now%20%3F2FSyncCFQxQ%20InfoxTest%20Q2FAbout%2F%5Cn6About_SubMusic%20VersiK_DKate_ZDisabl930s%20skip2FRemov9all%20data%27)~versiK!%271%27)*%20%202%5CnF-%2052**6%2047Play8odcast9e%20C%20Now2F*4GOfflin9availablHpisodJ1%3E5KonQServerUs5F%3CW%2012*67C*6XlistYadiostatiKZSettings2F_24jSKgqsource!x54z*F%01zxqj_ZYXWUQKJHGFC9876542*
+.
 .
 └── Library/
     ├── Now Playing/
@@ -44,26 +62,43 @@ Pretty: https://tree.nathanfriend.io/?s=(%27optiRs!(%27fancy!true~fullPath!false
     │       ├── Play Now
     │       ├── Shuffle
     │       ├── Podcast Mode (toggle)
-    │       └── Songs
+    │       ├── Songs
+    │       └── Remove on next sync (confirm)
     ├── Podcasts/
     │   └── Podcast 1/
     │       ├── Play Now
-    │       └── Episodes/
-    │           └── Episode 1/
-    │               └── Play Now
+    │       ├── Episodes/
+    │       │   └── Episode 1/
+    │       │       └── Play Now
+    │       └── Remove on next sync (confirm)
     ├── Sync Settings/
+    │   ├── Browse/
+    │   │   ├── Playlists/
+    │   │   │   └── <playlist1>/
+    │   │   │       ├── [] Offline available
+    │   │   │       └── Songs
+    │   │   ├── Podcasts/
+    │   │   │   ├── <podcast1>/
+    │   │   │   │   ├── [] Offline available (latest only)
+    │   │   │   │   └── Episodes/
+    │   │   │   │       └── <episode1>
+    │   │   │   └── ...
+    │   │   └── Radiostations/
+    │   │       └── <radiostation1>/
+    │   │           └── Play now ?
     │   ├── Sync Now
-    │   ├── Playlists
-    │   ├── (Podcasts)
     │   ├── Server/
     │   │   ├── Server Info
     │   │   └── Test Server
     │   └── About/
     └── About/
         ├── SubMusic Version
+        ├── Server Version
         ├── Donate
         └── Settings/
-            └── Disable 30s skip
+            ├── Disable 30s skip
+            ├── Remove cached metadata
+            └── Remove all data
 */
 
 module SubMusic {
@@ -168,12 +203,17 @@ module SubMusic {
 				}
 
 				// pass complete item to default callback
-				d_callback.invoke(item);
+				if (d_callback) {
+					d_callback.invoke(item);
+				}
 			}
 			
 			function onBack() {
-				if (d_callOnBack) { d_callOnBack.invoke(); }
-				else { Menu2InputDelegate.onBack(); }
+				var handled = false;
+				if (d_callOnBack) { handled = d_callOnBack.invoke(); }
+				// else { Menu2InputDelegate.onBack(); }
+				if (!handled) { return Menu2InputDelegate.onBack(); }
+				return true;
 			}
 		}
 
@@ -196,6 +236,37 @@ module SubMusic {
 				return d_title;
 			}
 
+			// default item loader, returns null if menu idx not found
+			function getItem(idx) {
+				System.println("SubMusicMenu::getItem( idx: " + idx + " ) - " + d_title);
+				
+				// check if item exists
+				if (idx >= d_items.size()) {
+					return null;
+				}
+				var item = d_items[idx];
+
+				// support dynamically computed strings
+				var labl = item.get(LABEL);
+				if (labl instanceof Lang.Method) {
+					labl = labl.invoke();
+				}
+				var sublabl = item.get(SUBLABEL);
+				if ((sublabl != null) 
+					&& (sublabl instanceof Lang.Method)) {
+					sublabl = sublabl.invoke();
+				}
+				var method = item.get(METHOD);
+
+				// create the menu item itself
+				return new WatchUi.MenuItem(
+					labl,			// label
+					sublabl,		// sublabel
+					method,			// identifier (use method for simple callback)
+					null			// options
+			    );
+			}
+
 			function error() {
 				return d_error;
 			}
@@ -209,7 +280,7 @@ module SubMusic {
 				System.println("MenuBase::onLoaded");
 				
 				d_error = error;
-				d_loaded = true;
+				// d_loaded = true;		// make sure menus are reloaded, keep false
 				if (f_loaded) { f_loaded.invoke(error); }
 			}
 
@@ -220,6 +291,35 @@ module SubMusic {
 				return WatchUi.loadResource(Rez.Strings.placeholder_loading);
 			}
 
+			// transition from menu item to menu view
+			function onOpen() {
+				var loader = new MenuLoader(self, delegate());
+			}
+
+			// default menu delegate
+			function delegate() {
+				return new MenuDelegate(null, null);
+			}
+
+			// Determines how the MenuItem will look
+			function get(key) {
+				if (key == LABEL) {
+					return label();
+				} else if (key == SUBLABEL) {
+					return sublabel();
+				} else if (key == METHOD) {
+					return method(:onOpen);
+				}
+				return null;
+			}
+
+			function label() {
+				return d_title;
+			}
+
+			function sublabel() {
+				return null;
+			}
 		}
 
 		// helper class for menus that require loading and can error
@@ -242,7 +342,9 @@ module SubMusic {
 					d_menu = menu;
 					d_delegate = delegate;	
 
+					// set the callback and start loading
 					menu.setOnLoaded(method(:onLoaded));
+					menu.load();
 				}
 
 				// for loaded menus: check error
@@ -264,7 +366,7 @@ module SubMusic {
 			}
 
 			function onLoaded(error) {
-				System.println("MenuLoader::onLoaded( " + (error instanceof SubMusic.Error) + ")");
+				System.println("MenuLoader::onLoaded( Error: " + (error instanceof SubMusic.Error) + ")");
 				// switch to error view on error
 				if (error instanceof SubMusic.Error) {
 					WatchUi.switchToView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);

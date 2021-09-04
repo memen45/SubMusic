@@ -6,15 +6,16 @@ module SubMusic {
         class PlaylistSettings extends MenuBase {
 
             private var d_id;
-            private var d_iplaylist;
+            private var d_playlist;
 
+            // keep enum, as PODCAST_MODE should have toggle
             enum {
                 PLAY,
                 SHUFFLE,
                 PODCAST_MODE,
                 SONGS,
             }
-            private var d_items = {
+            hidden var d_items = {
                 PLAY => {
                     LABEL => WatchUi.loadResource(Rez.Strings.Menu_PlayNow_label),
                     SUBLABEL => null,
@@ -28,46 +29,48 @@ module SubMusic {
                 PODCAST_MODE => {
                     LABEL => WatchUi.loadResource(Rez.Strings.Menu_PodcastMode_label),
                     SUBLABEL => WatchUi.loadResource(Rez.Strings.Menu_PodcastMode_sublabel),
-                    METHOD => method(:onPodcastMode)
+                    METHOD => method(:onPodcastMode),
                 },
-                SONGS => {
-                    LABEL => WatchUi.loadResource(Rez.Strings.Menu_Songs_label),
-                    SUBLABEL => null,
-                    METHOD => method(:onSongs),
-                },
+                // // SONGS => {
+                // //     LABEL => WatchUi.loadResource(Rez.Strings.Menu_Songs_label),
+                // //     SUBLABEL => null,
+                // //     METHOD => method(:onSongs),
+                // // },
+                SONGS => {},
             };
 
-            function initialize(id) {
-                d_id = id;
-                d_iplaylist = new IPlaylist(d_id);
+            function initialize(playlist) {
+                d_playlist = playlist;
+                d_id = playlist.id();
 
-                MenuBase.initialize(d_iplaylist.name(), true);
+                // load playlist name from storage rather than online
+                var iplaylist = new IPlaylist(d_id);
+                MenuBase.initialize(iplaylist.name(), true);
+
+                d_items[SONGS] = new Menu.SongsLocal(
+                    WatchUi.loadResource(Rez.Strings.Songs_label),
+                    d_playlist.songs(),
+                    method(:onSongSelect)
+                );
             }
 
             function getItem(idx) {
 
-                // check if item exists
-				var item = d_items.get(idx);
-				if (item == null) {
-					return null;
-				}
-
-                if (idx == PODCAST_MODE) {
-                    return new WatchUi.ToggleMenuItem(
-                        item[LABEL],
-                        item[SUBLABEL],
-                        item[METHOD],
-                        d_iplaylist.podcast(),
-                        {}
-                    );
+                // defer to base
+                if (idx != PODCAST_MODE) {
+                    return MenuBase.getItem(idx);
                 }
-
-				return new WatchUi.MenuItem(
-					item[LABEL],		// label
-					item[SUBLABEL],		// sublabel
-					item[METHOD],		// identifier (use method for simple callback)
-					null				// options
-			    );
+                
+                // make toggle item for podcast_mode
+                var item = d_items.get(idx);
+                var iplaylist = new IPlaylist(d_id);
+                return new WatchUi.ToggleMenuItem(
+                    item.get(LABEL),
+                    item.get(SUBLABEL),
+                    item.get(METHOD),
+                    iplaylist.podcast(),
+                    {}
+                );
             }
 
             function onPlay() {
@@ -86,42 +89,56 @@ module SubMusic {
             }
 
             function onPodcastMode() {
-                d_iplaylist.setPodcast(!d_iplaylist.podcast());     // flip podcast mode
+                // iplaylist required to modify 
+                var iplaylist = new IPlaylist(d_id);
+                iplaylist.setPodcast(!iplaylist.podcast());     // flip podcast mode
             }
 
-            function onSongs() {
-                var loader = new MenuLoader(
-                    new SubMusic.Menu.SongsLocal(WatchUi.loadResource(Rez.Strings.Menu_PlaylistSongs_title), d_iplaylist.songs()),
-                    new SubMusic.Menu.PlaylistSongsDelegate(d_id)
-                );
-            }
-        }
+            // function onSongs() {
+            //     var loader = new MenuLoader(
+            //         new SubMusic.Menu.SongsLocal(WatchUi.loadResource(Rez.Strings.Menu_PlaylistSongs_title), d_iplaylist.songs()),
+            //         new SubMusic.Menu.PlaylistSongsDelegate(d_id)
+            //     );
+            // }
 
-        class PlaylistSettingsDelegate extends MenuDelegate {
-            function initialize() {
-                MenuDelegate.initialize(null, null);
-            }
-        }
-
-        class PlaylistSongsDelegate extends SongsLocalDelegate {
-
-            private var d_id;
-
-            function initialize(id) {
-                SongsLocalDelegate.initialize();
-
-                d_id = id;
+            function sublabel() {
+                var iplaylist = new IPlaylist(d_id);
+                var mins = (iplaylist.time() / 60).toNumber().toString();
+                var sublabel = mins + " mins";
+                if (!iplaylist.synced()) {
+                    sublabel += " - needs sync";
+                }
+                return sublabel;
             }
 
-            // @Override
-            function onSongSelect(item) {
-                var songid = item.getId();
-
+            // provide custom handler for choosing a song from the list
+            function onSongSelect(songid) {
                 // start playback with playlist and song combination
                 var iplayable = new SubMusic.IPlayable();
                 iplayable.loadPlaylist(d_id, songid);
                 Media.startPlayback(null);
             }
         }
+
+        // class PlaylistSongsDelegate extends SongsLocalDelegate {
+
+        //     private var d_id;
+
+        //     function initialize(id) {
+        //         SongsLocalDelegate.initialize();
+
+        //         d_id = id;
+        //     }
+
+        //     // @Override
+        //     function onSongSelect(item) {
+        //         var songid = item.getId();
+
+        //         // start playback with playlist and song combination
+        //         var iplayable = new SubMusic.IPlayable();
+        //         iplayable.loadPlaylist(d_id, songid);
+        //         Media.startPlayback(null);
+        //     }
+        // }
     }
 }

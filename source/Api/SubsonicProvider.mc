@@ -7,6 +7,8 @@ class SubsonicProvider {
     private var d_fallback;  // fallback for failed request
     private var d_progress;  // intermediate callback to update request progress
 	
+	private var d_range;		// stores range for ranged requests
+
 	function initialize(settings) {
 		d_api = new SubsonicAPI(
 			settings, 
@@ -28,6 +30,8 @@ class SubsonicProvider {
 	// - getPlaylistSongs	returns an array of songs on the playlist with id
 	// - getRefId			returns a refId for a song by id (this downloads the song)
 	// - getArtwork			returns a BitmapResource for a song id
+	// - getAllPodcasts		returns array of all podcasts available for Subsonic user
+	// - getEpisodes		returns array of all episodes available for Subsonic user
 	//
 	// to be added in the future (not possible for SubsonicAPI, so return allplaylists):
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
@@ -97,7 +101,7 @@ class SubsonicProvider {
 	 *
 	 *  returns a refId for a song by id (this downloads the song)
 	 */	
-	function getRefId(id, mime, callback) {
+	function getRefId(id, mime, type, callback) {
 		d_callback = callback;
 
 		var encoding = mimeToEncoding(mime);
@@ -119,15 +123,62 @@ class SubsonicProvider {
 	/**
 	 * getArtwork
 	 *
-	 *  returns artwork for a song by id
+	 *  returns artwork for an object by id, type is not used here
 	 */	
-	function getArtwork(id, callback) {
+	function getArtwork(id, type, callback) {
 		d_callback = callback;
 
 		var params = {
 			"id" => id,
 		};
 		d_api.getCoverArt(self.method(:onGetCoverArt), params);
+	}
+
+	/**
+	 * getAllPodcasts
+	 *
+	 * returns array of all podcasts available for Subsonic user
+	 */
+	function getAllPodcasts(callback) {
+		d_callback = callback;
+
+		var params = {
+			// id left blank to receive all
+			"includeEpisodes" => "false",
+		};
+		d_api.getPodcasts(self.method(:onGetPodcasts), params);
+	}
+
+	/**
+	 * getPodcast
+	 *
+	 * returns array of all podcasts available for Subsonic user
+	 */
+	function getPodcast(id, callback) {
+		d_callback = callback;
+
+		var params = {
+			"id" => id,
+			"includeEpisodes" => "false",
+		};
+		d_api.getPodcasts(self.method(:onGetPodcasts), params);
+	}
+
+	/**
+	 * getAllEpisodes
+	 *
+	 * returns array of all episodes available for Subsonic user
+	 */
+	function getEpisodes(id, range, callback) {
+		d_callback = callback;
+
+		d_range = range;	// only used to slice response
+		
+		var params = {
+			"id" => id,
+			// includeEpisodes is true by default
+		};
+		d_api.getPodcasts(self.method(:onGetEpisodes), params);
 	}
 	
 	function onPing(response) {
@@ -168,6 +219,63 @@ class SubsonicProvider {
 		d_callback.invoke(playlists);
 	}
 
+	function onGetPodcasts(response) {
+		System.println("SubsonicProvider::onGetPodcasts( response = " + response + ")");
+		
+		// construct the standard array of podcast objects
+		var podcasts = [];
+		
+		// construct the podcast instances
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var podcast = response[idx];
+			podcasts.add(new Podcast({
+				"id" => podcast["id"],
+				"name" => podcast["title"],
+				"description" => podcast["description"],
+				"copyright" => podcast["copyright"],
+				"remote" => true,
+			}));
+		}
+		d_callback.invoke(podcasts);
+	}
+
+	function onGetEpisodes(response) {
+		System.println("SubsonicProvider::onGetEpisodes( response = " + response + ")");
+		
+		response = response["episode"];
+
+		// return empty on null response
+		if (response == null) {
+			d_callback.invoke([]);
+			return;
+		}
+
+		// construct the standard array of song objects
+		var episodes = [];
+
+		var start = range[0];
+		var end = range[1];
+		
+		// construct the song instances array
+		for (var idx = start; idx != end; ++idx) {
+			var episode = response[idx];
+
+			var time = episode["duration"];
+			if (time == null) {
+				time = 0;
+			}
+			episodes.add(new Episode({
+				"id" => episode["id"],
+				"title" => episode["title"],
+				"time" => time.toNumber(),
+				"mime" => episode["contentType"],
+				"art_id" => episode["coverArt"],
+			}));
+		}
+		
+		d_callback.invoke(episodes);
+	}
+
 	function onGetPlaylist(response) {
 		System.println("SubsonicProvider::onGetPlaylist( response = " + response + ")");
 		
@@ -187,12 +295,20 @@ class SubsonicProvider {
 	function onGetPlaylistSongs(response) {
 		System.println("SubsonicProvider::onGetPlaylistSongs( response = " + response + ")");
 		
+		response = response["entry"];
+
+		// return empty on null response
+		if (response == null) {
+			d_callback.invoke([]);
+			return;
+		}
+
 		// construct the standard array of song objects
 		var songs = [];
 		
 		// construct the song instances array
-		for (var idx = 0; idx < response["entry"].size(); ++idx) {
-			var song = response["entry"][idx];
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var song = response[idx];
 
 			var time = song["duration"];
 			if (time == null) {
@@ -200,6 +316,8 @@ class SubsonicProvider {
 			}
 			songs.add(new Song({
 				"id" => song["id"],
+				"title" => song["title"],
+				"artist" => song["artist"],
 				"time" => time.toNumber(),
 				"mime" => song["contentType"],
 				"art_id" => song["coverArt"],

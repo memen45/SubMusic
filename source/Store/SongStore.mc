@@ -23,6 +23,7 @@ module SongStore {
 
 	var d_songs = new ObjectStore(Storage.SONGS);			// allows fast indexing by id
 	var d_delete = new ArrayStore(Storage.SONGS_DELETE);	// allows fast access 
+	var d_todo = new ArrayStore(Storage.SONGS_TODO);		// allows fast access
 
 	function get(id) {
 //		System.println("SongStore::get( id : " + id + " )");
@@ -34,6 +35,14 @@ module SongStore {
 		System.println("SongStore::getIds()");
 
 		return d_songs.getIds();
+	}
+
+	function getTodos() {
+		var ret = new [d_todo.size()];
+		for (var idx = 0; idx != d_todo.size(); ++idx) {
+			ret[idx] = d_todo.get(idx);
+		}
+		return ret;
 	}
 
 	function getDeletes() {
@@ -54,10 +63,25 @@ module SongStore {
 		var ondelete = (d_delete.indexOf(id) >= 0);
 		if (delete && !ondelete) {
 			d_delete.add(id);
+			d_todo.remove(id);
 		} else if (!delete && ondelete) {
 			d_delete.remove(id);
 		}
+		// update todo tracking
+		var todo = (song.refId() == null);
+		var ontodo = (d_todo.indexOf(id) >= 0);
+		if (!delete && todo && !ontodo) {
+			d_todo.add(id);
+		} else if (!todo && ontodo) {
+			d_todo.remove(id);
+		}
 
+		// save details of the song
+		return d_songs.save(song);
+	}
+
+	// this is for fast property saving. refCount or refId changed? use save
+	function quicksave(song) {
 		// save details of the song
 		return d_songs.save(song);
 	}

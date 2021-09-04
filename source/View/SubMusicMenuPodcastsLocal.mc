@@ -4,7 +4,7 @@ using Toybox.Application;
 module SubMusic {
     module Menu {
 
-        class PlaylistsLocal extends MenuBase {
+        class PodcastsLocal extends MenuBase {
 
             // menu items will be loaded in here 
             hidden var d_items = [];
@@ -19,22 +19,22 @@ module SubMusic {
 
             // reload the ids on request
 			function load() {
-                var playlists = [];
-                var ids = PlaylistStore.getIds();
+                var podcasts = [];
+                var ids = PodcastStore.getIds();
 
-                // remove the non local playlist ids
+                // remove the non local podcast ids
                 var todelete = [];
                 for (var idx = 0; idx != ids.size(); ++idx) {
                     var id = ids[idx];
-                    var iplaylist = new IPlaylist(id);
-                    if (iplaylist.local()) {
-                        playlists.add(iplaylist);
+                    var ipodcast = new IPodcast(id);
+                    if (ipodcast.local()) {
+                        podcasts.add(ipodcast);
                     }
                 }
 
                 // create the menu items
-                for (var idx = 0; idx != playlists.size(); ++idx) {
-                    d_items.add(new Menu.PlaylistSettings(playlists[idx]));
+                for (var idx = 0; idx != podcasts.size(); ++idx) {
+                    d_items.add(new Menu.PodcastSettings(podcasts[idx]));
                 }
 			}
         }

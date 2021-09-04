@@ -1,5 +1,6 @@
 using Toybox.Application;
 using Toybox.WatchUi;
+using SubMusic.Menu;
 
 class SubMusicApp extends Application.AudioContentProviderApp {
 
@@ -50,17 +51,14 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get the initial view for configuring playback
     function getPlaybackConfigurationView() {
-    	return [ new SubMusic.Menu.PlaybackView(), new SubMusic.Menu.PlaybackDelegate() ];
+        var menu = new Menu.Playback();
+    	return [ new Menu.MenuView(menu), menu.delegate() ];
     }
 
     // Get the initial view for configuring sync
     function getSyncConfigurationView() {
-    	return [ new SubMusic.Menu.SyncView(), new SubMusic.Menu.SyncDelegate(method(:onBack)) ];		// show note on exit
-    }
-    
-    function onBack() {
-    	var msg = "Note: \"Start syncing music\" might not complete on this device";
-    	WatchUi.switchToView(new TextView(msg), new TapDelegate(method(:popView)), WatchUi.SLIDE_IMMEDIATE);
+        var menu = new Menu.Sync();
+    	return [ new SubMusic.Menu.MenuView(menu), menu.delegate() ];
     }
     
     function popView() {
