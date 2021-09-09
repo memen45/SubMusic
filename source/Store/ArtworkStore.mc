@@ -18,10 +18,28 @@ module ArtworkStore {
 		return d_artworks.get(id);
 	}
 
+	// returns artwork ids
 	function getIds() {
 		System.println("ArtworkStore::getIds()");
 
 		return d_artworks.getIds();
+	}
+
+	// returns non-connected artwork objects
+	function getAll(options) {
+		System.println("ArtworkStore::getAll( options: " + options + " )");
+		var artworks = [];
+		var objects = d_artworks.getValues();
+		for (var idx = 0; idx != objects.size(); ++idx) {
+			var artwork = new Artwork(objects[idx]);
+			if ((options.get(:condition) != null)
+				&& !(options.get(:condition).invoke(artwork))) {
+				continue;
+			}
+			// return integrated artwork instance
+			artworks.add(new IArtwork(artwork.art_id(), artwork.type()));
+		}
+		return artworks;
 	}
 
 	function getDeletes() {

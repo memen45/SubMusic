@@ -1,47 +1,50 @@
-class Artwork {
+class Artwork extends Storable {
 
-    hidden var d_id;                   // the id of the artwork
-    hidden var d_refCount = 0;         // count of usage
-    hidden var d_type = "song";                  // song / podcast / playlist, string
+
+	enum { SONG, ARTIST, ALBUM, PLAYLIST, SEARCH, PODCAST, END }		// only add types at end, as these are stored
+    static private var s_types = [ "song", "artist", "album", "playlist", "search", "podcast" ];
+	hidden var d_type;
+
+    hidden var d_storage = {
+        "art_id" => null,
+        "type" => Audio.SONG,
+        "refCount" => 0,
+    };
 
     function initialize(storage) {
         System.println("Artwork::initialize( storage = " + storage + ")");
 
-        d_id = storage["id"];
-        fromStorage(storage);
-    }
-
-    function toStorage() {
-        return {
-            "id" => d_id,
-            "refCount" => d_refCount,
-        };
-    }
-
-    function fromStorage(storage) {
-        var changed = false;
-		if ((storage["refCount"] != null) && (d_refCount != storage["refCount"])) {
-			d_refCount = storage["refCount"];
-			changed = true;
-		}
-        return changed;
+        Storable.initialize(storage);
     }
 
     // getters
-    function id() {
-        return d_id;
+    function art_id() {
+        return get("art_id");
     }
 	
 	function refCount() {
-		return d_refCount;
+		return get("refCount");
 	}
 
     function type() {
-        return d_type;
+        return get("type");
     }
 
-    function get() {
-        return Application.Storage.getValue(Storage.ARTWORK_PREFIX + d_id.toString());
+    static function typeToString(type) {
+        return s_types[type];
+    }
+
+    function id() {
+        return compute_id(art_id(), type());
+    }
+
+    static function compute_id(art_id, type) {
+        System.println("Artwork::compute_id() " + art_id + type);
+        return (Storage.ARTWORK_PREFIX).toString() + art_id.toString() + type.toString();
+    }
+
+    function image() {
+        return Application.Storage.getValue(id());
     }
 }
 
@@ -50,36 +53,35 @@ class IArtwork extends Artwork {
     //storage access
     private var d_stored = false;       // true if artwork metadata is in storage
 
-    function initialize(id) {
-        System.println("IArtwork::initialize( id : " + id + " )");
+    function initialize(id, type) {
+        System.println("IArtwork::initialize( id : " + id + " type : " + type + " )");
 
-        var storage = ArtworkStore.get(id);
+        var storage = ArtworkStore.get(compute_id(id, type));
         if (storage != null) {
             d_stored = true;
         } else {
-            storage = {"id" => id};     // nothing known yet except for id
+            storage = {
+                "art_id" => id,
+                "type" => type,
+            };     // nothing known yet except for id and type
         }
         Artwork.initialize(storage);
     }
 
-    function set(artwork) {
-		Application.Storage.setValue(Storage.ARTWORK_PREFIX + d_id.toString(), artwork);
+    function setImage(artwork) {
+		Application.Storage.setValue(id(), artwork);
         return save();
     }
 	
 	function incRefCount() {
-		d_refCount += 1;
+		set("refCount", refCount() + 1);
 		return save();
 	}
 	
 	function decRefCount() {
-		d_refCount -= 1;
+		set("refCount", refCount() - 1);
 		return save();
 	}
-
-    function setType(type) {
-        d_type = type;
-    }
 
 	function save() {
 		d_stored = ArtworkStore.save(self);
@@ -89,7 +91,7 @@ class IArtwork extends Artwork {
 	// removes the metadata from the ArtworkStore
 	function remove() {
 		ArtworkStore.remove(self);		// remove self from storage
-        Application.Storage.deleteValue(Storage.ARTWORK_PREFIX + d_id.toString());
+        Application.Storage.deleteValue(id());
 		d_stored = false;
 		return;
 	}

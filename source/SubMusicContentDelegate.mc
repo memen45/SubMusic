@@ -70,19 +70,19 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     function onSong(contentRefId, songEvent, playbackPosition) {
     	System.println("onSong Event (" + d_events[songEvent] + "): " + getSongName(contentRefId) + " at position " + playbackPosition);
 	
-		var isong = findSongByRefId(contentRefId);
-		if (isong == null) { return; }
+		var audio = findAudioByRefId(contentRefId);
+		if (audio == null) { return; }
 		
 		if (songEvent == START) {
 			// set the artwork
-			Media.setAlbumArt(isong.artwork());
+			Media.setAlbumArt(audio.artwork());
 			return;
 		}
 
     	if (songEvent == PLAYBACK_NOTIFY) {
 			// record a play
     		ScrobbleStore.add(new Scrobble({
-    			"id" => isong.id(),
+    			"id" => audio.id(),
     		}));
     		return;
     	}
@@ -100,9 +100,31 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
 			|| (songEvent == COMPLETE)) {
 
 			// record playback position
-    		isong.setPlayback(playbackPosition);
+    		audio.setPlayback(playbackPosition);
     	}   		
     }
+
+	function findAudioByRefId(refId) {
+		// trick: guess id and type from playable
+		var iplayable = new SubMusic.IPlayable();
+		var audio = iplayable.getAudio(iplayable.songidx());
+		if (audio.refId() == refId) {
+			return audio;
+		}
+		// if trick not successful, do exhaustive search
+		var ids = [ SongStore.getIds(), EpisodeStore.getIds() ];
+		for (var typ = 0; typ != Audio.END; ++typ) {
+			for (var idx = 0; idx != ids[typ].size(); ++idx) {
+				audio = new Audio(ids[typ][idx], typ);
+
+				// return if correct
+				if (audio.refId() == refId) {
+					return audio;
+				}
+			}
+		}
+		return null;
+	}
     
     function findSongByRefId(refId) {
 		var ids = SongStore.getIds();

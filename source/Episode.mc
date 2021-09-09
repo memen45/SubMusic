@@ -56,8 +56,8 @@ class Episode extends Storable {
 			return null;
 		}
 
-		var artwork = new IArtwork(art_id());
-		return artwork.get();
+		var artwork = new IArtwork(art_id(), Artwork.PODCAST);
+		return artwork.image();
 	}
 
 	function metadata() {
@@ -210,7 +210,7 @@ class IEpisode extends Episode {
 
 		// if previous art_id stored, remove safely
 		if (art_id() != null) {
-			var iartwork = new IArtwork(art_id());
+			var iartwork = new IArtwork(art_id(), Artwork.PODCAST);
 			iartwork.decRefCount();
 		}
 
@@ -222,14 +222,9 @@ class IEpisode extends Episode {
 		}
 
 		// reference the artwork
-		var iartwork = new IArtwork(art_id());
+		var iartwork = new IArtwork(art_id(), Artwork.PODCAST);
 		iartwork.incRefCount();
 		return true;
-	}
-	 
-	function setArtwork(artwork) {
-		var iartwork = new IArtwork(art_id());
-		return iartwork.set(artwork);
 	}
 
 	function save() {

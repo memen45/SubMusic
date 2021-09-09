@@ -22,21 +22,27 @@ class ArtworkSync extends Deferrable {
 		var ids = ArtworkStore.getDeletes();
 		for (var idx = 0; idx < ids.size(); ++idx) {
 			var id = ids[idx];
-			var iartwork = new IArtwork(id);
+			var artwork = new Artwork(ArtworkStore.get(id));
+			var iartwork = new IArtwork(artwork.art_id(), artwork.type());
 			iartwork.remove();				// remove from Storage
 		}
 
 		// now get the todos
-		ids = ArtworkStore.getIds();
-		for (var idx = 0; idx != ids.size(); ++idx) {
-			var artwork = new IArtwork(ids[idx]);
+		// ids = ArtworkStore.getIds();
+		// for (var idx = 0; idx != ids.size(); ++idx) {
+		// 	var artwork = new Artwork(ids[idx]);
 
-			// only add to todo if not yet stored
-			if (artwork.get() == null) {
-				d_todo.add(artwork);
-			}
-		}
+		// 	// only add to todo if not yet stored
+		// 	if (artwork.image() == null) {
+		// 		d_todo.add(artwork);
+		// 	}
+		// }
+		d_todo = ArtworkStore.getAll({:condition => method(:unstored)});
 		d_todo_total = d_todo.size();
+	}
+
+	function unstored(artwork) {
+		return (artwork.image() == null);
 	}
 	
 	function sync() {
@@ -49,7 +55,7 @@ class ArtworkSync extends Deferrable {
 		f_progress.invoke(progress());
 		
 		// start download
-		d_provider.getArtwork(d_todo[0].id(), d_todo[0].type(), method(:onDownloaded));
+		d_provider.getArtwork(d_todo[0].art_id(), d_todo[0].type(), method(:onDownloaded));
 		return Deferrable.defer();
 	}
 
@@ -58,6 +64,7 @@ class ArtworkSync extends Deferrable {
 		var todo = 0;
 		if (d_todo != null) { todo = d_todo.size(); }
 		
+		// determine what is done 
 		var done = d_todo_total - todo;
 		var progress = (100 * done) / d_todo_total.toFloat();
 		return progress;
@@ -72,7 +79,7 @@ class ArtworkSync extends Deferrable {
     // Callback for when a song is downloaded
 	function onDownloaded(artwork) {
 		// update artwork
-		d_todo[0].set(artwork);
+		d_todo[0].setImage(artwork);
 
 		// continue to next song
 		d_todo.removeAll(d_todo[0]);

@@ -159,9 +159,12 @@ class AmpacheProvider {
 			format = "raw";
 		}
 
+		// interpret type to string
+		var typ = Audio.typeToString(type);
+
 		d_params = {
 			"id" => id,
-			"type" => type,
+			"type" => typ,
 			"format" => format,
 		};
 		d_action = AMPACHE_ACTION_STREAM;
@@ -176,9 +179,10 @@ class AmpacheProvider {
 	function getArtwork(id, type, callback) {
 		d_callback = callback;
 
+		var typ = Artwork.typeToString(type);
 		d_params = {
 			"id" => id,
-			"type" => type,
+			"type" => typ,
 		};
 
 		d_action = AMPACHE_ACTION_GET_ART;
@@ -334,7 +338,7 @@ class AmpacheProvider {
 				"title" => episode["title"],
 				"time" => episode["filelength"],		// string, should be int
 				"mime" => episode["mime"],
-				"art_id" => episode["id"],
+				"art_id" => d_params["filter"],			// set art id to id of podcast instead
 				"description" => episode["description"],
 			}));
 		}

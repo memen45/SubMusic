@@ -118,6 +118,7 @@ class Api {
 
 	function onProgress(totalBytesTransferred, fileSize) {
 		// if total fileSize is null, progress = 0
+        System.println(totalBytesTransferred + " of " + fileSize);
 		var progress = 0;
 		if (fileSize) {
 			progress = (100 * totalBytesTransferred) / fileSize.toFloat();

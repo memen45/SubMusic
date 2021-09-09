@@ -25,6 +25,10 @@ class ObjectStore extends Store {
 		
 		return Store.value().keys();
 	}
+
+	function getValues() {
+		return Store.value().values();
+	}
 	
 	function save(item) {
 		System.println("ObjectStore::save( item : " + item.toStorage() + " )");

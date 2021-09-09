@@ -1,6 +1,7 @@
 using Toybox.WatchUi;
 using Toybox.Communications;
 using Toybox.Application;
+using Toybox.Media;
 
 module SubMusic {
 	module Menu {
@@ -33,45 +34,39 @@ module SubMusic {
 			}
 			
 			function removeAll() {
+				System.println("Settings::removeAll()");
 				// collect all ids of songs
-				var ids = SongStore.getIds();
-				for (var idx = 0; idx != ids.size(); ++idx) {
-					var id = ids[idx];
-					var isong = new ISong(id);
-					isong.remove();					// remove from Store
-				}
-				ids = EpisodeStore.getIds();
-				for (var idx = 0; idx != ids.size(); ++idx) {
-					var id = ids[idx];
-					var iepisode = new IEpisode(id);
-					iepisode.remove();					// remove from Store
-				}
-				ids = ArtworkStore.getIds();
-				for (var idx = 0; idx < ids.size(); ++idx) {
-					var id = ids[idx];
-					var iartwork = new IArtwork(id);
-					iartwork.remove();				// remove from Storage
-				}
+				// var ids = SongStore.getIds();
+				// for (var idx = 0; idx != ids.size(); ++idx) {
+				// 	var id = ids[idx];
+				// 	var isong = new ISong(id);
+				// 	isong.remove();					// remove from Store
+				// }
+				// ids = EpisodeStore.getIds();
+				// for (var idx = 0; idx != ids.size(); ++idx) {
+				// 	var id = ids[idx];
+				// 	var iepisode = new IEpisode(id);
+				// 	iepisode.remove();					// remove from Store
+				// }
+				// ids = ArtworkStore.getIds();
+				// for (var idx = 0; idx < ids.size(); ++idx) {
+				// 	var id = ids[idx];
+				// 	var iartwork = new IArtwork(id);
+				// 	iartwork.remove();				// remove from Storage
+				// }
+
+				// remove all cached media
+				Media.resetContentCache();
 				
 				// remove all metadata
 				Application.Storage.clearValues();
 				
 				// check storage to set the storage version number
 				Storage.check();
+
+				// exit app to make sure ram is cleared
+				System.exit();
 			}
 		}
-		
-		// class AboutSettingsView extends MenuView {
-		// 	function initialize() {
-		// 		MenuView.initialize(new AboutSettings());
-		// 	}
-		// }
-
-		// class AboutSettingsDelegate extends MenuDelegate {
-		// 	function initialize() {
-		// 		MenuDelegate.initialize(null, null);
-		// 		// all ids are methods and no action on Back
-		// 	}
-		// }
 	}
 }

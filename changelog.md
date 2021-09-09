@@ -2,10 +2,14 @@ Version [] -
 - (future) added 'Manage...' option for more playlist options
 - (future) added alpha podcast implementation (feedback needed)
 
-Version [0.1.14] - 2021-
-- added software version number
+Version [0.1.14] - 2021-09-09
+- added software version number in settings
 - rewrite of sync engine
+- rewrite of menu structure
 - added experimental podcast support (newest file only)
+- added artwork support for podcasts
+- fixed "remove all" option in menu in case cache was already removed
+- fixed missing songs filter (related to crashes and resets)
 
 Version [0.1.13] - 2021-08-30
 - fixed Media Error when song removed from playlist (before end)

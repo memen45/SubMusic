@@ -269,8 +269,9 @@ class SubsonicAPI extends Api {
 	// function merge(dict, dict2, keystocopy)
 	function merge(dict, dict2) {
 		var ret = copy(dict);
-		for (var idx = 0; dict2.keys.size(); ++idx) {
-			var key = dict2.keys()[idx];
+		var keys = dict2.keys();
+		for (var idx = 0; idx != keys.size(); ++idx) {
+			var key = keys[idx];
 			ret.put(key, dict2.get(key));
 		}
 		return ret;

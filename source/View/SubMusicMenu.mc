@@ -50,7 +50,7 @@ Library
     - Remove cached metadata
     - Remove all data
 
-Pretty: https://tree.nathanfriend.io/?s=(%27optiKs!(%27fancy!true~fullPath!false~trailingSlash!true)~q(%27q%27Library_Now%207ing26j%201_7%20All%20js_7Xs267XWShuffle2*6P8%20Mod9%7Btoggle%7D2*6js_P8s26P8WEHesxEH91567C4Sync%20ZBrowsex7XUplayXJz%5B%5D%20Ge5zjsxP8Up8JzG9%7Blatest%20Kly%7D5zEHes5*z%3CeHeJF...xRYUrYJz7%20now%20%3F2FSyncCFQxQ%20InfoxTest%20Q2FAbout%2F%5Cn6About_SubMusic%20VersiK_DKate_ZDisabl930s%20skip2FRemov9all%20data%27)~versiK!%271%27)*%20%202%5CnF-%2052**6%2047Play8odcast9e%20C%20Now2F*4GOfflin9availablHpisodJ1%3E5KonQServerUs5F%3CW%2012*67C*6XlistYadiostatiKZSettings2F_24jSKgqsource!x54z*F%01zxqj_ZYXWUQKJHGFC9876542*
+Pretty: https://tree.nathanfriend.io/?s=(%27optiKs!(%27fancy!true~fullPath!false~trailingSlash!true)~source!(%27source!%27Library24Now%209ing27SKg%201249%20All%20SKgs24js27jHShuffleqF%20ModC%7Btoggle%7DqSKgs5Fs27FHEQes84EQC1879U5Sync%20_Browse84jXplayli68*GSKgs84FXpodca6%20%7Blatest%20Kly%7D8*GEQes8**G%3CeQezG...84RZXrZz*G9%20now%20%3F2GSyncU2GJ84J%20Info84Test%20J2GAbout%2F%5Cn7About24SubMusicYJYDKate24_DisablC30s%20skip2GWcached%20metadata2GWall%20data%27)~versiK!%271%27)*%20%202%5CnG-%205qWK%20next%20sync%20%7BcKfirm%7D246stz*G%5B%5D%20OfflinCavailable7%20482**9PlayCe%20FPodcastG*4H%201q9UqJServerKonQpisodU%20NowWRemovCXs8G%3CY%20VersiK24ZadiostatiK_Settings2Gj9listq2*7z1%3E8%01zqj_ZYXWUQKJHGFC9876542*
 .
 .
 └── Library/
@@ -135,6 +135,7 @@ module SubMusic {
 		    function updateMenu() {
 				// set title
 				setTitle(d_menu.title());
+				System.println("MenuView::updateMenu " + d_menu.title() );
 
 				// load the items
 				var idx = 0;
@@ -272,16 +273,16 @@ module SubMusic {
 			}
 
 			function setOnLoaded(callback) {
-				System.println("MenuBase::setOnLoaded");
+				System.println("MenuBase::setOnLoaded " + self);
 				f_loaded = callback;
 			}
 
 			function onLoaded(error) {
-				System.println("MenuBase::onLoaded");
+				System.println("MenuBase::onLoaded" + self);
 				
 				d_error = error;
 				// d_loaded = true;		// make sure menus are reloaded, keep false
-				if (f_loaded) { f_loaded.invoke(error); }
+				if (f_loaded) {	f_loaded.invoke(error); }
 			}
 
 			function placeholder() {
@@ -337,19 +338,20 @@ module SubMusic {
 				System.println("MenuLoader::initialize(" + title + ")");
 
 				// store variables if needed for non-loaded menu
-				if (!menu.loaded()) {
+				var loaded = menu.loaded();
+				if (!loaded) {
 					// reference the menu and delegate for onLoaded
 					d_menu = menu;
 					d_delegate = delegate;	
 
 					// set the callback and start loading
 					menu.setOnLoaded(method(:onLoaded));
-					menu.load();
+					loaded = menu.load();
 				}
 
 				// for loaded menus: check error
 				var error = menu.error();
-				if (error) {
+				if ((error != null) && loaded) {
 					WatchUi.pushView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
 					return;
 				}
@@ -366,7 +368,7 @@ module SubMusic {
 			}
 
 			function onLoaded(error) {
-				System.println("MenuLoader::onLoaded( Error: " + (error instanceof SubMusic.Error) + ")");
+				System.println("MenuLoader::onLoaded( SubMusic.Error: " + (error instanceof SubMusic.Error) + ")");
 				// switch to error view on error
 				if (error instanceof SubMusic.Error) {
 					WatchUi.switchToView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);

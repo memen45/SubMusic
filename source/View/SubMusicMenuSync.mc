@@ -7,13 +7,7 @@ module SubMusic {
 	module Menu {
 		class Sync extends MenuBase {
 			
-			// enum {
-			// 	SELECT_PLAYLISTS,
-			// 	START_SYNC,
-			// 	BROWSE,
-			// }
-
-			private var d_items = [
+			hidden var d_items = [
 				new Menu.PlaylistsRemoteToggle(WatchUi.loadResource(Rez.Strings.confSync_SelectPlaylists_label)),		// Temporarily here, future: use browse
 				{
 					LABEL => WatchUi.loadResource(Rez.Strings.confSync_StartSync_label), 
@@ -21,6 +15,7 @@ module SubMusic {
 					METHOD => method(:onStartSync),
 				},
 				new Menu.Browse(),
+				new Menu.About(),
 			];
 
 			function initialize() {

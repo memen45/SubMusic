@@ -6,14 +6,13 @@ module SubMusic {
         hidden var d_storage = {
 
             // handled by loadIds()
-            "ids" => [],
+            "audios" => [],         // array of dictionaries with id and type
             "idcs" => [],
             "idx" => 0,             // suggested start index
             "shuffle" => false,
 
             "podcast_mode" => false,    // determines playback storage
-            "episodes" => false,         // denotes whether we have episodes or songs
-        };           
+        };
 
         function initialize(storage) {
             System.println("Playable::initialize( storage = " + storage + " )");
@@ -21,16 +20,12 @@ module SubMusic {
             Storable.initialize(storage);
         }
 
-        function episodes() {
-            return get("episodes");
-        }
-
         function podcast_mode() {
             return get("podcast_mode");
         }
 
-        function ids() {
-            return get("ids");
+        function audios() {
+            return get("audios");
         }
 
         function songidx() {
@@ -42,11 +37,11 @@ module SubMusic {
         }
 
         function size() {
-            return ids().size();
+            return audios().size();
         }
 
         function getSongId(idx) {
-            return ids()[idcs()[idx]];
+            return audios()[idcs()[idx]]["id"];
         }
 
         function shuffle() {
@@ -54,7 +49,18 @@ module SubMusic {
         }
 
         function getSongIds() {
-            return ids();
+            var ids = [];
+            for (var idx = 0; idx != audios().size(); ++idx) {
+                ids.add(getSongId(idx));
+            }
+            return ids;
+        }
+
+        function getAudio(idx) {
+            idx = idcs()[idx];      // rewrite to apply shuffle
+            var id = audios()[idx]["id"];
+            var type = audios()[idx]["type"];
+            return new Audio(id, type);
         }
     }
 
@@ -78,7 +84,6 @@ module SubMusic {
             return PlayableStore.save(self);
         }
 
-
         function incSongIdx() {
             setIdx(songidx() + 1);
             return save();
@@ -89,34 +94,47 @@ module SubMusic {
             return save();
         }
 
-        function setSongId(songid) {
-            var idx = ids().indexOf(songid);
-            if (idx < 0) {
-                return false;
+        function setAudio(audio) {
+            for (var idx = 0; idx != audios().size(); ++idx) {
+                var id = audios()[idx]["id"];
+                var type = audios()[idx]["type"];
+                if ((id == audio["id"])
+                    && (type == audio["type"])) {
+                    setIdx(idx);
+                    return save();
+                }
             }
-            idx = idcs().indexOf(idx);
-            if (idx < 0) {
-                return false;
-            }
-            setIdx(idx);
+            // not found
+            return false;
+        }
 
-            return save();
+        function setSongId(songid) {
+            // find id
+            for (var idx = 0; idx != audios().size(); ++idx) {
+                var id = audios()[idx]["id"];
+                if (id == songid) {
+                    setIdx(idx);
+                    return save();
+                }
+            }
+            // not found
+            return false;
         }
 
         function setIdx(value) {
             return set("idx", value);
         }
 
-        function setIds(value) {
-            return set("ids", value);
+        function setAudios(value) {
+            return set("audios", value);
         }
 
         function setIdcs(value) {
             return set("idcs", value);
         }
 
-        function setEpisodes(value) {
-            return set("episodes", value);
+        function setTypes(value) {
+            return set("types", value);
         }
 
         function setPodcastMode(value) {
@@ -127,52 +145,60 @@ module SubMusic {
             return set("shuffle", value);
         }
 
-        function type() {
-            if (episodes()) {
-                return "podcast";
-            }
-            return "song";
+        function removeAudioByIdx(idx) {
+            System.println(audios());
+            System.println(idcs());
+
+            audios().remove(audios()[idx]);   // remove the id from ids
+            idcs().remove(idx);       // remove the idx from idcs
+
+            System.println(audios().toString());
+            System.println(idcs());
         }
 
         function removeRemoved() {
+
+            if (audios().size() == 0) {
+                return;
+            }
+
             // check for ids that are no longer available
-            var removed = [];
-            var ids = ids();
-            System.println(ids);
-            for (var idx = 0; idx != ids.size(); ++idx) {
-                var id = ids[idx];
-                var audio = new Audio(id, type());
+            var index = 0;
+            var realidx = idcs()[songidx()];
+            do {
+                var id = audios()[index]["id"];
+                var type = audios()[index]["type"];
+                var audio = new Audio(id, type);
 
-                // if no refid, add id and idx to removed ids
-                if (audio.refId() == null){ 
-                    // add id to removed array
-                    removed.add(id);
-                    
-                    // remove this idx from idcs 
-                    idcs().remove(idx);
+                if (audio.refId() != null) {
+                    index += 1;
+                    continue;
                 }
-            }
+                
+                // this idx is removed, so no increment of idx
+                audios().remove(audios()[index]);
+                
+                // reset or decrease songidx if needed
+                if (index == realidx) {
+                    setIdx(0);
+                } else if (realidx > index) {
+                    realidx -= 1;
+                }
+            } while (index != audios().size());
 
-            // remove ids from current ids
-            for (var idx = 0; idx != removed.size(); ++idx) {
-                ids.remove(removed[idx]);
+            // now reset idcs
+            setIdcs(new[audios().size()]);
+            for (var idx = 0; idx != idcs().size(); ++idx) {
+                idcs()[idx] = idx;
             }
-            
-            System.println(idcs().toString());
-            
-            // fix idcs, first get sorting, then fill in 0...N given the sort order
-            var sorted_idcs = SubMusic.Utils.sort_idcs(idcs());
-            for (var idx = 0; idx != sorted_idcs.size(); ++idx) {
-                idcs()[sorted_idcs[idx]] = idx;
-            }
-            
-            System.println(idcs().toString());
+            // realidx == songidx when !shuffle
+            setIdx(realidx);
 
-            // reset idx if exceeding the new size
-            if (songidx() >= idcs().size()) {
-                setIdx(0);
+            // now fix shuffle if needed
+            if (shuffle()) {
+                set("shuffle", false);
+                shuffleIdcs(true);
             }
-            setIds(ids);
         }
 
         function shuffleIdcs(shuffle) {
@@ -189,7 +215,7 @@ module SubMusic {
             }
 
             System.println("Playable::shuffleIdcs() Before: " + idcs());
-            System.println("Playable::shuffleIdcs() songids: " + ids());
+            System.println("Playable::shuffleIdcs() songids: " + audios().toString());
             System.println("Playable::shuffleIdcs() songidx: " + songidx());
 
             // if not shuffle, generate 0:n array for idcs
@@ -197,7 +223,7 @@ module SubMusic {
                 // store the current real index
                 setIdx(idcs()[songidx()]);
 
-                setIdcs(new[ids().size()]);
+                setIdcs(new[audios().size()]);
                 for (var idx = 0; idx != idcs().size(); ++idx) {
                     idcs()[idx] = idx;
                 }
@@ -233,19 +259,22 @@ module SubMusic {
             return save();
         }
 
-        function loadIds(ids, audioid) {
+        function loadIds(ids, audioid, type) {
+            System.println("IPlayable::loadIds( ids: " + ids + " audioid: " + audioid + " type: " + type);
+             
             var audioidx = 0;
 
             // reset ids, idcs and idx
             setIdx(0);
-            setIds([]);
             setIdcs([]);
+
+            setAudios([]);
 
             setShuffle(false);
 
             // only add the audios that are available for playing
             for (var idx = 0; idx != ids.size(); ++idx) {
-                var audio = new Audio(ids[idx], type());
+                var audio = new Audio(ids[idx], type);
 
                 // check for audioid match
                 if ((audio.id() == audioid)
@@ -255,7 +284,9 @@ module SubMusic {
                     setIdx(audioidx);
                     
                     // reset progress if this audio was chosen and completed
-                    var progress = 100 * audio.playback() / audio.time();
+                    var time = audio.time().toNumber();
+                    if (time == 0) { time = 1; }
+                    var progress = 100 * audio.playback() / time;
                     var complete = (progress > 98);
                     if (complete) { audio.setPlayback(0); } 
                 }
@@ -266,12 +297,12 @@ module SubMusic {
                 }
 
                 // add to ids and indices
-                ids().add(audio.id());
                 idcs().add(audioidx);
+
+                audios().add(audio.toStorage());
 
                 audioidx++;
             }
-
             return save();
         }
 
@@ -284,11 +315,10 @@ module SubMusic {
             }
 
             var ipodcast = new IPodcast(id);
-            setEpisodes(true);                       // these are episodes
             setPodcastMode(ipodcast.podcast());
             var ids = ipodcast.episodes();
 
-            return loadIds(ids, episodeid);
+            return loadIds(ids, episodeid, Audio.PODCAST_EPISODE);
         }
 
         function loadPlaylist(id, songid) {
@@ -300,19 +330,17 @@ module SubMusic {
             }
 
             var iplaylist = new IPlaylist(id);
-            setEpisodes(false);                       // these are songs, not episodes
             setPodcastMode(iplaylist.podcast());
             var ids = iplaylist.songs();
             
-            return loadIds(ids, songid);
+            return loadIds(ids, songid, Audio.SONG);
         }
         
         function loadSongIds(ids) {
 
-            setEpisodes(false);                       // these are songs, not episodes
             setPodcastMode(false);
 
-            return loadIds(ids, null);
+            return loadIds(ids, null, Audio.SONG);
 
             // var songidx = 0;
             // for (var idx = 0; idx != ids.size(); ++idx) {

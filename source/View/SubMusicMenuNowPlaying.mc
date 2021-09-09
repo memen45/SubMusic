@@ -4,21 +4,21 @@ using SubMusic;
 
 module SubMusic {
 	module Menu {
-		class NowPlaying extends SongsLocal {
+		class NowPlaying extends AudiosLocal {
 
 			function initialize() {
 				var iplayable = new SubMusic.IPlayable();
-				SongsLocal.initialize(
+				AudiosLocal.initialize(
 					WatchUi.loadResource(Rez.Strings.confPlayback_NowPlaying_title), 
-					iplayable.getSongIds(),
-					method(:onSongSelect)
+					iplayable.audios(),
+					method(:onAudioSelect)
 				);
 			}
 
-			function onSongSelect(songid) {
+			function onAudioSelect(audio) {
 				// start playback with new songid
 				var iplayable = new SubMusic.IPlayable();
-				iplayable.setSongId(songid);
+				iplayable.setAudio(audio);
 				Media.startPlayback(null);
 			}
 

@@ -103,9 +103,7 @@ class SubMusicContentIterator extends Media.ContentIterator {
 	function getObj(idx) {
 
 		// retrieve content reference
-		var songid = d_playable.getSongId(idx);
-		var type = d_playable.type();
-		var audio = new Audio(songid, type);
+		var audio = d_playable.getAudio(idx);
 		var contentRef = new Media.ContentRef(audio.refId(), Media.CONTENT_TYPE_AUDIO);
 		
 		// retrieve metadata

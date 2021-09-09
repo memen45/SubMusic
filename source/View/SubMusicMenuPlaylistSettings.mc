@@ -14,6 +14,7 @@ module SubMusic {
                 SHUFFLE,
                 PODCAST_MODE,
                 SONGS,
+                OFFLINE,
             }
             hidden var d_items = {
                 PLAY => {
@@ -37,6 +38,11 @@ module SubMusic {
                 // //     METHOD => method(:onSongs),
                 // // },
                 SONGS => {},
+                OFFLINE => {
+                    LABEL => "Make available offline",
+                    SUBLABEL => null,
+                    METHOD => OFFLINE,
+                },
             };
 
             function initialize(playlist) {
@@ -57,18 +63,25 @@ module SubMusic {
             function getItem(idx) {
 
                 // defer to base
-                if (idx != PODCAST_MODE) {
+                if ((idx != PODCAST_MODE)
+                    && (idx != OFFLINE)) {
                     return MenuBase.getItem(idx);
                 }
                 
-                // make toggle item for podcast_mode
-                var item = d_items.get(idx);
+                // make toggle item
                 var iplaylist = new IPlaylist(d_id);
+
+                // load current value 
+                var value = iplaylist.podcast();
+                if (idx == OFFLINE) {
+                    value = iplaylist.local();
+                }
+                var item = d_items.get(idx);
                 return new WatchUi.ToggleMenuItem(
                     item.get(LABEL),
                     item.get(SUBLABEL),
                     item.get(METHOD),
-                    iplaylist.podcast(),
+                    value,
                     {}
                 );
             }
@@ -94,12 +107,11 @@ module SubMusic {
                 iplaylist.setPodcast(!iplaylist.podcast());     // flip podcast mode
             }
 
-            // function onSongs() {
-            //     var loader = new MenuLoader(
-            //         new SubMusic.Menu.SongsLocal(WatchUi.loadResource(Rez.Strings.Menu_PlaylistSongs_title), d_iplaylist.songs()),
-            //         new SubMusic.Menu.PlaylistSongsDelegate(d_id)
-            //     );
-            // }
+            function onRemoveLocal() {
+                var iplaylist = new IPlaylist(d_id);
+                iplaylist.setLocal(false);
+                WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
+            }
 
             function sublabel() {
                 var iplaylist = new IPlaylist(d_id);
@@ -117,6 +129,15 @@ module SubMusic {
                 var iplayable = new SubMusic.IPlayable();
                 iplayable.loadPlaylist(d_id, songid);
                 Media.startPlayback(null);
+            }
+
+            function onOfflineToggle(item) {
+                var iplaylist = new IPlaylist(d_id);
+                iplaylist.setLocal(item.isEnabled());
+            }
+
+            function delegate() {
+                return new MenuDelegate(method(:onOfflineToggle), null);
             }
         }
 

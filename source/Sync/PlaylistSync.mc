@@ -79,17 +79,17 @@ class PlaylistSync extends Deferrable {
     	d_failed = true;
 	    d_iplaylist.setSynced(!d_failed);
     	
-		if (!(error instanceof SubMusic.ApiError)) {
+		if ((error instanceof SubMusic.ApiError)
+			&& (error.api_type() == SubMusic.ApiError.NOTFOUND)) {
 
-			// other errors will break the sync by default
-    		Deferrable.cancel(error);
-    		return;
+			// update remote status
+			d_ipodcast.setRemote(false);
+			Deferrable.complete();
+			return;
 		}
-		
-    	// update playlist info if not found
-		var apiError as SubMusic.ApiError = error;
-		if (apiError.api_type() == SubMusic.ApiError.NOTFOUND) {
-			d_iplaylist.setRemote(false);
+
+		if ((error instanceof SubMusic.GarminSdkError)
+			&& (error.respCode() == Communications.NETWORK_RESPONSE_TOO_LARGE)) {
 			Deferrable.complete();
 			return;
 		}

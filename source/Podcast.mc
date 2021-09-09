@@ -71,7 +71,7 @@ class Podcast extends Storable {
 	
 	// getters
 	function id() {
-		return d_storage["id"];
+		return get("id");
 	}
 	
 	function name() {
@@ -91,8 +91,8 @@ class Podcast extends Storable {
 			return null;
 		}
 
-		var artwork = new IArtwork(art_id());
-		return artwork.get();
+		var artwork = new IArtwork(art_id(), Artwork.PODCAST);
+		return artwork.image();
 	}
 	
 	function episodes() {
@@ -185,6 +185,7 @@ class IPodcast extends Podcast {
 	}
 	
 	function setLocal(local) {
+		System.println("IPodcast::setLocal( " + local + " )");
 		// nothing to do if not changed
 		if (local() == local) {
 			return false;
@@ -262,7 +263,7 @@ class IPodcast extends Podcast {
 
 		// if previous art_id stored and linked, deref
 		if (art_id() != null) {
-			var iartwork = new IArtwork(art_id());
+			var iartwork = new IArtwork(art_id(), Artwork.PODCAST);
 			iartwork.decRefCount();
 		}
 		d_storage["art_id"] = art_id;
@@ -273,14 +274,9 @@ class IPodcast extends Podcast {
 		}
 
 		// reference the new artwork
-		var iartwork = new IArtwork(art_id);
+		var iartwork = new IArtwork(art_id(), Artwork.PODCAST);
 		iartwork.incRefCount();
 		return true;
-	}
-	 
-	function setArtwork(artwork) {
-		var iartwork = new IArtwork(art_id());
-		return iartwork.set(artwork);
 	}
 
 // 	function setPodcast(podcast) {
@@ -320,7 +316,7 @@ class IPodcast extends Podcast {
 		}
 		
 		// unlink artwork
-		var iartwork = new IArtwork(art_id());
+		var iartwork = new IArtwork(art_id(), Artwork.PODCAST);
 		iartwork.decRefCount();
 
 		for (var idx = 0; idx != episodes().size(); ++idx) {
@@ -342,7 +338,7 @@ class IPodcast extends Podcast {
 		}
 	
 		// link artwork
-		var iartwork = new IArtwork(art_id());
+		var iartwork = new IArtwork(art_id(), Artwork.PODCAST);
 		iartwork.incRefCount();
 
 		for (var idx = 0; idx != episodes().size(); ++idx) {
@@ -462,15 +458,15 @@ class IPodcast extends Podcast {
 			return false;
 		}
 
-		// remove references to episodes
+		// remove episodes
 		var eps = episodes();
 		for (var idx = 0; idx != eps.size(); ++idx) {
 			var ep = new IEpisode(eps[idx]);
-			ep.setRefId(null);
+			ep.remove();
 		}
 
 		setArt_id(null);			// remove reference to art_id
-		d_stored = !PlaylistStore.remove(self);	
+		d_stored = !PodcastStore.remove(self);	
 		return true;
 	}
 }

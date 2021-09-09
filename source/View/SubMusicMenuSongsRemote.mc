@@ -16,7 +16,6 @@ module SubMusic {
                 // initialize base as not loaded
                 MenuBase.initialize(title, false);
 
-                d_provider.setFallback(method(:onError));
                 d_id = id;
 
                 // items should be lazy loaded by a menu loader
@@ -32,6 +31,9 @@ module SubMusic {
 
                 // start loading
                 d_loading = true;
+
+                // set fallback before request. future: fix with request object
+                d_provider.setFallback(method(:onError));
                 d_provider.getPlaylistSongs(d_id, method(:onGetPlaylistSongs));
             }
 

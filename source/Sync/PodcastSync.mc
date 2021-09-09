@@ -78,18 +78,18 @@ class PodcastSync extends Deferrable {
 //   	d_ipodcast.setError(error); TODO
     	d_failed = true;
 	    d_ipodcast.setSynced(!d_failed);
-    	
-		if (!(error instanceof SubMusic.ApiError)) {
 
-			// other errors will break the sync by default
-    		Deferrable.cancel(error);
-    		return;
-		}
-		
-    	// update podcast info if not found
-		var apiError as SubMusic.ApiError = error;
-		if (apiError.api_type() == SubMusic.ApiError.NOTFOUND) {
+		if ((error instanceof SubMusic.ApiError)
+			&& (error.api_type() == SubMusic.ApiError.NOTFOUND)) {
+
+			// update remote status
 			d_ipodcast.setRemote(false);
+			Deferrable.complete();
+			return;
+		}
+
+		if ((error instanceof SubMusic.GarminSdkError)
+			&& (error.respCode() == Communications.NETWORK_RESPONSE_TOO_LARGE)) {
 			Deferrable.complete();
 			return;
 		}

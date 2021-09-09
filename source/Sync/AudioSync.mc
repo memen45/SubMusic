@@ -28,13 +28,13 @@ class AudioSync extends Deferrable {
 		}
 		
 		// now get the todos from songs and episodes
-		var types = [ "song", "podcast"];
+		var types = [ Audio.SONG, Audio.PODCAST_EPISODE];
 		ids = [ SongStore.getIds(), EpisodeStore.getIds() ];
-		for (var typ = 0; typ != types.size(); ++typ) {
+		for (var typ = 0; typ != Audio.END; ++typ) {
 				System.println(typ);
 			for (var idx = 0; idx != ids[typ].size(); ++idx) {
 				System.println(idx);
-				var audio = new Audio(ids[typ][idx], types[typ]);
+				var audio = new Audio(ids[typ][idx], typ);
 
 				// only add to todo if not yet stored
 				if (audio.refId() == null) {
@@ -71,6 +71,7 @@ class AudioSync extends Deferrable {
 
 	// handle callback on intermediate progress
 	function onProgress(progress) {
+		System.println("AudioSync::onProgress( progress: " + progress + " )");
 		progress /= d_todo_total.toFloat();
 		f_progress.invoke(progress() + progress);
 	}

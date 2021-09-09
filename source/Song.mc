@@ -66,8 +66,8 @@ class Song extends Storable {
 			return null;
 		}
 
-		var artwork = new IArtwork(art_id());
-		return artwork.get();
+		var artwork = new IArtwork(art_id(), Artwork.SONG);
+		return artwork.image();
 	}
 
 	function metadata() {
@@ -190,7 +190,7 @@ class ISong extends Song {
 
 		// if previous art_id stored, remove safely
 		if (art_id() != null) {
-			var iartwork = new IArtwork(art_id());
+			var iartwork = new IArtwork(art_id(), Artwork.SONG);
 			iartwork.decRefCount();
 		}
 
@@ -202,14 +202,9 @@ class ISong extends Song {
 		}
 
 		// reference the artwork
-		var iartwork = new IArtwork(art_id());
+		var iartwork = new IArtwork(art_id(), Artwork.SONG);
 		iartwork.incRefCount();
 		return true;
-	}
-	 
-	function setArtwork(artwork) {
-		var iartwork = new IArtwork(art_id());
-		return iartwork.set(artwork);
 	}
 
 	function save() {
