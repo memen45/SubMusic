@@ -242,10 +242,19 @@ class SubsonicProvider {
 	function onGetEpisodes(response) {
 		System.println("SubsonicProvider::onGetEpisodes( response = " + response + ")");
 		
-		response = response["episode"];
+		// assume id ensures first item is needed
+		if ( (response.size() == 0) 
+			|| (response[0] == null)
+			|| (response[0]["episode"] == null)) {
+			d_callback.invoke([]);
+			return;
+		}
+		
+		response = response[0]["episode"];
 
-		// return empty on null response
-		if (response == null) {
+		// response should be array, and have length
+		if (!(response instanceof Lang.Array)
+			|| (response.size() == 0)) {
 			d_callback.invoke([]);
 			return;
 		}
@@ -253,8 +262,11 @@ class SubsonicProvider {
 		// construct the standard array of song objects
 		var episodes = [];
 
-		var start = range[0];
-		var end = range[1];
+		var start = d_range[0];
+		var end = d_range[1];
+		if (response.size() < end) {
+			end = response.size();
+		}
 		
 		// construct the song instances array
 		for (var idx = start; idx != end; ++idx) {

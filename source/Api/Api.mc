@@ -121,7 +121,7 @@ class Api {
         System.println(totalBytesTransferred + " of " + fileSize);
 		var progress = 0;
 		if (fileSize) {
-			progress = (100 * totalBytesTransferred) / fileSize.toFloat();
+			progress = 100 * (totalBytesTransferred / fileSize.toFloat());
 		}
 		// callback the progress update
 		d_progress.invoke(progress);

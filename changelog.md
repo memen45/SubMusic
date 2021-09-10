@@ -1,6 +1,8 @@
 Version [] - 
-- (future) added 'Manage...' option for more playlist options
-- (future) added alpha podcast implementation (feedback needed)
+
+Version [0.1.15] - 2021-09-10
+- fixed episode loading on subsonic (still fails when too many episodes)
+- fixed progress bar during audio sync (32-bit overflow on large files)
 
 Version [0.1.14] - 2021-09-09
 - added software version number in settings
