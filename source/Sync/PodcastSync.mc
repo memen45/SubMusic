@@ -94,6 +94,11 @@ class PodcastSync extends Deferrable {
 			return;
 		}
 
+		if (error instanceof SubMusic.ApiError) {
+			Deferrable.complete();
+			return;
+		}
+
 		Deferrable.cancel(error);
 		return;
     }

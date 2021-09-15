@@ -6,7 +6,7 @@ class SubMusicTestView extends WatchUi.ProgressBar {
     private var d_provider = SubMusic.Provider.get();
 
 	private var d_progress;
-	private var d_step = (100 / 2).toNumber();
+	private var d_step = (100 / 4).toNumber();
 
 	function initialize() {
 		ProgressBar.initialize(WatchUi.loadResource(Rez.Strings.confSync_Test_start), null);
@@ -58,7 +58,39 @@ class SubMusicTestView extends WatchUi.ProgressBar {
 		
 		// return if no songs returned
 		if (response.size() == 0) {
-			setDisplayString("Inlog OK, but no songs found");
+			setDisplayString("Inlog OK\nNo songs found");
+			return;
+		}
+		setDisplayString("Inlog OK\nPlaylists good");
+		d_provider.getAllPodcasts(method(:onGetAllPodcasts));
+	}
+	
+	function onGetAllPodcasts(response) {
+		// if we are here, everything went well probably
+		d_progress += d_step;
+		setProgress(d_progress);
+		
+		// return if no podcasts returned
+		if (response.size() == 0) {
+			// cannot complete test, since no playlists are present
+			setDisplayString("Inlog OK\nNo podcasts");
+			return;
+		}
+		
+		// select first podcast (cannot check episode count)
+		var podcast = response[0];
+		
+		setDisplayString("Inlog OK");
+		d_provider.getEpisodes(podcast.id(), [0, 1], method(:onGetEpisodes));
+	}
+	
+	function onGetEpisodes(response) {
+		d_progress += d_step;
+		setProgress(d_progress.toNumber());
+		
+		// return if no songs returned
+		if (response.size() == 0) {
+			setDisplayString("Inlog OK\nNo episode found");
 			return;
 		}
 		setDisplayString("Test Succeeded");

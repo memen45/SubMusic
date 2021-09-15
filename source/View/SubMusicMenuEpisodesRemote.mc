@@ -34,7 +34,7 @@ module SubMusic {
                 
                 // set fallback before request. future: fix with request object
                 d_provider.setFallback(method(:onError));
-                d_provider.getEpisodes(d_id, [0, 15], method(:onGetEpisodes));
+                d_provider.getEpisodes(d_id, [0, 5], method(:onGetEpisodes));
                 return false;
             }
 
@@ -67,6 +67,16 @@ module SubMusic {
                 // loading finished
                 d_loading = false;
                 MenuBase.onLoaded(error);
+            }
+
+            function onBack() {
+                // try and cancel the outstanding requests
+                Communications.cancelAllRequests();
+                return false;
+            }
+
+            function delegate() {
+                return new MenuDelegate(null, method(:onBack));
             }
         }
     }

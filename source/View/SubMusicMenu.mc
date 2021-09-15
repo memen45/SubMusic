@@ -213,7 +213,7 @@ module SubMusic {
 				var handled = false;
 				if (d_callOnBack) { handled = d_callOnBack.invoke(); }
 				// else { Menu2InputDelegate.onBack(); }
-				if (!handled) { return Menu2InputDelegate.onBack(); }
+				if (handled != true) { return Menu2InputDelegate.onBack(); }
 				return true;
 			}
 		}
