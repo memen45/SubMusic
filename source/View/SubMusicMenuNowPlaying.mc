@@ -21,32 +21,6 @@ module SubMusic {
 				iplayable.setAudio(audio);
 				Media.startPlayback(null);
 			}
-
-			// function delegate() {
-			// 	return new NowPlayingDelegate();
-			// }
 		}
-
-		// class NowPlayingView extends MenuView {
-		// 	function initialize() {
-		// 		MenuView.initialize(new NowPlaying());
-		// 	}
-		// }
-
-        // class NowPlayingDelegate extends SongsLocalDelegate {
-		// 	function initialize() {
-		// 		SongsLocalDelegate.initialize();
-		// 	}
-
-		// 	// @Override
-		// 	function onSongSelect(item) {
-		// 		var songid = item.getId();
-
-		// 		// start playback with new songid
-		// 		var iplayable = new SubMusic.IPlayable();
-		// 		iplayable.setSongId(songid);
-		// 		Media.startPlayback(null);
-		// 	}
-		// }
 	}
 }

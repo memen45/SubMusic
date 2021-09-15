@@ -108,7 +108,8 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
 		// trick: guess id and type from playable
 		var iplayable = new SubMusic.IPlayable();
 		var audio = iplayable.getAudio(iplayable.songidx());
-		if (audio.refId() == refId) {
+		if ((audio instanceof SubMusic.Audio)
+			&& (audio.refId() == refId)) {
 			return audio;
 		}
 		// if trick not successful, do exhaustive search

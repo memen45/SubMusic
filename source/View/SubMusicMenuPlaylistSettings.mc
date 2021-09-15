@@ -8,7 +8,7 @@ module SubMusic {
             private var d_id;
             private var d_playlist;
 
-            // keep enum, as PODCAST_MODE should have toggle
+            // keep enum, as PODCAST_MODE and OFFLINE should have toggle
             enum {
                 PLAY,
                 SHUFFLE,
@@ -32,11 +32,6 @@ module SubMusic {
                     SUBLABEL => WatchUi.loadResource(Rez.Strings.Menu_PodcastMode_sublabel),
                     METHOD => method(:onPodcastMode),
                 },
-                // // SONGS => {
-                // //     LABEL => WatchUi.loadResource(Rez.Strings.Menu_Songs_label),
-                // //     SUBLABEL => null,
-                // //     METHOD => method(:onSongs),
-                // // },
                 SONGS => {},
                 OFFLINE => {
                     LABEL => "Make available offline",

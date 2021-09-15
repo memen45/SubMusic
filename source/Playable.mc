@@ -55,6 +55,10 @@ module SubMusic {
         }
 
         function getAudio(idx) {
+            // return null if out of bounds
+            if (idx >= idcs().size()) {
+                return null;
+            }
             idx = idcs()[idx];      // rewrite to apply shuffle
             var id = audios()[idx]["id"];
             var type = audios()[idx]["type"];

@@ -19,8 +19,7 @@ class ScrobbleSync extends Deferrable {
    	
    	function sync() {
    		if (d_todo == 0) {
-   			var complete = Deferrable.complete();
-   			return complete;
+   			return Deferrable.complete();
    		}
    		
    		// update progress

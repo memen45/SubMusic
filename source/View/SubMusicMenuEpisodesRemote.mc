@@ -26,7 +26,7 @@ module SubMusic {
 
                 // if already loading, do nothing, wait for response
                 if (d_loading) {
-                    return;
+                    return false;
                 }
 
                 // start loading
@@ -35,6 +35,7 @@ module SubMusic {
                 // set fallback before request. future: fix with request object
                 d_provider.setFallback(method(:onError));
                 d_provider.getEpisodes(d_id, [0, 15], method(:onGetEpisodes));
+                return false;
             }
 
             function onGetEpisodes(episodes) {

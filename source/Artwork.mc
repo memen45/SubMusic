@@ -40,11 +40,18 @@ class Artwork extends Storable {
 
     static function compute_id(art_id, type) {
         System.println("Artwork::compute_id() " + art_id + type);
+        if (art_id == null) {
+            return null;
+        }
         return (Storage.ARTWORK_PREFIX).toString() + art_id.toString() + type.toString();
     }
 
     function image() {
-        return Application.Storage.getValue(id());
+        var ide = id();
+        if (ide == null) {
+            return null;
+        }
+        return Application.Storage.getValue(ide);
     }
 }
 

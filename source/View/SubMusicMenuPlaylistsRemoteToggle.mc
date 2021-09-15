@@ -47,12 +47,13 @@ module SubMusic {
 
                 // if already loading, do nothing, wait for response
                 if (d_loading) {
-                    return;
+                    return false;
                 }
 
                 // start loading
                 d_loading = true;
                 d_provider.getAllPlaylists(method(:onGetAllPlaylists));
+                return false;
             }
 
             function onGetAllPlaylists(playlists) {

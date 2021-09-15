@@ -351,7 +351,7 @@ module SubMusic {
 
 				// for loaded menus: check error
 				var error = menu.error();
-				if ((error != null) && loaded) {
+				if ((error != null) && (loaded == true)) {
 					WatchUi.pushView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
 					return;
 				}

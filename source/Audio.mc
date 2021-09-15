@@ -1,5 +1,5 @@
 
-class Audio extends Storable{
+class Audio extends Storable {
 
 	hidden var d_audio;
 

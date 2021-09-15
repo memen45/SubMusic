@@ -48,10 +48,14 @@ module SubMusic {
 				return new SyncDelegate(method(:onBack));
 			}
 			
-    
 			function onBack() {
 				var msg = "Note: \"Start syncing music\" might not complete. Use Playback > More.";
 				WatchUi.switchToView(new TextView(msg), new TapDelegate(method(:popView)), WatchUi.SLIDE_IMMEDIATE);
+			}
+
+			// pop the view method for onBack behaviour
+			function popView() {
+				WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
 			}
 		}
 

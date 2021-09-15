@@ -83,7 +83,7 @@ class PlaylistSync extends Deferrable {
 			&& (error.api_type() == SubMusic.ApiError.NOTFOUND)) {
 
 			// update remote status
-			d_ipodcast.setRemote(false);
+			d_iplaylist.setRemote(false);
 			Deferrable.complete();
 			return;
 		}

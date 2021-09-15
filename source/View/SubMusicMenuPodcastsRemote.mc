@@ -23,7 +23,7 @@ module SubMusic {
 
                 // if already loading, do nothing, wait for response
                 if (d_loading) {
-                    return;
+                    return false;
                 }
 
                 // start loading
@@ -32,6 +32,7 @@ module SubMusic {
                 // set fallback before request. future: fix with request object
                 d_provider.setFallback(method(:onError));
                 d_provider.getAllPodcasts(method(:onGetAllPodcasts));
+                return false;
             }
 
             function onGetAllPodcasts(podcasts) {
