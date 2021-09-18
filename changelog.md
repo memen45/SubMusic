@@ -1,5 +1,10 @@
 Version [] - 
 
+Version [0.1.18] - 2021-09-18
+- fixed pre loading of all nested menus (now only when opened)
+- improved sync speed long playlists
+- fixed ArtWork sync crash
+
 Version [0.1.17] - 2021-09-15
 - fixed cancelled sync when Podcast feature not available on server
 - added podcasts to Test Server option

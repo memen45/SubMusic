@@ -7,50 +7,34 @@ module SubMusic {
 
             private var d_id;
             private var d_playlist;
-            
-            enum {
-                OFFLINE,
-                SONGS,
-            }
-            hidden var d_items = {
-                OFFLINE => {
-                    LABEL => "Make available offline",
-                    SUBLABEL => null,
-                    METHOD => OFFLINE,
-                },
-                SONGS => {},
-            };
 
             function initialize(playlist) {
+                MenuBase.initialize(playlist.name(), false);
+
                 d_playlist = playlist;
                 d_id = playlist.id();
-
-                // this class could become lazy loaded as well, e.g. for loading playlist details
-                MenuBase.initialize(d_playlist.name(), true);
-
-                d_items[SONGS] = new Menu.SongsRemote(
-                    WatchUi.loadResource(Rez.Strings.Songs_label),
-                    d_id
-                );
             }
 
-            function getItem(idx) {
+            function load() {
+				System.println("Menu.PlaylistSettingsRemote::load()");
 
-                // defer to base
-                if (idx != OFFLINE) {
-                    return MenuBase.getItem(idx);
-                }
-                
-                // make toggle item for offline mode
-                var item = d_items[idx];
+                return MenuBase.load([
+                    {
+                        LABEL => "Make available offline",
+                        SUBLABEL => null,
+                        METHOD => "offline",
+                        OPTION => method(:isOffline),
+                    },
+                    new Menu.SongsRemote(
+                        WatchUi.loadResource(Rez.Strings.Songs_label),
+                        d_id
+                    ),
+                ]);
+            }
+
+            function isOffline() {
                 var iplaylist = new IPlaylist(d_id);
-                return new WatchUi.ToggleMenuItem(
-                    item.get(LABEL),
-                    item.get(SUBLABEL),
-                    item.get(METHOD),
-                    iplaylist.local(),
-                    {}
-                );
+                return iplaylist.local();
             }
 
             function sublabel() {

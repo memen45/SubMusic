@@ -146,6 +146,9 @@ class IPlaylist extends Playlist {
 	
 	// setters
 	function addSong(id) {
+		System.println("IPlaylist::addSong(id: " + id + " )");
+
+		// add it to the array
 		d_songs.add(id);
 	}
 	
@@ -300,21 +303,26 @@ class IPlaylist extends Playlist {
 		setLinked(true);
 		save();
 	}
-	
+
 	function updateMeta(playlist) {
 		System.println("IPlaylist::updateMeta( playlist: " + playlist.toStorage() + " )");
-		// System.println("IPlaylist::updateMeta( playlist )");
-		
+
+		// only single save is needed, so mark as not stored temporarily
+		d_stored = false;
+
+		// update the variables
 		var changed = setName(playlist.name());
 		changed |= setCount(playlist.count());
 		changed |= setRemote(playlist.remote());
 		if (changed) {
-			d_stored = save();
+			save();
 		}
+		d_stored = true;
 	}
 	
 	// updates song list, returns array of song ids that are not yet locally available
 	function update(songs) {
+		System.println("IPlaylist::update() STARTING id:" + id() + " )");
 		
 		// keep track of current songs
 		var songs_now = new [d_songs.size()];

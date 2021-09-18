@@ -31,9 +31,7 @@ class AudioSync extends Deferrable {
 		var types = [ Audio.SONG, Audio.PODCAST_EPISODE];
 		ids = [ SongStore.getIds(), EpisodeStore.getIds() ];
 		for (var typ = 0; typ != Audio.END; ++typ) {
-				System.println(typ);
 			for (var idx = 0; idx != ids[typ].size(); ++idx) {
-				System.println(idx);
 				var audio = new Audio(ids[typ][idx], typ);
 
 				// only add to todo if not yet stored

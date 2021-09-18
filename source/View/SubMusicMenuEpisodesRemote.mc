@@ -5,9 +5,6 @@ module SubMusic {
     module Menu {
         class EpisodesRemote extends MenuBase {
 
-            // menu items will be loaded in here 
-            hidden var d_items = [];
-
             private var d_loading = false;
 	        private var d_provider = SubMusic.Provider.get();
             private var d_id;       // store id of podcast channel
@@ -23,6 +20,7 @@ module SubMusic {
             }
 
             function load() {
+                System.println("Menu.EpisodesRemote::load()");
 
                 // if already loading, do nothing, wait for response
                 if (d_loading) {
@@ -35,16 +33,18 @@ module SubMusic {
                 // set fallback before request. future: fix with request object
                 d_provider.setFallback(method(:onError));
                 d_provider.getEpisodes(d_id, [0, 5], method(:onGetEpisodes));
+                // var deferrable = d_deferrableFactory.invoke();
+                // deferrable.run()
                 return false;
             }
 
             function onGetEpisodes(episodes) {
 
                 // store in class
-                d_items = [];
+                var items = [];
                 for (var idx = 0; idx != episodes.size(); ++idx) {
                     //d_items.add(new Menu.EpisodeSettingsRemote(episodes[idx]));
-                    d_items.add({
+                    items.add({
                         LABEL => episodes[idx].title(),
                         SUBLABEL => null,
                         METHOD => episodes[idx].id(),
@@ -52,6 +52,9 @@ module SubMusic {
                 }
 
                 // loading finished
+                MenuBase.load(items);
+
+                // update the view as it might be textview still
                 d_loading = false;
                 MenuBase.onLoaded(null);
             }

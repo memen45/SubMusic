@@ -52,12 +52,14 @@ class SubMusicApp extends Application.AudioContentProviderApp {
     // Get the initial view for configuring playback
     function getPlaybackConfigurationView() {
         var menu = new Menu.Playback();
+        menu.load();    // menu needs to be loaded when MenuLoader is not used
     	return [ new Menu.MenuView(menu), menu.delegate() ];
     }
 
     // Get the initial view for configuring sync
     function getSyncConfigurationView() {
         var menu = new Menu.Sync();
+        menu.load();    // menu needs to be loaded when MenuLoader is not used
     	return [ new SubMusic.Menu.MenuView(menu), menu.delegate() ];
     }
     

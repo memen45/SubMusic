@@ -1,5 +1,6 @@
 using Toybox.Media;
 using Toybox.Application;
+using Toybox.Test;
 
 // 
 class Song extends Storable {
@@ -61,15 +62,6 @@ class Song extends Storable {
 		return d_storage["art_id"];
 	}
 
-	function artwork() {
-		if (art_id() == null) {
-			return null;
-		}
-
-		var artwork = new IArtwork(art_id(), Artwork.SONG);
-		return artwork.image();
-	}
-
 	function metadata() {
 		// metadata only available when refId != null
 		if (refId() == null) {
@@ -85,6 +77,8 @@ class ISong extends Song {
 	// storage access
 	private var d_stored = false;						// true if song metadata is in storage
 	
+	private var d_artwork = null;
+
 	function initialize(id) {
 		System.println("ISong::initialize( id : " + id + " )");
 		var storage = SongStore.get(id);
@@ -94,6 +88,18 @@ class ISong extends Song {
 			storage = {"id" => id};		// nothing known yet except for id
 		}
 		Song.initialize(storage);
+
+		// load artwork if defined
+		if (art_id() != null) {
+			d_artwork = new IArtwork(art_id(), Artwork.SONG);
+		}
+	}
+
+	function artwork() {
+		if (d_artwork == null) {
+			return null;
+		}
+		return d_artwork.image();
 	}
 	
 	// setters
@@ -105,6 +111,8 @@ class ISong extends Song {
 			return false;
 		}
 		d_storage["time"] = time;
+		
+		System.println("ISong::setTime( time: " + time + " )");
 		
 		// nothing to do if not stored
 		if (d_stored) {
@@ -126,6 +134,8 @@ class ISong extends Song {
 			return false;
 		}
 		d_storage["mime"] = mime;
+
+		System.println("ISong::setMime( mime: " + mime + " )");
 		
 		// nothing to do if not stored
 		if (d_stored) {
@@ -184,27 +194,30 @@ class ISong extends Song {
 
 	function setArt_id(art_id) {
 		// if equal, nothing to do
-		if (art_id() == art_id) {
-			return false;
+		var changed = updateAny("art_id", art_id);
+
+		// if nothing changed, nothing to update
+		if (!changed) {
+			return changed;
 		}
 
-		// if previous art_id stored, remove safely
+		System.println("ISong::setArt_id( art_id: " + art_id + " )");
+
+		// dereference previous art
+		if (d_artwork != null) {
+			d_artwork.decRefCount();
+		}
+
+		// if new artwork, load it
 		if (art_id() != null) {
-			var iartwork = new IArtwork(art_id(), Artwork.SONG);
-			iartwork.decRefCount();
+			d_artwork = new IArtwork(art_id(), Artwork.SONG);
+			
+			// reference the artwork
+			d_artwork.incRefCount();
 		}
 
-		d_storage["art_id"] = art_id;
-
-		// if no new artwork, nothing to do
-		if (art_id() == null) {
-			return true;
-		}
-
-		// reference the artwork
-		var iartwork = new IArtwork(art_id(), Artwork.SONG);
-		iartwork.incRefCount();
-		return true;
+		d_artwork = null;
+		return changed;
 	}
 
 	function save() {
@@ -225,11 +238,16 @@ class ISong extends Song {
 	function updateMeta(song) {
 		System.println("ISong::updateMeta( song : " + song.toStorage() + " )");
 		
+		// only single save is needed, so mark as not stored temporarily
+		d_stored = false;
+
+		// update the variables
 		var changed = setTime(song.time());
 		changed |= setMime(song.mime());
 		changed |= setArt_id(song.art_id());
 		if (changed) {
-			d_stored = save();
+			save();
 		}
+		d_stored = true;
 	}
 }

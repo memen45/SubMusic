@@ -99,7 +99,7 @@ module SubMusic {
 			
 			progress /= 2;
 			
-			System.println(progress.toNumber());
+			// System.println(progress.toNumber());
 			d_notifySyncProgress.invoke(progress.toNumber());
 		}
 		

@@ -6,20 +6,15 @@ module SubMusic {
 
         class PodcastsLocal extends MenuBase {
 
-            // menu items will be loaded in here 
-            hidden var d_items = [];
-
             function initialize(title) {
-                // initialize base as loaded
-                MenuBase.initialize(title, true);
-
-                // load the items
-                load();
+                MenuBase.initialize(title, false);
             }
 
             // reload the ids on request
 			function load() {
-                var podcasts = [];
+                System.println("Menu.PodcastsLocal::load()");
+
+                var ipodcasts = [];
                 var ids = PodcastStore.getIds();
 
                 // remove the non local podcast ids
@@ -28,14 +23,16 @@ module SubMusic {
                     var id = ids[idx];
                     var ipodcast = new IPodcast(id);
                     if (ipodcast.local()) {
-                        podcasts.add(ipodcast);
+                        ipodcasts.add(ipodcast);
                     }
                 }
 
                 // create the menu items
-                for (var idx = 0; idx != podcasts.size(); ++idx) {
-                    d_items.add(new Menu.PodcastSettings(podcasts[idx]));
+                var items = [];
+                for (var idx = 0; idx != ipodcasts.size(); ++idx) {
+                    items.add(new Menu.PodcastSettings(ipodcasts[idx]));
                 }
+                return MenuBase.load(items);
 			}
         }
     }

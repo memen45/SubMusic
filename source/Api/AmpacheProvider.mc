@@ -286,6 +286,7 @@ class AmpacheProvider {
 		if (limit == null) {
 			limit = 0;
 		}
+		System.println("AmpacheProvider::checkDone()");
 		System.println(d_response.size());
 		System.println(response.size());
 		System.println(d_count);
@@ -316,6 +317,7 @@ class AmpacheProvider {
 				"description" => podcast["description"],
 				"copyright" => podcast["copyright"],
 				"remote" => true,
+				"art_id" => podcast["id"]
 			}));
 		}
 		checkDone(response);

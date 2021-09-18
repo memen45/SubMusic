@@ -7,33 +7,36 @@ module SubMusic {
 	module Menu {
 		class AboutSettings extends MenuBase {
 
-			hidden var d_items = [
-				{
-					LABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_RemoveAll_label), 
-					SUBLABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_RemoveAll_sublabel),
-					METHOD => method(:onRemoveAll),
-				},
-				{
-					LABEL => WatchUi.loadResource(Rez.Strings.Donate_label), 
-					SUBLABEL => null, 
-					METHOD => method(:onDonate),
-				},
-			];
-
 			function initialize() {
-				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.Settings_label), true);
+				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.Settings_label), false);
+			}
+
+			function load() {
+				System.println("Menu.AboutSettings::load()");
+				return MenuBase.load([
+					{
+						LABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_RemoveAll_label), 
+						SUBLABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_RemoveAll_sublabel),
+						METHOD => method(:onRemoveAll),
+					},
+					{
+						LABEL => WatchUi.loadResource(Rez.Strings.Donate_label), 
+						SUBLABEL => null, 
+						METHOD => method(:onDonate),
+					},
+				]);
 			}
 			
-			function onDonate() {
+			static function onDonate() {
 				WatchUi.pushView(new DonateView(), new DonateDelegate(), WatchUi.SLIDE_IMMEDIATE);
 			}
 			
-			function onRemoveAll() {
+			static function onRemoveAll() {
 				var msg = "Are you sure you want to delete all Application data?";
 				WatchUi.pushView(new WatchUi.Confirmation(msg), new SubMusicConfirmationDelegate(self.method(:removeAll)), WatchUi.SLIDE_IMMEDIATE);
 			}
 			
-			function removeAll() {
+			static function removeAll() {
 				System.println("Settings::removeAll()");
 				// collect all ids of songs
 				// var ids = SongStore.getIds();

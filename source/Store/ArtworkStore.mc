@@ -25,7 +25,7 @@ module ArtworkStore {
 		return d_artworks.getIds();
 	}
 
-	// returns non-connected artwork objects
+	// returns artwork objects
 	function getAll(options) {
 		System.println("ArtworkStore::getAll( options: " + options + " )");
 		var artworks = [];

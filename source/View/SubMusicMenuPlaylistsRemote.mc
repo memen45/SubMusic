@@ -5,9 +5,6 @@ module SubMusic {
     module Menu {
         class PlaylistsRemote extends MenuBase {
 
-            // menu items will be loaded in here 
-            hidden var d_items = [];
-
 	        private var d_provider = SubMusic.Provider.get();
             private var d_loading = false;
 
@@ -20,6 +17,7 @@ module SubMusic {
             }
 
             function load() {
+                System.println("Menu.PlaylistsRemote::load()");
 
                 // if already loading, do nothing, wait for response
                 if (d_loading) {
@@ -36,14 +34,13 @@ module SubMusic {
             }
 
             function onGetAllPlaylists(playlists) {
-
                 // store in class
-                d_items = [];
+                var items = [];
                 for (var idx = 0; idx != playlists.size(); ++idx) {
-                    d_items.add(new Menu.PlaylistSettingsRemote(playlists[idx]));
+                    items.add(new Menu.PlaylistSettingsRemote(playlists[idx]));
                 }
+                MenuBase.load(items);
 
-                // loading finished
                 d_loading = false;
                 MenuBase.onLoaded(null);
             }

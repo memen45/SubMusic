@@ -5,9 +5,6 @@ module SubMusic {
 
         class PlaylistsRemoteToggle extends MenuBase {
 
-            // items not known at creation
-            private var d_items = null;
-
 	        private var d_provider = SubMusic.Provider.get();
             private var d_loading = false;
 
@@ -21,19 +18,29 @@ module SubMusic {
 
             function getItem(idx) {
 
-                if (d_items == null) {
+                if (items() == null) {
                     return null;
                 }
                 
                 // check if out of bounds
-                if (idx >= d_items.size()) {
+                if (idx >= items().size()) {
                     return null;
                 }
 
                 // load playlist from array
-                var playlist = d_items[idx];
+                var playlist = items()[idx];
 
                 // create checkbox menuitem
+                var label = playlist.name();
+                var sublabel = playlist.count().toString() + " songs";
+                if (!playlist.remote()) {
+                    sublabel += " - local only";
+                }
+                var enabled = playlist.local();
+                return new WatchUi.ToggleMenuItem(label, sublabel, playlist, enabled, {});
+            }
+
+            function playlist_to_item(playlist) {
                 var label = playlist.name();
                 var sublabel = playlist.count().toString() + " songs";
                 if (!playlist.remote()) {
@@ -48,6 +55,12 @@ module SubMusic {
                 // if already loading, do nothing, wait for response
                 if (d_loading) {
                     return false;
+                }
+
+                // load locals 
+                var ids = PlaylistStore.getIds();
+                for (var idx = 0; idx != ids.size(); ++idx) {
+                    items().add(new IPlaylist(ids[idx]));
                 }
 
                 // start loading
@@ -91,11 +104,10 @@ module SubMusic {
                 // append remotes to the stored ones
                 items.addAll(items_remote);
 
-                // store in class
-                d_items = items;
+                // load items 
+                MenuBase.load(items);
 
-                // loading finished
-                d_loading = false;
+                // update the view accordingly
                 MenuBase.onLoaded(null);
             }
 
@@ -129,30 +141,5 @@ module SubMusic {
                 return new MenuDelegate(method(:onPlaylistToggle), null);
             }
         }
-
-        // class PlaylistsRemoteToggleView extends MenuView {
-        //     function initialize(title) {
-        //         MenuView.initialize(new PlaylistsRemoteToggle(title));
-        //     }
-        // }
-
-        // class PlaylistsRemoteToggleDelegate extends MenuDelegate {
-        //     function initialize() {
-        //         MenuDelegate.initialize(method(:onPlaylistToggle), null);
-        //     }
-
-        //     function onPlaylistToggle(item) {
-        //         var playlist = item.getId();
-        //         var id = playlist.id();
-        //         var iplaylist = new IPlaylist(id);
-
-        //         // update local
-        //         iplaylist.setLocal(item.isEnabled());
-
-        //         if (item.isEnabled()) {
-        //             iplaylist.updateMeta(playlist);
-        //         }
-        //     }
-        // }
     }
 }

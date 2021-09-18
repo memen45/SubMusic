@@ -6,59 +6,41 @@ module SubMusic {
         class PodcastSettings extends MenuBase {
 
             private var d_id;
-            private var d_podcast;
+            private var d_ipodcast;
 
-            enum {
-                PLAY,
-                EPISODES,
-                OFFLINE,
-            }
-            hidden var d_items = {
-                PLAY => {
-                    LABEL => WatchUi.loadResource(Rez.Strings.Menu_PlayNow_label),
-                    SUBLABEL => null,
-                    METHOD => method(:onPlay),
-                },
-                EPISODES => {},
-                OFFLINE => {
-                    LABEL => "Newest available offline",
-                    SUBLABEL => null,
-                    METHOD => OFFLINE,
-                },
-            };
+            function initialize(ipodcast) {
+                MenuBase.initialize(ipodcast.name(), false);
 
-            function initialize(podcast) {
-                d_podcast = podcast;
-                d_id = podcast.id();
-
-                // load podcast name from storage rather than online
-                var ipodcast = new IPodcast(d_id);
-                MenuBase.initialize(ipodcast.name(), true);
-
-                d_items.put(EPISODES, new Menu.EpisodesLocal(
-                    WatchUi.loadResource(Rez.Strings.Episodes_label),
-                    d_podcast.episodes(),
-                    method(:onEpisodeSelect)
-                ));
+                d_ipodcast = ipodcast;
+                d_id = ipodcast.id();
             }
 
-            function getItem(idx) {
+            function load() {
+                System.println("Menu.PodcastSettings::load()");
 
-                // defer to base
-                if (idx != OFFLINE) {
-                    return MenuBase.getItem(idx);
-                }
-                
-                // make toggle item for offline mode
-                var item = d_items[idx];
-                var ipodcast = new IPodcast(d_id);
-                return new WatchUi.ToggleMenuItem(
-                    item.get(LABEL),
-                    item.get(SUBLABEL),
-                    item.get(METHOD),
-                    ipodcast.local(),
-                    {}
-                );
+                return MenuBase.load([
+                    {
+                        LABEL => WatchUi.loadResource(Rez.Strings.Menu_PlayNow_label),
+                        SUBLABEL => null,
+                        METHOD => method(:onPlay),
+                        // OPTION => d_ipodcast.artwork(),     // try and add artwork
+                    },
+                    new Menu.EpisodesLocal(
+                            Rez.Strings.Episodes_label,
+                            d_ipodcast.episodes(),
+                            method(:onEpisodeSelect)
+                        ),
+                    {
+                        LABEL => "Newest available offline",
+                        SUBLABEL => null,
+                        METHOD => "offline",
+                        OPTION => method(:isOffline),
+                    },
+                ]);
+            }
+
+            function isOffline() {
+                return d_ipodcast.local();
             }
 
             function onPlay() {
@@ -69,11 +51,13 @@ module SubMusic {
             }
 
             function sublabel() {
-                var ipodcast = new IPodcast(d_id);
                 // var mins = (ipodcast.time() / 60).toNumber().toString();
                 // var sublabel = mins + " mins";
-                var sublabel = ipodcast.time();     // might be string hh:mm:ss
-                if (!ipodcast.synced()) {
+                var sublabel = d_ipodcast.time().toString();     // might be string hh:mm:ss
+                if (sublabel == null) {
+                    sublabel = "";
+                }
+                if (!d_ipodcast.synced()) {
                     sublabel += " - needs sync";
                 }
                 return sublabel;
@@ -88,8 +72,7 @@ module SubMusic {
             }
 
             function onOfflineToggle(item) {
-                var ipodcast = new IPodcast(d_id);
-                ipodcast.setLocal(item.isEnabled());
+                d_ipodcast.setLocal(item.isEnabled());
             }
 
             function delegate() {

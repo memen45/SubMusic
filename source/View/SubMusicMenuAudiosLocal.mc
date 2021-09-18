@@ -5,43 +5,49 @@ module SubMusic {
 
         class AudiosLocal extends MenuBase {
 
-            private var d_audios = [];
+            private var d_audios;
 
             // performs the action on choice of song id
             private var d_handler = null;
 
-            // the actual menu items
-            hidden var d_items = [];
-
             function initialize(title, audios, handler) {
-                MenuBase.initialize(title, true);
+                MenuBase.initialize(title, false);
 
                 d_handler = handler;
+                d_audios = audios;
+            }
 
+            function load() {
+				System.println("Menu.AudiosLocal::load()");
+                
                 // only add local songs
-                for (var idx = 0; idx != audios.size(); ++idx) {
+                var audios = [];
+                for (var idx = 0; idx != d_audios.size(); ++idx) {
 
-                    var id = audios[idx]["id"];
-                    var type = audios[idx]["type"];
+                    var id = d_audios[idx]["id"];
+                    var type = d_audios[idx]["type"];
                     var audio = new Audio(id, type);
 
                     // if local, menu entry is added
                     if (audio.refId() != null) {
-                        d_audios.add(audio);
+                        audios.add(audio);
                     }
                 }
 
                 // load the actual menu items 
-                for (var idx = 0; idx != d_audios.size(); ++idx) {
+                var items = [];
+                for (var idx = 0; idx != audios.size(); ++idx) {
                     // load the menuitem
-                    var audio = d_audios[idx];
+                    var audio = audios[idx];
                     var meta = audio.metadata();
-                    d_items.add({
+                    items.add({
                         LABEL => meta.title,
                         SUBLABEL => meta.artist,
                         METHOD => audio.toStorage(),
                     });
                 }
+                // this can be reloaded
+				return MenuBase.load(items);
             }
 
             function onAudioSelect(item) {

@@ -2,7 +2,7 @@ class ArtworkSync extends Deferrable {
 
 	private var d_provider = SubMusic.Provider.get();
 	
-	private var d_failed = [];		// array of all failed
+	// private var d_failed = [];		// array of all failed
 	
 	private var f_progress; 		// callback on progress
 	
@@ -92,10 +92,11 @@ class ArtworkSync extends Deferrable {
 
     	// indicate failed sync
 //   	d_playlist.setError(error); TODO
-    	d_failed.add(d_todo[0]);
+    	// d_failed.add(d_todo[0]);
     	
     	// check if song in progress
-		if (d_todo[0] == null) {
+		if ((d_todo.size() == 0)
+			|| (d_todo[0] == null)) {
 			Deferrable.cancel(error);
 			return;
 		}

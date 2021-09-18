@@ -110,16 +110,13 @@ class IEpisode extends Episode {
 		}
 
 		// nothing to do if not changed
-		if (d_storage[key].equals(string)) {
-			return false;
-		}
-		d_storage[key] = string;
+		var changed = updateAny(key, string);
 
 		// nothing to do if not stored
-		if (d_stored) {
+		if (changed && d_stored) {
 			save();
 		}
-		return true;
+		return changed;
 	}
 
 	function setTitle(title) {
@@ -249,12 +246,17 @@ class IEpisode extends Episode {
 	function updateMeta(episode) {
 		System.println("IEpisode::updateMeta( episode : " + episode.toStorage() + " )");
 		
+		// only single save is needed, so mark as not stored temporarily
+		d_stored = false;
+
+		// update the variables
 		var changed = setTime(episode.time());
 		changed |= setTitle(episode.title());
 		changed |= setMime(episode.mime());
 		changed |= setArt_id(episode.art_id());
 		if (changed) {
-			d_stored = save();
+			save();
 		}
+		d_stored = true;
 	}
 }

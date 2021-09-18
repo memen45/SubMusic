@@ -148,6 +148,7 @@ module SubMusic {
         }
 
         function removeAudioByIdx(idx) {
+            System.println("IPlayable::removeAudioByIdx(idx: " + idx + " )");
             System.println(audios());
             System.println(idcs());
 
@@ -156,6 +157,7 @@ module SubMusic {
 
             System.println(audios().toString());
             System.println(idcs());
+            System.println("IPlayable::removeAudioByIdx() - done");
         }
 
         function removeRemoved() {

@@ -7,19 +7,25 @@ module SubMusic {
 	module Menu {
 		class Sync extends MenuBase {
 			
-			hidden var d_items = [
-				new Menu.PlaylistsRemoteToggle(WatchUi.loadResource(Rez.Strings.confSync_SelectPlaylists_label)),		// Temporarily here, future: use browse
-				{
-					LABEL => WatchUi.loadResource(Rez.Strings.confSync_StartSync_label), 
-					SUBLABEL => method(:getLastSyncString), 
-					METHOD => method(:onStartSync),
-				},
-				new Menu.Browse(),
-				new Menu.About(),
-			];
+			hidden var d_items = [];
 
 			function initialize() {
-				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.confSync_Title), true);
+				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.confSync_Title), false);
+			}
+
+			function load() {
+				System.println("Menu.Sync::load()");
+				
+				return MenuBase.load([
+					new Menu.PlaylistsRemoteToggle(WatchUi.loadResource(Rez.Strings.confSync_SelectPlaylists_label)),		// Temporarily here, future: use browse
+					{
+						LABEL => WatchUi.loadResource(Rez.Strings.confSync_StartSync_label), 
+						SUBLABEL => method(:getLastSyncString), 
+						METHOD => method(:onStartSync),
+					},
+					new Menu.Browse(),
+					new Menu.About(),
+				]);
 			}
 			
 			function getLastSyncString() {
@@ -36,8 +42,8 @@ module SubMusic {
 			function onStartSync() {
 				// store sync request, refer to bug https://forums.garmin.com/developer/connect-iq/i/bug-reports/bug-media-communications-syncdelegate-blocks-charging
 				Application.Storage.setValue(Storage.SYNC_REQUEST, true);
-				var syncrequest  = Application.Storage.getValue(Storage.SYNC_REQUEST);
-				System.println(syncrequest);
+				// var syncrequest  = Application.Storage.getValue(Storage.SYNC_REQUEST);
+				// System.println(syncrequest);
 				
 				// start the sync
 				Communications.startSync();

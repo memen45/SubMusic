@@ -4,41 +4,25 @@ using Toybox.Application;
 class Podcast extends Storable {
 
 	hidden var d_storage = {
+		// required external playlist properties
 		"id" => null,
 		"name" => "default",
 		"description" => "default",
 		"art_id" => null,
 
-		"episodes" => [],
+		// optional external playlist properties
+		"episodes" => [],				// array of episode ids
 		"time" => 0,
 
-		"remote" => false,
-		"synced" => false,
+		// required internal playlist properties	
+		"remote" => false,				// true if metadata remotely available (according to last check)
+		"synced" => false,				// true if no episodes failed during sync -> or track by date last synced?
 
-		"linked" => false,
-		"local" => false,
+		"linked" => false,				// true if all episodes are referenced in their refCount
+		"local" => false,				// true if should be locally available, false if should not
 
-		"podcast" => true,
+		"podcast" => true,				// true if playback position is stored, 
 	};
-	
-	// required external playlist properties
-	// hidden var d_id;
-	// hidden var d_name = "default";
-	// hidden var d_description = "default";
-	// hidden var d_copyright = "";
-	
-	// // optional external playlist properties
-	// hidden var d_episodes = [];		// array of episode ids
-		
-	// // required internal playlist properties	
-	// hidden var d_remote = false; 	// true if metadata remotely available (according to last check)
-	// hidden var d_synced = false;	// true if no episodes failed during sync -> or track by date last synced?
-	
-	// hidden var d_linked = false;	// true if all episodes are referenced in their refCount
-	// hidden var d_local = false;		// true if should be locally available, false if should not
-
-	// hidden var d_podcast = true;	// true if playback position is stored, 
-
 	
 	function initialize(storage) {
 		// System.println("Playlist::initialize( storage = " + storage + " )");
@@ -46,28 +30,6 @@ class Podcast extends Storable {
 
 		Storable.initialize(storage);
 	}
-
-	// function fromStorage(storage) {
-	// 	var changed = false;
-
-	// 	// iterate over all keys 
-	// 	var keys = d_storage.keys();
-	// 	for (var idx = 0; idx != keys.size(); ++idx) {
-	// 		var key = keys[idx];
-
-	// 		// update value if not null and not equal
-	// 		if ((storage[key] != null) && (d_storage[key] != storage[key])) {
-	// 			d_storage[key] = storage[key];
-	// 			changed = true;
-	// 		}
-	// 	}
-
-	// 	return changed;
-	// }
-	
-	// function toStorage() {
-	// 	return d_storage;
-	// }
 	
 	// getters
 	function id() {
@@ -84,15 +46,6 @@ class Podcast extends Storable {
 	
 	function art_id() {
 		return d_storage["art_id"];
-	}
-
-	function artwork() {
-		if (art_id() == null) {
-			return null;
-		}
-
-		var artwork = new IArtwork(art_id(), Artwork.PODCAST);
-		return artwork.image();
 	}
 	
 	function episodes() {
@@ -131,6 +84,8 @@ class IPodcast extends Podcast {
 	// storage access
 	private var d_stored = false;		// true if podcast metadata is in storage
 
+	private var d_artwork = null;
+
 	function initialize(id) {
 		System.println("IPodcast::initialize( id : " + id + " )");
 		var storage = PodcastStore.get(id);
@@ -141,6 +96,18 @@ class IPodcast extends Podcast {
 		}
 
 		Podcast.initialize(storage);
+		
+		// load artwork if defined
+		if (art_id() != null) {
+			d_artwork = new IArtwork(art_id(), Artwork.PODCAST);
+		}
+	}
+
+	function artwork() {
+		if (d_artwork == null) {
+			return null;
+		}
+		return d_artwork.image();
 	}
 
 	function stored() {
@@ -252,31 +219,34 @@ class IPodcast extends Podcast {
 
 	function setArt_id(art_id) {
 		// if equal, nothing to do
-		if (art_id() == art_id) {
-			return false;
+		var changed = updateAny("art_id", art_id);
+
+		// if nothing changed, nothing to update
+		if (!changed) {
+			return changed;
 		}
+		
+		System.println("IPodcast::setArt_id( art_id: " + art_id + " )");
 
 		if (!linked()) {
-			d_storage["art_id"] = art_id;
 			return true;
 		}
 
 		// if previous art_id stored and linked, deref
+		if (d_artwork != null) {
+			d_artwork.decRefCount();
+		}
+
+		// if new artwork, load it
 		if (art_id() != null) {
-			var iartwork = new IArtwork(art_id(), Artwork.PODCAST);
-			iartwork.decRefCount();
-		}
-		d_storage["art_id"] = art_id;
-
-		// if new artwork null, nothing to do
-		if (art_id == null) {
-			return true;
+			d_artwork = new IArtwork(art_id(), Artwork.PODCAST);
+			
+			// reference the artwork
+			d_artwork.incRefCount();
 		}
 
-		// reference the new artwork
-		var iartwork = new IArtwork(art_id(), Artwork.PODCAST);
-		iartwork.incRefCount();
-		return true;
+		d_artwork = null;
+		return changed;
 	}
 
 // 	function setPodcast(podcast) {
@@ -353,13 +323,18 @@ class IPodcast extends Podcast {
 	function updateMeta(podcast) {
 		System.println("IPodcast::updateMeta( podcast: " + podcast.toStorage() + " )");
 		
+		// only single save is needed, so mark as not stored temporarily
+		d_stored = false;
+
+		// update the variables
 		var changed = setName(podcast.name());
 		changed |= setDescription(podcast.description());
 		changed |= setArt_id(podcast.art_id());
 		changed |= setRemote(podcast.remote());
 		if (changed) {
-			d_stored = save();
+			save();
 		}
+		d_stored = true;
 	}
 	
 	// updates episodes list, returns array of episode ids that are not yet locally available

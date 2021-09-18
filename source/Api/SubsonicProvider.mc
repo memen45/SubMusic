@@ -234,6 +234,7 @@ class SubsonicProvider {
 				"description" => podcast["description"],
 				"copyright" => podcast["copyright"],
 				"remote" => true,
+				"art_id" => podcast["coverArt"],
 			}));
 		}
 		d_callback.invoke(podcasts);

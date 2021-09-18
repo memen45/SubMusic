@@ -1,4 +1,5 @@
 using Toybox.WatchUi;
+using Toybox.Graphics;
 
 /* 
 Planned menu:
@@ -109,6 +110,7 @@ module SubMusic {
 			LABEL,
 			SUBLABEL,
 			METHOD,
+			OPTION,			// if Boolean: ToggleMenuItem, if Drawable: IconMenuItem
 		}
 	
 		class MenuView extends WatchUi.Menu2 {
@@ -179,7 +181,11 @@ module SubMusic {
 
 				// update otherwise
 				updateMenu();
-		    }		
+		    }
+
+			function onHide() {
+				d_menu.unload();
+			}
 		}
 		
 		class MenuDelegate extends WatchUi.Menu2InputDelegate {
@@ -224,9 +230,34 @@ module SubMusic {
 			private var f_loaded = null;
 			private var d_error = null;
 
+			private var d_items = [];
+
 			function initialize(title, loaded) {
+				// try and load the resource
+				if (!(title instanceof Lang.String)) {
+					title = WatchUi.loadResource(title);
+				}
+				// System.println("MenuBase::initialize( title: " + title + " )");
 				d_title = title;
 				d_loaded = loaded;
+			}
+
+			function items() {
+				return d_items;
+			}
+
+			function load(items) {
+				d_items = items;
+				
+				// mark as loaded
+				setLoaded(true);
+				return loaded();
+			}
+
+			// default unloader, make sure resources are freed and menu will be reloaded
+			function unload() {
+				d_items = [];
+				d_loaded = false;
 			}
 
 			function loaded() {
@@ -237,9 +268,17 @@ module SubMusic {
 				return d_title;
 			}
 
+			// if method, invoke it, otherwise return original
+			function resolve_var(value) {
+				if (value instanceof Lang.Method) {
+					return value.invoke();
+				}
+				return value;
+			}
+
 			// default item loader, returns null if menu idx not found
 			function getItem(idx) {
-				System.println("SubMusicMenu::getItem( idx: " + idx + " ) - " + d_title);
+				// System.println("SubMusicMenu::getItem( idx: " + idx + " ) - " + d_title);
 				
 				// check if item exists
 				if (idx >= d_items.size()) {
@@ -248,18 +287,40 @@ module SubMusic {
 				var item = d_items[idx];
 
 				// support dynamically computed strings
-				var labl = item.get(LABEL);
-				if (labl instanceof Lang.Method) {
-					labl = labl.invoke();
-				}
-				var sublabl = item.get(SUBLABEL);
-				if ((sublabl != null) 
-					&& (sublabl instanceof Lang.Method)) {
-					sublabl = sublabl.invoke();
-				}
+				var labl = resolve_var(item.get(LABEL));
+				var sublabl = resolve_var(item.get(SUBLABEL));
 				var method = item.get(METHOD);
 
-				// create the menu item itself
+				var option = resolve_var(item.get(OPTION));
+
+				// if  Boolean: load ToggleMenuItem
+				if (option instanceof Lang.Boolean) {
+					return new WatchUi.ToggleMenuItem(labl, sublabl, method, option, {});
+				}
+
+				// if image given, load IconMenuItem				
+				// if ((option instanceof WatchUi.BitmapResource)
+				// 	|| (option instanceof Graphics.BufferedBitmap)
+				// 	// || (option instanceof Graphics.BitmapReference)
+				// 	// || (option instanceof Graphics.BufferedBitmapReference)
+				// 	|| (option instanceof WatchUi.Drawable)) {
+
+				// 	// set parameters
+				// 	var params = {
+				// 		:width => 30,
+				// 		:height => 30,
+				// 		:bitmapResource => option, 
+				// 	};
+				// 	var bufferedBitmap = null;
+				// 	if (Graphics has :createBufferedBitmap) {
+				// 		bufferedBitmap = Graphics.createBufferedBitmap(params);
+				// 	} else {
+				// 		bufferedBitmap = new Graphics.BufferedBitmap(params);
+				// 	}
+				// 	return new WatchUi.IconMenuItem(labl, sublabl, method, option, {});
+				// }
+
+				// create normal MenuItem
 				return new WatchUi.MenuItem(
 					labl,			// label
 					sublabl,		// sublabel
@@ -275,6 +336,10 @@ module SubMusic {
 			function setOnLoaded(callback) {
 				System.println("MenuBase::setOnLoaded " + self);
 				f_loaded = callback;
+			}
+
+			function setLoaded(loaded) {
+				d_loaded = loaded;
 			}
 
 			function onLoaded(error) {
@@ -331,11 +396,7 @@ module SubMusic {
 			private var d_delegate = null;
 
 			function initialize(menu, delegate) {
-				var title = menu.title();
-				if (!(menu.title() instanceof Lang.String)) {
-					title = WatchUi.loadResource(title);
-				}
-				System.println("MenuLoader::initialize(" + title + ")");
+				System.println("MenuLoader::initialize(" + menu.title() + ")");
 
 				// store variables if needed for non-loaded menu
 				var loaded = menu.loaded();

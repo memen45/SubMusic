@@ -6,23 +6,15 @@ module SubMusic {
 
         class PlaylistsLocal extends MenuBase {
 
-            // menu items will be loaded in here 
-            hidden var d_items = [];
-
             function initialize(title) {
                 // initialize base as loaded
-                MenuBase.initialize(title, true);
-
-                // load the items
-                load();
-            }
-
-            function update() {
-                load();
+                MenuBase.initialize(title, false);
             }
 
             // reload the ids on request
 			function load() {
+                System.println("Menu.PlaylistsLocal::load()");
+                
                 var playlists = [];
                 var ids = PlaylistStore.getIds();
 
@@ -37,12 +29,11 @@ module SubMusic {
                 }
 
                 // create the menu items
-                d_items = [];
+                var items = [];
                 for (var idx = 0; idx != playlists.size(); ++idx) {
-                    d_items.add(new Menu.PlaylistSettings(playlists[idx]));
+                    items.add(new Menu.PlaylistSettings(playlists[idx]));
                 }
-                // mark complete 
-                return true;
+				return MenuBase.load(items);
 			}
         }
 

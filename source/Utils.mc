@@ -47,4 +47,25 @@ module SubMusic {
 			return 0;
 		}
 	}
+
+	function copy(dict as Lang.Dictionary) as Lang.Dictionary {
+		var ret = {};
+		for (var idx = 0; idx < dict.keys().size(); ++idx) {
+			var key = dict.keys()[idx];
+			ret.put(key, dict.get(key));
+		}
+		return ret;
+	}
+
+	// merge two dictionaries, maybe improve by filtering keys e.g.
+	// function merge(dict, dict2, keystocopy)
+	function merge(dict as Lang.Dictionary, dict2 as Lang.Dictionary) as Lang.Dictionary {
+		var ret = copy(dict);
+		var keys = dict2.keys();
+		for (var idx = 0; idx != keys.size(); ++idx) {
+			var key = keys[idx];
+			ret.put(key, dict2.get(key));
+		}
+		return ret;
+	}
 }

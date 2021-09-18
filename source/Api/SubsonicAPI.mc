@@ -2,6 +2,7 @@ using Toybox.Communications;
 using Toybox.WatchUi;
 using Toybox.System;
 using SubMusic;
+using SubMusic.Utils;
 
 // class for interfacing with a subsonic API endpoint
 class SubsonicAPI extends Api {
@@ -41,7 +42,7 @@ class SubsonicAPI extends Api {
 		// construct parameters
 		var id = params["id"];
 		var time = params["time"];
-		params = copy(d_params);
+		params = Utils.copy(d_params);
 		params["id"] = id;			// set id for scrobble
 		params["time"] = time;		// set time for scrobble
 		
@@ -108,7 +109,7 @@ class SubsonicAPI extends Api {
 		var url = url() + "getPodcasts";
 
 		// construct parameters 
-		params = merge(d_params, params);
+		params = Utils.merge(d_params, params);
 
     	Communications.makeWebRequest(url, params, {}, self.method(:onGetPodcasts));
 	}
@@ -149,7 +150,7 @@ class SubsonicAPI extends Api {
 		
 		// construct parameters
 		var id = params["id"];
-		params = copy(d_params);
+		params = Utils.copy(d_params);
 		params["id"] = id;			// set id for playlist
 		
     	var options = {
@@ -185,7 +186,7 @@ class SubsonicAPI extends Api {
 		// construct parameters
 		var id = params["id"];
 		var format = params["format"];
-		params = copy(d_params);
+		params = Utils.copy(d_params);
 		params["id"] = id;
 		params["format"] = format;
 		
@@ -226,7 +227,7 @@ class SubsonicAPI extends Api {
 
 		// construct parameters
 		var id = params["id"];
-		params = copy(d_params);
+		params = Utils.copy(d_params);
 		params["id"] = id;
 
 		params["size"] = 100;
@@ -254,27 +255,6 @@ class SubsonicAPI extends Api {
 	// @override
 	function checkApiError(responseCode, data) {
 		return SubsonicError.is(responseCode, data);
-	}
-
-	function copy(dict) {
-		var ret = {};
-		for (var idx = 0; idx < dict.keys().size(); ++idx) {
-			var key = dict.keys()[idx];
-			ret.put(key, dict.get(key));
-		}
-		return ret;
-	}
-
-	// merge two dictionaries, maybe improve by filtering keys e.g.
-	// function merge(dict, dict2, keystocopy)
-	function merge(dict, dict2) {
-		var ret = copy(dict);
-		var keys = dict2.keys();
-		for (var idx = 0; idx != keys.size(); ++idx) {
-			var key = keys[idx];
-			ret.put(key, dict2.get(key));
-		}
-		return ret;
 	}
 
 	// @override

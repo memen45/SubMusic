@@ -10,17 +10,11 @@ module SubMusic {
             // performs the action on choice of episode id
             private var d_handler = null;
 
-            // the actual menu items
-            hidden var d_items = [];
-
             function initialize(title, episode_ids, handler) {
-                MenuBase.initialize(title, true);
+                MenuBase.initialize(title, false);
 
                 d_ids = episode_ids;
                 d_handler = handler;
-
-                // load the menu items
-                load();
             }
 
             function load() {
@@ -41,17 +35,19 @@ module SubMusic {
                 }
 
                 // load the actual menu items 
+                var items = [];
                 for (var idx = 0; idx != d_ids.size(); ++idx) {
                     // load the menuitem
                     var id = d_ids[idx];
                     var iepisode = new IEpisode(id);
                     var meta = iepisode.metadata();
-                    d_items.add({
+                    items.add({
                         LABEL => meta.title,
                         SUBLABEL => meta.artist,
                         METHOD => id,
                     });
                 }
+				return MenuBase.load(items);
             }
 
             function onEpisodeSelect(item) {

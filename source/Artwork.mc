@@ -3,9 +3,9 @@ class Artwork extends Storable {
 
 	enum { SONG, ARTIST, ALBUM, PLAYLIST, SEARCH, PODCAST, END }		// only add types at end, as these are stored
     static private var s_types = [ "song", "artist", "album", "playlist", "search", "podcast" ];
-	hidden var d_type;
 
     hidden var d_storage = {
+        "id" => null,
         "art_id" => null,
         "type" => Audio.SONG,
         "refCount" => 0,
@@ -35,11 +35,15 @@ class Artwork extends Storable {
     }
 
     function id() {
-        return compute_id(art_id(), type());
+        // only compute id once. art_id and type are fixed after creation
+        if (get("id") == null) {
+            set("id", compute_id(art_id(), type()));
+        }
+        return get("id");
     }
 
     static function compute_id(art_id, type) {
-        System.println("Artwork::compute_id() " + art_id + type);
+        System.println("Artwork::compute_id() for art_id: " + art_id + ", type: " + type + " )");
         if (art_id == null) {
             return null;
         }
@@ -47,11 +51,10 @@ class Artwork extends Storable {
     }
 
     function image() {
-        var ide = id();
-        if (ide == null) {
+        if (id() == null) {
             return null;
         }
-        return Application.Storage.getValue(ide);
+        return Application.Storage.getValue(id());
     }
 }
 
@@ -60,17 +63,20 @@ class IArtwork extends Artwork {
     //storage access
     private var d_stored = false;       // true if artwork metadata is in storage
 
-    function initialize(id, type) {
-        System.println("IArtwork::initialize( id : " + id + " type : " + type + " )");
+    function initialize(art_id, type) {
+        System.println("IArtwork::initialize( art_id : " + art_id + " type : " + type + " )");
 
-        var storage = ArtworkStore.get(compute_id(id, type));
+        var id = compute_id(art_id, type);
+        var storage = ArtworkStore.get(id);
         if (storage != null) {
             d_stored = true;
+            storage["id"] = id;     // tmp fix for bw compat
         } else {
             storage = {
-                "art_id" => id,
+                "id" => id,
+                "art_id" => art_id,
                 "type" => type,
-            };     // nothing known yet except for id and type
+            };     // nothing known yet except for id, art_id and type
         }
         Artwork.initialize(storage);
     }
@@ -91,6 +97,11 @@ class IArtwork extends Artwork {
 	}
 
 	function save() {
+        // do not save if id invalid
+        if (art_id == null) {
+            return false;
+        }
+        
 		d_stored = ArtworkStore.save(self);
 		return d_stored;
 	}
@@ -98,7 +109,7 @@ class IArtwork extends Artwork {
 	// removes the metadata from the ArtworkStore
 	function remove() {
 		ArtworkStore.remove(self);		// remove self from storage
-        Application.Storage.deleteValue(id());
+        Application.Storage.deleteValue(id()); // remove the downloaded image
 		d_stored = false;
 		return;
 	}

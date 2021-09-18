@@ -10,20 +10,17 @@ module SubMusic {
             // performs the action on choice of song id
             private var d_handler = null;
 
-            // the actual menu items
-            hidden var d_items = [];
-
             function initialize(title, song_ids, handler) {
-                MenuBase.initialize(title, true);
+                MenuBase.initialize(title, false);
 
                 d_ids = song_ids;
                 d_handler = handler;
 
-                // load the menu items
-                load();
+                // do not load the menu items
             }
 
             function load() {
+                System.println("Menu.SongsLocal::load()");
 
                 // remove the non local songs
                 var todelete = [];
@@ -41,17 +38,19 @@ module SubMusic {
                 }
 
                 // load the actual menu items 
+                var items = [];
                 for (var idx = 0; idx != d_ids.size(); ++idx) {
                     // load the menuitem
                     var id = d_ids[idx];
                     var isong = new ISong(id);
                     var meta = isong.metadata();
-                    d_items.add({
+                    items.add({
                         LABEL => meta.title,
                         SUBLABEL => meta.artist,
                         METHOD => id,
                     });
                 }
+                return MenuBase.load(items);
             }
 
             function onSongSelect(item) {

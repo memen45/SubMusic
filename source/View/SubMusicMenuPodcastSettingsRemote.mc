@@ -7,50 +7,34 @@ module SubMusic {
 
             private var d_id;
             private var d_podcast;
-            
-            enum {
-                OFFLINE,
-                EPISODES,
-            }
-            hidden var d_items = {
-                OFFLINE => {
-                    LABEL => "Newest available offline",
-                    SUBLABEL => null,
-                    METHOD => OFFLINE,
-                },
-                EPISODES => {},
-            };
 
             function initialize(podcast) {
+                MenuBase.initialize(podcast.name(), false);
+
                 d_podcast = podcast;
                 d_id = podcast.id();
-
-                // this class could become lazy loaded as well, e.g. for loading podcast details
-                MenuBase.initialize(d_podcast.name(), true);
-
-                d_items[EPISODES] = new Menu.EpisodesRemote(
-                    WatchUi.loadResource(Rez.Strings.Episodes_label),
-                    d_id
-                );
             }
 
-            function getItem(idx) {
+            function load() {
+                System.println("Menu.PodcastSettingsRemote::load()");
 
-                // defer to base
-                if (idx != OFFLINE) {
-                    return MenuBase.getItem(idx);
-                }
-                
-                // make toggle item for offline mode
-                var item = d_items[idx];
+                return MenuBase.load([
+                    {
+                        LABEL => "Newest available offline",
+                        SUBLABEL => null,
+                        METHOD => "offline",
+                        OPTION => method(:isOffline),
+                    },
+                    new Menu.EpisodesRemote(
+                            WatchUi.loadResource(Rez.Strings.Episodes_label),
+                            d_id
+                        ),
+                ]);
+            }
+
+            function isOffline() {
                 var ipodcast = new IPodcast(d_id);
-                return new WatchUi.ToggleMenuItem(
-                    item.get(LABEL),
-                    item.get(SUBLABEL),
-                    item.get(METHOD),
-                    ipodcast.local(),
-                    {}
-                );
+                return ipodcast.local();
             }
 
             function sublabel() {
