@@ -110,9 +110,11 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
 		var audio = iplayable.getAudio(iplayable.songidx());
 		if ((audio instanceof SubMusic.Audio)
 			&& (audio.refId() == refId)) {
+			System.println("SubMusicContentDelegate::findAudioByRefId( refId: " + refId + " ) - guessed");
 			return audio;
 		}
 		// if trick not successful, do exhaustive search
+		System.println("SubMusicContentDelegate::findAudioByRefId( refId: " + refId + " ) - not guessed");
 		var ids = [ SongStore.getIds(), EpisodeStore.getIds() ];
 		for (var typ = 0; typ != Audio.END; ++typ) {
 			for (var idx = 0; idx != ids[typ].size(); ++idx) {

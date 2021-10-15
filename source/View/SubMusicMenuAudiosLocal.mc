@@ -5,16 +5,18 @@ module SubMusic {
 
         class AudiosLocal extends MenuBase {
 
-            private var d_audios;
+            private var d_ids;
+            private var d_types;
 
             // performs the action on choice of song id
             private var d_handler = null;
 
-            function initialize(title, audios, handler) {
+            function initialize(title, ids, types, handler) {
                 MenuBase.initialize(title, false);
 
                 d_handler = handler;
-                d_audios = audios;
+                d_ids = ids;
+                d_types = types;
             }
 
             function load() {
@@ -22,10 +24,10 @@ module SubMusic {
                 
                 // only add local songs
                 var audios = [];
-                for (var idx = 0; idx != d_audios.size(); ++idx) {
+                for (var idx = 0; idx != d_ids.size(); ++idx) {
 
-                    var id = d_audios[idx]["id"];
-                    var type = d_audios[idx]["type"];
+                    var id = d_ids[idx];
+                    var type = d_types[idx];
                     var audio = new Audio(id, type);
 
                     // if local, menu entry is added

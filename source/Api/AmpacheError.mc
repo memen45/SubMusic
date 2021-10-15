@@ -3,26 +3,29 @@ using Toybox.Lang;
 class AmpacheError extends SubMusic.ApiError {
 	
 // 			Ampache5 error codes
-//	enum {
-//		ACCESS_CONTROL 	= 4700,
-//		HANDSHAKE		= 4701,
-//		FEATURE_MISSING	= 4703,
-//		NOT_FOUND		= 4704,
-//		METHOD_MISSING	= 4705,
-//		METHOD_DPRCTD	= 4706,
-//		BAD_REQUEST		= 4710,
-//		FAILED_ACCESS	= 4742,
-//	}
-	static enum {
-		ACCESS_CONTROL 	= 400,
-		HANDSHAKE		= 401,
-		FEATURE_MISSING	= 403,
-		NOT_FOUND		= 404,
-		METHOD_MISSING	= 405,
-		METHOD_DPRCTD	= 406,
-		BAD_REQUEST		= 410,
-		FAILED_ACCESS	= 442,
+	enum {
+		ACCESS_CONTROL 	= 4700,
+		HANDSHAKE		= 4701,
+		FEATURE_MISSING	= 4703,
+		NOT_FOUND		= 4704,
+		METHOD_MISSING	= 4705,
+		METHOD_DPRCTD	= 4706,
+		BAD_REQUEST		= 4710,
+		FAILED_ACCESS	= 4742,
 	}
+
+// 			Ampache4 error codes (deprecated)
+	private const ERROR_CODE_OFFSET = 4300;
+//	static enum {
+//		ACCESS_CONTROL 	= 400,
+//		HANDSHAKE		= 401,
+//		FEATURE_MISSING	= 403,
+//		NOT_FOUND		= 404,
+//		METHOD_MISSING	= 405,
+//		METHOD_DPRCTD	= 406,
+//		BAD_REQUEST		= 410,
+//		FAILED_ACCESS	= 442,
+//	}
 	private var d_type = null;
 	private var d_msg = "";
 	
@@ -31,12 +34,13 @@ class AmpacheError extends SubMusic.ApiError {
 	function initialize(error_obj) {
 		
 		// if null error_obj, response is malformed
-		if (error_obj) {
-			d_type = error_obj["code"].toNumber();
-			d_msg = error_obj["message"];
+		if ((error_obj != null) && (error_obj["errorCode"] != null)) {
 			// TODO for Ampache 5:
-//			d_code = error_obj["errorCode"];		// Ampache5
-//			d_msg = error_obj["errorMessage"];		// Ampache5
+			d_type = error_obj["errorCode"];		// Ampache5
+			d_msg = error_obj["errorMessage"];		// Ampache5
+		} else if ((error_obj != null) && (error_obj["code"] != null)) {
+			d_type = error_obj["code"].toNumber() + ERROR_CODE_OFFSET;
+			d_msg = error_obj["message"];
 		}
 		
 		// default is unknown

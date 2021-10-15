@@ -42,7 +42,7 @@ class ArtworkSync extends Deferrable {
 	}
 
 	function unstored(artwork) {
-		return (artwork.image() == null);
+		return ((artwork.image() == null) && (artwork.art_id() != null));
 	}
 	
 	function sync() {

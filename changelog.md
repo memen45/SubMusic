@@ -1,5 +1,11 @@
 Version [] - 
 
+Version [0.1.19] - 2021-10-15
+- updated Ampache5 Error codes (backwards compatible)
+- improved speed in Song access during play
+- fixed removal of removed songs (now performed after complete sync)
+- fixed issue on trying to sync artwork with id null
+
 Version [0.1.18] - 2021-09-18
 - fixed pre loading of all nested menus (now only when opened)
 - improved sync speed long playlists

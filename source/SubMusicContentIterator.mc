@@ -10,8 +10,9 @@ class SubMusicContentIterator extends Media.ContentIterator {
     function initialize() {
         ContentIterator.initialize();
 
-		// retrieve now playing start object
+		// retrieve now playing
 		d_playable = new SubMusic.IPlayable();
+		
 		d_songcount = d_playable.size();
     }
 

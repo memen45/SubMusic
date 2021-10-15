@@ -3,6 +3,7 @@ using Toybox.Communications;
 using Toybox.Media;
 using Toybox.Time;
 using Toybox.WatchUi;
+using SubMusic;
 
 module SubMusic {
 	
@@ -84,6 +85,10 @@ module SubMusic {
 				return new AudioSync(progress, done, fail);
 			} else if (idx == ARTWORK) {
 				return new ArtworkSync(progress, done, fail);
+			} else if (idx == END) {
+				var playable = new SubMusic.IPlayable();
+				playable.removeRemoved();
+				return null;
 			}
 			return null;
 		}

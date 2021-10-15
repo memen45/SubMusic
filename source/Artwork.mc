@@ -109,8 +109,8 @@ class IArtwork extends Artwork {
 	// removes the metadata from the ArtworkStore
 	function remove() {
 		ArtworkStore.remove(self);		// remove self from storage
-        Application.Storage.deleteValue(id()); // remove the downloaded image
 		d_stored = false;
+        Application.Storage.deleteValue(id()); // remove the downloaded image
 		return;
 	}
 }

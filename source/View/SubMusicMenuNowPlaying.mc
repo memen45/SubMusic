@@ -10,7 +10,8 @@ module SubMusic {
 				var iplayable = new SubMusic.IPlayable();
 				AudiosLocal.initialize(
 					WatchUi.loadResource(Rez.Strings.confPlayback_NowPlaying_title), 
-					iplayable.audios(),
+					iplayable.ids(),
+					iplayable.types(),
 					method(:onAudioSelect)
 				);
 			}
