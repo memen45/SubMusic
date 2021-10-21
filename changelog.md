@@ -1,5 +1,8 @@
 Version [] - 
 
+Version [0.1.20] - 2021-10-21
+- fix crash on AmpacheError
+
 Version [0.1.19] - 2021-10-15
 - updated Ampache5 Error codes (backwards compatible)
 - improved speed in Song access during play
