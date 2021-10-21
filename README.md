@@ -1,6 +1,17 @@
 # SubMusic
 Synchronize playlists from your own music server: Nextcloud - Subsonic - Ampache - Airsonic.
 
+[<img src="https://developer.garmin.com/static/available-badge-9e49ebfb7336ce47f8df66dfe45d28ae.svg" width="200">](https://apps.garmin.com/en-US/apps/600bd75f-6ccf-4ca5-bc7a-0a4fcfdcf794)
+
+## Features:
+- Browse your online playlists and podcasts
+- Make playlists available offline
+- Make latest podcast episode available offline
+- Browse and play your songs offline by playlist, shuffle, play all at once
+- Enable podcast mode if you have podcast episodes in a playlist
+- Listening count is uploaded to your server next time you sync
+- Enjoy Album art (if available on server, not supported on all devices)
+
 ## How to use
 
 Set up Synced Playlists    |  Choose from synced playlists | Enjoy your music 
