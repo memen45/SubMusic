@@ -7,8 +7,9 @@ using Toybox.Media;
  
 class AmpacheAPI extends Api {
  
-	private var d_session;	// handshake response
-	private var d_expire;	// Moment of session expire
+	private var d_session;				// handshake response
+	private var d_expire;				// Moment of session expire
+	private var d_version = "440000";	// Ampache4 API version
 	
 	function initialize(settings, progress, fallback) {
 		Api.initialize("/server/json.server.php");
@@ -23,8 +24,7 @@ class AmpacheAPI extends Api {
 		// check if auth is expired, it may be usable!
 		d_expire = new Time.Moment(0);
 		d_session = Application.Storage.getValue("AMPACHE_API_SESSION");
-		if ((d_session == null)
-			|| (d_session["session_expire"] == null)) {
+		if (d_session == null) {
 			return;
 		}
 		var expire = parseISODate(d_session["session_expire"]);
@@ -56,6 +56,7 @@ class AmpacheAPI extends Api {
 			"user" => usr(),
 			"timestamp" => timestamp,
 			"auth" => auth,
+			"version" => d_version,
 		};
 		
 		System.println("AmpacheAPI::handshake with timestamp " + timestamp + " and auth " + auth);

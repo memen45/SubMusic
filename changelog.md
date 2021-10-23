@@ -1,7 +1,8 @@
 Version [] - 
 
-Version [0.1.20] - 2021-10-21
+Version [0.1.20] - 2021-10-23
 - fix crash on AmpacheError
+- fix crash on choose song in Now Playing menu
 
 Version [0.1.19] - 2021-10-15
 - updated Ampache5 Error codes (backwards compatible)
@@ -22,7 +23,7 @@ Version [0.1.16] - 2021-09-15
 - fixed several minor bugs
 
 Version [0.1.15] - 2021-09-10
-- fixed episode loading on subsonic (still fails when too many episodes)
+- fixed episode loading on Subsonic (still fails when too many episodes)
 - fixed progress bar during audio sync (32-bit overflow on large files)
 
 Version [0.1.14] - 2021-09-09

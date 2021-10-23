@@ -52,7 +52,7 @@ module SubMusic {
 				return MenuBase.load(items);
             }
 
-            function onAudioSelect(item) {
+            function onSelect(item) {
                 var id = item.getId();
                 // action onSongSelect should be defined by implementer classes
                 if (d_handler) { d_handler.invoke(id); }
@@ -66,7 +66,7 @@ module SubMusic {
             }
 
             function delegate() {
-                return new MenuDelegate(method(:onAudioSelect), null);
+                return new MenuDelegate(method(:onSelect), null);
             }
         }
     }

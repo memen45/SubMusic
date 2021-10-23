@@ -67,7 +67,7 @@ class Api {
 	 *
 	 * returns http/sdk errors if found
 	 */
-	function checkResponse(responseCode, data) {
+	static function checkResponse(responseCode, data) {
 		var error = SubMusic.HttpError.is(responseCode);
 		if (error) { return error; }
 		error = SubMusic.GarminSdkError.is(responseCode);
@@ -75,30 +75,36 @@ class Api {
         return self.checkApiError(responseCode, data);
     }
 
-    function checkApiError(responseCode, data) {
+    static function checkApiError(responseCode, data) {
         System.println("WARNING: Api::checkApiError() was called, but should not be called");
         return null;
     }
 
-    function checkDictionaryResponse(responseCode, data) {
+    static function checkDictionaryResponse(responseCode, data) {
         var error = checkResponse(responseCode, data);
         if (error) { return error; }
+        return isDictionary(data);      // check type of received object
+    }
 
+    static function checkArrayResponse(responseCode, data) {
+        var error = checkResponse(responseCode, data);
+        if (error) { return error; }
+        return isArray(data);           // check type of received object
+    }
+
+    static function isDictionary(data) {
         // check type of received object
         if (data instanceof Lang.Dictionary) { return null; }
         return new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE);
     }
 
-    function checkArrayResponse(responseCode, data) {
-        var error = checkResponse(responseCode, data);
-        if (error) { return error; }
-
+    static function isArray(data) {
         // check type of received object
         if (data instanceof Lang.Array) { return null; }
         return new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE);
     }
 
-    function checkContentResponse(responseCode, data) {
+    static function checkContentResponse(responseCode, data) {
         var error = checkResponse(responseCode, data);
         if (error) { return error; }
 
@@ -107,7 +113,7 @@ class Api {
         return new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE);
     }
 
-    function checkImageResponse(responseCode, data) {
+    static function checkImageResponse(responseCode, data) {
         var error = checkResponse(responseCode, data);
         if (error) { return error; }
 
