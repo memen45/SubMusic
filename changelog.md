@@ -1,5 +1,8 @@
 Version [] - 
 
+Version [0.1.21] - 2021-10-26
+- fix crash on open due to reloading playlist from storage
+
 Version [0.1.20] - 2021-10-23
 - fix crash on AmpacheError
 - fix crash on choose song in Now Playing menu
