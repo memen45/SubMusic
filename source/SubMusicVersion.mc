@@ -2,8 +2,8 @@ class SubMusicVersion {
 
 	private var d_major = 0;
 	private var d_minor = 1;
-	private var d_patch = 20;
-	private var d_name = "uniform";
+	private var d_patch = 21;
+	private var d_name = "victor";
 
 	function initialize(storage) {
 		if (storage == null) {
