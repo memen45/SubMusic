@@ -48,6 +48,7 @@ module SubMusic {
                         LABEL => meta.title,
                         SUBLABEL => meta.artist,
                         METHOD => id,
+//                        OPTION => isong.artwork(),
                     });
                 }
                 return MenuBase.load(items);

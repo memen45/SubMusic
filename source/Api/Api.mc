@@ -67,7 +67,7 @@ class Api {
 	 *
 	 * returns http/sdk errors if found
 	 */
-	static function checkResponse(responseCode, data) {
+	function checkResponse(responseCode, data) {
 		var error = SubMusic.HttpError.is(responseCode);
 		if (error) { return error; }
 		error = SubMusic.GarminSdkError.is(responseCode);
@@ -75,18 +75,19 @@ class Api {
         return self.checkApiError(responseCode, data);
     }
 
-    static function checkApiError(responseCode, data) {
+    function checkApiError(responseCode, data) {
         System.println("WARNING: Api::checkApiError() was called, but should not be called");
+        System.println("responseCode: " + responseCode + " data: " + data);
         return null;
     }
 
-    static function checkDictionaryResponse(responseCode, data) {
+    function checkDictionaryResponse(responseCode, data) {
         var error = checkResponse(responseCode, data);
         if (error) { return error; }
         return isDictionary(data);      // check type of received object
     }
 
-    static function checkArrayResponse(responseCode, data) {
+    function checkArrayResponse(responseCode, data) {
         var error = checkResponse(responseCode, data);
         if (error) { return error; }
         return isArray(data);           // check type of received object
@@ -104,7 +105,7 @@ class Api {
         return new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE);
     }
 
-    static function checkContentResponse(responseCode, data) {
+    function checkContentResponse(responseCode, data) {
         var error = checkResponse(responseCode, data);
         if (error) { return error; }
 
@@ -113,7 +114,7 @@ class Api {
         return new SubMusic.ApiError(SubMusic.ApiError.BADRESPONSE);
     }
 
-    static function checkImageResponse(responseCode, data) {
+    function checkImageResponse(responseCode, data) {
         var error = checkResponse(responseCode, data);
         if (error) { return error; }
 

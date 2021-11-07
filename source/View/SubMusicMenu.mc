@@ -317,7 +317,7 @@ module SubMusic {
 				// 	} else {
 				// 		bufferedBitmap = new Graphics.BufferedBitmap(params);
 				// 	}
-				// 	return new WatchUi.IconMenuItem(labl, sublabl, method, option, {});
+				// 	return new WatchUi.IconMenuItem(labl, sublabl, method, bufferedBitmap, {});
 				// }
 
 				// create normal MenuItem
@@ -394,6 +394,7 @@ module SubMusic {
 
 			private var d_menu = null;
 			private var d_delegate = null;
+			private var d_created = false;
 
 			function initialize(menu, delegate) {
 				System.println("MenuLoader::initialize(" + menu.title() + ")");
@@ -413,34 +414,43 @@ module SubMusic {
 				// for loaded menus: check error
 				var error = menu.error();
 				if ((error != null) && (loaded == true)) {
-					WatchUi.pushView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
+					loadView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
 					return;
 				}
 
 				// for empty menus, use placeholder
-				if (menu.getItem(0) == null) {	
-					WatchUi.pushView(new TextView(menu.placeholder()), null, WatchUi.SLIDE_IMMEDIATE);
+				if (menu.getItem(0) == null) {
+					loadView(new TextView(menu.placeholder()), null, WatchUi.SLIDE_IMMEDIATE);
 					return;
 				}
 
 				// load the menu
-				WatchUi.pushView(new MenuView(menu), delegate, WatchUi.SLIDE_IMMEDIATE);
+				loadView(new MenuView(menu), delegate, WatchUi.SLIDE_IMMEDIATE);
 				return;
+			}
+			
+			function loadView(view, delegate, transition) {
+				if (d_created) {
+					WatchUi.switchToView(view, delegate, transition);
+					return;
+				}
+				d_created = true;
+				WatchUi.pushView(view, delegate, transition);
 			}
 
 			function onLoaded(error) {
 				System.println("MenuLoader::onLoaded( SubMusic.Error: " + (error instanceof SubMusic.Error) + ")");
 				// switch to error view on error
 				if (error instanceof SubMusic.Error) {
-					WatchUi.switchToView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
+					loadView(new ErrorView(error), null, WatchUi.SLIDE_IMMEDIATE);
 					return;
 				}
 
 				// only show menu if there are items to show
 				if (d_menu.getItem(0) == null) {
-					WatchUi.switchToView(new TextView(d_menu.placeholder()), null, WatchUi.SLIDE_IMMEDIATE);
+					loadView(new TextView(d_menu.placeholder()), null, WatchUi.SLIDE_IMMEDIATE);
 				} else {
-					WatchUi.switchToView(new MenuView(d_menu), d_delegate, WatchUi.SLIDE_IMMEDIATE);
+					loadView(new MenuView(d_menu), d_delegate, WatchUi.SLIDE_IMMEDIATE);
 				}
 
 				// allow garbage collection / reference count to zero

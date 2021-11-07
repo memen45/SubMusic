@@ -29,15 +29,16 @@ class Storable {
 
 	// decision for storage 
 	function el_to_storage(el) {
-		if (el instanceof Storable) {
-			return el.toStorage();
-		}
-		if (el instanceof Lang.Array) {
-			return array_to_storage(el);
-		}
-		if (el instanceof Lang.Dictionary) {
-			return dict_to_storage(el);
-		}
+	// skipping the check to save time recursively
+//		if (el instanceof Storable) {
+//			return el.toStorage();
+//		}
+//		if (el instanceof Lang.Array) {
+//			return array_to_storage(el);
+//		}
+//		if (el instanceof Lang.Dictionary) {
+//			return dict_to_storage(el);
+//		}
 		return el;
 	}
 

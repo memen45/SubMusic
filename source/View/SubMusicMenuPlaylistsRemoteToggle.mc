@@ -16,38 +16,44 @@ module SubMusic {
                 // items are lazy loaded by a menu loader
             }
 
-            function getItem(idx) {
-
-                if (items() == null) {
-                    return null;
+//            function getItem(idx) {
+//
+//                if (items() == null) {
+//                    return null;
+//                }
+//                
+//                // check if out of bounds
+//                if (idx >= items().size()) {
+//                    return null;
+//                }
+//
+//                // load playlist from array
+//                var playlist = items()[idx];
+//
+//                // create checkbox menuitem
+//                var label = playlist.name();
+//                var sublabel = playlist.count().toString() + " songs";
+//                if (!playlist.remote()) {
+//                    sublabel += " - local only";
+//                }
+//                var enabled = playlist.local();
+//                return new WatchUi.ToggleMenuItem(label, sublabel, playlist, enabled, {});
+//            }
+            
+            function playlist_to_item(playlist) { 
+            	var label = playlist.name();
+                var sublabel = playlist.count().toString() + " songs";
+                if (!playlist.remote()) {
+                    sublabel += " - local only";
                 }
+                var enabled = playlist.local();
                 
-                // check if out of bounds
-                if (idx >= items().size()) {
-                    return null;
-                }
-
-                // load playlist from array
-                var playlist = items()[idx];
-
-                // create checkbox menuitem
-                var label = playlist.name();
-                var sublabel = playlist.count().toString() + " songs";
-                if (!playlist.remote()) {
-                    sublabel += " - local only";
-                }
-                var enabled = playlist.local();
-                return new WatchUi.ToggleMenuItem(label, sublabel, playlist, enabled, {});
-            }
-
-            function playlist_to_item(playlist) {
-                var label = playlist.name();
-                var sublabel = playlist.count().toString() + " songs";
-                if (!playlist.remote()) {
-                    sublabel += " - local only";
-                }
-                var enabled = playlist.local();
-                return new WatchUi.ToggleMenuItem(label, sublabel, playlist, enabled, {});
+            	return {
+            		LABEL => label,
+            		SUBLABEL => sublabel,
+            		METHOD => playlist,		// identify by playlist
+            		OPTION => enabled,		// is Boolean to make it Toggle item
+            	};
             }
 
             function load() {
@@ -57,10 +63,11 @@ module SubMusic {
                     return false;
                 }
 
-                // load locals 
+                // load locals (skip for now, as loading menu can only be done once
+                // (if old menuview is hidden, it will remove the items)
                 var ids = PlaylistStore.getIds();
                 for (var idx = 0; idx != ids.size(); ++idx) {
-                    items().add(new IPlaylist(ids[idx]));
+                   //items().add(playlist_to_item(new IPlaylist(ids[idx])));
                 }
 
                 // start loading
@@ -83,14 +90,14 @@ module SubMusic {
 
                     // nothing to update if not stored locally
                     if (ids.indexOf(id) < 0) {
-                        items_remote.add(playlist);		// add to the remote items list
+                        items_remote.add(playlist_to_item(playlist));		// add to the remote items list
                         continue;
                     }
 
                     // if stored, update
                     var iplaylist = new IPlaylist(id);
                     iplaylist.setRemote(playlist.remote());
-                    items.add(iplaylist);					// add to the items list
+                    items.add(playlist_to_item(iplaylist));		// add to the items list
                     ids.remove(id);							// this id is updated already, so remove from the list
                 }
 
@@ -98,7 +105,7 @@ module SubMusic {
                 for (var idx = 0; idx < ids.size(); ++idx) {
                     var iplaylist = new IPlaylist(ids[idx]);
                     iplaylist.setRemote(false);
-                    items.add(iplaylist);				// add to the items list
+                    items.add(playlist_to_item(iplaylist));				// add to the items list
                 }
 
                 // append remotes to the stored ones
@@ -108,16 +115,17 @@ module SubMusic {
                 MenuBase.load(items);
 
                 // update the view accordingly
+                d_loading = false;
                 MenuBase.onLoaded(null);
             }
 
             function placeholder() {
                 if (d_loading) {
-                    return WatchUi.loadResource(Rez.Strings.placeholder_noRemotePlaylists);
+                    return WatchUi.loadResource(Rez.Strings.fetchingPlaylists);
                 }
-                return WatchUi.loadResource(Rez.Strings.fetchingPlaylists);
+                return WatchUi.loadResource(Rez.Strings.placeholder_noRemotePlaylists);
             }
-
+            
             function onError(error) {
                 // loading finished
                 d_loading = false;

@@ -1,5 +1,12 @@
 Version [] - 
 
+Version [0.1.22] - 2021-11-07
+- fix race condition (error now shows immediately instead of after Back)
+- fix Subsonic Unknown Api error: now reports BADRESPONSE
+- fixed interrupted sync due to max time (serialisation speed improved)
+- fixed issue with error handling
+- fixed "No remote playlists", when actually still loading
+
 Version [0.1.21] - 2021-10-26
 - fix crash on open due to reloading playlist from storage
 
