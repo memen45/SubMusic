@@ -86,13 +86,6 @@ class SubsonicAPI extends Api {
     	}
     	
     	var response = data["subsonic-response"]["playlists"]["playlist"];
-    	
-    	// finally, expecting array as response
-    	error = Api.isArray(response);
-		if (error) { 
-			d_fallback.invoke(error);
-			return;				// show error, but also load empty array
-		 }
 		
 		d_callback.invoke(response);
 	}
@@ -126,14 +119,7 @@ class SubsonicAPI extends Api {
     	}
     	
     	var response = data["subsonic-response"]["podcasts"]["channel"];
-    	
-    	// finally, expecting array as response
-    	error = Api.isArray(response);
-		if (error) { 
-			d_fallback.invoke(error);
-			return;				// show error, but also load empty array
-		 }
-		
+
 		d_callback.invoke(response);
 	}
 		

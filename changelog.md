@@ -1,5 +1,8 @@
 Version [] - 
 
+Version [0.1.23] - 2021-11-11
+- workaround for BAD RESPONSE when no playlists/podcasts/songs (airsonic, airsonic-advanced)
+
 Version [0.1.22] - 2021-11-07
 - fix race condition (error now shows immediately instead of after Back)
 - fix Subsonic Unknown Api error: now reports BADRESPONSE

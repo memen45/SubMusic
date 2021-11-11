@@ -197,6 +197,13 @@ class SubsonicProvider {
 	function onGetAllPlaylists(response) {
 		System.println("SubsonicProvider::onGetAllPlaylists( response = " + response + ")");
 		
+		// response should be array, and have length
+		if (!(response instanceof Lang.Array)
+			|| (response.size() == 0)) {
+			d_callback.invoke([]);
+			return;
+		}
+		
 		// construct the standard array of playlist objects
 		var playlists = [];
 		
@@ -221,6 +228,13 @@ class SubsonicProvider {
 
 	function onGetPodcasts(response) {
 		System.println("SubsonicProvider::onGetPodcasts( response = " + response + ")");
+		
+		// response should be array, and have length
+		if (!(response instanceof Lang.Array)
+			|| (response.size() == 0)) {
+			d_callback.invoke([]);
+			return;
+		}
 		
 		// construct the standard array of podcast objects
 		var podcasts = [];
@@ -310,8 +324,9 @@ class SubsonicProvider {
 		
 		response = response["entry"];
 
-		// return empty on null response
-		if (response == null) {
+		// response should be array, and have length
+		if (!(response instanceof Lang.Array)
+			|| (response.size() == 0)) {
 			d_callback.invoke([]);
 			return;
 		}
