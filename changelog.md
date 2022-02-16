@@ -1,5 +1,9 @@
 Version [] - 
 
+Version [0.1.24] - 2022-02-16
+- added support for d2airx10, epix2, fenix7, fenix7s , fenix7x, venu2plus
+- fixed null response handling in server info
+
 Version [0.1.23] - 2021-11-11
 - workaround for BAD RESPONSE when no playlists/podcasts/songs (airsonic, airsonic-advanced)
 
