@@ -29,7 +29,11 @@ class SubMusicServerView extends TextView {
 	function onPing(response) {
 		System.println("onPing(" + response + ")");
     	
-    	TextView.appendText("\nVersion: " + response["version"]);
+    	if (response != null) {
+    		TextView.appendText("\nVersion: " + response["version"]);
+    	} else {
+    		TextView.appendText("Null response from server");
+    	}
 	}
 	
 	function onError(error) {
