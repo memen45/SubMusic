@@ -34,6 +34,11 @@ Library
           - Episodes
             - <episode1>
         - ...
+      - Albums
+        - <artist1>
+            - <album1>
+              - [] Offline available
+              - Songs
       - Radiostations
         - <radiostation1>
           - Play now ?
@@ -51,8 +56,7 @@ Library
     - Remove cached metadata
     - Remove all data
 
-Pretty: https://tree.nathanfriend.io/?s=(%27optiKs!(%27fancy!true~fullPath!false~trailingSlash!true)~source!(%27source!%27Library24Now%209ing27SKg%201249%20All%20SKgs24js27jHShuffleqF%20ModC%7Btoggle%7DqSKgs5Fs27FHEQes84EQC1879U5Sync%20_Browse84jXplayli68*GSKgs84FXpodca6%20%7Blatest%20Kly%7D8*GEQes8**G%3CeQezG...84RZXrZz*G9%20now%20%3F2GSyncU2GJ84J%20Info84Test%20J2GAbout%2F%5Cn7About24SubMusicYJYDKate24_DisablC30s%20skip2GWcached%20metadata2GWall%20data%27)~versiK!%271%27)*%20%202%5CnG-%205qWK%20next%20sync%20%7BcKfirm%7D246stz*G%5B%5D%20OfflinCavailable7%20482**9PlayCe%20FPodcastG*4H%201q9UqJServerKonQpisodU%20NowWRemovCXs8G%3CY%20VersiK24ZadiostatiK_Settings2Gj9listq2*7z1%3E8%01zqj_ZYXWUQKJHGFC9876542*
-.
+Pretty: https://tree.nathanfriend.io/?s=(%27optiQs!(%27fancy!true~fullPath!false~trailingSlash!true~rootDot!false)~source!(%27source!%27Library24Now%209ing28SQg%201249%20All%20j249li_s289li_HShufflezPF%20ModG%7Btoggle%7Dzj6PFs28PFHEWes74EWG1789X6Sync%20qBrowse749li_s7Cplayli_J257*Uj74PFs7CpFJ25%20%7Blate_%20Qly%7D7*UEWes7**CeWeJ7U...74Albums7Carti_J7**CalbumJ757***Uj74Radio_atiQs7Cradio_atiQJ7*U9%20now%20%3F2USyncX2UK74K%20Info74Te_%20K2UAbout%2F%5Cn8About24SubMusicZKZDQate24qDisablG30s%20skip2UYcached%20metadata2UYall%20data%27)~versiQ!%271%27)*%20%202%5CnU-%205***U%5B%5D%20OfflinGavailable6zYQ%20next%20sync%20%7BcQfirm%7D2472**8%2049PlayCU%3CFodca_Ge%20H%201z9XzJ1%3EKServerQonU*4WpisodX%20NowYRemovGZ%20VersiQ24_stjSQgsqSettings2Uz2*8%01zqj_ZYXWUQKJHGFC9876542*
 .
 └── Library/
     ├── Now Playing/
@@ -84,6 +88,11 @@ Pretty: https://tree.nathanfriend.io/?s=(%27optiKs!(%27fancy!true~fullPath!false
     │   │   │   │   └── Episodes/
     │   │   │   │       └── <episode1>
     │   │   │   └── ...
+    │   │   ├── Albums/
+    │   │   │   └── <artist1>/
+    │   │   │       └── <album1>/
+    │   │   │           ├── [] Offline available
+    │   │   │           └── Songs
     │   │   └── Radiostations/
     │   │       └── <radiostation1>/
     │   │           └── Play now ?

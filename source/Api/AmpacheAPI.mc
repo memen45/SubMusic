@@ -230,6 +230,42 @@ class AmpacheAPI extends Api {
 		Communications.makeImageRequest(url(), params, options, self.method(:onGet_art));
 	}
 
+	// returns array of artist objects
+	function artists(callback, params) {
+		System.println("AmpacheAPI::artists( params: " + params + ")");
+		
+		Api.setCallback(callback);
+
+		params.put("action", "artists");
+		params.put("auth", d_session.get("auth"));
+		
+		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
+	}
+
+	// returns array of album objects
+	function artist_albums(callback, params) {
+		System.println("AmpacheAPI::artist_albums( params: " + params + ")");
+		
+		Api.setCallback(callback);
+
+		params.put("action", "artist_albums");
+		params.put("auth", d_session.get("auth"));
+		
+		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
+	}
+
+	// returns array of artist objects
+	function album_songs(callback, params) {
+		System.println("AmpacheAPI::album_songs( params: " + params + ")");
+		
+		Api.setCallback(callback);
+
+		params.put("action", "album_songs");
+		params.put("auth", d_session.get("auth"));
+		
+		Communications.makeWebRequest(url(), params, {}, self.method(:onArrayResponse));
+	}
+
 	function onGet_art(responseCode, data) {
 		System.println("AmpacheAPI::onGet_art with responseCode: " + responseCode + " and " + data);
 		

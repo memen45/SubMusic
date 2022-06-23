@@ -239,6 +239,105 @@ class SubsonicAPI extends Api {
 		}
     	d_callback.invoke(data);
     }
+		
+	
+	/**
+	 * getArtists
+	 *
+	 * returns an array of artist objects
+	 */
+	function getArtists(callback) {
+		System.println("SubsonicAPI::getArtists()");
+	
+		Api.setCallback(callback);
+		
+		var url = url() + "getArtists";
+		
+    	var options = {
+    		:method => Communications.HTTP_REQUEST_METHOD_GET,
+    	};
+    	Communications.makeWebRequest(url, d_params, options, self.method(:onGetArtists));
+    }
+    
+    function onGetArtists(responseCode, data) {
+    	System.println("Subsonic::onGetArtists(responseCode: " + responseCode + ", data: " + data);
+    	
+		// check if request was successful and response is ok
+	   	var error = Api.checkDictionaryResponse(responseCode, data);
+    	if (error) {
+    		d_fallback.invoke(error);	// add function name and variables available ?
+    		return;
+    	}
+    	d_callback.invoke(data["subsonic-response"]["artists"]["index"]);
+    }
+		
+	
+	/**
+	 * getArtist
+	 *
+	 * returns an artist object
+	 */
+	function getArtist(callback, params) {
+		System.println("SubsonicAPI::getArtist(params: " + params + ")");
+	
+		Api.setCallback(callback);
+		
+		var url = url() + "getArtist";
+		
+		// construct parameters
+		params = Utils.copy(d_params);
+		
+    	var options = {
+    		:method => Communications.HTTP_REQUEST_METHOD_GET,
+    	};
+    	Communications.makeWebRequest(url, params, options, self.method(:onGetArtist));
+    }
+    
+    function onGetArtist(responseCode, data) {
+    	System.println("Subsonic::onGetArtist(responseCode: " + responseCode + ", data: " + data);
+    	
+		// check if request was successful and response is ok
+	   	var error = Api.checkDictionaryResponse(responseCode, data);
+    	if (error) {
+    		d_fallback.invoke(error);	// add function name and variables available ?
+    		return;
+    	}
+    	d_callback.invoke(data["subsonic-response"]["artist"]);
+    }
+		
+	
+	/**
+	 * getAlbum
+	 *
+	 * returns an album object
+	 */
+	function getAlbum(callback, params) {
+		System.println("SubsonicAPI::getAlbum( params: " + params + ")");
+	
+		Api.setCallback(callback);
+		
+		var url = url() + "getAlbum";
+		
+		// construct parameters
+		params = Utils.copy(d_params);
+		
+    	var options = {
+    		:method => Communications.HTTP_REQUEST_METHOD_GET,
+    	};
+    	Communications.makeWebRequest(url, params, options, self.method(:onGetAlbum));
+    }
+    
+    function onGetAlbum(responseCode, data) {
+    	System.println("Subsonic::onGetAlbum(responseCode: " + responseCode + ", data: " + data);
+    	
+		// check if request was successful and response is ok
+	   	var error = Api.checkDictionaryResponse(responseCode, data);
+    	if (error) {
+    		d_fallback.invoke(error);	// add function name and variables available ?
+    		return;
+    	}
+    	d_callback.invoke(data["subsonic-response"]["album"]);
+    }
 
 	// @override
 	function checkApiError(responseCode, data) {

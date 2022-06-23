@@ -34,6 +34,8 @@
     <string id="Podcasts_label">Podcasts</string>
     <string id="Songs_label">Songs</string>
     <string id="Episodes_label">Episodes</string>
+    <string id="Albums_label">Albums</string>
+    <string id="Artists_label">Artists</string>
     
     <string id="confSync_PlaylistDetail_label">Playlist Detail</string>
     <string id="confSync_Test_start">Starting test...</string>
@@ -55,11 +57,13 @@
     <string id="placeholder_noRemotePlaylists">No Remote Playlists</string>
     <string id="placeholder_noRemotePodcasts">No Remote Podcasts</string>
     <string id="placeholder_noRemoteEpisodes">No Remote Episodes</string>
+    <string id="placeholder_noRemoteAlbums">No Remote Albums</string>
     <string id="placeholder_noRemoteSongs">No Remote Songs</string>
     <string id="fetchingSongs">Fetching Songs...</string>
     <string id="fetchingPlaylists">Fetching Playlists...</string>
     <string id="fetchingPodcasts">Fetching Podcasts...</string>
     <string id="fetchingEpisodes">Fetching Episodes...</string>
+    <string id="fetchingAlbums">Fetching Albums...</string>
     <string id="playbackMenuTitle">Playlists</string>
 
     <string id="Menu_PlaylistSongs_title">Songs</string>

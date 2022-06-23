@@ -37,6 +37,8 @@ module Storage {
 		EPISODES,		// dictionary where episodes id is key
 		SONGS_TODO,		// array of song ids of todo songs (refId == null)
 
+		ALBUMS,			// dictionary where album id is key
+
 		VERSION = 200,	// version string of store
 	}
 

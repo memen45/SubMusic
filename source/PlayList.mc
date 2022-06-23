@@ -1,125 +1,89 @@
 using Toybox.System;
 using Toybox.Application;
 
-class Playlist {
-	
-	// required external playlist properties
-	hidden var d_id;
-	hidden var d_name = "default";
-	hidden var d_songCount = 0;
-	
-	// optional external playlist properties
-	hidden var d_songs = [];		// array of song ids
-		
-	// required internal playlist properties
-	hidden var d_time = 0;			// total playing time of the playlist in seconds
-	
-	hidden var d_remote = false; 	// true if metadata remotely available (according to last check)
-	hidden var d_synced = false;	// true if no songs failed during sync -> or track by date last synced?
-	
-	hidden var d_linked = false;	// true if all songs are referenced in their refCount
-	hidden var d_local = false;		// true if should be locally available, false if should not
+class Playlist extends Storable {
 
-	hidden var d_podcast = false;	// true if playback position is stored, 
+	hidden var d_storage = {
 
+		// required external playlist properties
+        "id" => null,       			// id of the album
+        "name" => "default",       		// name of the album
+		"songCount" => 0,				// number of songs on the album
+        "art_id" => null,   			// null if no art available
+
+		// optional external playlist properties
+		"songs" => [],					// array of album songs
+		"time" => 0,					// total playing time in seconds
+
+		// required internal playlist properties
+		"remote" => false,				// true if metadata remotely available (according to last check)
+		"synced" => false,				// true if no episodes failed during sync -> or track by date last synced?
+
+		"linked" => false,				// true if all episodes are referenced in their refCount
+		"local" => false,				// true if should be locally available, false if should not
+
+		"podcast" => true,				// true if playback position is stored, 
+    };
 	
 	function initialize(storage) {
-		// System.println("Playlist::initialize( storage = " + storage + " )");
 		System.println("Playlist::initialize( storage : " + storage + " )");
 
-		d_id = storage["id"];
 		fromStorage(storage);
-	}
-
-	function fromStorage(storage) {		
-		if (storage["name"] != null) {
-			d_name = storage["name"];
-		}
-		if (storage["songCount"] != null) {
-			d_songCount = storage["songCount"];
-		}
-		if (storage["songs"] != null) {
-			d_songs = storage["songs"];
-		}
-		if (storage["time"] != null) {
-			d_time = storage["time"];
-		}
-		if (storage["remote"] != null) {
-			d_remote = storage["remote"];
-		}
-		if (storage["synced"] != null) {
-			d_synced = storage["synced"];
-		}
-		if (storage["local"] != null) {
-			d_local = storage["local"];
-		}
-		if (storage["linked"] != null) {
-			d_linked = storage["linked"];
-		}
-		if (storage["podcast"] != null) {
-			d_podcast = storage["podcast"];
-		}
-	}
-	
-	function toStorage() {
-		return {
-			"id" => d_id,
-			"name" => d_name,
-			"songCount" => d_songCount,
-			
-			"songs" => d_songs,
-			"time" => d_time,
-			
-			"linked" => d_linked,
-			"remote" => d_remote,
-			"synced" => d_synced,
-			"local" => d_local,
-
-			"podcast" => d_podcast,
-		};
 	}
 	
 	// getters
 	function id() {
-		return d_id;
+		return d_storage["id"];
 	}
 	
 	function name() {
-		return d_name;
+		return d_storage["name"];
 	}
-	
+
 	function count() {
-		return d_songCount;
+		return d_storage["songCount"];
+	}
+
+	function art_id() {
+		return d_storage["art_id"];
 	}
 	
 	function songs() {
-		return d_songs;
+		return d_storage["songs"];
 	}
 	
 	function remote() {
-		return d_remote;
+		return d_storage["remote"];
 	}
 	
 	function local() {
-		return d_local;
+		return d_storage["local"];
 	}
 	
 	function synced() {
-		return d_synced;
+		return d_storage["synced"];
 	}
 	
 	function linked() {
-		return d_linked;
+		return d_storage["linked"];
 	}
 	
 	function time() {
-		return d_time;
+		return d_storage["time"];
 	}
 
 	function podcast() {
-		return d_podcast;
+		return d_storage["podcast"];
 	}
 	
+	function artwork() {
+		if (art_id() == null) {
+			return null;
+		}
+
+		var artwork = new IArtwork(art_id(), Artwork.SONG);
+		return artwork.image();
+	}
 }
 
 // playlist connection to store
@@ -130,7 +94,7 @@ class IPlaylist extends Playlist {
 
 	function initialize(id) {
 		System.println("IPlaylist::initialize( id : " + id + " )");
-		var storage = PlaylistStore.get(id);
+		var storage = store_get(id);
 		if (storage != null) {
 			d_stored = true;
 		} else {
@@ -143,25 +107,37 @@ class IPlaylist extends Playlist {
 	function stored() {
 		return d_stored;
 	}
+
+	function store_get(id) {
+		return PlaylistStore.get(id);
+	}
+
+	function store_save(obj) {
+		return PlaylistStore.save(obj);
+	}
+
+	function store_remove(obj) {
+		return PlaylistStore.remove(obj);
+	}
 	
 	// setters
 	function addSong(id) {
 		System.println("IPlaylist::addSong(id: " + id + " )");
 
 		// add it to the array
-		d_songs.add(id);
+		songs().add(id);
 	}
 	
 	function removeSong(id) {
-		return d_songs.remove(id);
+		return songs().remove(id);
 	}
 	
 	function setTime(time) {
 		// nothing to do if not changed
-		if (d_time == time) {
+		if (time() == time) {
 			return false;
 		}
-		d_time = time;
+		d_storage["time"] = time;
 		
 		// nothing to do if not stored
 		if (d_stored) {
@@ -172,10 +148,10 @@ class IPlaylist extends Playlist {
 	
 	function setLinked(linked) {
 		// nothing to do if not changed
-		if (d_linked == linked) {
+		if (linked() == linked) {
 			return false;
 		}
-		d_linked = linked;
+		d_storage["linked"] = linked;
 		
 		// nothing to do if not stored
 		if (d_stored) {
@@ -186,20 +162,20 @@ class IPlaylist extends Playlist {
 	
 	function setLocal(local) {
 		// nothing to do if not changed
-		if (d_local == local) {
+		if (local() == local) {
 			return false;
 		}
-		d_local = local;
+		d_storage["local"] = local;
 
 		return save();		// forced save, as local
 	}
 
 	function setRemote(remote) {
 		// nothing to do if not changed
-		if (d_remote == remote) {
+		if (remote() == remote) {
 			return false;
 		}
-		d_remote = remote;
+		d_storage["remote"] = remote;
 
 		// nothing to do if not stored
 		if (d_stored) {
@@ -210,10 +186,10 @@ class IPlaylist extends Playlist {
 
 	function setSynced(synced) {
 		// nothing to do if not changed
-		if (d_synced == synced) {
+		if (synced() == synced) {
 			return false;
 		}
-		d_synced = synced;
+		d_storage["synced"] = synced;
 
 		// nothing to do if not stored
 		if (d_stored) {
@@ -229,10 +205,10 @@ class IPlaylist extends Playlist {
 		}
 	
 		// nothing to do if not changed
-		if (d_name.equals(name)) {
+		if (name().equals(name)) {
 			return false;
 		}
-		d_name = name;
+		d_storage["name"] = name;
 		
 		// nothing to do if not stored
 		if (d_stored) {
@@ -243,10 +219,10 @@ class IPlaylist extends Playlist {
 
 	function setPodcast(podcast) {
 		// nothing to do if not changed
-		if (d_podcast == podcast) {
+		if (podcast() == podcast) {
 			return false;
 		}
-		d_podcast = podcast;
+		d_storage["podcast"] = podcast;
 
 		// nothing to do if not stored
 		if (d_stored) {
@@ -258,10 +234,10 @@ class IPlaylist extends Playlist {
 	function setCount(count) {
 		System.println("IPlaylist.setCount( count : " + count + " )");
 		// nothing to do if not changed
-		if (d_songCount == count) {
+		if (count() == count) {
 			return false;
 		}
-		d_songCount = count;
+		d_storage["songCount"] = count;
 		// nothing to do if not stored
 		if (d_stored) {
 			save();
@@ -278,8 +254,9 @@ class IPlaylist extends Playlist {
 		}
 		
 		// unlink each of the songs
-		for (var idx = 0; idx < d_songs.size(); ++idx) {
-			var song = new ISong(d_songs[idx]);
+		var sngs = songs();
+		for (var idx = 0; idx < sngs.size(); ++idx) {
+			var song = new ISong(sngs[idx]);
 			song.decRefCount();
 		}
 		setLinked(false);
@@ -296,8 +273,9 @@ class IPlaylist extends Playlist {
 		}
 	
 		// link each of the songs
-		for (var idx = 0; idx < d_songs.size(); ++idx) {
-			var isong = new ISong(d_songs[idx]);
+		var sngs = songs();
+		for (var idx = 0; idx < sngs.size(); ++idx) {
+			var isong = new ISong(sngs[idx]);
 			isong.incRefCount();
 		}
 		setLinked(true);
@@ -325,9 +303,9 @@ class IPlaylist extends Playlist {
 		System.println("IPlaylist::update() STARTING id:" + id() + " )");
 		
 		// keep track of current songs
-		var songs_now = new [d_songs.size()];
+		var songs_now = new [songs().size()];
 		for (var idx = 0; idx < songs_now.size(); ++idx) {
-			songs_now[idx] = d_songs[idx];
+			songs_now[idx] = songs()[idx];
 		}
 
 		// keep track of newly added songs
@@ -393,7 +371,7 @@ class IPlaylist extends Playlist {
 		}
 
 		// order of songs should be copied from server
-		d_songs = songs_ord;
+		d_storage["songs"] = songs_ord;
 
 		save();
 		return songs_new;
@@ -401,7 +379,7 @@ class IPlaylist extends Playlist {
 	
 	// saves the playlist
 	function save() {
-		d_stored = PlaylistStore.save(self);
+		d_stored = store_save(self);
 		return d_stored;
 	}
 	
@@ -418,7 +396,7 @@ class IPlaylist extends Playlist {
 		}
 
 		// remove 
-		d_stored = !PlaylistStore.remove(self);	
+		d_stored = !store_remove(self);	
 		return true;
 	}
 }

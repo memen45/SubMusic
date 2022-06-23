@@ -29,6 +29,9 @@ class AmpacheProvider {
 		AMPACHE_ACTION_PODCAST,
 		AMPACHE_ACTION_PODCASTS,
 		AMPACHE_ACTION_EPISODES,
+		AMPACHE_ACTION_ARTISTS,
+		AMPACHE_ACTION_ARTIST_ALBUMS,
+		AMPACHE_ACTION_ALBUM_SONGS,
 	}
 	
 	function initialize(settings) {
@@ -55,6 +58,9 @@ class AmpacheProvider {
 	// - getArtwork			returns a BitmapResource for a song id
 	// - getAllPodcasts		returns array of all podcasts available for Ampache user
 	// - getAllEpisodes		returns array of all episodes available for Ampache user
+	// - getArtists			returns array of all artists
+	// - getAlbums			returns array of albums for an artist id
+	// - getAlbumSongs		returns an array of songs on the album with id
 	//
 	// to be added in the future:
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
@@ -246,6 +252,60 @@ class AmpacheProvider {
 		d_action = AMPACHE_ACTION_EPISODES;
 		do_();
 	}
+	
+	/**
+	 * getArtists
+	 *
+	 * returns array of all artists available for Ampache user
+	 */
+	function getArtists(callback) {
+		d_callback = callback;
+
+		// create empty array as initial response
+		d_response = [];
+		d_params = {
+			"limit" => 20,
+			"offset" => 0,
+		};
+		d_action = AMPACHE_ACTION_ARTISTS;
+		do_();
+	}
+	
+	/**
+	 * getAlbums
+	 *
+	 * returns array of all albums of artist id available for Ampache user
+	 */
+	function getAlbums(id, callback) {
+		d_callback = callback;
+
+		// create empty array as initial response
+		d_response = [];
+
+		d_params = {
+			"filter" => id,
+		};
+		d_action = AMPACHE_ACTION_ARTIST_ALBUMS;
+		do_();
+	}
+	
+	/**
+	 * getAlbumSongs
+	 *
+	 * returns array of all songs on album id available for Ampache user
+	 */
+	function getAlbumSongs(id, callback) {
+		d_callback = callback;
+
+		// create empty array as initial response
+		d_response = [];
+
+		d_params = {
+			"filter" => id,
+		};
+		d_action = AMPACHE_ACTION_ARTIST_ALBUMS;
+		do_();
+	}
 
 	function on_do_ping(response) {
 		System.println("AmpacheProvider::on_do_ping( response = " + response + ")");
@@ -266,6 +326,42 @@ class AmpacheProvider {
 		for (var idx = 0; idx < response.size(); ++idx) {
 			var playlist = response[idx];
 			var items = playlist["items"];
+			if (items == null) {
+				items = 0;
+			}
+			d_response.add(new Playlist({
+				"id" => playlist["id"],
+				"name" => playlist["name"],
+				"songCount" => items.toNumber(),
+				"remote" => true,
+			}));
+		}
+		checkDone(response);
+	}
+
+	function on_do_artists(response) {
+		// append the standard artist objects to the array
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var artist = response[idx];
+			var items = artist["albums"];
+			if (items == null) {
+				items = 0;
+			}
+			d_response.add(new Artist({
+				"id" => artist["id"],
+				"name" => artist["name"],
+				"albumCount" => items.toNumber(),
+				"art_id" => artist["art"],
+			}));
+		}
+		checkDone(response);
+	}
+
+	function on_do_albums(response) {
+		// append the standard playlist objects to the array
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var playlist = response[idx];
+			var items = playlist["tracks"];
 			if (items == null) {
 				items = 0;
 			}
@@ -432,6 +528,18 @@ class AmpacheProvider {
 		}
 		if (d_action == AMPACHE_ACTION_EPISODES) {
 			d_api.podcast_episodes(self.method(:on_do_episodes), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_ARTISTS) {
+			d_api.artists(self.method(:on_do_artists), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_ARTIST_ALBUMS) {
+			d_api.artist_albums(self.method(:on_do_albums), d_params);
+			return;
+		}
+		if (d_action == AMPACHE_ACTION_ALBUM_SONGS) {
+			d_api.album_songs(self.method(:on_do_playlist_songs), d_params);
 			return;
 		}
 

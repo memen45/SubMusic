@@ -32,6 +32,9 @@ class SubsonicProvider {
 	// - getArtwork			returns a BitmapResource for a song id
 	// - getAllPodcasts		returns array of all podcasts available for Subsonic user
 	// - getEpisodes		returns array of all episodes available for Subsonic user
+	// - getArtists			returns array of all artists
+	// - getAlbums			returns array of albums for an artist id
+	// - getAlbumSongs		returns an array of songs on the album with id
 	//
 	// to be added in the future (not possible for SubsonicAPI, so return allplaylists):
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
@@ -179,6 +182,45 @@ class SubsonicProvider {
 			// includeEpisodes is true by default
 		};
 		d_api.getPodcasts(self.method(:onGetEpisodes), params);
+	}
+
+	/**
+	 * getArtists
+	 *
+	 * returns array of all artists available for Subsonic user
+	 */
+	function getArtists(callback) {
+		d_callback = callback;
+
+		d_api.getArtists(self.method(:onGetArtists));
+	}
+
+	/**
+	 * getAlbums
+	 *
+	 * returns array of all albums available for artist
+	 */
+	function getAlbums(id, callback) {
+		d_callback = callback;
+
+		var params = {
+			"id" => id,
+		};
+		d_api.getArtist(self.method(:onGetAlbums), params);
+	}
+
+	/**
+	 * getAlbumSongs
+	 *
+	 * returns array of all songs on album available for Subsonic user
+	 */
+	function getAlbumSongs(id, callback) {
+		d_callback = callback;
+
+		var params = {
+			"id" => id,
+		};
+		d_api.getAlbum(self.method(:onGetAlbumSongs), params);
 	}
 	
 	function onPing(response) {
@@ -361,6 +403,107 @@ class SubsonicProvider {
 
 	function onGetCoverArt(artwork) {
 		d_callback.invoke(artwork);
+	}
+
+	function onGetArtists(response) {
+		System.println("SubsonicProvider::onGetArtists( response = " + response + ")");
+		
+		// response should be array, and have length
+		if (!(response instanceof Lang.Array)
+			|| (response.size() == 0)) {
+			d_callback.invoke([]);
+			return;
+		}
+		
+		// construct the standard array of playlist objects
+		var artists = [];
+		
+		// construct the artist instance
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var artist = response[idx]["artist"][0];
+
+			var albumCount = artist["albumCount"];
+			if (albumCount == null) {
+				albumCount = 0;		// assume 0 if not defined
+			}
+			
+			artists.add(new Artist({
+				"id" => artist["id"],
+				"name" => artist["name"],
+				"albumCount" => albumCount.toNumber(),
+			}));
+		}
+		d_callback.invoke(artists);
+	}
+
+	function onGetAlbums(response) {
+		System.println("SubsonicProvider::onGetAlbums( response = " + response + ")");
+
+		response = response["album"];
+
+		// response should be array, and have length
+		if (!(response instanceof Lang.Array)
+			|| (response.size() == 0)) {
+			d_callback.invoke([]);
+			return;
+		}
+		
+		// construct the standard array of playlist objects
+		var playlists = [];
+		
+		// construct the playlist instance
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var playlist = response[idx];
+
+			var songCount = playlist["songCount"];
+			if (songCount == null) {
+				songCount = 0;		// assume 0 if not defined
+			}
+			
+			playlists.add(new Playlist({
+				"id" => playlist["id"],
+				"name" => playlist["name"],
+				"songCount" => songCount.toNumber(),
+				"remote" => true,
+			}));
+		}
+		d_callback.invoke(playlists);
+	}
+
+	function onGetAlbumSongs(response) {
+		System.println("SubsonicProvider::onGetAlbumSongs( response = " + response + ")");
+		
+		response = response["song"];
+
+		// response should be array, and have length
+		if (!(response instanceof Lang.Array)
+			|| (response.size() == 0)) {
+			d_callback.invoke([]);
+			return;
+		}
+
+		// construct the standard array of song objects
+		var songs = [];
+		
+		// construct the song instances array
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var song = response[idx];
+
+			var time = song["duration"];
+			if (time == null) {
+				time = 0;
+			}
+			songs.add(new Song({
+				"id" => song["id"],
+				"title" => song["title"],
+				"artist" => song["artist"],
+				"time" => time.toNumber(),
+				"mime" => song["contentType"],
+				"art_id" => song["coverArt"],
+			}));
+		}
+		
+		d_callback.invoke(songs);
 	}
 	
 	function onError(error) {

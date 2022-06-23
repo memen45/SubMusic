@@ -3,7 +3,7 @@ using SubMusic.Menu;
 
 module SubMusic {
     module Menu {
-        class PlaylistsRemote extends MenuBase {
+        class ArtistsRemote extends MenuBase {
 
 	        private var d_provider = SubMusic.Provider.get();
             private var d_loading = false;
@@ -17,7 +17,7 @@ module SubMusic {
             }
 
             function load() {
-                System.println("Menu.PlaylistsRemote::load()");
+                System.println("Menu.AlbumsRemote::load()");
 
                 // if already loading, do nothing, wait for response
                 if (d_loading) {
@@ -29,15 +29,15 @@ module SubMusic {
                 
                 // set fallback before request. future: fix with request object
                 d_provider.setFallback(method(:onError));
-                d_provider.getAllPlaylists(method(:onGetAllPlaylists));
+                d_provider.getArtists(method(:onGetArtists));
                 return false;
             }
 
-            function onGetAllPlaylists(playlists) {
+            function onGetArtists(artists) {
                 // store in class
                 var items = [];
-                for (var idx = 0; idx != playlists.size(); ++idx) {
-                    items.add(new Menu.PlaylistSettingsRemote(playlists[idx]));
+                for (var idx = 0; idx != artists.size(); ++idx) {
+                    items.add(new Menu.AlbumsRemote(artists[idx].name(), artists[idx].id()));
                 }
                 MenuBase.load(items);
 
@@ -47,9 +47,9 @@ module SubMusic {
 
             function placeholder() {
                 if (d_loading) {
-                    return WatchUi.loadResource(Rez.Strings.fetchingPlaylists);
+                    return WatchUi.loadResource(Rez.Strings.fetchingAlbums);
                 }
-                return WatchUi.loadResource(Rez.Strings.placeholder_noRemotePlaylists);
+                return WatchUi.loadResource(Rez.Strings.placeholder_noRemoteAlbums);
             }
 
             function onError(error) {
