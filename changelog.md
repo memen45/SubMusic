@@ -1,5 +1,8 @@
 Version [] - 
 
+Version [0.1.25] - 2022-06-24
+- added support for d2mach1, fenix6prosystem5preview, fr255m, fr255sm, fr955, venu2system5preview
+
 Version [0.1.24] - 2022-02-16
 - added support for d2airx10, epix2, fenix7, fenix7s , fenix7x, venu2plus
 - fixed null response handling in server info
