@@ -123,3 +123,10 @@ module ApiStandard {
 		AMPACHE = 1,
 	}
 }
+
+module ApiAuthMethod {
+	enum {
+		API_AUTH = 0,
+		HTTP_AUTH = 1,
+	}
+}

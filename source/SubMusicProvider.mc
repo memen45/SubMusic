@@ -22,6 +22,7 @@ module SubMusic {
 	        	"api_url" => Application.Properties.getValue("subsonic_API_URL"),
 				"api_usr" => Application.Properties.getValue("subsonic_API_usr"),
 				"api_key" => Application.Properties.getValue("subsonic_API_key"),
+				"api_aut" => Application.Properties.getValue("subsonic_AUTH_method"),
 			};
 	    }
 	    

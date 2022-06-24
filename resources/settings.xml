@@ -14,4 +14,10 @@
 	<setting propertyKey="@Properties.subsonic_API_key" title="@Strings.ServerKey">
 		<settingConfig type="alphaNumeric" required="true" />
 	</setting>
+	<setting propertyKey="@Properties.subsonic_AUTH_method" title="@Strings.ApiAuthMethod">
+		<settingConfig type="list">
+			<listEntry value="0">@Strings.ApiAuthAPI</listEntry>
+			<listEntry value="1">@Strings.ApiAuthHTTP</listEntry>
+		</settingConfig>
+	</setting>
 </settings>

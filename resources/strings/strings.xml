@@ -7,6 +7,9 @@
     <string id="ServerAddress">Server Address</string>
     <string id="ServerUser">Username</string>
     <string id="ServerKey">API key</string>
+    <string id="ApiAuthMethod">Authentication method (Subsonic only)</string>
+    <string id="ApiAuthAPI">API</string>
+    <string id="ApiAuthHTTP">HTTP Basic</string>
 
     <string id="confSync_Title">Sync settings</string>
     <string id="confSync_StartSync_label">Sync</string>

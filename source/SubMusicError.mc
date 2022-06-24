@@ -102,6 +102,8 @@ module SubMusic {
 		
 		static enum {
 			BAD_REQUEST = 400,
+			UNAUTHORIZED = 401,
+			FORBIDDEN = 403,
 			NOT_FOUND = 404,
 		}
 		private var d_type;
@@ -137,9 +139,13 @@ module SubMusic {
 		static function typeToString(type) {
 			
 			if (type == BAD_REQUEST) {
-				return "BAD_REQUEST";
+				return "Bad Request";
+			} else if (type == UNAUTHORIZED) {
+				return "Unauthorized";
+			} else if (type == FORBIDDEN) {
+				return "Forbidden";
 			} else if (type == NOT_FOUND) {
-				return "NOT_FOUND";
+				return "Not Found";
 			}
 			return "Unknown HttpError";
 		}

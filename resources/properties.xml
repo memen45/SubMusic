@@ -3,4 +3,5 @@
 	<property id="subsonic_API_URL" type="string">https://demo.nextcloud.com/apps/music/subsonic</property>
 	<property id="subsonic_API_usr" type="string">user</property>
 	<property id="subsonic_API_key" type="string">key</property>
+	<property id="subsonic_AUTH_method" type="number">0</property>
 </properties>

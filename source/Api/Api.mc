@@ -47,7 +47,6 @@ class Api {
         updateUrl(settings.get("api_url"));
         updateUsr(settings.get("api_usr"));
         updateKey(settings.get("api_key"));
-
     }
     
     function updateUrl(url) {

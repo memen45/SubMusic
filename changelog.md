@@ -1,6 +1,7 @@
 Version [] - 
 
 Version [0.1.25] - 2022-06-24
+- added HTTP Basic authentication (subsonic only)
 - added support for d2mach1, fenix6prosystem5preview, fr255m, fr255sm, fr955, venu2system5preview
 
 Version [0.1.24] - 2022-02-16

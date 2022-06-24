@@ -8,10 +8,11 @@ using SubMusic.Utils;
 class SubsonicAPI extends Api {
 
 	private var d_params = {};
+	private var d_options = {};
 	
 	function initialize(settings, progress, fallback) {
 		Api.initialize("/rest/");
-		Api.update(settings);
+		update(settings);
 
 		// set callbacks
 		Api.setProgressCallback(progress);
@@ -29,7 +30,7 @@ class SubsonicAPI extends Api {
 		Api.setCallback(callback);
 		
 		var url = url() + "ping";
-    	Communications.makeWebRequest(url, d_params, {}, self.method(:onResponse));
+    	Communications.makeWebRequest(url, d_params, d_options, self.method(:onResponse));
     }
 	
 	function scrobble(callback, params) {
@@ -46,7 +47,7 @@ class SubsonicAPI extends Api {
 		params["id"] = id;			// set id for scrobble
 		params["time"] = time;		// set time for scrobble
 		
-    	Communications.makeWebRequest(url, params, {}, self.method(:onResponse));
+    	Communications.makeWebRequest(url, params, d_options, self.method(:onResponse));
     }
 
 	function onResponse(responseCode, data) {
@@ -72,7 +73,7 @@ class SubsonicAPI extends Api {
 		Api.setCallback(callback);
 		
 		var url = url() + "getPlaylists";
-    	Communications.makeWebRequest(url, d_params, {}, self.method(:onGetPlaylists));
+    	Communications.makeWebRequest(url, d_params, d_options, self.method(:onGetPlaylists));
 	}
 	
 	function onGetPlaylists(responseCode, data) {
@@ -105,7 +106,7 @@ class SubsonicAPI extends Api {
 		// construct parameters 
 		params = Utils.merge(d_params, params);
 
-    	Communications.makeWebRequest(url, params, {}, self.method(:onGetPodcasts));
+    	Communications.makeWebRequest(url, params, d_options, self.method(:onGetPodcasts));
 	}
 	
 	function onGetPodcasts(responseCode, data) {
@@ -246,6 +247,12 @@ class SubsonicAPI extends Api {
 	}
 
 	// @override
+	function update(settings) {
+		Api.update(settings);					// normal update
+		updateAut(settings.get("api_aut"));		// add auth update
+	}
+
+	// @override
 	function updateUsr(usr) {
 		Api.updateUsr(usr);
 		d_params.put("u", usr);
@@ -255,5 +262,25 @@ class SubsonicAPI extends Api {
 	function updateKey(key) {
 		Api.updateKey(key);
 		d_params.put("p", key);
+	}
+
+	function updateAut(aut) {
+		// clear authentication headers 
+		if (aut == ApiAuthMethod.API_AUTH) {
+			d_options = {};
+			return;
+		}
+		
+		// set header if auth method is set to HTTP Basic
+		var options = {
+			:fromRepresentation => StringUtil.REPRESENTATION_STRING_PLAIN_TEXT,
+			:toRepresentation => StringUtil.REPRESENTATION_STRING_BASE64,
+		};
+		var creds = StringUtil.convertEncodedString(usr() + ":" + key(), options);
+		d_options = {
+			:headers => {
+				"Authorization" => "Basic " + creds,
+			}
+		};
 	}
 }
