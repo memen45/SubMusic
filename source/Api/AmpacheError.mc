@@ -25,6 +25,30 @@ class AmpacheError extends SubMusic.ApiError {
 		BAD_REQUEST		= 410,
 		FAILED_ACCESS	= 442,
 	}
+
+	// map ampache errors to string representation
+	static private var stringmap = {
+		ACCESS_CONTROL 	=> "ACCESS_CONTROL",
+		HANDSHAKE 		=> "HANDSHAKE",
+		FEATURE_MISSING => "FEATURE_MISSING",
+		NOT_FOUND 		=> "NOT_FOUND",
+		METHOD_MISSING 	=> "METHOD_MISSING",
+		METHOD_DPRCTD 	=> "METHOD_DPRCTD",
+		BAD_REQUEST 	=> "BAD_REQUEST",
+		FAILED_ACCESS 	=> "FAILED_ACCESS",
+	};
+
+	// map subsonic errors to API level errors
+	static private var apimap = {
+		ACCESS_CONTROL 	=> SubMusic.ApiError.SERVERCLIENT,
+		HANDSHAKE 		=> SubMusic.ApiError.LOGIN,
+		FEATURE_MISSING => SubMusic.ApiError.SERVERCLIENT,
+		NOT_FOUND 		=> SubMusic.ApiError.NOTFOUND,
+		METHOD_MISSING 	=> SubMusic.ApiError.SERVERCLIENT,
+		METHOD_DPRCTD 	=> SubMusic.ApiError.SERVERCLIENT,
+		BAD_REQUEST 	=> SubMusic.ApiError.BADREQUEST,
+		FAILED_ACCESS 	=> SubMusic.ApiError.ACCESS,
+	};
 	private var d_type = null;
 	private var d_msg = "";
 	
@@ -36,22 +60,12 @@ class AmpacheError extends SubMusic.ApiError {
 		if ((error_obj != null) && (error_obj["code"] != null)) {
 			d_type = error_obj["code"].toNumber();
 			d_msg = error_obj["message"];
+		}		
+
+		var apitype = apimap.get(d_type);
+		if (apitype == null) {
+			apitype = SubMusic.ApiError.UNKNOWN;
 		}
-		
-		// default is unknown
-		var apitype = SubMusic.ApiError.UNKNOWN;
-		if (d_type == HANDSHAKE) {
-			apitype= SubMusic.ApiError.LOGIN;
-		} else if (d_type == FAILED_ACCESS) {
-			apitype= SubMusic.ApiError.ACCESS;
-		} else if (d_type == NOT_FOUND) {
-			apitype = SubMusic.ApiError.NOTFOUND;
-		} else if ((d_type == ACCESS_CONTROL) || (d_type == FEATURE_MISSING) || (d_type == METHOD_MISSING) || (d_type == METHOD_DPRCTD)) {
-			apitype = SubMusic.ApiError.SERVERCLIENT;
-		} else if (d_type == BAD_REQUEST) {
-			apitype = SubMusic.ApiError.BADREQUEST;
-		}
-		
 		SubMusic.ApiError.initialize(apitype);
 
 		System.println(s_name + "::" + AmpacheError.typeToString(d_type));
@@ -84,23 +98,10 @@ class AmpacheError extends SubMusic.ApiError {
 	}
 
 	static function typeToString(type) {
-		if (type == ACCESS_CONTROL) {
-			return "ACCESS_CONTROL";
-		} else if (type == HANDSHAKE) {
-			return "HANDSHAKE";
-		} else if (type == FEATURE_MISSING) {
-			return "FEATURE_MISSING";
-		} else if (type == NOT_FOUND) {
-			return "NOT_FOUND";
-		} else if (type == METHOD_MISSING) {
-			return "METHOD_MISSING";
-		} else if (type == METHOD_DPRCTD) {
-			return "METHOD_DPRCTD";
-		} else if (type == BAD_REQUEST) {
-			return "BAD_REQUEST";
-		} else if (type == FAILED_ACCESS) {
-			return "FAILED_ACCESS";
+		var string = stringmap.get(type);
+		if (string == null) {
+			string = "Unknown";
 		}
-		return "Unknown";
+		return string;
 	}
 }

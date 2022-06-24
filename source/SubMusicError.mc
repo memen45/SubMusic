@@ -7,6 +7,13 @@ module SubMusic {
 			HTTP,
 			API,
 		}
+
+		// map errors to string representation
+		static private var stringmap = {
+			HTTP => "HTTP",
+			API => "API",
+		};
+
 		static private var s_name = "Error";
 		private var d_type;
 		
@@ -28,12 +35,11 @@ module SubMusic {
 	    }
 
 		static function typeToString(type) {
-			if (type == HTTP) {
-				return "HTTP";
-			} else if (type == API) {
-				return "API";
+			var string = stringmap.get(type);
+			if (string == null) {
+				string = "Unknown";
 			}
-			return "Unknown Error";
+			return string;
 		}
 	}
 	
@@ -47,7 +53,18 @@ module SubMusic {
 			BADREQUEST,
 			BADRESPONSE,
 			UNKNOWN,
-		}		
+		}
+
+		// map errors to string representation
+		static private var stringmap = {
+			LOGIN 			=> "LOGIN",
+	    	ACCESS 			=> "ACCESS",
+	    	NOTFOUND 		=> "NOTFOUND",
+	    	SERVERCLIENT 	=> "SERVERCLIENT",
+	    	BADREQUEST 		=> "BADREQUEST",
+	    	BADRESPONSE 	=> "BADRESPONSE",
+	    	UNKNOWN 		=> "UNKNOWN",
+		};
 		private var d_type;
 		static private var s_name = "ApiError";
 		
@@ -78,23 +95,11 @@ module SubMusic {
 		}
 	    
 	    static function typeToString(type) {
-	    
-	    	if (type == LOGIN) {
-	    		return "\"LOGIN\"";
-	    	} else if (type == ACCESS) {
-	    		return "\"ACCESS\"";
-	    	} else if (type == NOTFOUND) {
-	    		return "\"NOTFOUND\"";
-	    	} else if (type == SERVERCLIENT) {
-	    		return "\"SERVERCLIENT\"";
-	    	} else if (type == BADREQUEST) {
-	    		return "\"BADREQUEST\"";
-	    	} else if (type == BADRESPONSE) {
-	    		return "\"BADRESPONSE\"";
-	    	} else if (type == UNKNOWN) {
-	    		return "\"UNKNOWN\"";
-	    	}
-	    	return "Unknown ApiError";
+			var string = stringmap.get(type);
+			if (string == null) {
+				string = "Unknown";
+			}
+			return string;
 	    }
 	}
 	
@@ -106,6 +111,15 @@ module SubMusic {
 			FORBIDDEN = 403,
 			NOT_FOUND = 404,
 		}
+
+		// map errors to string representation
+		static private var stringmap = {
+			BAD_REQUEST => "Bad Request",
+			UNAUTHORIZED => "Unauthorized",
+			FORBIDDEN => "Forbidden",
+			NOT_FOUND => "Not Found",
+		};
+
 		private var d_type;
 		static private var s_name = "HttpError";
 		
@@ -137,23 +151,47 @@ module SubMusic {
 		}
 		
 		static function typeToString(type) {
-			
-			if (type == BAD_REQUEST) {
-				return "Bad Request";
-			} else if (type == UNAUTHORIZED) {
-				return "Unauthorized";
-			} else if (type == FORBIDDEN) {
-				return "Forbidden";
-			} else if (type == NOT_FOUND) {
-				return "Not Found";
+			var string = stringmap.get(type);
+			if (string == null) {
+				string = "Unknown";
 			}
-			return "Unknown HttpError";
+			return string;
 		}
 	}
 	
 	class GarminSdkError extends Error {
 	
 		// enum for possible errors can be found in module Communications
+
+		// map errors to string representation
+		static private var stringmap = {
+			Communications.UNKNOWN_ERROR 									=> "UNKNOWN_ERROR",
+	    	Communications.BLE_ERROR 										=> "BLE_ERROR",
+	    	Communications.BLE_HOST_TIMEOUT 								=> "BLE_HOST_TIMEOUT",
+	    	Communications.BLE_SERVER_TIMEOUT 								=> "BLE_SERVER_TIMEOUT",
+	    	Communications.BLE_NO_DATA 										=> "BLE_NO_DATA",
+	    	Communications.BLE_REQUEST_CANCELLED 							=> "BLE_REQUEST_CANCELLED",
+	    	Communications.BLE_QUEUE_FULL 									=> "BLE_QUEUE_FULL",
+	    	Communications.BLE_REQUEST_TOO_LARGE 							=> "BLE_REQUEST_TOO_LARGE",
+	    	Communications.BLE_UNKNOWN_SEND_ERROR 							=> "BLE_UNKNOWN_SEND_ERROR",
+	    	Communications.BLE_CONNECTION_UNAVAILABLE 						=> "BLE_CONNECTION_UNAVAILABLE",
+	    	Communications.INVALID_HTTP_HEADER_FIELDS_IN_REQUEST 			=> "INVALID_HTTP_HEADER_FIELDS_IN_REQUEST",
+	    	Communications.INVALID_HTTP_BODY_IN_REQUEST 					=> "INVALID_HTTP_BODY_IN_REQUEST",
+	    	Communications.INVALID_HTTP_METHOD_IN_REQUEST 					=> "INVALID_HTTP_METHOD_IN_REQUEST",
+	    	Communications.NETWORK_REQUEST_TIMED_OUT 						=> "NETWORK_REQUEST_TIMED_OUT",
+	    	Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE 			=> "INVALID_HTTP_BODY_IN_NETWORK_RESPONSE",
+	    	Communications.INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE	=> "INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE",
+	    	Communications.NETWORK_RESPONSE_TOO_LARGE 						=> "NETWORK_RESPONSE_TOO_LARGE",
+	    	Communications.NETWORK_RESPONSE_OUT_OF_MEMORY 					=> "NETWORK_RESPONSE_OUT_OF_MEMORY",
+	    	Communications.STORAGE_FULL 									=> "STORAGE_FULL",
+	    	Communications.SECURE_CONNECTION_REQUIRED 						=> "SECURE_CONNECTION_REQUIRED",
+	    	Communications.UNSUPPORTED_CONTENT_TYPE_IN_RESPONSE 			=> "UNSUPPORTED_CONTENT_TYPE_IN_RESPONSE",
+	    	Communications.REQUEST_CANCELLED 								=> "REQUEST_CANCELLED",
+	    	Communications.REQUEST_CONNECTION_DROPPED 						=> "REQUEST_CONNECTION_DROPPED",
+	    	Communications.UNABLE_TO_PROCESS_MEDIA 							=> "UNABLE_TO_PROCESS_MEDIA",
+	    	Communications.UNABLE_TO_PROCESS_IMAGE 							=> "UNABLE_TO_PROCESS_IMAGE",
+	    	Communications.UNABLE_TO_PROCESS_HLS 							=> "UNABLE_TO_PROCESS_HLS",
+		};
 		private var d_responseCode;
 		static private var s_name = "GarminSdkError";
 
@@ -190,60 +228,11 @@ module SubMusic {
 	
 		// move to somewhere else later, but now this is one of the two places this is used
 	    static function respCodeToString(responseCode) {
-	    	if (responseCode == Communications.UNKNOWN_ERROR) {
-	    		return "\"UNKNOWN_ERROR\"";
-	    	} else if (responseCode == Communications.BLE_ERROR) {
-	    		return "\"BLE_ERROR\"";
-	    	} else if (responseCode == Communications.BLE_HOST_TIMEOUT) {
-	    		return "\"BLE_HOST_TIMEOUT\"";
-	    	} else if (responseCode == Communications.BLE_SERVER_TIMEOUT) {
-	    		return "\"BLE_SERVER_TIMEOUT\"";
-	    	} else if (responseCode == Communications.BLE_NO_DATA) {
-	    		return "\"BLE_NO_DATA\"";
-	    	} else if (responseCode == Communications.BLE_REQUEST_CANCELLED) {
-	    		return "\"BLE_REQUEST_CANCELLED\"";
-	    	} else if (responseCode == Communications.BLE_QUEUE_FULL) {
-	    		return "\"BLE_QUEUE_FULL\"";
-	    	} else if (responseCode == Communications.BLE_REQUEST_TOO_LARGE) {
-	    		return "\"BLE_REQUEST_TOO_LARGE\"";
-	    	} else if (responseCode == Communications.BLE_UNKNOWN_SEND_ERROR) {
-	    		return "\"BLE_UNKNOWN_SEND_ERROR\"";
-	    	} else if (responseCode == Communications.BLE_CONNECTION_UNAVAILABLE) {
-	    		return "\"BLE_CONNECTION_UNAVAILABLE\"";
-	    	} else if (responseCode == Communications.INVALID_HTTP_HEADER_FIELDS_IN_REQUEST) {
-	    		return "\"INVALID_HTTP_HEADER_FIELDS_IN_REQUEST\"";
-	    	} else if (responseCode == Communications.INVALID_HTTP_BODY_IN_REQUEST) {
-	    		return "\"INVALID_HTTP_BODY_IN_REQUEST\"";
-	    	} else if (responseCode == Communications.INVALID_HTTP_METHOD_IN_REQUEST) {
-	    		return "\"INVALID_HTTP_METHOD_IN_REQUEST\"";
-	    	} else if (responseCode == Communications.NETWORK_REQUEST_TIMED_OUT) {
-	    		return "\"NETWORK_REQUEST_TIMED_OUT\"";
-	    	} else if (responseCode == Communications.INVALID_HTTP_BODY_IN_NETWORK_RESPONSE) {
-	    		return "\"INVALID_HTTP_BODY_IN_NETWORK_RESPONSE\"";
-	    	} else if (responseCode == Communications.INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE) {
-	    		return "\"INVALID_HTTP_HEADER_FIELDS_IN_NETWORK_RESPONSE\"";
-	    	} else if (responseCode == Communications.NETWORK_RESPONSE_TOO_LARGE) {
-	    		return "\"NETWORK_RESPONSE_TOO_LARGE\"";
-	    	} else if (responseCode == Communications.NETWORK_RESPONSE_OUT_OF_MEMORY) {
-	    		return "\"NETWORK_RESPONSE_OUT_OF_MEMORY\"";
-	    	} else if (responseCode == Communications.STORAGE_FULL) {
-	    		return "\"STORAGE_FULL\"";
-	    	} else if (responseCode == Communications.SECURE_CONNECTION_REQUIRED) {
-	    		return "\"SECURE_CONNECTION_REQUIRED\"";
-	    	} else if (responseCode == Communications.UNSUPPORTED_CONTENT_TYPE_IN_RESPONSE) {
-	    		return "\"UNSUPPORTED_CONTENT_TYPE_IN_RESPONSE\"";
-	    	} else if (responseCode == Communications.REQUEST_CANCELLED) {
-	    		return "\"REQUEST_CANCELLED\"";
-	    	} else if (responseCode == Communications.REQUEST_CONNECTION_DROPPED) {
-	    		return "\"REQUEST_CONNECTION_DROPPED\"";
-	    	} else if (responseCode == Communications.UNABLE_TO_PROCESS_MEDIA) {
-	    		return "\"UNABLE_TO_PROCESS_MEDIA\"";
-	    	} else if (responseCode == Communications.UNABLE_TO_PROCESS_IMAGE) {
-	    		return "\"UNABLE_TO_PROCESS_IMAGE\"";
-	    	} else if (responseCode == Communications.UNABLE_TO_PROCESS_HLS) {
-	    		return "\"UNABLE_TO_PROCESS_HLS\"";
-	    	}
-	    	return "Unknown GarminSdkError";
+			var string = stringmap.get(responseCode);
+			if (string == null) {
+				string = "Unknown";
+			}
+			return string;
 	    }
 	}
 }

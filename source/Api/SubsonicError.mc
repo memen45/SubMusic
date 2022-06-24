@@ -14,6 +14,32 @@ class SubsonicError extends SubMusic.ApiError {
 		TRIAL_OVER		= 60,		// 60 	The trial period for the Subsonic server is over. Please upgrade to Subsonic Premium. Visit subsonic.org for details.
 		NOT_FOUND		= 70,		// 70 	The requested data was not found.
 	}
+
+	// map subsonic errors to string representation
+	static private var stringmap = {
+		GENERIC 		=> "GENERIC",
+		MISSING_PARAM 	=> "MISSING_PARAM",
+		INCOMPAT_CLIENT => "INCOMPAT_CLIENT",
+		INCOMPAT_SERVER => "INCOMPAT_SERVER",
+		WRONG_CREDS 	=> "WRONG_CREDS",
+		TOKEN_SUPPORT 	=> "TOKEN_SUPPORT",
+		NOT_AUTHORIZED 	=> "NOT_AUTHORIZED",
+		TRIAL_OVER 		=> "TRIAL_OVER",
+		NOT_FOUND 		=> "NOT_FOUND",
+	};
+
+	// map subsonic errors to API level errors
+	static private var apimap = {
+		GENERIC 		=> SubMusic.ApiError.UNKNOWN,
+		MISSING_PARAM 	=> SubMusic.ApiError.BADREQUEST,
+		INCOMPAT_CLIENT => SubMusic.ApiError.SERVERCLIENT,
+		INCOMPAT_SERVER => SubMusic.ApiError.SERVERCLIENT,
+		WRONG_CREDS 	=> SubMusic.ApiError.LOGIN,
+		TOKEN_SUPPORT 	=> SubMusic.ApiError.LOGIN,
+		NOT_AUTHORIZED 	=> SubMusic.ApiError.ACCESS,
+		TRIAL_OVER 		=> SubMusic.ApiError.LOGIN,
+		NOT_FOUND 		=> SubMusic.ApiError.NOTFOUND,
+	};
 	private var d_type = null;
 	private var d_msg = "";
 	
@@ -25,22 +51,12 @@ class SubsonicError extends SubMusic.ApiError {
 		if (error_obj) {
 			d_type = error_obj["code"];
 			d_msg = error_obj["message"];
+		}		
+
+		var apitype = apimap.get(d_type);
+		if (apitype == null) {
+			apitype = SubMusic.ApiError.UNKNOWN;
 		}
-		
-		// default is unknown
-		var apitype = SubMusic.ApiError.UNKNOWN;
-		if ((d_type == WRONG_CREDS) || (d_type == TOKEN_SUPPORT) || (d_type == TRIAL_OVER)) {
-			apitype = SubMusic.ApiError.LOGIN;
-		} else if (d_type == NOT_AUTHORIZED) {
-			apitype = SubMusic.ApiError.ACCESS;
-		} else if (d_type == NOT_FOUND) {
-			apitype = SubMusic.ApiError.NOTFOUND;
-		} else if ((d_type == INCOMPAT_CLIENT) || (d_type == INCOMPAT_SERVER)) {
-			apitype = SubMusic.ApiError.SERVERCLIENT;
-		} else if (d_type == MISSING_PARAM) {
-			apitype = SubMusic.ApiError.BADREQUEST;
-		}
-		
 		SubMusic.ApiError.initialize(apitype);
 
 		System.println(s_name + "::" + SubsonicError.typeToString(d_type));
@@ -77,25 +93,10 @@ class SubsonicError extends SubMusic.ApiError {
 	}
 
 	static function typeToString(type) {
-		if (type == GENERIC) {
-			return "GENERIC";
-		} else if (type == MISSING_PARAM) {
-			return "MISSING_PARAM";
-		} else if (type == INCOMPAT_CLIENT) {
-			return "INCOMPAT_CLIENT";
-		} else if (type == INCOMPAT_SERVER) {
-			return "INCOMPAT_SERVER";
-		} else if (type == WRONG_CREDS) {
-			return "WRONG_CREDS";
-		} else if (type == TOKEN_SUPPORT) {
-			return "TOKEN_SUPPORT";
-		} else if (type == NOT_AUTHORIZED) {
-			return "NOT_AUTHORIZED";
-		} else if (type == TRIAL_OVER) {
-			return "TRIAL_OVER";
-		} else if (type == NOT_FOUND) {
-			return "NOT_FOUND";
+		var string = stringmap.get(type);
+		if (string == null) {
+			string = "Unknown";
 		}
-		return "Unknown";
+		return string;
 	}
 }
