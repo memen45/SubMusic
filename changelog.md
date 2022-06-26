@@ -1,5 +1,9 @@
 Version [] - 
 
+Version [0.2.0] - 2022-06-26
+- Launch icon resolution improved
+- fix HTTP Basic authentication (subsonic only)
+
 Version [0.1.25] - 2022-06-24
 - added HTTP Basic authentication (subsonic only)
 - added support for d2mach1, fr255m, fr255sm, fr955

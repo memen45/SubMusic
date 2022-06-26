@@ -141,11 +141,8 @@ class SubsonicAPI extends Api {
 		var id = params["id"];
 		params = Utils.copy(d_params);
 		params["id"] = id;			// set id for playlist
-		
-    	var options = {
-    		:method => Communications.HTTP_REQUEST_METHOD_GET,
-    	};
-    	Communications.makeWebRequest(url, params, options, self.method(:onGetPlaylist));
+
+    	Communications.makeWebRequest(url, params, d_options, self.method(:onGetPlaylist));
     }
     
     function onGetPlaylist(responseCode, data) {
@@ -179,12 +176,15 @@ class SubsonicAPI extends Api {
 		params["id"] = id;
 		params["format"] = format;
 		
+		// additional options
     	var options = {
     		:method => Communications.HTTP_REQUEST_METHOD_GET,
           	:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_AUDIO,
           	:mediaEncoding => encoding,
 			:fileDownloadProgressCallback => method(:onProgress),
    		};
+		options = SubMusic.Utils.merge(options, d_options);
+
     	Communications.makeWebRequest(url, params, options, self.method(:onStream));
     }
     
@@ -221,11 +221,14 @@ class SubsonicAPI extends Api {
 
 		params["size"] = 100;
 		
+		// additional options
 		var options = {
 			:maxWidth => 100,
 			:maxHeight => 100,
 			:fileDownloadProgressCallback => method(:onProgress),
 		};
+		options = SubMusic.Utils.merge(options, d_options);
+
     	Communications.makeImageRequest(url, params, options, self.method(:onGetCoverArt));
     }
     
