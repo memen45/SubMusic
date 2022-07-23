@@ -15,7 +15,7 @@ module SubMusic {
 				System.println("Menu.About::load()");
 				return MenuBase.load([
 					{
-						LABEL => WatchUi.loadResource(Rez.Strings.Version_label), 
+						LABEL => WatchUi.loadResource(Rez.Strings.AppName) + " " + WatchUi.loadResource(Rez.Strings.Version_label), 
 						SUBLABEL => (new SubMusicVersion(null)).toString(), 
 						METHOD => "version",		// not used, null does not work
 					},

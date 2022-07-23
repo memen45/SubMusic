@@ -10,6 +10,8 @@
     <string id="ApiAuthMethod">Authentication method (Subsonic only)</string>
     <string id="ApiAuthAPI">API</string>
     <string id="ApiAuthHTTP">HTTP Basic</string>
+    <string id="skip_30s">Enable Skip</string>
+    <string id="skip_30s_sublabel">Show 30s skip buttons</string>
 
     <string id="confSync_Title">Sync settings</string>
     <string id="confSync_StartSync_label">Sync</string>

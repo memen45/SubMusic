@@ -1,5 +1,9 @@
 Version [] - 
 
+Version [0.2.1] - 23-07-2022
+- added setting to disable 30s skip forward/backward buttons (issue #13, #43)
+- added app settings view to watch menu (Menu > About > Settings)
+
 Version [0.2.0] - 2022-06-26
 - Launch icon resolution improved
 - fix HTTP Basic authentication (subsonic only)

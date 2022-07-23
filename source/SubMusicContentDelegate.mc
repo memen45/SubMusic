@@ -67,7 +67,7 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
 
     // Handles a notification from the system that an event has
     // been triggered for the given song
-    function onSong(contentRefId, songEvent, playbackPosition) {
+    function onSong(contentRefId, songEvent as Media.SongEvent, playbackPosition) as Void {
     	System.println("onSong Event (" + d_events[songEvent] + "): " + getSongName(contentRefId) + " at position " + playbackPosition);
 	
 		var audio = findAudioByRefId(contentRefId);

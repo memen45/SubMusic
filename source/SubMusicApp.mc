@@ -29,6 +29,9 @@ class SubMusicApp extends Application.AudioContentProviderApp {
     	
     	// reset the sessions for the provider
     	SubMusic.Provider.onSettingsChanged();
+
+        // reload the media profile
+        Media.requestPlaybackProfileUpdate();
     }
 
     // Get a Media.ContentDelegate for use by the system to get and iterate through media on the device
