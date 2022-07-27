@@ -60,10 +60,12 @@ module SubMusic {
 
 			function sublabel_API_standard() {
 				var api_typ = Application.Properties.getValue("API_standard");
-				if (api_typ == ApiStandard.AMPACHE) {
-	        		return WatchUi.loadResource(Rez.Strings.ApiStandardAmpache);
-				}
-	        	return WatchUi.loadResource(Rez.Strings.ApiStandardSubsonic);
+				var api_map = {
+					ApiStandard.AMPACHE 	=> WatchUi.loadResource(Rez.Strings.ApiStandardAmpache),
+					ApiStandard.SUBSONIC 	=> WatchUi.loadResource(Rez.Strings.ApiStandardSubsonic),
+					ApiStandard.PLEX 		=> WatchUi.loadResource(Rez.Strings.ApiStandardPlex),
+				};
+				return api_map[api_typ];
 			}
 
 			function sublabel_AUTH_method() {
@@ -76,6 +78,7 @@ module SubMusic {
 
 			function onToggle() {
 				Application.Properties.setValue("skip_30s", !Application.Properties.getValue("skip_30s"));
+				Media.requestPlaybackProfileUpdate();
 			}
 
 			function delegate() {

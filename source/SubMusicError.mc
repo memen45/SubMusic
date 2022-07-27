@@ -129,6 +129,10 @@ module SubMusic {
 
 			System.println(HttpError.toString());
 		}
+
+		function http_type() {
+			return d_type;
+		}
 		
 		static function is(responseCode) {
 		

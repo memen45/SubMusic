@@ -13,11 +13,12 @@ class SubMusicServerView extends TextView {
     	msg += settings["api_url"];
     	msg += "\n" + settings["api_usr"] + "\n";
     	
-    	if (settings["api_typ"] == ApiStandard.AMPACHE) {
-    		msg += "Ampache";
-    	} else {
-    		msg += "Subsonic";
-    	}
+		var api_map = {
+			ApiStandard.AMPACHE 	=> WatchUi.loadResource(Rez.Strings.ApiStandardAmpache),
+			ApiStandard.SUBSONIC 	=> WatchUi.loadResource(Rez.Strings.ApiStandardSubsonic),
+			ApiStandard.PLEX 		=> WatchUi.loadResource(Rez.Strings.ApiStandardPlex),
+		};
+		msg += api_map[settings["api_typ"]];
     	
 		TextView.initialize(msg);
 		

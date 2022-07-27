@@ -187,7 +187,6 @@ module SubMusic {
                 ids().remove(ids()[index]);
                 types().remove(types()[index]);
                 
-                
                 // reset or decrease songidx if needed
                 if (index == realidx) {
                     setIdx(0);
@@ -208,8 +207,11 @@ module SubMusic {
             setIdx(realidx);
 
             // if not shuffle, nothing to do
+            var saved = save();
+            System.println("IPlayable::removeRemoved now " + d_storage);
+            
             if (!shuffle()) {
-            	return save();
+            	return saved;
             }
             // now fix shuffle if needed
             set("shuffle", false);

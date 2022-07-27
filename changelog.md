@@ -1,5 +1,10 @@
 Version [] - 
 
+Version [0.2.2] - 27-07-2022
+- added experimental Plex.tv support
+- fix update playerProfile when setting changed
+- fix Playable crash when songs removed from playlist with shuffle enabled
+
 Version [0.2.1] - 23-07-2022
 - added setting to disable 30s skip forward/backward buttons (issue #13, #43)
 - added app settings view to watch menu (Menu > About > Settings)

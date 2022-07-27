@@ -10,6 +10,7 @@ class ScrobbleSync extends Deferrable {
 	private var d_todo_total = ScrobbleStore.size();	// store initial size
 	
 	function initialize(progress, done, fail) {
+		System.println("ScrobbleSync::initialize()");
 		Deferrable.initialize(method(:sync), done, fail);		// make sync the deferred task
 		
 		f_progress = progress;

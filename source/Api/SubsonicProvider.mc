@@ -1,3 +1,5 @@
+using SubMusic.Utils;
+
 class SubsonicProvider {
 	
 	private var d_api;
@@ -26,14 +28,16 @@ class SubsonicProvider {
 	// functions:
 	// - ping				returns an object with server version
 	// - recordPlay			submit a play
-	// - getAllPlaylists	returns array of all playlists available for Subsonic user
+	// - getAllPlaylists	returns an array of all playlists available for Ampache user
+	// - getPlaylist		returns an array of one playlist object for id
 	// - getPlaylistSongs	returns an array of songs on the playlist with id
 	// - getRefId			returns a refId for a song by id (this downloads the song)
 	// - getArtwork			returns a BitmapResource for a song id
-	// - getAllPodcasts		returns array of all podcasts available for Subsonic user
-	// - getEpisodes		returns array of all episodes available for Subsonic user
+	// - getAllPodcasts		returns an array of all podcasts available for Ampache user
+	// - getPodcast			returns an array of one podcast object for id
+	// - getEpisodes		returns an array of episodes in the podcast with id
 	//
-	// to be added in the future (not possible for SubsonicAPI, so return allplaylists):
+	// to be added in the future:
 	// - getUpdatedPlaylists - returns array of all playlists updated since Moment
 	
 	/**
@@ -104,7 +108,7 @@ class SubsonicProvider {
 	function getRefId(id, mime, type, callback) {
 		d_callback = callback;
 
-		var encoding = mimeToEncoding(mime);
+		var encoding = SubMusic.Utils.mimeToEncoding(mime);
 		var format = "mp3";
 		if (encoding == Media.ENCODING_INVALID) {
 			// default to mp3 transcoding
@@ -165,7 +169,7 @@ class SubsonicProvider {
 	}
 
 	/**
-	 * getAllEpisodes
+	 * getEpisodes
 	 *
 	 * returns array of all episodes available for Subsonic user
 	 */
@@ -348,6 +352,7 @@ class SubsonicProvider {
 				"artist" => song["artist"],
 				"time" => time.toNumber(),
 				"mime" => song["contentType"],
+				"media_url" => song["id"],
 				"art_id" => song["coverArt"],
 			}));
 		}
@@ -377,36 +382,5 @@ class SubsonicProvider {
 
 	function setProgressCallback(progress) {
 		d_progress = progress;
-	}
-
-	function mimeToEncoding(mime) {
-		// mime should be a string
-		if (!(mime instanceof Lang.String)) {
-			return Media.ENCODING_INVALID;
-		}
-		// check docs: https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Containers
-		if (mime.equals("audio/mpeg")) {
-			return Media.ENCODING_MP3;
-		}
-		if (mime.equals("audio/mp4")) {
-			return Media.ENCODING_M4A;
-		}
-		if (mime.equals("audio/aac")) {
-			return Media.ENCODING_ADTS;
-		}
-		if (mime.equals("audio/wave")
-			|| mime.equals("audio/wav")
-			|| mime.equals("audio/x-wav")
-			|| mime.equals("audio/x-pn-wav")) {
-			return Media.ENCODING_WAV;
-		}
-
-		// known mime types, but not supported by the sdk
-		if (mime.equals("audio/x-flac")) {
-			return Media.ENCODING_INVALID;
-		}
-
-		// mime type not defined
-		return Media.ENCODING_INVALID;
 	}
 }

@@ -29,7 +29,9 @@ module SubMusic {
 	    function createProvider(settings) {
 	    	if (d_type == ApiStandard.AMPACHE) {
 	        	d_provider = new AmpacheProvider(settings);
-	        } else {
+	        } else if (d_type == ApiStandard.PLEX) {
+				d_provider = new PlexProvider(settings);
+			} else {
 	        	d_provider = new SubsonicProvider(settings);
 	        }
 	        return d_provider;

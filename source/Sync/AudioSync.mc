@@ -12,6 +12,7 @@ class AudioSync extends Deferrable {
 	private var d_todo_total;		// the number of items that had to be synced
 
 	function initialize(progress, done, fail) {
+		System.println("AudioSync::initialize()");
 		Deferrable.initialize(method(:sync), done, fail);		// make sync the deferred task
 		
 		f_progress = progress;
@@ -53,7 +54,7 @@ class AudioSync extends Deferrable {
 		f_progress.invoke(progress());
 		
 		// start download
-		d_provider.getRefId(d_todo[0].id(), d_todo[0].mime(), d_todo[0].type(), method(:onDownloaded));
+		d_provider.getRefId(d_todo[0].media_url(), d_todo[0].mime(), d_todo[0].type(), method(:onDownloaded));
 		return Deferrable.defer();
 	}
 

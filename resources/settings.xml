@@ -3,6 +3,7 @@
         <settingConfig type="list">
             <listEntry value="0">@Strings.ApiStandardSubsonic</listEntry>
             <listEntry value="1">@Strings.ApiStandardAmpache</listEntry>
+            <listEntry value="2">@Strings.ApiStandardPlex</listEntry>
         </settingConfig>
     </setting>
 	<setting propertyKey="@Properties.subsonic_API_URL" title="@Strings.ServerAddress">

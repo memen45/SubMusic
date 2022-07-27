@@ -1,4 +1,6 @@
 using Toybox.System;
+using Toybox.Media;
+using Toybox.Lang;
 
 module SubMusic {
 	module Utils {
@@ -46,26 +48,57 @@ module SubMusic {
 			}
 			return 0;
 		}
-	}
 
-	function copy(dict as Lang.Dictionary) as Lang.Dictionary {
-		var ret = {};
-		for (var idx = 0; idx < dict.keys().size(); ++idx) {
-			var key = dict.keys()[idx];
-			ret.put(key, dict.get(key));
+		function copy(dict as Lang.Dictionary) as Lang.Dictionary {
+			var ret = {};
+			for (var idx = 0; idx < dict.keys().size(); ++idx) {
+				var key = dict.keys()[idx];
+				ret.put(key, dict.get(key));
+			}
+			return ret;
 		}
-		return ret;
-	}
 
-	// merge two dictionaries, maybe improve by filtering keys e.g.
-	// function merge(dict, dict2, keystocopy)
-	function merge(dict as Lang.Dictionary, dict2 as Lang.Dictionary) as Lang.Dictionary {
-		var ret = copy(dict);
-		var keys = dict2.keys();
-		for (var idx = 0; idx != keys.size(); ++idx) {
-			var key = keys[idx];
-			ret.put(key, dict2.get(key));
+		// merge two dictionaries, maybe improve by filtering keys e.g.
+		// function merge(dict, dict2, keystocopy)
+		function merge(dict as Lang.Dictionary, dict2 as Lang.Dictionary) as Lang.Dictionary {
+			var ret = copy(dict);
+			var keys = dict2.keys();
+			for (var idx = 0; idx != keys.size(); ++idx) {
+				var key = keys[idx];
+				ret.put(key, dict2.get(key));
+			}
+			return ret;
+		}	
+
+		function mimeToEncoding(mime) {
+			// mime should be a string
+			if (!(mime instanceof Lang.String)) {
+				return Media.ENCODING_INVALID;
+			}
+			// check docs: https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Containers
+			if (mime.equals("audio/mpeg")) {
+				return Media.ENCODING_MP3;
+			}
+			if (mime.equals("audio/mp4")) {
+				return Media.ENCODING_M4A;
+			}
+			if (mime.equals("audio/aac")) {
+				return Media.ENCODING_ADTS;
+			}
+			if (mime.equals("audio/wave")
+				|| mime.equals("audio/wav")
+				|| mime.equals("audio/x-wav")
+				|| mime.equals("audio/x-pn-wav")) {
+				return Media.ENCODING_WAV;
+			}
+
+			// known mime types, but not supported by the sdk
+			if (mime.equals("audio/x-flac")) {
+				return Media.ENCODING_INVALID;
+			}
+
+			// mime type not defined
+			return Media.ENCODING_INVALID;
 		}
-		return ret;
 	}
 }

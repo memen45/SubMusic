@@ -8,6 +8,7 @@ class PlaylistSync extends Deferrable {
 	private var f_progress; 		// callback on progress
 
 	function initialize(id, progress, done, fail) {
+		System.println("PlaylistSync::initialize()");
 		Deferrable.initialize(method(:sync), done, fail);		// make sync the deferred task
 		
 		f_progress = progress;
@@ -78,9 +79,14 @@ class PlaylistSync extends Deferrable {
 //   	d_iplaylist.setError(error); TODO
     	d_failed = true;
 	    d_iplaylist.setSynced(!d_failed);
-    	
-		if ((error instanceof SubMusic.ApiError)
-			&& (error.api_type() == SubMusic.ApiError.NOTFOUND)) {
+
+		// 'not found' can return through api or http status codes
+		var api_not_found = (error instanceof SubMusic.ApiError)
+						&& (error.api_type() == SubMusic.ApiError.NOTFOUND);
+		var http_not_found = (error instanceof SubMusic.HttpError)
+						&& (error.http_type() == SubMusic.HttpError.NOT_FOUND);
+
+		if (api_not_found || http_not_found) {
 
 			// update remote status
 			d_iplaylist.setRemote(false);

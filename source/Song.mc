@@ -13,6 +13,7 @@ class Song extends Storable {
 		"time" => 0,			// duration of the song
 		"mime" => "",			// string e.g. "audio/mpeg"
 		"art_id" => null,		// null if no art_id available
+		"media_url" => "",		// key to retrieve the media file
 
 		// required internal song properties
 		"refId" => null,		// null if no audio file is local
@@ -44,6 +45,10 @@ class Song extends Storable {
 	
 	function mime() {
 		return d_storage["mime"];
+	}
+
+	function media_url() {
+		return d_storage["media_url"];
 	}
 	
 	function refId() {
@@ -106,16 +111,10 @@ class ISong extends Song {
 	
 	// returns true if changes saved 
 	function setTime(time) {
-		// nothing to do if not changed
-		if (time() == time) {
-			return false;
-		}
-		d_storage["time"] = time;
-		
-		System.println("ISong::setTime( time: " + time + " )");
-		
+		var changed = updateAny("time", time);
+
 		// nothing to do if not stored
-		if (d_stored) {
+		if (changed && d_stored) {
 			save();
 		}
 		return true;
@@ -130,15 +129,22 @@ class ISong extends Song {
 		}
 	
 		// nothing to do if not changed
-		if (mime().equals(mime)) {
-			return false;
-		}
-		d_storage["mime"] = mime;
+		var changed = updateAny("mime", mime);
 
-		System.println("ISong::setMime( mime: " + mime + " )");
-		
 		// nothing to do if not stored
-		if (d_stored) {
+		if (changed && d_stored) {
+			save();
+		}
+		return true;
+	}
+	
+	// returns true if changes saved
+	function setMedia_url(media_url) {
+
+		var changed = updateAny("media_url", media_url);
+
+		// nothing to do if not stored or changed
+		if (changed && d_stored) {
 			save();
 		}
 		return true;
@@ -242,8 +248,11 @@ class ISong extends Song {
 		d_stored = false;
 
 		// update the variables
-		var changed = setTime(song.time());
-		changed |= setMime(song.mime());
+		var changed = updateAny("time", song.time());
+		changed |= updateAny("mime", song.mime());
+		changed |= updateAny("media_url", song.media_url());
+		// changed |= updateAny("title", song.title());		// not used, so no storage needed
+		// changed |= updateAny("artist", song.artist());	// not used, so no storage needed
 		changed |= setArt_id(song.art_id());
 		if (changed) {
 			save();

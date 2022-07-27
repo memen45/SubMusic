@@ -48,6 +48,10 @@ class Audio extends Storable {
 	function mime() {
 		return d_audio.mime();
 	}
+	
+	function media_url() {
+		return d_audio.media_url();
+	}
 
 	function refId() {
 		return d_audio.refId();

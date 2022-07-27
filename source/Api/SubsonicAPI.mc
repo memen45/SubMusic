@@ -12,7 +12,7 @@ class SubsonicAPI extends Api {
 	
 	function initialize(settings, progress, fallback) {
 		Api.initialize("/rest/");
-		update(settings);
+		update(settings);			// call overridden updater from here
 
 		// set callbacks
 		Api.setProgressCallback(progress);

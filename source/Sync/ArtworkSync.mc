@@ -11,6 +11,7 @@ class ArtworkSync extends Deferrable {
 	private var d_todo_total;		// the number of items that had to be synced
 
 	function initialize(progress, done, fail) {
+		System.println("ArtworkSync::initialize()");
 		Deferrable.initialize(method(:sync), done, fail);		// make sync the deferred task
 		
 		f_progress = progress;

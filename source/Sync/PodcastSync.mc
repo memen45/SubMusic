@@ -8,6 +8,7 @@ class PodcastSync extends Deferrable {
 	private var f_progress; 		// callback on progress
 
 	function initialize(id, progress, done, fail) {
+		System.println("PodcastSync::initialize()");
 		Deferrable.initialize(method(:sync), done, fail);		// make sync the deferred task
 		
 		f_progress = progress;

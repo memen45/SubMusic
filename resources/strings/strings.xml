@@ -4,6 +4,7 @@
     <string id="ApiStandard">API backend</string>
     <string id="ApiStandardSubsonic">Subsonic API</string>
     <string id="ApiStandardAmpache">Ampache API</string>
+    <string id="ApiStandardPlex">Plex API</string>
     <string id="ServerAddress">Server Address</string>
     <string id="ServerUser">Username</string>
     <string id="ServerKey">API key</string>
