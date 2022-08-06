@@ -1,5 +1,8 @@
 Version [] - 
 
+Version [0.2.3] - 06-08-2022
+- fix Ampache and Plex infinite loop issue #52
+
 Version [0.2.2] - 27-07-2022
 - added experimental Plex.tv support
 - fix update playerProfile when setting changed

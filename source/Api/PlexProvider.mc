@@ -19,8 +19,8 @@ class PlexProvider {
 	private var d_count = MAX_COUNT;	// count objects for ranged requests
 
     private var d_id;       // required for getPlaylist, getPlaylistSongs, getRefId, getArtwork
-	private var d_encoding;	// required for getRefId
-	private var d_response;	// construct full response
+	private var d_encoding;				// encoding parameter needed for stream
+	private var d_response;				// construct full response
     
 	enum {
 		PLEX_PING,
@@ -118,7 +118,9 @@ class PlexProvider {
 		// create empty array as initial response
 		d_response = [];
 		d_params = { "playlistType" => "audio" };   // only audio playlists
-        d_limit = MAX_LIMIT;
+
+		// set range parameters
+		d_limit = MAX_LIMIT;
         d_offset = OFFSET;
 
 		d_action = PLEX_PLAYLISTS;
@@ -275,7 +277,7 @@ class PlexProvider {
 	/**
 	 * getAllPodcasts
 	 *
-	 * returns array of all podcasts available for Subsonic user
+	 * returns array of all podcasts available for Plex user
 	 */
 	function getAllPodcasts(callback) {
 		System.println("PlexProvider::getAllPodcasts( no API method available )");
@@ -285,7 +287,7 @@ class PlexProvider {
 	/**
 	 * getPodcast
 	 *
-	 * returns array of all podcasts available for Subsonic user
+	 * returns array of all podcasts available for Plex user
 	 */
 	function getPodcast(id, callback) {
 		System.println("PlexProvider::getPodcast( no API method available )");
@@ -327,10 +329,6 @@ class PlexProvider {
 		d_count = MAX_COUNT;		// reset to max count for next request
 		d_callback.invoke(d_response);
 	}
-
-    function onProgress(progress) {
-        d_progress.invoke(progress);
-    }   
 
 	/*
 	 * do_
@@ -395,10 +393,10 @@ class PlexProvider {
         // if response too large and limit is possible
 		if ((error instanceof SubMusic.GarminSdkError)
 			&& (error.respCode() == Communications.NETWORK_RESPONSE_TOO_LARGE)
-			&& (d_params["limit"] > 1)) {
+			&& (d_limit > 1)) {
 			
-			d_params["limit"] = (d_params["limit"] / 2).toNumber();		// half the response
-			System.println("PlexProvider limit was lowered to " + d_params["limit"]);
+			d_limit = (d_limit / 2).toNumber();		// half the response
+			System.println("PlexProvider limit was lowered to " + d_limit);
 			do_();														// retry the request
 			return;
 		}
@@ -406,6 +404,10 @@ class PlexProvider {
 		d_action = null;
 		d_fallback.invoke(error);
     }
+
+    function onProgress(progress) {
+        d_progress.invoke(progress);
+    }   
     
     function setFallback(fallback) {
     	d_fallback = fallback;

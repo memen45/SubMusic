@@ -11,7 +11,7 @@ class AmpacheProvider {
 
 	// request variables needed to repeat the request if necessary
 	private var d_action = null;
-	private var d_params = {};
+	private var d_params = {};  // stores the last request parameters
 
 	enum { MAX_COUNT = 10000, MAX_LIMIT = 20, OFFSET = 0, }
     private var d_limit = MAX_LIMIT;    // defines the number of results in a single response
@@ -75,6 +75,18 @@ class AmpacheProvider {
 		do_();
 	}
 	
+	function on_do_ping(response) {
+		System.println("AmpacheProvider::on_do_ping( response = " + response + ")");
+		
+		d_action = null;
+		d_callback.invoke(response);
+	}
+
+    /**
+     * recordPlay
+     * 
+     * submit a play
+     */
 	function recordPlay(id, time, callback) {
 		d_callback = callback;
 		
@@ -87,6 +99,13 @@ class AmpacheProvider {
 		d_action = AMPACHE_ACTION_RECORD_PLAY;
 		do_();
 	}
+
+	function on_do_record_play(response) {
+		System.println("AmpacheProvider::on_do_record_play( response = " + response + ")");
+		
+		d_action = null;
+		d_callback.invoke(response["success"]); // expected success string
+	}
 	
 	/**
 	 * getAllPlaylists
@@ -98,7 +117,6 @@ class AmpacheProvider {
 
 		// create empty array as initial response
 		d_response = [];
-
 		d_params = {};
 
 		// set range parameters
@@ -107,6 +125,24 @@ class AmpacheProvider {
 
 		d_action = AMPACHE_ACTION_PLAYLISTS;
 		do_();
+	}
+
+	function on_do_playlists(response) {
+		// append the standard playlist objects to the array
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var playlist = response[idx];
+			var items = playlist["items"];
+			if (items == null) {
+				items = 0;
+			}
+			d_response.add(new Playlist({
+				"id" => playlist["id"],
+				"name" => playlist["name"],
+				"songCount" => items.toNumber(),
+				"remote" => true,
+			}));
+		}
+		checkDone(response);
 	}
 
 	/**
@@ -149,6 +185,29 @@ class AmpacheProvider {
 		do_();
 	}
 
+	function on_do_playlist_songs(response) {		
+		// append the standard song objects to the array
+		for (var idx = 0; idx < response.size(); ++idx) {
+			var song = response[idx];
+
+			// new way of storing songs
+			var time = song["time"];
+			if (time == null) {
+				time = 0;
+			}
+			d_response.add(new Song({
+				"id" => song["id"],
+				"title" => song["title"],
+				"artist" => song["artist"]["name"],
+				"time" => time.toNumber(),
+				"mime" => song["mime"],
+				"media_url" => song["id"],
+				"art_id" => song["id"],
+			}));
+		}
+		checkDone(response);
+	}
+
 	/**
 	 * getRefId
 	 *
@@ -157,7 +216,7 @@ class AmpacheProvider {
 	function getRefId(id, mime, type, callback) {
 		d_callback = callback;
 
-		d_encoding = SubMusic.Utils.mimeToEncoding(mime);
+		d_encoding = Utils.mimeToEncoding(mime);
 		var format = "mp3";
 		if (d_encoding == Media.ENCODING_INVALID) {
 			// default to mp3 transcoding 
@@ -179,6 +238,11 @@ class AmpacheProvider {
 		do_();
 	}
 
+	function on_do_stream(contentRef) {
+		d_action = null;
+		d_callback.invoke(contentRef.getId());
+	}
+
 	/**
 	 * getArtwork
 	 *
@@ -195,6 +259,11 @@ class AmpacheProvider {
 
 		d_action = AMPACHE_ACTION_GET_ART;
 		do_();
+	}
+
+	function on_do_get_art(artwork) {
+		d_action = null;
+		d_callback.invoke(artwork);
 	}
 	
 	/**
@@ -255,38 +324,6 @@ class AmpacheProvider {
 
 		d_action = AMPACHE_ACTION_EPISODES;
 		do_();
-	}
-
-	function on_do_ping(response) {
-		System.println("AmpacheProvider::on_do_ping( response = " + response + ")");
-		
-		d_action = null;
-		d_callback.invoke(response);
-	}
-
-	function on_do_record_play(response) {
-		System.println("AmpacheProvider::on_do_record_play( response = " + response + ")");
-		
-		d_action = null;
-		d_callback.invoke(response["success"]); // expected success string
-	}
-
-	function on_do_playlists(response) {
-		// append the standard playlist objects to the array
-		for (var idx = 0; idx < response.size(); ++idx) {
-			var playlist = response[idx];
-			var items = playlist["items"];
-			if (items == null) {
-				items = 0;
-			}
-			d_response.add(new Playlist({
-				"id" => playlist["id"],
-				"name" => playlist["name"],
-				"songCount" => items.toNumber(),
-				"remote" => true,
-			}));
-		}
-		checkDone(response);
 	}
 
 	function checkDone(response) {
@@ -354,39 +391,6 @@ class AmpacheProvider {
 			}));
 		}
 		checkDone(response);
-	}
-
-	function on_do_playlist_songs(response) {		
-		// append the standard song objects to the array
-		for (var idx = 0; idx < response.size(); ++idx) {
-			var song = response[idx];
-
-			// new way of storing songs
-			var time = song["time"];
-			if (time == null) {
-				time = 0;
-			}
-			d_response.add(new Song({
-				"id" => song["id"],
-				"title" => song["title"],
-				"artist" => song["artist"]["name"],
-				"time" => time.toNumber(),
-				"mime" => song["mime"],
-				"media_url" => song["id"],
-				"art_id" => song["id"],
-			}));
-		}
-		checkDone(response);
-	}
-
-	function on_do_stream(contentRef) {
-		d_action = null;
-		d_callback.invoke(contentRef.getId());
-	}
-
-	function on_do_get_art(artwork) {
-		d_action = null;
-		d_callback.invoke(artwork);
 	}
 
 	/*
@@ -468,10 +472,10 @@ class AmpacheProvider {
 		// if response too large and limit is possible
 		if ((error instanceof SubMusic.GarminSdkError)
 			&& (error.respCode() == Communications.NETWORK_RESPONSE_TOO_LARGE)
-			&& (d_params["limit"] > 1)) {
+			&& (d_limit > 1)) {
 			
-			d_params["limit"] = (d_params["limit"] / 2).toNumber();		// half the response
-			System.println("AmpacheProvider limit was lowered to " + d_params["limit"]);
+			d_limit = (d_limit / 2).toNumber();		// half the response
+			System.println("AmpacheProvider limit was lowered to " + d_limit);
 			do_();														// retry the request
 			return;
 		}
