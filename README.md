@@ -35,7 +35,10 @@ Requires Ampache version 4.2.0 or higher. For older versions you can enable the 
 
 ### == Subsonic/Airsonic ==
 
-Should be supported now. Just choose Subsonic API in the Connect IQ app settings and fill in the url, username and your password accordingly.
+Just choose Subsonic API in the Connect IQ app settings and fill in the url, username and your password accordingly.
+
+### == Plex TV ==
+Should be supported now. Follow [this guide](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/) to obtain your authentication token. Then, go to Connect IQ app settings, choose Plex API and set the Server Address accordingly. Set the password field to the authentication token you obtained. 
 
 ## Known issues 
 Below a list of known 'issues'. These are problems that cannot be fixed by design of either the watch software or the API backends chosen.
@@ -44,7 +47,7 @@ Below a list of known 'issues'. These are problems that cannot be fixed by desig
 
 **Nextcloud** - does not support transcoding, so supported file types are MP3, MP4, ADTS and WAV files. Other file types will be skipped (shows a 'need sync' in playlist overview).
 
-**General** - 'Error -300' or 'Error 0': check the server address. Any typos? Are you using HTTP? Enable HTTPS on your server. Do you use self-signed certificates? Install certificates signed by a certificate authority (CA) e.g. Let's Encrypt. 
+**General** - 'Error -300' or 'Error 0': check the server address. Any typos? Are you using HTTP or custom ports? Enable HTTPS on your server. Do you use self-signed certificates? Install certificates signed by a certificate authority (CA) e.g. Let's Encrypt. Do you limit the TLS cipher suites to only the latest? Try enabling some older ones, see [this issue](https://github.com/memen45/SubMusic/issues/42#issuecomment-1073341881).
 
 ## == Support ==
 
