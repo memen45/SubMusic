@@ -44,7 +44,9 @@ Should be supported now including transcoding. Choose Plex API in the Connect IQ
 ## Known issues 
 Below a list of known 'issues'. These are problems that cannot be fixed by design of either the watch software or the API backends chosen.
 
-**General** - 'Error -300' or 'Error 0': check the server address for typos? If using HTTP, enable HTTPS on your server. Do you use self-signed certificates? Install certificates signed by a certificate authority (CA) e.g. Let's Encrypt. Do you limit the TLS cipher suites to only the latest? Try enabling some older ones, see [this issue](https://github.com/memen45/SubMusic/issues/42#issuecomment-1073341881). Are you using default custom ports such as `<address>:4040` or `<address>:32400`? This is not supported, so use ports 80 and 443 only!
+**General** - 'Error -300' or 'Error 0': first check the server address for typos. If using HTTP, enable HTTPS on your server. 
+- Do you use self-signed certificates? Install certificates signed by a certificate authority (CA) e.g. Let's Encrypt. Do you limit the TLS cipher suites to only the latest? Try enabling some older ones, see [this issue](https://github.com/memen45/SubMusic/issues/42#issuecomment-1073341881). 
+- Are you using default custom ports such as `<address>:4040` or `<address>:32400`? This is not supported, so use ports 80 and 443 only!
 
 **SubSonic API** - no more than ~25 songs on a playlist, due to Subsonic API and watch limitations. Do you get 'Error -402' during sync? Remove some songs from the playlist.
 
