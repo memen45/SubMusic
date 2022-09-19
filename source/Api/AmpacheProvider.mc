@@ -201,7 +201,6 @@ class AmpacheProvider {
 				"artist" => song["artist"]["name"],
 				"time" => time.toNumber(),
 				"mime" => song["mime"],
-				"media_url" => song["id"],
 				"art_id" => song["id"],
 			}));
 		}

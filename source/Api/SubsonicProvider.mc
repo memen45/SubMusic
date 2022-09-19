@@ -352,7 +352,6 @@ class SubsonicProvider {
 				"artist" => song["artist"],
 				"time" => time.toNumber(),
 				"mime" => song["contentType"],
-				"media_url" => song["id"],
 				"art_id" => song["coverArt"],
 			}));
 		}

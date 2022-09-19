@@ -66,11 +66,6 @@ module Storage {
 			Application.Storage.setValue(PLAYABLE, null);
 		}
 
-		version = new SubMusicVersion({"major" => 0, "minor" => 2, "patch" => 2});
-		if (previous.lessthan(version)) {
-			tryFixMediaUrl();				// fix introduction of media_url property
-		}
-
 		// update stored version
 		Application.Storage.setValue(VERSION, current.toStorage());
 
@@ -118,15 +113,6 @@ module Storage {
 				var contentRef = new Media.ContentRef(refId, Media.CONTENT_TYPE_AUDIO);
 				Media.deleteCachedItem(contentRef);
 			}
-		}
-	}
-
-	// set media_url property to id() for all stored songs
-	function tryFixMediaUrl() {
-		var ids = SongStore.getIds();
-		for (var idx = 0; idx < ids.size(); ++idx) {
-			var isong = new ISong(ids[idx]);
-			isong.setMedia_url(isong.id());
 		}
 	}
 }

@@ -202,7 +202,7 @@ class PlexProvider {
 	function on_do_playlist_songs(response) {	
 
 		// get the array of songs on the playlist
-		response = response["Metadata"];	
+		response = response["Metadata"];
 
 		// append the standard song objects to the array
 		for (var idx = 0; idx < response.size(); ++idx) {
@@ -221,7 +221,6 @@ class PlexProvider {
 				"artist" => song["grandparentTitle"],
 				"time" => time.toNumber() / 1000,
 				"mime" => containerToMime(container),
-				"media_url" => song["Media"][0]["Part"][0]["key"],
 				"art_id" => song["art"],
 			}));
 		}
@@ -242,8 +241,11 @@ class PlexProvider {
 			d_encoding = Media.ENCODING_MP3;
 		}
 
-		d_params = {};
-		d_id = id;
+		d_params = {
+			"path" => "/library/metadata/" + id,
+			"download" => 1,
+			"X-Plex-Client-Profile-Extra" => "add-transcode-target(type=musicProfile&context=streaming&protocol=hls&container=mpegts&audioCodec=aac,mp3)"
+		};
 
 		d_action = PLEX_STREAM;
 		do_();
@@ -352,7 +354,7 @@ class PlexProvider {
 			return;
 		}
 		if (d_action == PLEX_STREAM) {
-			d_api.stream(self.method(:on_do_stream), d_params, d_id, d_encoding);
+			d_api.music_transcode(self.method(:on_do_stream), d_params, d_encoding);
 			return;
 		}
 		if (d_action == PLEX_GET_ART) {

@@ -1,4 +1,5 @@
 using SubMusic.Utils;
+using Toybox.Communications;
 
 class PlexAPI extends Api {
 
@@ -15,7 +16,8 @@ class PlexAPI extends Api {
 
     	System.println("PlexAPI::initialize(client name: " + client() + " )");
 
-        d_params.put("X-Plex-Platform", System.getDeviceSettings().partNumber);
+        d_params.put("X-Plex-Platform", "Chrome");
+        d_params.put("X-Plex-Device", System.getDeviceSettings().partNumber);
         d_params.put("X-Plex-Device-Name", client());
     }
 
@@ -23,10 +25,7 @@ class PlexAPI extends Api {
         Api.setCallback(callback);
 
         var url = url() + "/identity";
-		var options = {
-			:responseType => HTTP_RESPONSE_CONTENT_TYPE_TEXT_PLAIN,
-		};
-		options = SubMusic.Utils.merge(options, d_options);
+		var options = d_options;
 
         Communications.makeWebRequest(url, {}, options, self.method(:onResponse));
     }
@@ -37,11 +36,15 @@ class PlexAPI extends Api {
 		Api.setCallback(callback);
 		
 		var url = url() + "/:/scrobble";
+		var options = {
+			:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_TEXT_PLAIN,
+		};
 		
 		// construct parameters
 		params = SubMusic.Utils.merge(params, d_params);
+		options = SubMusic.Utils.merge(options, d_options);
 
-		Communications.makeWebRequest(url, params, d_options, self.method(:onScrobble));
+		Communications.makeWebRequest(url, params, options, self.method(:onScrobble));
 	}
 
 	function onScrobble(responseCode, data) {
@@ -118,6 +121,30 @@ class PlexAPI extends Api {
     	Api.setCallback(callback);
 
 		var url = url() + id;
+		params = SubMusic.Utils.merge(params, d_params);
+
+		// additional options
+    	var options = {
+    		:method => Communications.HTTP_REQUEST_METHOD_GET,
+          	:responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_AUDIO,
+          	:mediaEncoding => encoding,
+			:fileDownloadProgressCallback => method(:onProgress),
+   		};
+
+		Communications.makeWebRequest(url, params, options, self.method(:onStream));
+	}
+    
+    /**
+     * music_transcode
+     *
+     * downloads a given media file
+     */
+    function music_transcode(callback, params, encoding) {
+		System.println("PlexAPI::music_transcode( params: " + params + " )");
+    
+    	Api.setCallback(callback);
+
+		var url = url() + "/music/:/transcode/universal/start.m3u8";
 		params = SubMusic.Utils.merge(params, d_params);
 
 		// additional options

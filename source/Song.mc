@@ -13,7 +13,6 @@ class Song extends Storable {
 		"time" => 0,			// duration of the song
 		"mime" => "",			// string e.g. "audio/mpeg"
 		"art_id" => null,		// null if no art_id available
-		"media_url" => "",		// key to retrieve the media file
 
 		// required internal song properties
 		"refId" => null,		// null if no audio file is local
@@ -45,10 +44,6 @@ class Song extends Storable {
 	
 	function mime() {
 		return d_storage["mime"];
-	}
-
-	function media_url() {
-		return d_storage["media_url"];
 	}
 	
 	function refId() {
@@ -132,18 +127,6 @@ class ISong extends Song {
 		var changed = updateAny("mime", mime);
 
 		// nothing to do if not stored
-		if (changed && d_stored) {
-			save();
-		}
-		return true;
-	}
-	
-	// returns true if changes saved
-	function setMedia_url(media_url) {
-
-		var changed = updateAny("media_url", media_url);
-
-		// nothing to do if not stored or changed
 		if (changed && d_stored) {
 			save();
 		}
@@ -250,7 +233,6 @@ class ISong extends Song {
 		// update the variables
 		var changed = updateAny("time", song.time());
 		changed |= updateAny("mime", song.mime());
-		changed |= updateAny("media_url", song.media_url());
 		// changed |= updateAny("title", song.title());		// not used, so no storage needed
 		// changed |= updateAny("artist", song.artist());	// not used, so no storage needed
 		changed |= setArt_id(song.art_id());

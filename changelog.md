@@ -1,5 +1,10 @@
 Version [] - 
 
+Version [0.2.4] - 19-09-2022
+- added Plex transcoding
+- fixed Plex server info
+- added support for Plex scrobble
+
 Version [0.2.3] - 06-08-2022
 - fix Ampache and Plex infinite loop issue #52
 

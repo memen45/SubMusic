@@ -43,7 +43,7 @@ class Artwork extends Storable {
     }
 
     static function compute_id(art_id, type) {
-        System.println("Artwork::compute_id() for art_id: " + art_id + ", type: " + type + " )");
+        // System.println("Artwork::compute_id() for art_id: " + art_id + ", type: " + type + " )");
         if (art_id == null) {
             return null;
         }
