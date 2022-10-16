@@ -1,5 +1,8 @@
 Version [] - 
 
+Version [0.2.5] - 16-10-2022
+- fixed Plex sync error with larger playlists
+
 Version [0.2.4] - 19-09-2022
 - added Plex transcoding
 - fixed Plex server info

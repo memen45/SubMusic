@@ -349,10 +349,6 @@ class PlexProvider {
 			d_api.scrobble(self.method(:on_do_record_play), d_params);
 			return;
 		}
-		if (d_action == PLEX_PLAYLIST) {
-			d_api.playlists_items(self.method(:on_do_playlist), d_params, d_id);
-			return;
-		}
 		if (d_action == PLEX_STREAM) {
 			d_api.music_transcode(self.method(:on_do_stream), d_params, d_encoding);
 			return;
@@ -370,6 +366,10 @@ class PlexProvider {
         d_params.put("X-Plex-Container-Size", d_limit);
         d_params.put("X-Plex-Container-Start", d_offset);
 
+		if (d_action == PLEX_PLAYLIST) {
+			d_api.playlists_items(self.method(:on_do_playlist), d_params, d_id);
+			return;
+		}
 		if (d_action == PLEX_PLAYLISTS) {
 			d_api.playlists(self.method(:on_do_playlists), d_params);
 			return;
