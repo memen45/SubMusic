@@ -122,6 +122,7 @@ class AmpacheProvider {
 		// set range parameters
 		d_limit = MAX_LIMIT;
 		d_offset = OFFSET;
+		d_count = MAX_COUNT;
 
 		d_action = AMPACHE_ACTION_PLAYLISTS;
 		do_();
@@ -180,6 +181,7 @@ class AmpacheProvider {
 		// set range parameters
 		d_limit = MAX_LIMIT;
 		d_offset = OFFSET;
+		d_count = MAX_COUNT;
 
 		d_action = AMPACHE_ACTION_PLAYLIST_SONGS;
 		do_();
@@ -280,6 +282,7 @@ class AmpacheProvider {
 		// set range parameters
 		d_limit = 5;			// use lower limit due to description
 		d_offset = OFFSET;
+		d_count = MAX_COUNT;
 
 		d_action = AMPACHE_ACTION_PODCASTS;
 		do_();
@@ -331,11 +334,13 @@ class AmpacheProvider {
 		if (d_limit == null) {
 			d_limit = MAX_LIMIT;
 		}
+
 		System.println("AmpacheProvider::checkDone()");
-		System.println(d_response.size());
-		System.println(response.size());
-		System.println(d_count);
-		System.println(d_limit);
+		System.println("Total received: " + d_response.size());
+		System.println("Last received: " + response.size());
+		System.println("Max total: " + d_count);
+		System.println("Max at once: " + d_limit);
+
 		if ((d_response.size() < d_count)		// count not reached 
 			&& (response.size() >= d_limit)) {	// limit reached
 			// request required, since response was full and count not reached

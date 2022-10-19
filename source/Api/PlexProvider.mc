@@ -15,8 +15,8 @@ class PlexProvider {
     
     enum { MAX_COUNT = 10000, MAX_LIMIT = 20, OFFSET = 0, }
     private var d_limit = MAX_LIMIT;    // defines the number of results in a single response
-    private var d_offset = OFFSET;      // defines the offset for the request
-	private var d_count = MAX_COUNT;	// count objects for ranged requests
+    private var d_offset = OFFSET;      // defines the offset for the ranged request
+	private var d_count = MAX_COUNT;	// defines the number of objects to be received in ranged requests
 
     private var d_id;       // required for getPlaylist, getPlaylistSongs, getRefId, getArtwork
 	private var d_encoding;				// encoding parameter needed for stream
@@ -122,6 +122,7 @@ class PlexProvider {
 		// set range parameters
 		d_limit = MAX_LIMIT;
         d_offset = OFFSET;
+		d_count = MAX_COUNT;
 
 		d_action = PLEX_PLAYLISTS;
 		do_();
@@ -161,6 +162,7 @@ class PlexProvider {
 		d_response.add(plex_to_playlist(response));
 
 		d_action = null;
+		d_count = MAX_COUNT;
 		d_callback.invoke(d_response);
 	}
 
@@ -194,6 +196,7 @@ class PlexProvider {
         // set range parameters
 		d_limit = MAX_LIMIT;
 		d_offset = OFFSET;
+		d_count = MAX_COUNT;
 
 		d_action = PLEX_PLAYLIST_SONGS;
 		do_();
@@ -312,11 +315,13 @@ class PlexProvider {
 		if (d_limit == null) {
 			d_limit = MAX_LIMIT;
 		}
+
 		System.println("PlexProvider::checkDone()");
-		System.println(d_response.size());
-		System.println(response.size());
-		System.println(d_count);
-		System.println(d_limit);
+		System.println("Total received: " + d_response.size());
+		System.println("Last received: " + response.size());
+		System.println("Max total: " + d_count);
+		System.println("Max at once: " + d_limit);
+
 		if ((d_response.size() < d_count)		// count not reached 
 			&& (response.size() >= d_limit)) {	// limit reached
 			// request required, since response was full and count not reached
