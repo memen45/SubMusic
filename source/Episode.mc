@@ -7,6 +7,7 @@ class Episode extends Storable {
 		// required external episode properties
 		"id" => null,			// id of the episode
 		"title" => "",			// title of the episode
+		"artist" => "",			// 
 		"time" => 0,			// duration of the episode
 		"mime" => "",			// string e.g. "audio/mpeg"
 		"art_id" => null,		// null if no art_id available
@@ -29,6 +30,10 @@ class Episode extends Storable {
 
 	function title() {
 		return d_storage["title"];
+	}
+
+	function artist() {
+		return d_storage["artist"];
 	}
 	
 	function time() {

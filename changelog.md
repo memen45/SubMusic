@@ -1,5 +1,8 @@
 Version [] - 
 
+Version [0.2.6] - 19-10-2022
+- added workaround for Plex' missing metadata
+
 Version [0.2.5] - 16-10-2022
 - fixed Plex sync error with larger playlists
 

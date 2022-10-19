@@ -43,10 +43,22 @@ module SubMusic {
                     // load the menuitem
                     var id = d_ids[idx];
                     var isong = new ISong(id);
-                    var meta = isong.metadata();
+                    var metadata = isong.metadata();
+
+                    // add stored metadata if not given in file (Plex does not provide metadata in file)
+                    var has_title = (metadata.title != null) && (metadata.title instanceof Lang.String) && (!metadata.title.equals(""));
+                    var has_artist = (metadata.artist != null) && (metadata.artist instanceof Lang.String) && (!metadata.artist.equals(""));
+                    if (!has_title) {
+                        metadata.title = isong.title();
+                    }
+                    if (!has_artist) {
+                        metadata.artist = isong.artist();
+                    }
+
+                    // add the item
                     items.add({
-                        LABEL => meta.title,
-                        SUBLABEL => meta.artist,
+                        LABEL => metadata.title,
+                        SUBLABEL => metadata.artist,
                         METHOD => id,
 //                        OPTION => isong.artwork(),
                     });

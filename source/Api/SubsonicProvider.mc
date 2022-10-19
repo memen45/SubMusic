@@ -348,8 +348,8 @@ class SubsonicProvider {
 			}
 			songs.add(new Song({
 				"id" => song["id"],
-				"title" => song["title"],
-				"artist" => song["artist"],
+				// "title" => song["title"],
+				// "artist" => song["artist"],
 				"time" => time.toNumber(),
 				"mime" => song["contentType"],
 				"art_id" => song["coverArt"],

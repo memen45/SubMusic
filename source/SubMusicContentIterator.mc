@@ -116,6 +116,16 @@ class SubMusicContentIterator extends Media.ContentIterator {
 		var content = Media.getCachedContentObj(contentRef);
 		var metadata = content.getMetadata();
 
+		// add stored metadata if not given in file (Plex does not provide metadata in file)
+		var has_title = (metadata.title != null) && (metadata.title instanceof Lang.String) && (!metadata.title.equals(""));
+		var has_artist = (metadata.artist != null) && (metadata.artist instanceof Lang.String) && (!metadata.artist.equals(""));
+		if (!has_title) {
+			metadata.title = audio.title();
+		}
+		if (!has_artist) {
+			metadata.artist = audio.artist();
+		}
+		
 		// default playback is 0, unless in podcast mode, some position is stored before and position is not within five seconds of the end
 		var playbackStartPos = 0;	
 		if (d_playable.podcast_mode()

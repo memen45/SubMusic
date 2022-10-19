@@ -33,6 +33,14 @@ class Audio extends Storable {
 		return d_audio.artwork();
 	}
 
+	function title() {
+		return d_audio.title();
+	}
+
+	function artist() {
+		return d_audio.artist();
+	}
+
 	function time() {
 		return d_audio.time();
 	}

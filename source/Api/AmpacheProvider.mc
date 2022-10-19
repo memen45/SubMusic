@@ -197,8 +197,8 @@ class AmpacheProvider {
 			}
 			d_response.add(new Song({
 				"id" => song["id"],
-				"title" => song["title"],
-				"artist" => song["artist"]["name"],
+				// "title" => song["title"],
+				// "artist" => song["artist"]["name"],
 				"time" => time.toNumber(),
 				"mime" => song["mime"],
 				"art_id" => song["id"],

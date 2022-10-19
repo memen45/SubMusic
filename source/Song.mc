@@ -233,8 +233,8 @@ class ISong extends Song {
 		// update the variables
 		var changed = updateAny("time", song.time());
 		changed |= updateAny("mime", song.mime());
-		// changed |= updateAny("title", song.title());		// not used, so no storage needed
-		// changed |= updateAny("artist", song.artist());	// not used, so no storage needed
+		changed |= updateAny("title", song.title());		// not used, so no storage needed
+		changed |= updateAny("artist", song.artist());	// not used, so no storage needed
 		changed |= setArt_id(song.art_id());
 		if (changed) {
 			save();
