@@ -5,21 +5,22 @@ using SubMusic.Menu;
 
 module SubMusic {
 	module Menu {
-		class About extends MenuBase {
+		class Settings extends MenuBase {
 
 			function initialize() {
-				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.About_label), false);
+				MenuBase.initialize(WatchUi.loadResource(Rez.Strings.Settings_label), false);
 			}
 
 			function load() {
-				System.println("Menu.About::load()");
+				System.println("Menu.Settings::load()");
 				return MenuBase.load([
+					new Menu.AppSettings(),
+					new Menu.Storage(),
 					{
 						LABEL => WatchUi.loadResource(Rez.Strings.AppName) + " " + WatchUi.loadResource(Rez.Strings.Version_label), 
 						SUBLABEL => (new SubMusicVersion(null)).toString(), 
 						METHOD => "version",		// not used, null does not work
 					},
-					new Menu.AboutSettings(),
 					{
 						LABEL => WatchUi.loadResource(Rez.Strings.Donate_label), 
 						SUBLABEL => null, 

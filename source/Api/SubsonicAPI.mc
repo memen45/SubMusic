@@ -4,6 +4,7 @@ using Toybox.System;
 using Toybox.Lang;
 using SubMusic;
 using SubMusic.Utils;
+using SubMusic.Storage;
 
 // class for interfacing with a subsonic API endpoint
 class SubsonicAPI extends Api {
@@ -270,7 +271,7 @@ class SubsonicAPI extends Api {
 
 	function updateAut(aut) {
 		// clear authentication headers 
-		if (aut == ApiAuthMethod.API_AUTH) {
+		if (aut == Storage.ApiAuthMethod.API_AUTH) {
 			d_options = {};
 			return;
 		}

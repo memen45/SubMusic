@@ -33,6 +33,9 @@
     <string id="Browse_label">Browse</string>
     <string id="More_label">More...</string>
     <string id="About_label">About</string>
+    <string id="Settings_label">Settings</string>
+    <string id="AppSettings_label">App Settings</string>
+    <string id="Storage_label">Storage</string>
     <string id="Version_label">Version</string>
     <string id="Settings_label">Settings</string>
 
@@ -74,4 +77,7 @@
     <string id="Menu_PodcastMode_label">Podcast Mode</string>
     <string id="Menu_PodcastMode_sublabel">Stores play state</string>
     <string id="Menu_Songs_label">Songs</string>
+    
+    <string id="Memory_label">Memory</string>
+    <string id="Cache_label">Media cache</string>
 </strings>

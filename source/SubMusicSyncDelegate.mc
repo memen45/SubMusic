@@ -3,7 +3,7 @@ using Toybox.Communications;
 using Toybox.Media;
 using Toybox.Time;
 using Toybox.WatchUi;
-using SubMusic;
+using SubMusic.Storage;
 
 module SubMusic {
 	

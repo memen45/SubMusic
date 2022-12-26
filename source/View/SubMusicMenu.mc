@@ -6,20 +6,20 @@ Planned menu:
 
 Library
   - Now Playing
-   - Song 1
+   - <Song 1>
   - Play All Songs
   - Playlists
-   - Playlist 1
+   - <Playlist 1>
      - Play Now
      - Shuffle
      - Podcast Mode (toggle)
      - Songs
      - Remove on next sync (confirm)
   - Podcasts
-   - Podcast 1
+   - <Podcast 1>
      - Play Now
      - Episodes
-      - Episode 1
+      - <Episode 1>
        - Play Now
      - Remove on next sync (confirm)
   - Sync Settings
@@ -41,65 +41,67 @@ Library
     - Server
       - Server Info
       - Test Server
-    - About/
- - About
-  - SubMusic Version
-  - Server Version
-  - Donate
-  - Settings
-    - Disable 30s skip
-    - Remove cached metadata
-    - Remove all data
+    - Settings/
+- Settings
+ - App settings
+  - Disable 30s skip
+ - Storage
+  - Memory
+  - Media Cache
+  - Remove all data
+ - SubMusic Version
+ - Donate
 
-Pretty: https://tree.nathanfriend.io/?s=(%27optiKs!(%27fancy!true~fullPath!false~trailingSlash!true)~source!(%27source!%27Library24Now%209ing27SKg%201249%20All%20SKgs24js27jHShuffleqF%20ModC%7Btoggle%7DqSKgs5Fs27FHEQes84EQC1879U5Sync%20_Browse84jXplayli68*GSKgs84FXpodca6%20%7Blatest%20Kly%7D8*GEQes8**G%3CeQezG...84RZXrZz*G9%20now%20%3F2GSyncU2GJ84J%20Info84Test%20J2GAbout%2F%5Cn7About24SubMusicYJYDKate24_DisablC30s%20skip2GWcached%20metadata2GWall%20data%27)~versiK!%271%27)*%20%202%5CnG-%205qWK%20next%20sync%20%7BcKfirm%7D246stz*G%5B%5D%20OfflinCavailable7%20482**9PlayCe%20FPodcastG*4H%201q9UqJServerKonQpisodU%20NowWRemovCXs8G%3CY%20VersiK24ZadiostatiK_Settings2Gj9listq2*7z1%3E8%01zqj_ZYXWUQKJHGFC9876542*
+Pretty: https://tree.nathanfriend.io/?s=(%27optiUs!(%27fancy!true~fullPath!false~trailingSlash!true)~source!(%27source!%27Library24Now%209ingzSUg%20J249%20All%20SUgs249listsz9liFShuffle2*6PXsWModK%7Btoggle%7D2*6SUgs5PXstszPXFEYes84%3CEYKJ869Z5Sync%20SG2QBrowse849listjplayli78*QSUgs84PXstjpX7%20%7BlatesWUly%7D8*QEYes8**Q%3CeYeJ8Q...84RqjrqJ8*Q9%20now%20%3F2QSyncZ2Q_84_%20Info84TesW_2QSG%2FH4SGH6App%20sG24DisablK30s%20skipH6Storage24Memory24Media%20Cache24RemovKall%20dataH6SubMusic%20VersiUH6DUate%27)~versiU!%271%27)*%20%202HQ-%2052*6RemovKU%20nexWsync%20%7BcUfirm%7D246%2047stJ8*Q%5B%5D%20OfflinKavailable82**9PlayFsWJ2*69Z2*6GettingsH%5CnJ1%3EKe%20Q*4UonWt%20XodcaYpisodZ%20Now_Serverjs8Q%3CqadiostatiUz26%3C%01zqj_ZYXWUQKJHGF9876542*
+
 .
-.
-└── Library/
-    ├── Now Playing/
-    │   └── Song 1
-    ├── Play All Songs
-    ├── Playlists/
-    │   └── Playlist 1/
-    │       ├── Play Now
-    │       ├── Shuffle
-    │       ├── Podcast Mode (toggle)
-    │       ├── Songs
-    │       └── Remove on next sync (confirm)
-    ├── Podcasts/
-    │   └── Podcast 1/
-    │       ├── Play Now
-    │       ├── Episodes/
-    │       │   └── Episode 1/
-    │       │       └── Play Now
-    │       └── Remove on next sync (confirm)
-    ├── Sync Settings/
-    │   ├── Browse/
-    │   │   ├── Playlists/
-    │   │   │   └── <playlist1>/
-    │   │   │       ├── [] Offline available
-    │   │   │       └── Songs
-    │   │   ├── Podcasts/
-    │   │   │   ├── <podcast1>/
-    │   │   │   │   ├── [] Offline available (latest only)
-    │   │   │   │   └── Episodes/
-    │   │   │   │       └── <episode1>
-    │   │   │   └── ...
-    │   │   └── Radiostations/
-    │   │       └── <radiostation1>/
-    │   │           └── Play now ?
-    │   ├── Sync Now
-    │   ├── Server/
-    │   │   ├── Server Info
-    │   │   └── Test Server
-    │   └── About/
-    └── About/
-        ├── SubMusic Version
-        ├── Server Version
-        ├── Donate
-        └── Settings/
-            ├── Disable 30s skip
-            ├── Remove cached metadata
-            └── Remove all data
+├── Library/
+│   ├── Now Playing/
+│   │   └── <Song 1>
+│   ├── Play All Songs
+│   ├── Playlists/
+│   │   └── <Playlist 1>/
+│   │       ├── Play Now
+│   │       ├── Shuffle
+│   │       ├── Podcast Mode (toggle)
+│   │       ├── Songs
+│   │       └── Remove on next sync (confirm)
+│   ├── Podcasts/
+│   │   └── <Podcast 1>/
+│   │       ├── Play Now
+│   │       ├── Episodes/
+│   │       │   └── <Episode 1>/
+│   │       │       └── Play Now
+│   │       └── Remove on next sync (confirm)
+│   └── Sync Settings/
+│       ├── Browse/
+│       │   ├── Playlists/
+│       │   │   └── <playlist1>/
+│       │   │       ├── [] Offline available
+│       │   │       └── Songs
+│       │   ├── Podcasts/
+│       │   │   ├── <podcast1>/
+│       │   │   │   ├── [] Offline available (latest only)
+│       │   │   │   └── Episodes/
+│       │   │   │       └── <episode1>
+│       │   │   └── ...
+│       │   └── Radiostations/
+│       │       └── <radiostation1>/
+│       │           └── Play now ?
+│       ├── Sync Now
+│       ├── Server/
+│       │   ├── Server Info
+│       │   └── Test Server
+│       └── Settings/
+└── Settings/
+    ├── App settings/
+    │   └── Disable 30s skip
+    ├── Storage/
+    │   ├── Memory
+    │   ├── Media Cache
+    │   └── Remove all data
+    ├── SubMusic Version
+    └── Donate
 */
 
 module SubMusic {
@@ -184,7 +186,10 @@ module SubMusic {
 		    }
 
 			function onHide() {
-				d_menu.unload();
+				if (!d_menu.loaded()) {
+					System.println("MenuView::onHide -> will unload the menu " + d_menu.title());
+					d_menu.unload();
+				}
 			}
 		}
 		
@@ -346,7 +351,7 @@ module SubMusic {
 				System.println("MenuBase::onLoaded" + self);
 				
 				d_error = error;
-				// d_loaded = true;		// make sure menus are reloaded, keep false
+				d_loaded = false;		// make sure menus are reloaded, keep false
 				if (f_loaded) {	f_loaded.invoke(error); }
 			}
 

@@ -1,3 +1,5 @@
+using SubMusic.Storage;
+
 module PlaylistStore {
     var d_store = new ObjectStore(Storage.PLAYLISTS);
 

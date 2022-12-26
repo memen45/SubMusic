@@ -2,6 +2,7 @@ using Toybox.WatchUi;
 using Toybox.Time;
 
 using SubMusic.Menu;
+using SubMusic.Storage;
 
 module SubMusic {
 	module Menu {
@@ -24,7 +25,7 @@ module SubMusic {
 						METHOD => method(:onStartSync),
 					},
 					new Menu.Browse(),
-					new Menu.About(),
+					new Menu.Settings(),
 				]);
 			}
 			

@@ -1,3 +1,5 @@
+using SubMusic.Storage;
+
 module PodcastStore {
     var d_store = new ObjectStore(Storage.PODCASTS);
 

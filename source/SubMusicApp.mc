@@ -1,6 +1,7 @@
 using Toybox.Application;
 using Toybox.WatchUi;
 using SubMusic.Menu;
+using SubMusic.Storage;
 
 class SubMusicApp extends Application.AudioContentProviderApp {
 

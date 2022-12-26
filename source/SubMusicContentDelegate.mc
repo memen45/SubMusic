@@ -1,5 +1,6 @@
 using Toybox.Media;
 using SubMusic;
+using SubMusic.ScrobbleStore;
 
 // This class handles events from the system's media
 // player. getContentIterator() returns an iterator
@@ -81,7 +82,7 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
 
     	if (songEvent == PLAYBACK_NOTIFY) {
 			// record a play
-    		ScrobbleStore.add(new Scrobble({
+    		ScrobbleStore.add(new SubMusic.Scrobble({
     			"id" => audio.id(),
     		}));
     		return;

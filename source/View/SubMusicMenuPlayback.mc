@@ -21,7 +21,7 @@ module SubMusic {
 					new Menu.PlaylistsLocal(WatchUi.loadResource(Rez.Strings.playbackMenuTitle)),
 					new Menu.PodcastsLocal(WatchUi.loadResource(Rez.Strings.Podcasts_label)),
 					new Menu.More(),
-					new Menu.About(),
+					new Menu.Settings(),
 					{
 						LABEL => WatchUi.loadResource(Rez.Strings.Donate_label), 
 						SUBLABEL => null, 

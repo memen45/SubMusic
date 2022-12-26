@@ -1,5 +1,6 @@
 using Toybox.System;
 using Toybox.Application;
+using SubMusic.Storage;
 
 /**
  * module SongStore

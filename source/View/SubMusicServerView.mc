@@ -1,4 +1,5 @@
 using Toybox.WatchUi;
+using SubMusic.Storage;
 
 class SubMusicServerView extends TextView {
 	
@@ -14,9 +15,9 @@ class SubMusicServerView extends TextView {
     	msg += "\n" + settings["api_usr"] + "\n";
     	
 		var api_map = {
-			ApiStandard.AMPACHE 	=> WatchUi.loadResource(Rez.Strings.ApiStandardAmpache),
-			ApiStandard.SUBSONIC 	=> WatchUi.loadResource(Rez.Strings.ApiStandardSubsonic),
-			ApiStandard.PLEX 		=> WatchUi.loadResource(Rez.Strings.ApiStandardPlex),
+			Storage.ApiStandard.AMPACHE 	=> WatchUi.loadResource(Rez.Strings.ApiStandardAmpache),
+			Storage.ApiStandard.SUBSONIC 	=> WatchUi.loadResource(Rez.Strings.ApiStandardSubsonic),
+			Storage.ApiStandard.PLEX 		=> WatchUi.loadResource(Rez.Strings.ApiStandardPlex),
 		};
 		msg += api_map[settings["api_typ"]];
     	

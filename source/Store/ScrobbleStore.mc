@@ -1,3 +1,5 @@
+using SubMusic.Storage;
+
 module SubMusic {
 
 	class Scrobble {

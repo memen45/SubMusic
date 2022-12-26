@@ -2,6 +2,7 @@ using Toybox.WatchUi;
 using Toybox.Communications;
 using Toybox.Application;
 using Toybox.Time;
+using SubMusic.Storage;
 
 module SubMusic {
 	module Menu {
@@ -31,7 +32,7 @@ module SubMusic {
 						SUBLABEL => WatchUi.loadResource(Rez.Strings.confSync_MoreInfo_ServerDetail_sublabel),
 						METHOD => method(:onServerDetail),
 					},
-					new Menu.About(),
+					new Menu.Settings(),
 					{
 						LABEL => WatchUi.loadResource(Rez.Strings.Donate_label), 
 						SUBLABEL => null, 
