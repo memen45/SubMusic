@@ -1,6 +1,7 @@
 using Toybox.Communications;
 using Toybox.WatchUi;
 using Toybox.System;
+using Toybox.Lang;
 using SubMusic;
 using SubMusic.Utils;
 
@@ -109,7 +110,7 @@ class SubsonicAPI extends Api {
     	Communications.makeWebRequest(url, params, d_options, self.method(:onGetPodcasts));
 	}
 	
-	function onGetPodcasts(responseCode, data) {
+	function onGetPodcasts(responseCode as Lang.Number, data as Lang.Dictionary or Null) {
 		System.println("SubsonicAPI::onGetPodcasts( responseCode: " + responseCode + ", data: " + data + ")");		
 		
 		// check if request was successful and response is ok

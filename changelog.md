@@ -1,5 +1,10 @@
 Version [] - 
 
+Version [0.2.7] - 14-11-2022
+- fixed podcast episode downloading on og subsonic and airsonic-advanced servers
+- fixed progressbar during sync
+- fixed title/artist showing when browsing online (subsonic, ampache)
+
 Version [0.2.6] - 19-10-2022
 - added workaround for Plex' missing metadata
 - fixed partial sync for Ampache and Plex large playlists

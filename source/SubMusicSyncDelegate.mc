@@ -172,7 +172,7 @@ module SubMusic {
 			SyncDelegate.initialize();
 		}
 
-		function notifySyncProgres(percentageComplete) {
+		function notifySyncProgress(percentageComplete) {
 			Communications.notifySyncProgress(percentageComplete);
 		}
 
@@ -209,7 +209,7 @@ module SubMusic {
 			SyncDelegate.initialize();
 		}
 
-		function notifySyncProgres(percentageComplete) {
+		function notifySyncProgress(percentageComplete) {
 			Media.notifySyncProgress(percentageComplete);
 		}
 

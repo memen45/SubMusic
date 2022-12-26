@@ -66,7 +66,7 @@ class Api {
 	 *
 	 * returns http/sdk errors if found
 	 */
-	function checkResponse(responseCode, data) {
+	function checkResponse(responseCode as Lang.Number, data as Lang.Dictionary or Null) {
 		var error = SubMusic.HttpError.is(responseCode);
 		if (error) { return error; }
 		error = SubMusic.GarminSdkError.is(responseCode);
@@ -80,7 +80,7 @@ class Api {
         return null;
     }
 
-    function checkDictionaryResponse(responseCode, data) {
+    function checkDictionaryResponse(responseCode as Lang.Number, data as Lang.Dictionary or Null) {
         var error = checkResponse(responseCode, data);
         if (error) { return error; }
         return isDictionary(data);      // check type of received object

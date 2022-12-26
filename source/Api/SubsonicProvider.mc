@@ -296,7 +296,7 @@ class SubsonicProvider {
 				time = 0;
 			}
 			episodes.add(new Episode({
-				"id" => episode["id"],
+				"id" => episode["streamId"],
 				"title" => episode["title"],
 				"time" => time.toNumber(),
 				"mime" => episode["contentType"],
@@ -348,8 +348,8 @@ class SubsonicProvider {
 			}
 			songs.add(new Song({
 				"id" => song["id"],
-				// "title" => song["title"],
-				// "artist" => song["artist"],
+				"title" => song["title"],
+				"artist" => song["artist"],
 				"time" => time.toNumber(),
 				"mime" => song["contentType"],
 				"art_id" => song["coverArt"],
