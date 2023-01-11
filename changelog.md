@@ -1,5 +1,8 @@
 Version [] - 
 
+Version [0.2.8] - 
+- fized storage 0 Bytes
+
 Version [0.2.7] - 26-12-2022
 - fixed podcast episode downloading on og subsonic and airsonic-advanced servers
 - fixed progressbar during sync

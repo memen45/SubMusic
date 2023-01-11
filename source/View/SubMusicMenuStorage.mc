@@ -88,11 +88,14 @@ module SubMusic {
 			}
 
 			static function formatBytes(bytes as Lang.Integer) as Lang.String {
+				if (bytes == 0) {
+					return "0 Bytes";
+				}
 				var k = 1024;
 				var sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 				var in = Math.floor(Math.log(bytes, 10) / Math.log(k, 10));
 				var flt = (bytes / Math.pow(k, in));
-				return flt.format("%.1f") +  sizes[in.toNumber()];
+				return flt.format("%.1f") + " " + sizes[in.toNumber()];
 			}
 		}
 	}
