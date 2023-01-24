@@ -62,7 +62,10 @@ class AmpacheError extends SubMusic.ApiError {
 			d_msg = error_obj["message"];
 		}		
 
-		var apitype = apimap.get(d_type);
+		var apitype = null;
+		if (d_type != null) {
+			apitype = apimap.get(d_type);
+		}
 		if (apitype == null) {
 			apitype = SubMusic.ApiError.UNKNOWN;
 		}

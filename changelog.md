@@ -1,7 +1,8 @@
 Version [] - 
 
-Version [0.2.8] - 
-- fized storage 0 Bytes
+Version [0.2.8] - 11-01-2023
+- fixed storage 0 Bytes
+- fixed some rare crashes on receiving invalid response
 
 Version [0.2.7] - 26-12-2022
 - fixed podcast episode downloading on og subsonic and airsonic-advanced servers

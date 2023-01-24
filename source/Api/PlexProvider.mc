@@ -129,7 +129,12 @@ class PlexProvider {
 	}
 
 	function on_do_playlists(response) {
+		
+		// get the array of playlists
 		response = response["Metadata"];
+		if (!(response instanceof Lang.Array)) {
+			response = [];
+		}
 
 		// append the standard playlist objects to the array
 		for (var idx = 0; idx < response.size(); ++idx) {
@@ -206,6 +211,9 @@ class PlexProvider {
 
 		// get the array of songs on the playlist
 		response = response["Metadata"];
+		if (!(response instanceof Lang.Array)) {
+			response = [];
+		}
 
 		// append the standard song objects to the array
 		for (var idx = 0; idx < response.size(); ++idx) {
@@ -430,6 +438,9 @@ class PlexProvider {
 			"mp4" => "audio/mp4",
 			"wav" => "audio/wav",
 		};
+		if (!(container instanceof Lang.Object)) {
+			container = "mp3";
+		}
 		return map[container];
 	}
 }
