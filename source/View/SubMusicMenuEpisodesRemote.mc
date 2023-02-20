@@ -20,7 +20,9 @@ module SubMusic {
             }
 
             function load() {
-                System.println("Menu.EpisodesRemote::load()");
+                if ($.debug) {
+                	System.println("Menu.EpisodesRemote::load()");
+                }
 
                 // if already loading, do nothing, wait for response
                 if (d_loading) {

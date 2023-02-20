@@ -13,27 +13,35 @@ module EpisodeStore {
 	var d_episodes = new ObjectStore(Storage.EPISODES);			// allows fast indexing by id
 	
 	function get(id) {
-//		System.println("EpisodeStore::get( id : " + id + " )");
+//		if ($.debug) {
+//			System.println("EpisodeStore::get( id : " + id + " )");
+//		}
 
 		return d_episodes.get(id);
 	}
 
 	function getIds() {
-		System.println("EpisodeStore::getIds()");
+		if ($.debug) {
+			System.println("EpisodeStore::getIds()");
+		}
 
 		return d_episodes.getIds();
 	}
 
     // these functions should be used only internally by IEpisode class
 	function save(episode) {
-		System.println("EpisodeStore::save( episode : " + episode.toStorage() + " )");
+		if ($.debug) {
+			System.println("EpisodeStore::save( episode : " + episode.toStorage() + " )");
+		}
 
 		// save details of the episode
 		return d_episodes.save(episode);
 	}
 
 	function remove(episode) {
-		System.println("EpisodeStore::remove( " + episode.toStorage() + ")");
+		if ($.debug) {
+			System.println("EpisodeStore::remove( " + episode.toStorage() + ")");
+		}
 
 		// remove from storage
 		d_episodes.remove(episode);

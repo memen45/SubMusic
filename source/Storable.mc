@@ -1,7 +1,9 @@
 class Storable {
 
 	function initialize(storage) {
-		// System.println("Storable::initialize( storage : " + storage + " )");
+		// if ($.debug) {
+		// 	System.println("Storable::initialize( storage : " + storage + " )");
+		// }
 
 		fromStorage(storage);
 	}
@@ -44,7 +46,9 @@ class Storable {
 
 	// iterate over all elements in the array to convert to storage
 	function array_to_storage(array) {
-		System.println("Storable::array_to_storage( array: " + array + " )");
+		if ($.debug) {
+			System.println("Storable::array_to_storage( array: " + array + " )");
+		}
 
 		var ret = new [array.size()];
 		for (var idx = 0; idx != array.size(); ++idx) {

@@ -3,10 +3,19 @@ using Toybox.WatchUi;
 using SubMusic.Menu;
 using SubMusic.Storage;
 
+var debug = false;
+
 class SubMusicApp extends Application.AudioContentProviderApp {
 
     function initialize() {
         AudioContentProviderApp.initialize();
+
+        // update debug status
+        $.debug = Application.Properties.getValue("debug");
+
+        if ($.debug) {
+        	System.println("SubMusicApp::initialize()");
+        }
         
         // in case variables need to be reset
     //    Application.Storage.clearValues();
@@ -17,16 +26,22 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // onStart() is called on application start up
     function onStart(state) {
-    	System.println("Start with state: " + state);
+    	if ($.debug) {
+    		System.println("Start with state: " + state);
+    	}
     }
 
     // onStop() is called when your application is exiting
     function onStop(state) {
-    	System.println("Stop with state: " + state);
+    	if ($.debug) {
+    		System.println("Stop with state: " + state);
+    	}
     }
     
     function onSettingsChanged() {
-    	System.println("Settings changed");
+    	if ($.debug) {
+    		System.println("Settings changed");
+    	}
     	
     	// reset the sessions for the provider
     	SubMusic.Provider.onSettingsChanged();
@@ -37,7 +52,9 @@ class SubMusicApp extends Application.AudioContentProviderApp {
 
     // Get a Media.ContentDelegate for use by the system to get and iterate through media on the device
     function getContentDelegate(arg) {
-    	System.println("getContentDelegate with arg: " + arg);
+    	if ($.debug) {
+    		System.println("getContentDelegate with arg: " + arg);
+    	}
         
         return new SubMusicContentDelegate();
     }
@@ -45,7 +62,9 @@ class SubMusicApp extends Application.AudioContentProviderApp {
     // Get a delegate that communicates sync status to the system for syncing media content to the device
     function getSyncDelegate() {
         var syncrequest = Application.Storage.getValue(Storage.SYNC_REQUEST);
-        System.println("SubMusicApp syncrequest " + syncrequest);
+        if ($.debug) {
+        	System.println("SubMusicApp syncrequest " + syncrequest);
+        }
         // return deprecated if sync was not started from the menu (i.e. autostart)
         if (syncrequest != true) {
             return new SubMusic.SyncDelegate_deprecated();

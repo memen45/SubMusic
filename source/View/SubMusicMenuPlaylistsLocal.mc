@@ -13,7 +13,9 @@ module SubMusic {
 
             // reload the ids on request
 			function load() {
-                System.println("Menu.PlaylistsLocal::load()");
+                if ($.debug) {
+                	System.println("Menu.PlaylistsLocal::load()");
+                }
                 
                 var playlists = [];
                 var ids = PlaylistStore.getIds();

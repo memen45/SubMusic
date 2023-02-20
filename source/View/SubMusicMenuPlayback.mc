@@ -10,7 +10,9 @@ module SubMusic {
 			}
 
 			function load() {
-				System.println("Menu.Playback::load()");
+				if ($.debug) {
+					System.println("Menu.Playback::load()");
+				}
 				return MenuBase.load([
 					new Menu.NowPlaying(),
 					{

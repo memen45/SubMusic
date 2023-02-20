@@ -13,7 +13,9 @@ module SubMusic {
 			}
 
 			function load() {
-				System.println("Menu.More::load()");
+				if ($.debug) {
+					System.println("Menu.More::load()");
+				}
 				return MenuBase.load([
 					new Menu.PlaylistsRemoteToggle(WatchUi.loadResource(Rez.Strings.confSync_SelectPlaylists_label)),		// Temporarily here, future: use browse
 					{
@@ -56,7 +58,9 @@ module SubMusic {
 				// store sync request, refer to bug https://forums.garmin.com/developer/connect-iq/i/bug-reports/bug-media-communications-syncdelegate-blocks-charging
 				Application.Storage.setValue(Storage.SYNC_REQUEST, true);
 				// var syncrequest  = Application.Storage.getValue(Storage.SYNC_REQUEST);
-				// System.println(syncrequest);
+				// if ($.debug) {
+				// 	System.println(syncrequest);
+				// }
 				
 				// start the sync
 				Communications.startSync();

@@ -14,7 +14,9 @@ module SubMusic {
 		private var d_todo_total = ScrobbleStore.size();	// store initial size
 		
 		function initialize(progress, done, fail) {
-			System.println("ScrobbleSync::initialize()");
+			if ($.debug) {
+				System.println("ScrobbleSync::initialize()");
+			}
 			Deferrable.initialize(method(:sync), done, fail);		// make sync the deferred task
 			
 			f_progress = progress;
@@ -38,7 +40,9 @@ module SubMusic {
 		}
 		
 		function onRecordPlay(response) {
-			System.println("ScrobbleSync::onRecordPlay( response : " + response + ")");
+			if ($.debug) {
+				System.println("ScrobbleSync::onRecordPlay( response : " + response + ")");
+			}
 			
 			// decrement todos
 			d_todo -= 1;
@@ -51,7 +55,9 @@ module SubMusic {
 		}
 		
 		function onError(error) {
-			System.println("ScrobbleSync::onError( " + error.shortString() + " " + error.toString() + ")");
+			if ($.debug) {
+				System.println("ScrobbleSync::onError( " + error.shortString() + " " + error.toString() + ")");
+			}
 			
 			// some problem with the network - we can skip this and try again later
 			if ((error instanceof SubMusic.HttpError)

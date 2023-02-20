@@ -29,7 +29,9 @@ module SubMusic {
 
 		// Starts the sync with the system
 		function onStartSync() {
-			System.println("Sync started...");
+			if ($.debug) {
+				System.println("Sync started...");
+			}
 
 			// show progress
 			d_notifySyncProgress.invoke(0);
@@ -47,7 +49,9 @@ module SubMusic {
 		}
 
 		function onCompleteSync() {
-			System.println("Sync completed...");
+			if ($.debug) {
+				System.println("Sync completed...");
+			}
 
 			// finish sync
 			d_notifySyncComplete.invoke(null);
@@ -100,11 +104,15 @@ module SubMusic {
 		}
 	
 		function onScrobbleProgress(progress) {
-			System.println("Sync Progress: scrobble is on " + progress + " %");
+			if ($.debug) {
+				System.println("Sync Progress: scrobble is on " + progress + " %");
+			}
 			
 			progress /= 2;
 			
-			// System.println(progress.toNumber());
+			// if ($.debug) {
+			// 	System.println(progress.toNumber());
+			// }
 			d_notifySyncProgress.invoke(progress.toNumber());
 		}
 		
@@ -123,7 +131,9 @@ module SubMusic {
 		}
 		
 		function onPlaylistProgress(progress) {
-			// System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
+			// if ($.debug) {
+			// 	System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
+			// }
 
 			// progress += (100 * d_last);
 			// progress /= d_ids_total.toFloat();
@@ -131,12 +141,16 @@ module SubMusic {
 			// progress /= 2;
 			// progress += 50;		// add 50% done as that was the scrobble part
 			
-			// System.println(progress.toNumber());
+			// if ($.debug) {
+			// 	System.println(progress.toNumber());
+			// }
 			d_notifySyncProgress.invoke(progress.toNumber());
 		}
 		
 		function onPodcastProgress(progress) {
-			// System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
+			// if ($.debug) {
+			// 	System.println("Sync Progress: list " + (d_loop.idx() + 1) + " of " + d_loop.end() + " is on " + progress + " %");
+			// }
 
 			// progress += (100 * d_last);
 			// progress /= d_ids_total.toFloat();
@@ -144,12 +158,16 @@ module SubMusic {
 			// progress /= 2;
 			// progress += 50;		// add 50% done as that was the scrobble part
 			
-			// System.println(progress.toNumber());
+			// if ($.debug) {
+			// 	System.println(progress.toNumber());
+			// }
 			d_notifySyncProgress.invoke(progress.toNumber());
 		}
 		
 		function onError(error) {
-			System.println("SubMusicSyncDelegate::onError( " + error.shortString() + " " + error.toString() + ")");
+			if ($.debug) {
+				System.println("SubMusicSyncDelegate::onError( " + error.shortString() + " " + error.toString() + ")");
+			}
 			
 			// notify short error during sync
 			d_notifySyncComplete.invoke(error.shortString());
@@ -177,7 +195,9 @@ module SubMusic {
 		}
 
 		function notifySyncComplete(errorMessage) {
-			System.println("SyncDelegate::notifySyncComplete()");
+			if ($.debug) {
+				System.println("SyncDelegate::notifySyncComplete()");
+			}
 			Communications.notifySyncComplete(errorMessage);
 			
 			// mark as no sync request pending
@@ -189,12 +209,16 @@ module SubMusic {
 		}
 
 		function onStartSync() {
-			System.println("SyncDelegate::onStartSync()");
+			if ($.debug) {
+				System.println("SyncDelegate::onStartSync()");
+			}
 			return d_syncer.onStartSync();
 		}
 
 		function onStopSync() {
-			System.println("SyncDelegate::onStopSync()");
+			if ($.debug) {
+				System.println("SyncDelegate::onStopSync()");
+			}
 			return d_syncer.onStopSync();
 		}
 	}
@@ -214,7 +238,9 @@ module SubMusic {
 		}
 
 		function notifySyncComplete(errorMessage) {
-			System.println("SyncDelegate_deprecated::notifySyncComplete()");
+			if ($.debug) {
+				System.println("SyncDelegate_deprecated::notifySyncComplete()");
+			}
 			Media.notifySyncComplete(errorMessage);
 		}
 
@@ -223,12 +249,16 @@ module SubMusic {
 		}
 
 		function onStartSync() {
-			System.println("SyncDelegate_deprecated::onStartSync()");
+			if ($.debug) {
+				System.println("SyncDelegate_deprecated::onStartSync()");
+			}
 			return d_syncer.onStartSync();
 		}
 
 		function onStopSync() {
-			System.println("SyncDelegate_deprecated::onStopSync()");
+			if ($.debug) {
+				System.println("SyncDelegate_deprecated::onStopSync()");
+			}
 			return d_syncer.onStopSync();
 		}
 	}

@@ -12,7 +12,9 @@ module SubMusic {
 
             // reload the ids on request
 			function load() {
-                System.println("Menu.PodcastsLocal::load()");
+                if ($.debug) {
+                	System.println("Menu.PodcastsLocal::load()");
+                }
 
                 var ipodcasts = [];
                 var ids = PodcastStore.getIds();

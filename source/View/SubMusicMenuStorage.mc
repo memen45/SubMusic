@@ -13,7 +13,9 @@ module SubMusic {
 			}
 
 			function load() {
-				System.println("Menu.Storage::load()");
+				if ($.debug) {
+					System.println("Menu.Storage::load()");
+				}
 				return MenuBase.load([
 					{
 						LABEL => WatchUi.loadResource(Rez.Strings.Memory_label), 
@@ -53,7 +55,9 @@ module SubMusic {
 			}
 			
 			static function removeAll() {
-				System.println("Settings::removeAll()");
+				if ($.debug) {
+					System.println("Settings::removeAll()");
+				}
 				// collect all ids of songs
 				// var ids = SongStore.getIds();
 				// for (var idx = 0; idx != ids.size(); ++idx) {

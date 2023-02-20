@@ -16,7 +16,9 @@ module SubMusic {
             }
 
             function load() {
-                System.println("Menu.PodcastSettings::load()");
+                if ($.debug) {
+                	System.println("Menu.PodcastSettings::load()");
+                }
 
                 return MenuBase.load([
                     {

@@ -13,7 +13,9 @@ module SubMusic {
 			}
 
 			function load() {
-				System.println("Menu.AppSettings::load()");
+				if ($.debug) {
+					System.println("Menu.AppSettings::load()");
+				}
 				return MenuBase.load([
 					{
 						LABEL => WatchUi.loadResource(Rez.Strings.ApiStandard),
@@ -44,8 +46,14 @@ module SubMusic {
 					{
 						LABEL => WatchUi.loadResource(Rez.Strings.skip_30s),
 						SUBLABEL => WatchUi.loadResource(Rez.Strings.skip_30s_sublabel),
-						METHOD => method(:onToggle),
-						OPTION => Application.Properties.getValue("skip_30s"),
+						METHOD => method(:onToggleSkip30s),
+						OPTION => method(:stateSkip30s),
+					},
+					{
+						LABEL => WatchUi.loadResource(Rez.Strings.debug),
+						SUBLABEL => WatchUi.loadResource(Rez.Strings.debug_sublabel),
+						METHOD => method(:onToggleDebug),
+						OPTION => method(:stateDebug),
 					},
 				]);
 			}
@@ -72,9 +80,32 @@ module SubMusic {
 				return WatchUi.loadResource(Rez.Strings.ApiAuthHTTP);
 			}
 
-			function onToggle() {
+			function stateSkip30s() {
+				return Application.Properties.getValue("skip_30s");
+			}
+
+			function onToggleSkip30s() {
+				var skip30s_new = !Application.Properties.getValue("skip_30s");
+				if ($.debug) {
+					System.println("Setting skip_30s from " + Application.Properties.getValue("skip_30s") + " to " + skip30s_new);
+				}
+
 				Application.Properties.setValue("skip_30s", !Application.Properties.getValue("skip_30s"));
 				Media.requestPlaybackProfileUpdate();
+			}
+
+			function stateDebug() {
+				return Application.Properties.getValue("debug");
+			}
+
+			function onToggleDebug() {
+				var debug_new = !Application.Properties.getValue("debug");
+				if ($.debug) {
+					System.println("Setting debug from " + Application.Properties.getValue("debug") + " to " + debug_new);
+				}
+
+				Application.Properties.setValue("debug", debug_new);
+				$.debug = debug_new;	// update the global debug flag
 			}
 
 			function delegate() {

@@ -27,21 +27,29 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
 
     // Respond to a user ad click
     function onAdAction(adContext) {
-    	System.println("Ad Action: " + getSongName(adContext));
+    	if ($.debug) {
+    		System.println("Ad Action: " + getSongName(adContext));
+    	}
     }
     
     function onCustomButton(button) {
-    	System.println("Custom Button clicked: " + button);
+    	if ($.debug) {
+    		System.println("Custom Button clicked: " + button);
+    	}
     }
 
     // Respond to a thumbs-up action
     function onThumbsUp(contentRefId) {
-    	System.println("Thumbs Up: " + getSongName(contentRefId));
+    	if ($.debug) {
+    		System.println("Thumbs Up: " + getSongName(contentRefId));
+    	}
     }
 
     // Respond to a thumbs-down action
     function onThumbsDown(contentRefId) {
-    	System.println("Thumbs Down: " + getSongName(contentRefId));
+    	if ($.debug) {
+    		System.println("Thumbs Down: " + getSongName(contentRefId));
+    	}
     }
 
     // Respond to a command to turn shuffle on or off
@@ -50,7 +58,9 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     }
     
     function onRepeat() {
-    	System.println("Repeat Mode change");
+    	if ($.debug) {
+    		System.println("Repeat Mode change");
+    	}
     }
     
     function resetContentIterator() {
@@ -59,17 +69,23 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
     }
     
     function onMore() {
-    	System.println("onMore is called");
+    	if ($.debug) {
+    		System.println("onMore is called");
+    	}
     }
     
     function onLibrary() {
-    	System.println("onLibrary is called");
+    	if ($.debug) {
+    		System.println("onLibrary is called");
+    	}
     }
 
     // Handles a notification from the system that an event has
     // been triggered for the given song
     function onSong(contentRefId, songEvent as Media.SongEvent, playbackPosition) as Void {
-    	System.println("onSong Event (" + d_events[songEvent] + "): " + getSongName(contentRefId) + " at position " + playbackPosition);
+    	if ($.debug) {
+    		System.println("onSong Event (" + d_events[songEvent] + "): " + getSongName(contentRefId) + " at position " + playbackPosition);
+    	}
 	
 		var audio = findAudioByRefId(contentRefId);
 		if (audio == null) { return; }
@@ -111,11 +127,15 @@ class SubMusicContentDelegate extends Media.ContentDelegate {
 		var audio = iplayable.getAudio(iplayable.songidx());
 		if ((audio instanceof SubMusic.Audio)
 			&& (audio.refId() == refId)) {
-			System.println("SubMusicContentDelegate::findAudioByRefId( refId: " + refId + " ) - guessed");
+			if ($.debug) {
+				System.println("SubMusicContentDelegate::findAudioByRefId( refId: " + refId + " ) - guessed");
+			}
 			return audio;
 		}
 		// if trick not successful, do exhaustive search
-		System.println("SubMusicContentDelegate::findAudioByRefId( refId: " + refId + " ) - not guessed");
+		if ($.debug) {
+			System.println("SubMusicContentDelegate::findAudioByRefId( refId: " + refId + " ) - not guessed");
+		}
 		var ids = [ SongStore.getIds(), EpisodeStore.getIds() ];
 		for (var typ = 0; typ != Audio.END; ++typ) {
 			for (var idx = 0; idx != ids[typ].size(); ++idx) {

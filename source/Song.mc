@@ -20,7 +20,9 @@ class Song extends Storable {
 		"playback" => 0,		// last playback position
 	};
 	function initialize(storage) {
-		System.println("Song::initialize( storage = " + storage + " )");
+		if ($.debug) {
+			System.println("Song::initialize( storage = " + storage + " )");
+		}
 		
 		Storable.initialize(storage);
 	}
@@ -80,7 +82,9 @@ class ISong extends Song {
 	private var d_artwork = null;
 
 	function initialize(id) {
-		System.println("ISong::initialize( id : " + id + " )");
+		if ($.debug) {
+			System.println("ISong::initialize( id : " + id + " )");
+		}
 		var storage = SongStore.get(id);
 		if (storage != null) {
 			d_stored = true;
@@ -190,7 +194,9 @@ class ISong extends Song {
 			return changed;
 		}
 
-		System.println("ISong::setArt_id( art_id: " + art_id + " )");
+		if ($.debug) {
+			System.println("ISong::setArt_id( art_id: " + art_id + " )");
+		}
 
 		// dereference previous art
 		if (d_artwork != null) {
@@ -225,7 +231,9 @@ class ISong extends Song {
 	
 	// saves the new item to application storage
 	function updateMeta(song) {
-		System.println("ISong::updateMeta( song : " + song.toStorage() + " )");
+		if ($.debug) {
+			System.println("ISong::updateMeta( song : " + song.toStorage() + " )");
+		}
 		
 		// only single save is needed, so mark as not stored temporarily
 		d_stored = false;

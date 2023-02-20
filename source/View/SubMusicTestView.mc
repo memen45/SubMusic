@@ -97,7 +97,9 @@ class SubMusicTestView extends WatchUi.ProgressBar {
 	}
 	
 	function onError(error) {
-		System.println("Test Failed");
+		if ($.debug) {
+			System.println("Test Failed");
+		}
 		
 		setDisplayString("Test failed:\n" + error.shortString() + "\n" + error.toString());
 		

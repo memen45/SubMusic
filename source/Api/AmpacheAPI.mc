@@ -19,7 +19,9 @@ class AmpacheAPI extends Api {
 		Api.setProgressCallback(progress);
 		Api.setFallback(fallback);
 
-    	System.println("AmpacheAPI::initialize(client name: " + client() + " )");
+    	if ($.debug) {
+    		System.println("AmpacheAPI::initialize(client name: " + client() + " )");
+    	}
 		
 		// check if auth is expired, it may be usable!
 		d_expire = new Time.Moment(0);
@@ -59,13 +61,17 @@ class AmpacheAPI extends Api {
 			"version" => d_version,
 		};
 		
-		System.println("AmpacheAPI::handshake with timestamp " + timestamp + " and auth " + auth);
+		if ($.debug) {
+			System.println("AmpacheAPI::handshake with timestamp " + timestamp + " and auth " + auth);
+		}
 		
 		Communications.makeWebRequest(url(), params, {}, self.method(:onHandshake));
 	}
 	
 	function onHandshake(responseCode, data) {
-		System.println("AmpacheAPI::onHandshake with responseCode " + responseCode + " payload " + data);
+		if ($.debug) {
+			System.println("AmpacheAPI::onHandshake with responseCode " + responseCode + " payload " + data);
+		}
 		
 		// errors are filtered first
 		var error = Api.checkDictionaryResponse(responseCode, data);
@@ -99,7 +105,9 @@ class AmpacheAPI extends Api {
 	}
 	
 	function record_play(callback, params) {
-		System.println("AmpacheAPI::record_play( params: " + params + ")");
+		if ($.debug) {
+			System.println("AmpacheAPI::record_play( params: " + params + ")");
+		}
 		
 		Api.setCallback(callback);
 
@@ -110,7 +118,9 @@ class AmpacheAPI extends Api {
 	}
 	
 	function scrobble(callback, params) {
-		System.println("AmpacheAPI::scrobble( params: " + params + ")");
+		if ($.debug) {
+			System.println("AmpacheAPI::scrobble( params: " + params + ")");
+		}
 		
 		Api.setCallback(callback);
 
@@ -122,7 +132,9 @@ class AmpacheAPI extends Api {
 	
 	// returns array of playlist objects
 	function playlists(callback, params) {
-		System.println("AmpacheAPI::playlists( params: " + params + ")");
+		if ($.debug) {
+			System.println("AmpacheAPI::playlists( params: " + params + ")");
+		}
 		
 		Api.setCallback(callback);
 
@@ -134,7 +146,9 @@ class AmpacheAPI extends Api {
 	
 	// returns array of podcast objects
 	function podcasts(callback, params) {
-		System.println("AmpacheAPI::podcasts( params: " + params + ")");
+		if ($.debug) {
+			System.println("AmpacheAPI::podcasts( params: " + params + ")");
+		}
 		
 		Api.setCallback(callback);
 
@@ -146,7 +160,9 @@ class AmpacheAPI extends Api {
 	
 	// returns array of podcast objects
 	function podcast(callback, params) {
-		System.println("AmpacheAPI::podcast( id: " + params["filter"] + ")");
+		if ($.debug) {
+			System.println("AmpacheAPI::podcast( id: " + params["filter"] + ")");
+		}
 		
 		Api.setCallback(callback);
 
@@ -158,7 +174,9 @@ class AmpacheAPI extends Api {
 	
 	// returns array of podcast objects
 	function podcast_episodes(callback, params) {
-		System.println("AmpacheAPI::podcast_episodes( params: " + params + ")");
+		if ($.debug) {
+			System.println("AmpacheAPI::podcast_episodes( params: " + params + ")");
+		}
 		
 		Api.setCallback(callback);
 
@@ -170,7 +188,9 @@ class AmpacheAPI extends Api {
 	
 	// returns single playlist info
 	function playlist(callback, params) {
-		System.println("AmpacheAPI::playlist( id: " + params["filter"] + ")");
+		if ($.debug) {
+			System.println("AmpacheAPI::playlist( id: " + params["filter"] + ")");
+		}
 		
 		Api.setCallback(callback);
 		
@@ -181,7 +201,9 @@ class AmpacheAPI extends Api {
 	
 	// returns array of song objects
 	function playlist_songs(callback, params) {
-		System.println("AmpacheAPI::playlist_songs( id: " + params["filter"] + ")");
+		if ($.debug) {
+			System.println("AmpacheAPI::playlist_songs( id: " + params["filter"] + ")");
+		}
 		
 		Api.setCallback(callback);
 		
@@ -192,7 +214,9 @@ class AmpacheAPI extends Api {
 	
 	// returns refId to the downloaded song
 	function stream(callback, params, encoding) {
-		System.println("AmpacheAPI::stream( id : " + params["id"] + " type: " + params["type"] + " )");
+		if ($.debug) {
+			System.println("AmpacheAPI::stream( id : " + params["id"] + " type: " + params["type"] + " )");
+		}
 
 		Api.setCallback(callback);
 		
@@ -212,7 +236,9 @@ class AmpacheAPI extends Api {
 	}
 
 	function get_art(callback, params) {
-		System.println("AmpacheAPI::get_art( id : " + params["id"] + " type: " + params["type"] + " )");
+		if ($.debug) {
+			System.println("AmpacheAPI::get_art( id : " + params["id"] + " type: " + params["type"] + " )");
+		}
 
 		Api.setCallback(callback);
 
@@ -231,7 +257,9 @@ class AmpacheAPI extends Api {
 	}
 
 	function onGet_art(responseCode, data) {
-		System.println("AmpacheAPI::onGet_art with responseCode: " + responseCode + " and " + data);
+		if ($.debug) {
+			System.println("AmpacheAPI::onGet_art with responseCode: " + responseCode + " and " + data);
+		}
 		
 		// check if request was successful and response is ok
 		var error = Api.checkImageResponse(responseCode, data);
@@ -244,7 +272,9 @@ class AmpacheAPI extends Api {
     
 	// returns true if the current session is not expired (optionally pass in duration for session)
 	function session(duration) {
-		System.println("AmpacheAPI::session(duration: " + duration + ");" + " Time now: " + Time.now().value() + ", session expires: " + d_expire.value());
+		if ($.debug) {
+			System.println("AmpacheAPI::session(duration: " + duration + ");" + " Time now: " + Time.now().value() + ", session expires: " + d_expire.value());
+		}
 		
 		var now = new Time.Moment(Time.now().value());
 		if (duration != null) {
@@ -259,7 +289,9 @@ class AmpacheAPI extends Api {
 	 * default handler for actions that return an array
 	 */
 	function onArrayResponse(responseCode, data) {
-		System.println("AmpacheAPI::onArrayResponse with responseCode: " + responseCode + ", payload " + data);
+		if ($.debug) {
+			System.println("AmpacheAPI::onArrayResponse with responseCode: " + responseCode + ", payload " + data);
+		}
 		
 		// errors are filtered first
 		var error = Api.checkArrayResponse(responseCode, data);
@@ -276,7 +308,9 @@ class AmpacheAPI extends Api {
 	 * Default handler for actions that return a dictionary
 	 */
 	function onDictionaryResponse(responseCode, data) {
-		System.println("AmpacheAPI::onDictionaryResponse with responseCode " + responseCode + " payload " + data);
+		if ($.debug) {
+			System.println("AmpacheAPI::onDictionaryResponse with responseCode " + responseCode + " payload " + data);
+		}
 		
 		// errors are filtered first
 		var error = Api.checkDictionaryResponse(responseCode, data);
@@ -293,7 +327,9 @@ class AmpacheAPI extends Api {
 	 * Default handler for actions that return a ContentRef
 	 */
 	function onContentResponse(responseCode, data) {
-		System.println("AmpacheAPI::onContentResponse with responseCode " + responseCode + " payload " + data);
+		if ($.debug) {
+			System.println("AmpacheAPI::onContentResponse with responseCode " + responseCode + " payload " + data);
+		}
 		
 		// errors are filtered first
 		var error = Api.checkContentResponse(responseCode, data);
@@ -408,7 +444,9 @@ class AmpacheAPI extends Api {
 	}
 
 	function deleteSession() {
-		System.println("AmpacheAPI::deleteSession()");
+		if ($.debug) {
+			System.println("AmpacheAPI::deleteSession()");
+		}
 		// reset the session
 		d_expire = new Time.Moment(0);
 		Application.Storage.deleteValue("AMPACHE_API_SESSION");

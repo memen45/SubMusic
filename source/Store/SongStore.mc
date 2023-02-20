@@ -27,13 +27,17 @@ module SongStore {
 	var d_todo = new ArrayStore(Storage.SONGS_TODO);		// allows fast access
 
 	function get(id) {
-//		System.println("SongStore::get( id : " + id + " )");
+//		if ($.debug) {
+//			System.println("SongStore::get( id : " + id + " )");
+//		}
 
 		return d_songs.get(id);
 	}
 
 	function getIds() {
-		System.println("SongStore::getIds()");
+		if ($.debug) {
+			System.println("SongStore::getIds()");
+		}
 
 		return d_songs.getIds();
 	}
@@ -56,7 +60,9 @@ module SongStore {
 
     // these functions should be used only internally by ISong class
 	function save(song) {
-		System.println("SongStore::save( song : " + song.toStorage() + " )");
+		if ($.debug) {
+			System.println("SongStore::save( song : " + song.toStorage() + " )");
+		}
 
 		// update delete tracking
 		var id = new Id(song.id());
@@ -88,7 +94,9 @@ module SongStore {
 	}
 
 	function remove(song) {
-		System.println("SongStore::remove( " + song.toStorage() + ")");
+		if ($.debug) {
+			System.println("SongStore::remove( " + song.toStorage() + ")");
+		}
 
 		// remove from storage
 		d_songs.remove(song);

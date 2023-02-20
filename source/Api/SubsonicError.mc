@@ -59,7 +59,9 @@ class SubsonicError extends SubMusic.ApiError {
 		}
 		SubMusic.ApiError.initialize(apitype);
 
-		System.println(s_name + "::" + SubsonicError.typeToString(d_type));
+		if ($.debug) {
+			System.println(s_name + "::" + SubsonicError.typeToString(d_type));
+		}
 	}
 	
 	function shortString() {

@@ -44,7 +44,9 @@ class PlexProvider {
     }
 	
 	function onSettingsChanged(settings) {
-		System.println("PlexProvider::onSettingsChanged");
+		if ($.debug) {
+			System.println("PlexProvider::onSettingsChanged");
+		}
 		
 		d_api.update(settings);
 	}
@@ -77,7 +79,9 @@ class PlexProvider {
     }
 
 	function on_do_ping(response) {
-		System.println("PlexProvider::on_do_ping( response = " + response + ")");
+		if ($.debug) {
+			System.println("PlexProvider::on_do_ping( response = " + response + ")");
+		}
 		
 		d_action = null;
 		d_callback.invoke(response);
@@ -101,7 +105,9 @@ class PlexProvider {
 	}
 
 	function on_do_record_play(response) {
-		System.println("PlexProvider::on_do_record_play( response = " + response + ")");
+		if ($.debug) {
+			System.println("PlexProvider::on_do_record_play( response = " + response + ")");
+		}
 		
 		d_action = null;
 		d_callback.invoke(response); // expected empty response
@@ -293,7 +299,9 @@ class PlexProvider {
 	 * returns array of all podcasts available for Plex user
 	 */
 	function getAllPodcasts(callback) {
-		System.println("PlexProvider::getAllPodcasts( no API method available )");
+		if ($.debug) {
+			System.println("PlexProvider::getAllPodcasts( no API method available )");
+		}
 		callback.invoke([]);
 	}
 
@@ -303,7 +311,9 @@ class PlexProvider {
 	 * returns array of all podcasts available for Plex user
 	 */
 	function getPodcast(id, callback) {
-		System.println("PlexProvider::getPodcast( no API method available )");
+		if ($.debug) {
+			System.println("PlexProvider::getPodcast( no API method available )");
+		}
 		callback.invoke([]);
 	}
 
@@ -313,7 +323,9 @@ class PlexProvider {
 	 * returns an array of episodes in the podcast with id
 	 */
 	function getEpisodes(id, range, callback) {
-		System.println("PlexProvider::getEpisodes( no API method available )");
+		if ($.debug) {
+			System.println("PlexProvider::getEpisodes( no API method available )");
+		}
 		callback.invoke([]);
 	}
     
@@ -324,16 +336,20 @@ class PlexProvider {
 			d_limit = MAX_LIMIT;
 		}
 
-		System.println("PlexProvider::checkDone()");
-		System.println("Total received: " + d_response.size());
-		System.println("Last received: " + response.size());
-		System.println("Max total: " + d_count);
-		System.println("Max at once: " + d_limit);
+		if ($.debug) {
+			System.println("PlexProvider::checkDone()");
+			System.println("Total received: " + d_response.size());
+			System.println("Last received: " + response.size());
+			System.println("Max total: " + d_count);
+			System.println("Max at once: " + d_limit);
+		}
 
 		if ((d_response.size() < d_count)		// count not reached 
 			&& (response.size() >= d_limit)) {	// limit reached
 			// request required, since response was full and count not reached
-			System.println("PlexProvider::checkDone - next request");
+			if ($.debug) {
+				System.println("PlexProvider::checkDone - next request");
+			}
 			d_offset += d_limit;	// increase offset
 			do_();
 			return;
@@ -411,7 +427,9 @@ class PlexProvider {
 			&& (d_limit > 1)) {
 			
 			d_limit = (d_limit / 2).toNumber();		// half the response
-			System.println("PlexProvider limit was lowered to " + d_limit);
+			if ($.debug) {
+				System.println("PlexProvider limit was lowered to " + d_limit);
+			}
 			do_();														// retry the request
 			return;
 		}
@@ -438,7 +456,7 @@ class PlexProvider {
 			"mp4" => "audio/mp4",
 			"wav" => "audio/wav",
 		};
-		if (!(container instanceof Lang.Object)) {
+		if (!(container instanceof Lang.String)) {
 			container = "mp3";
 		}
 		return map[container];

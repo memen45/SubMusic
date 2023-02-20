@@ -18,7 +18,9 @@ module SubMusic {
 		private var d_type;
 		
 		function initialize(type) {
-			System.println(s_name + "::" + Error.typeToString(type));
+			if ($.debug) {
+				System.println(s_name + "::" + Error.typeToString(type));
+			}
 			d_type = type;
 		}
 		
@@ -71,7 +73,9 @@ module SubMusic {
 		function initialize(type) {
 			Error.initialize(Error.API);
 
-			System.println(s_name + "::" + ApiError.typeToString(type));
+			if ($.debug) {
+				System.println(s_name + "::" + ApiError.typeToString(type));
+			}
 			
 			d_type = type;
 		}
@@ -127,7 +131,9 @@ module SubMusic {
 			Error.initialize(Error.HTTP);
 			d_type = type;
 
-			System.println(HttpError.toString());
+			if ($.debug) {
+				System.println(HttpError.toString());
+			}
 		}
 
 		function http_type() {
@@ -203,7 +209,9 @@ module SubMusic {
 			Error.initialize(Error.HTTP);
 			d_responseCode = responseCode;
 
-			System.println(GarminSdkError.toString());
+			if ($.debug) {
+				System.println(GarminSdkError.toString());
+			}
 		}
 	
 		static function is(responseCode) {

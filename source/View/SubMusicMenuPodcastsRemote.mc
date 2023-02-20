@@ -17,7 +17,9 @@ module SubMusic {
             }
 
             function load() {
-                System.println("Menu.PodcastsRemote::load()");
+                if ($.debug) {
+                	System.println("Menu.PodcastsRemote::load()");
+                }
 
                 // if already loading, do nothing, wait for response
                 if (d_loading) {

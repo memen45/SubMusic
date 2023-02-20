@@ -13,7 +13,9 @@ class Artwork extends Storable {
     };
 
     function initialize(storage) {
-        System.println("Artwork::initialize( storage = " + storage + ")");
+        if ($.debug) {
+        	System.println("Artwork::initialize( storage = " + storage + ")");
+        }
 
         Storable.initialize(storage);
     }
@@ -44,7 +46,9 @@ class Artwork extends Storable {
     }
 
     static function compute_id(art_id, type) {
-        // System.println("Artwork::compute_id() for art_id: " + art_id + ", type: " + type + " )");
+        // if ($.debug) {
+        // 	System.println("Artwork::compute_id() for art_id: " + art_id + ", type: " + type + " )");
+        // }
         if (art_id == null) {
             return null;
         }
@@ -65,7 +69,9 @@ class IArtwork extends Artwork {
     private var d_stored = false;       // true if artwork metadata is in storage
 
     function initialize(art_id, type) {
-        System.println("IArtwork::initialize( art_id : " + art_id + " type : " + type + " )");
+        if ($.debug) {
+        	System.println("IArtwork::initialize( art_id : " + art_id + " type : " + type + " )");
+        }
 
         var id = compute_id(art_id, type);
         var storage = ArtworkStore.get(id);

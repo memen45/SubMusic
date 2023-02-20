@@ -24,8 +24,12 @@ class Playlist {
 
 	
 	function initialize(storage) {
-		// System.println("Playlist::initialize( storage = " + storage + " )");
-		System.println("Playlist::initialize( storage : " + storage + " )");
+		// if ($.debug) {
+		// 	System.println("Playlist::initialize( storage = " + storage + " )");
+		// }
+		if ($.debug) {
+			System.println("Playlist::initialize( storage : " + storage + " )");
+		}
 
 		d_id = storage["id"];
 		fromStorage(storage);
@@ -129,7 +133,9 @@ class IPlaylist extends Playlist {
 	private var d_stored = false;		// true if playlist metadata is in storage
 
 	function initialize(id) {
-		System.println("IPlaylist::initialize( id : " + id + " )");
+		if ($.debug) {
+			System.println("IPlaylist::initialize( id : " + id + " )");
+		}
 		var storage = PlaylistStore.get(id);
 		if (storage != null) {
 			d_stored = true;
@@ -146,7 +152,9 @@ class IPlaylist extends Playlist {
 	
 	// setters
 	function addSong(id) {
-		System.println("IPlaylist::addSong(id: " + id + " )");
+		if ($.debug) {
+			System.println("IPlaylist::addSong(id: " + id + " )");
+		}
 
 		// add it to the array
 		d_songs.add(id);
@@ -256,7 +264,9 @@ class IPlaylist extends Playlist {
 	}
 	
 	function setCount(count) {
-		System.println("IPlaylist.setCount( count : " + count + " )");
+		if ($.debug) {
+			System.println("IPlaylist.setCount( count : " + count + " )");
+		}
 		// nothing to do if not changed
 		if (d_songCount == count) {
 			return false;
@@ -271,7 +281,9 @@ class IPlaylist extends Playlist {
 
 	// unlinks all related songs
 	function unlink() {
-		System.println("IPlaylist::unlink()");
+		if ($.debug) {
+			System.println("IPlaylist::unlink()");
+		}
 		// nothing to do if not linked
 		if (!linked()) {
 			return;
@@ -288,7 +300,9 @@ class IPlaylist extends Playlist {
 	
 	// links all related songs
 	function link() {
-		System.println("IPlaylist::link()");
+		if ($.debug) {
+			System.println("IPlaylist::link()");
+		}
 		
 		// nothing to do if already linked
 		if (linked()) {
@@ -305,7 +319,9 @@ class IPlaylist extends Playlist {
 	}
 
 	function updateMeta(playlist) {
-		System.println("IPlaylist::updateMeta( playlist: " + playlist.toStorage() + " )");
+		if ($.debug) {
+			System.println("IPlaylist::updateMeta( playlist: " + playlist.toStorage() + " )");
+		}
 
 		// only single save is needed, so mark as not stored temporarily
 		d_stored = false;
@@ -322,7 +338,9 @@ class IPlaylist extends Playlist {
 	
 	// updates song list, returns array of song ids that are not yet locally available
 	function update(songs) {
-		System.println("IPlaylist::update() STARTING id:" + id() + " )");
+		if ($.debug) {
+			System.println("IPlaylist::update() STARTING id:" + id() + " )");
+		}
 		
 		// keep track of current songs
 		var songs_now = new [d_songs.size()];

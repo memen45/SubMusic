@@ -11,7 +11,9 @@ class ObjectStore extends Store {
 
 	// returns a connected item
 	function get(id) {
-//		System.println("ObjectStore::get( id : " + id + " )");
+//		if ($.debug) {
+//			System.println("ObjectStore::get( id : " + id + " )");
+//		}
 
 		var items = Store.value();
 		if (id == null)  {
@@ -21,7 +23,9 @@ class ObjectStore extends Store {
 	}
 
 	function getIds() {
-//		System.println("ObjectStore::getIds()");
+//		if ($.debug) {
+//			System.println("ObjectStore::getIds()");
+//		}
 		
 		return Store.value().keys();
 	}
@@ -31,7 +35,9 @@ class ObjectStore extends Store {
 	}
 	
 	function save(item) {
-		System.println("ObjectStore::save( item : " + item.toStorage() + " )");
+		if ($.debug) {
+			System.println("ObjectStore::save( item : " + item.toStorage() + " )");
+		}
 
 		// return false if failed save
 		var id = item.id();
@@ -46,7 +52,9 @@ class ObjectStore extends Store {
 
 	// returns true if item id entry removed from storage or is not in storage
 	function remove(item) {        
-		System.println("ObjectStore::remove( " + item.toStorage() + " )");
+		if ($.debug) {
+			System.println("ObjectStore::remove( " + item.toStorage() + " )");
+		}
 		
 		var id = item.id();
         if (id == null)  {

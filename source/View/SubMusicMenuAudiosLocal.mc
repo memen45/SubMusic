@@ -20,7 +20,9 @@ module SubMusic {
             }
 
             function load() {
-				System.println("Menu.AudiosLocal::load()");
+				if ($.debug) {
+					System.println("Menu.AudiosLocal::load()");
+				}
                 
                 // only add local songs
                 var audios = [];

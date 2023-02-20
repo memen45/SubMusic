@@ -20,7 +20,9 @@ class SubsonicAPI extends Api {
 		Api.setProgressCallback(progress);
 		Api.setFallback(fallback);
 
-    	System.println("SubsonicAPI::initialize(client name: " + client() + " )");
+    	if ($.debug) {
+    		System.println("SubsonicAPI::initialize(client name: " + client() + " )");
+    	}
 
 		d_params.put("c", client());
 		d_params.put("v", "1.10.2");		// subsonic api version
@@ -36,7 +38,9 @@ class SubsonicAPI extends Api {
     }
 	
 	function scrobble(callback, params) {
-		System.println("SubsonicAPI::scrobble(params: " + params + ")");
+		if ($.debug) {
+			System.println("SubsonicAPI::scrobble(params: " + params + ")");
+		}
 	
 		Api.setCallback(callback);
 		
@@ -53,7 +57,9 @@ class SubsonicAPI extends Api {
     }
 
 	function onResponse(responseCode, data) {
-		System.println("SubsonicAPI::onResponse( responseCode: " + responseCode + ", data: " + data + ")");		
+		if ($.debug) {
+			System.println("SubsonicAPI::onResponse( responseCode: " + responseCode + ", data: " + data + ")");
+		}		
 		
 		// check if request was successful and response is ok
     	var error = Api.checkDictionaryResponse(responseCode, data);
@@ -70,7 +76,9 @@ class SubsonicAPI extends Api {
 	 * returns all playlists the user is allowed to play.
 	 */
 	function getPlaylists(callback) {
-		System.println("SubsonicAPI::getPlaylists");
+		if ($.debug) {
+			System.println("SubsonicAPI::getPlaylists");
+		}
 		
 		Api.setCallback(callback);
 		
@@ -79,7 +87,9 @@ class SubsonicAPI extends Api {
 	}
 	
 	function onGetPlaylists(responseCode, data) {
-		System.println("SubsonicAPI::onGetPlaylists( responseCode: " + responseCode + ", data: " + data + ")");		
+		if ($.debug) {
+			System.println("SubsonicAPI::onGetPlaylists( responseCode: " + responseCode + ", data: " + data + ")");
+		}		
 		
 		// check if request was successful and response is ok
     	var error = Api.checkDictionaryResponse(responseCode, data);
@@ -99,7 +109,9 @@ class SubsonicAPI extends Api {
 	 * returns all podcasts the user is allowed to play.
 	 */
 	function getPodcasts(callback, params) {
-		System.println("SubsonicAPI::getPodcasts(params: " + params + ")");
+		if ($.debug) {
+			System.println("SubsonicAPI::getPodcasts(params: " + params + ")");
+		}
 		
 		Api.setCallback(callback);
 		
@@ -112,7 +124,9 @@ class SubsonicAPI extends Api {
 	}
 	
 	function onGetPodcasts(responseCode as Lang.Number, data as Lang.Dictionary or Null) {
-		System.println("SubsonicAPI::onGetPodcasts( responseCode: " + responseCode + ", data: " + data + ")");		
+		if ($.debug) {
+			System.println("SubsonicAPI::onGetPodcasts( responseCode: " + responseCode + ", data: " + data + ")");
+		}		
 		
 		// check if request was successful and response is ok
     	var error = Api.checkDictionaryResponse(responseCode, data);
@@ -133,7 +147,9 @@ class SubsonicAPI extends Api {
 	 * returns a listing of files in a saved playlist
 	 */
 	function getPlaylist(callback, params) {
-		System.println("SubsonicAPI::getPlaylist(params: " + params + ")");
+		if ($.debug) {
+			System.println("SubsonicAPI::getPlaylist(params: " + params + ")");
+		}
 	
 		Api.setCallback(callback);
 		
@@ -148,7 +164,9 @@ class SubsonicAPI extends Api {
     }
     
     function onGetPlaylist(responseCode, data) {
-    	System.println("Subsonic::onGetPlaylist(responseCode: " + responseCode + ", data: " + data);
+    	if ($.debug) {
+    		System.println("Subsonic::onGetPlaylist(responseCode: " + responseCode + ", data: " + data);
+    	}
     	
 		// check if request was successful and response is ok
 	   	var error = Api.checkDictionaryResponse(responseCode, data);
@@ -165,7 +183,9 @@ class SubsonicAPI extends Api {
      * downloads a given media file
      */
     function stream(callback, params, encoding) {
-    	System.println("SubsonicAPI::stream( params: " + params + ")");
+    	if ($.debug) {
+    		System.println("SubsonicAPI::stream( params: " + params + ")");
+    	}
     
     	Api.setCallback(callback);
     
@@ -191,7 +211,9 @@ class SubsonicAPI extends Api {
     }
     
     function onStream(responseCode, data) {
-    	System.println("SubsonicAPI::onStream with responseCode: " + responseCode);
+    	if ($.debug) {
+    		System.println("SubsonicAPI::onStream with responseCode: " + responseCode);
+    	}
     	
 		// check if request was successful and response is ok
 		var error = Api.checkContentResponse(responseCode, data);
@@ -208,9 +230,10 @@ class SubsonicAPI extends Api {
      * downloads artwork for given media id
      */
     function getCoverArt(callback, params) {
-    	System.println("SubsonicAPI::getCoverArt( params: " + params + ")");
-    	
-    	System.println("d_params = " + d_params);
+    	if ($.debug) {
+    		System.println("SubsonicAPI::getCoverArt( params: " + params + ")");
+    		System.println("d_params = " + d_params);
+    	}
     
     	Api.setCallback(callback);
     
@@ -235,7 +258,9 @@ class SubsonicAPI extends Api {
     }
     
     function onGetCoverArt(responseCode, data) {
-    	System.println("SubsonicAPI::onGetCoverArt with responseCode: " + responseCode + " and " + data);
+    	if ($.debug) {
+    		System.println("SubsonicAPI::onGetCoverArt with responseCode: " + responseCode + " and " + data);
+    	}
     	
 		// check if request was successful and response is ok
 		var error = Api.checkImageResponse(responseCode, data);

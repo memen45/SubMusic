@@ -14,7 +14,9 @@ module SubMusic {
         };
 
         function initialize(storage) {
-            System.println("Playable::initialize( storage = " + storage + " )");
+            if ($.debug) {
+            	System.println("Playable::initialize( storage = " + storage + " )");
+            }
 
             Storable.initialize(storage);
         }
@@ -72,7 +74,9 @@ module SubMusic {
     class IPlayable extends Playable {
 
         function initialize() {
-            System.println("IPlayable::initialize()");
+            if ($.debug) {
+            	System.println("IPlayable::initialize()");
+            }
 
             var storage = PlayableStore.get();
             if (storage == null) {
@@ -147,19 +151,23 @@ module SubMusic {
         }
 
         function removeAudioByIdx(idx) {
-            System.println("IPlayable::removeAudioByIdx(idx: " + idx + " )");
-            System.println(ids());
-            System.println(types());
-            System.println(idcs());
+            if ($.debug) {
+            	System.println("IPlayable::removeAudioByIdx(idx: " + idx + " )");
+            	System.println(ids());
+            	System.println(types());
+            	System.println(idcs());
+            }
 
             ids().remove(ids()[idx]);   // remove the id from ids
             types().remove(types()[idx]);   // remove the type from types
             idcs().remove(idx);       // remove the idx from idcs
 
-            System.println(ids().toString());
-            System.println(types().toString());
-            System.println(idcs());
-            System.println("IPlayable::removeAudioByIdx() - done");
+            if ($.debug) {
+            	System.println(ids().toString());
+            	System.println(types().toString());
+            	System.println(idcs());
+            	System.println("IPlayable::removeAudioByIdx() - done");
+            }
         }
 
         function removeRemoved() {
@@ -208,7 +216,9 @@ module SubMusic {
 
             // if not shuffle, nothing to do
             var saved = save();
-            System.println("IPlayable::removeRemoved now " + d_storage);
+            if ($.debug) {
+            	System.println("IPlayable::removeRemoved now " + d_storage);
+            }
             
             if (!shuffle()) {
             	return saved;
@@ -231,10 +241,12 @@ module SubMusic {
                 return false;
             }
 
-            System.println("Playable::shuffleIdcs() Before: " + idcs());
-            System.println("Playable::shuffleIdcs() songids: " + ids().toString());
-            System.println("Playable::shuffleIdcs() songids: " + types().toString());
-            System.println("Playable::shuffleIdcs() songidx: " + songidx());
+            if ($.debug) {
+            	System.println("Playable::shuffleIdcs() Before: " + idcs());
+            	System.println("Playable::shuffleIdcs() songids: " + ids().toString());
+            	System.println("Playable::shuffleIdcs() songids: " + types().toString());
+            	System.println("Playable::shuffleIdcs() songidx: " + songidx());
+            }
 
             // if not shuffle, generate 0:n array for idcs
             if (!shuffle) {
@@ -245,7 +257,9 @@ module SubMusic {
                 for (var idx = 0; idx != idcs().size(); ++idx) {
                     idcs()[idx] = idx;
                 }
-                System.println("Playable::shuffleIdcs() After unshuffle:" + idcs());
+                if ($.debug) {
+                	System.println("Playable::shuffleIdcs() After unshuffle:" + idcs());
+                }
                 return save();
             }
 
@@ -264,7 +278,9 @@ module SubMusic {
                 idcs()[other] = tmp;
             }
             
-            System.println("Playable::shuffleIdcs() After shuffle:" + idcs());
+            if ($.debug) {
+            	System.println("Playable::shuffleIdcs() After shuffle:" + idcs());
+            }
 
             // slice last songs and prepend to account for songidx
             var splitidx = songidx();
@@ -272,13 +288,17 @@ module SubMusic {
             setIdcs(idcs().slice(-splitidx, null));
             idcs().addAll(end);
             
-            System.println("Playable::shuffleIdcs() After shuffle:" + idcs());
+            if ($.debug) {
+            	System.println("Playable::shuffleIdcs() After shuffle:" + idcs());
+            }
 
             return save();
         }
 
         function loadIds(ids, audioid, type) {
-            System.println("IPlayable::loadIds( ids: " + ids + " audioid: " + audioid + " type: " + type);
+            if ($.debug) {
+            	System.println("IPlayable::loadIds( ids: " + ids + " audioid: " + audioid + " type: " + type);
+            }
              
             var audioidx = 0;
 
@@ -326,7 +346,9 @@ module SubMusic {
         }
 
         function loadPodcast(id, episodeid) {
-            System.println("IPlayable::loadPodcast( id: " + id + " episodeid: " + episodeid + ")");
+            if ($.debug) {
+            	System.println("IPlayable::loadPodcast( id: " + id + " episodeid: " + episodeid + ")");
+            }
             
             // return empty array if no id available
             if (id == null) {
@@ -341,7 +363,9 @@ module SubMusic {
         }
 
         function loadPlaylist(id, songid) {
-            System.println("IPlayable::loadPlaylist( id: " + id + " songid: " + songid + ")");
+            if ($.debug) {
+            	System.println("IPlayable::loadPlaylist( id: " + id + " songid: " + songid + ")");
+            }
             
             // return empty array if no id available
             if (id == null) {

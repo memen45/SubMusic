@@ -13,7 +13,9 @@ class SubMusicPlaylistView extends WatchUi.View {
 	}
 
     function onLayout(dc) {
-    	System.println("text area is " + dc.getWidth() + " x " + dc.getHeight());
+    	if ($.debug) {
+    		System.println("text area is " + dc.getWidth() + " x " + dc.getHeight());
+    	}
     	d_textarea = new WatchUi.TextArea({
     		:text => d_playlist.name() + "\n" + d_playlist.count() + " songs",
     		:color => Graphics.COLOR_WHITE,

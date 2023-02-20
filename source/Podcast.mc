@@ -25,8 +25,12 @@ class Podcast extends Storable {
 	};
 	
 	function initialize(storage) {
-		// System.println("Playlist::initialize( storage = " + storage + " )");
-		System.println("Podcast::initialize( storage : " + storage + " )");
+		// if ($.debug) {
+		// 	System.println("Playlist::initialize( storage = " + storage + " )");
+		// }
+		if ($.debug) {
+			System.println("Podcast::initialize( storage : " + storage + " )");
+		}
 
 		Storable.initialize(storage);
 	}
@@ -87,7 +91,9 @@ class IPodcast extends Podcast {
 	private var d_artwork = null;
 
 	function initialize(id) {
-		System.println("IPodcast::initialize( id : " + id + " )");
+		if ($.debug) {
+			System.println("IPodcast::initialize( id : " + id + " )");
+		}
 		var storage = PodcastStore.get(id);
 		if (storage != null) {
 			d_stored = true;
@@ -152,7 +158,9 @@ class IPodcast extends Podcast {
 	}
 	
 	function setLocal(local) {
-		System.println("IPodcast::setLocal( " + local + " )");
+		if ($.debug) {
+			System.println("IPodcast::setLocal( " + local + " )");
+		}
 		// nothing to do if not changed
 		if (local() == local) {
 			return false;
@@ -226,7 +234,9 @@ class IPodcast extends Podcast {
 			return changed;
 		}
 		
-		System.println("IPodcast::setArt_id( art_id: " + art_id + " )");
+		if ($.debug) {
+			System.println("IPodcast::setArt_id( art_id: " + art_id + " )");
+		}
 
 		if (!linked()) {
 			return true;
@@ -264,7 +274,9 @@ class IPodcast extends Podcast {
 // 	}
 	
 // 	function setCount(count) {
-// 		System.println("IPlaylist.setCount( count : " + count + " )");
+// 		if ($.debug) {
+// 			System.println("IPlaylist.setCount( count : " + count + " )");
+// 		}
 // 		// nothing to do if not changed
 // 		if (d_songCount == count) {
 // 			return false;
@@ -279,7 +291,9 @@ class IPodcast extends Podcast {
 
 	// unlinks all related refs (only artwork)
 	function unlink() {
-		System.println("IPodcast::unlink()");
+		if ($.debug) {
+			System.println("IPodcast::unlink()");
+		}
 		// nothing to do if not linked
 		if (!linked()) {
 			return;
@@ -300,7 +314,9 @@ class IPodcast extends Podcast {
 	
 	// links all related refs (only artwork)
 	function link() {
-		System.println("IPodcast::link()");
+		if ($.debug) {
+			System.println("IPodcast::link()");
+		}
 		
 		// nothing to do if already linked
 		if (linked()) {
@@ -321,7 +337,9 @@ class IPodcast extends Podcast {
 	}
 	
 	function updateMeta(podcast) {
-		System.println("IPodcast::updateMeta( podcast: " + podcast.toStorage() + " )");
+		if ($.debug) {
+			System.println("IPodcast::updateMeta( podcast: " + podcast.toStorage() + " )");
+		}
 		
 		// only single save is needed, so mark as not stored temporarily
 		d_stored = false;

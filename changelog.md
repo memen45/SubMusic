@@ -1,8 +1,10 @@
 Version [] - 
 
-Version [0.2.8] - 11-01-2023
-- fixed storage 0 Bytes
+Version [0.2.8] - 20-02-2023
+- fixed settings storage having 0 Bytes
 - fixed some rare crashes on receiving invalid response
+- added setting to enable debug logging
+- removed default debug output (speed improvement)
 
 Version [0.2.7] - 26-12-2022
 - fixed podcast episode downloading on og subsonic and airsonic-advanced servers

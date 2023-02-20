@@ -11,7 +11,9 @@ module SubMusic {
 			}
 
 			function load() {
-				System.println("Menu.Browse::load()");
+				if ($.debug) {
+					System.println("Menu.Browse::load()");
+				}
 				return MenuBase.load([
 					new Menu.PlaylistsRemote(WatchUi.loadResource(Rez.Strings.Playlists_label)),
 					new Menu.PodcastsRemote(WatchUi.loadResource(Rez.Strings.Podcasts_label)),

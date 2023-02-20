@@ -42,7 +42,9 @@ class Api {
     }
 
     function update(settings) {
-        System.println("Api::update( " + settings + ")");
+        if ($.debug) {
+        	System.println("Api::update( " + settings + ")");
+        }
 
         updateUrl(settings.get("api_url"));
         updateUsr(settings.get("api_usr"));
@@ -75,8 +77,10 @@ class Api {
     }
 
     function checkApiError(responseCode, data) {
-        System.println("WARNING: Api::checkApiError() was called, but should not be called");
-        System.println("responseCode: " + responseCode + " data: " + data);
+        if ($.debug) {
+        	System.println("WARNING: Api::checkApiError() was called, but should not be called");
+        	System.println("responseCode: " + responseCode + " data: " + data);
+        }
         return null;
     }
 
@@ -124,7 +128,9 @@ class Api {
 
 	function onProgress(totalBytesTransferred, fileSize) {
 		// if total fileSize is null, progress = 0
-        System.println(totalBytesTransferred + " of " + fileSize);
+        if ($.debug) {
+        	System.println(totalBytesTransferred + " of " + fileSize);
+        }
 		var progress = 0;
 		if (fileSize) {
 			progress = 100 * (totalBytesTransferred / fileSize.toFloat());

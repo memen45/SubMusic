@@ -14,7 +14,9 @@ class PlexAPI extends Api {
 		Api.setProgressCallback(progress);
 		Api.setFallback(fallback);
 
-    	System.println("PlexAPI::initialize(client name: " + client() + " )");
+    	if ($.debug) {
+    		System.println("PlexAPI::initialize(client name: " + client() + " )");
+    	}
 
         d_params.put("X-Plex-Platform", "Chrome");
         d_params.put("X-Plex-Device", System.getDeviceSettings().partNumber);
@@ -31,7 +33,9 @@ class PlexAPI extends Api {
     }
 
 	function scrobble(callback, params) {
-		System.println("PlexAPI::scrobble(params: " + params + ")");
+		if ($.debug) {
+			System.println("PlexAPI::scrobble(params: " + params + ")");
+		}
 	
 		Api.setCallback(callback);
 		
@@ -48,7 +52,9 @@ class PlexAPI extends Api {
 	}
 
 	function onScrobble(responseCode, data) {
-		System.println("PlexAPI::onScrobble( responseCode: " + responseCode + ", data: " + data + ")");		
+		if ($.debug) {
+			System.println("PlexAPI::onScrobble( responseCode: " + responseCode + ", data: " + data + ")");
+		}		
 		
 		var error = Api.checkResponse(responseCode, data);
 		if (error) {
@@ -64,7 +70,9 @@ class PlexAPI extends Api {
 	 * checks Dictionary response and returns the MediaContainer element
 	 */
 	function onResponse(responseCode, data) {
-		System.println("PlexAPI::onResponse with responseCode " + responseCode + " payload " + data);
+		if ($.debug) {
+			System.println("PlexAPI::onResponse with responseCode " + responseCode + " payload " + data);
+		}
 		
 		// errors are filtered first
 		var error = Api.checkDictionaryResponse(responseCode, data);
@@ -80,13 +88,17 @@ class PlexAPI extends Api {
 
         var url = url() + "/playlists";
         params = Utils.merge(d_params, params);
-        System.println("PlexAPI::playlists( params: " + params + ")");
+        if ($.debug) {
+        	System.println("PlexAPI::playlists( params: " + params + ")");
+        }
 
         Communications.makeWebRequest(url, params, d_options, self.method(:onResponse));
     }
 
     function onPlaylists(responseCode, data) {
-        System.println("PlexAPI::onPlaylists( responseCode: " + responseCode + ", data: " + data + ")");		
+        if ($.debug) {
+        	System.println("PlexAPI::onPlaylists( responseCode: " + responseCode + ", data: " + data + ")");
+        }		
 		
 		// check if request was successful and response is ok
     	var error = Api.checkDictionaryResponse(responseCode, data);
@@ -105,7 +117,9 @@ class PlexAPI extends Api {
 
         var url = url() + "/playlists/" + id + "/items";
         params = Utils.merge(d_params, params);
-        System.println("PlexAPI::playlists_items( id: " + id + ", params: " + params + ")");
+        if ($.debug) {
+        	System.println("PlexAPI::playlists_items( id: " + id + ", params: " + params + ")");
+        }
 
         Communications.makeWebRequest(url, params, d_options, self.method(:onResponse));
     }
@@ -116,7 +130,9 @@ class PlexAPI extends Api {
      * downloads a given media file
      */
     function stream(callback, params, id, encoding) {
-		System.println("PlexAPI::stream( params: " + params + ", id: " + id + ")");
+		if ($.debug) {
+			System.println("PlexAPI::stream( params: " + params + ", id: " + id + ")");
+		}
     
     	Api.setCallback(callback);
 
@@ -140,7 +156,9 @@ class PlexAPI extends Api {
      * downloads a given media file
      */
     function music_transcode(callback, params, encoding) {
-		System.println("PlexAPI::music_transcode( params: " + params + " )");
+		if ($.debug) {
+			System.println("PlexAPI::music_transcode( params: " + params + " )");
+		}
     
     	Api.setCallback(callback);
 
@@ -159,7 +177,9 @@ class PlexAPI extends Api {
 	}
 
 	function onStream(responseCode, data) {
-		System.println("PlexAPI::onStream with responseCode: " + responseCode);
+		if ($.debug) {
+			System.println("PlexAPI::onStream with responseCode: " + responseCode);
+		}
     	
 		// check if request was successful and response is ok
 		var error = Api.checkContentResponse(responseCode, data);
@@ -177,7 +197,9 @@ class PlexAPI extends Api {
      * downloads artwork for given media id
      */
 	function photo_transcode(callback, params, id) {
-		System.println("PlexAPI::photo_transcode( id: " + id +  " )");
+		if ($.debug) {
+			System.println("PlexAPI::photo_transcode( id: " + id +  " )");
+		}
 
 		Api.setCallback(callback);
 
@@ -198,7 +220,9 @@ class PlexAPI extends Api {
 	}
 
 	function onPhoto(responseCode, data) {
-		System.println("PlexAPI::onPhoto with responseCode: " + responseCode + " and " + data);
+		if ($.debug) {
+			System.println("PlexAPI::onPhoto with responseCode: " + responseCode + " and " + data);
+		}
 
 		// check if request was successful and response is ok
 		var error = Api.checkImageResponse(responseCode, data);

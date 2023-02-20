@@ -18,7 +18,9 @@ class Episode extends Storable {
 	};
 
 	function initialize(storage) {
-		System.println("Episode::initialize( storage = " + storage + " )");
+		if ($.debug) {
+			System.println("Episode::initialize( storage = " + storage + " )");
+		}
 
 		Storable.initialize(storage);
 	}
@@ -81,7 +83,9 @@ class IEpisode extends Episode {
 	private var d_stored = false;						// true if song metadata is in storage
 	
 	function initialize(id) {
-		System.println("IEpisode::initialize( id : " + id + " )");
+		if ($.debug) {
+			System.println("IEpisode::initialize( id : " + id + " )");
+		}
 		var storage = EpisodeStore.get(id);
 		if (storage != null) {
 			d_stored = true;
@@ -249,7 +253,9 @@ class IEpisode extends Episode {
 	
 	// saves the new item to application storage
 	function updateMeta(episode) {
-		System.println("IEpisode::updateMeta( episode : " + episode.toStorage() + " )");
+		if ($.debug) {
+			System.println("IEpisode::updateMeta( episode : " + episode.toStorage() + " )");
+		}
 		
 		// only single save is needed, so mark as not stored temporarily
 		d_stored = false;

@@ -20,7 +20,9 @@ class SubsonicProvider {
 	}
 	
 	function onSettingsChanged(settings) {
-		System.println("SubsonicProvider::onSettingsChanged");
+		if ($.debug) {
+			System.println("SubsonicProvider::onSettingsChanged");
+		}
 		
 		d_api.update(settings);
 	}
@@ -186,20 +188,26 @@ class SubsonicProvider {
 	}
 	
 	function onPing(response) {
-		System.println("SubsonicProvider::onPing( response = " + response + ")");
+		if ($.debug) {
+			System.println("SubsonicProvider::onPing( response = " + response + ")");
+		}
 		
 		
 		d_callback.invoke(response);
 	}
 	
 	function onRecordPlay(response) {
-		System.println("SubsonicProvider::onRecordPlay( response = " + response + ")");
+		if ($.debug) {
+			System.println("SubsonicProvider::onRecordPlay( response = " + response + ")");
+		}
 		
 		d_callback.invoke(response); // expected empty element
 	}
 
 	function onGetAllPlaylists(response) {
-		System.println("SubsonicProvider::onGetAllPlaylists( response = " + response + ")");
+		if ($.debug) {
+			System.println("SubsonicProvider::onGetAllPlaylists( response = " + response + ")");
+		}
 		
 		// response should be array, and have length
 		if (!(response instanceof Lang.Array)
@@ -231,7 +239,9 @@ class SubsonicProvider {
 	}
 
 	function onGetPodcasts(response) {
-		System.println("SubsonicProvider::onGetPodcasts( response = " + response + ")");
+		if ($.debug) {
+			System.println("SubsonicProvider::onGetPodcasts( response = " + response + ")");
+		}
 		
 		// response should be array, and have length
 		if (!(response instanceof Lang.Array)
@@ -259,7 +269,9 @@ class SubsonicProvider {
 	}
 
 	function onGetEpisodes(response) {
-		System.println("SubsonicProvider::onGetEpisodes( response = " + response + ")");
+		if ($.debug) {
+			System.println("SubsonicProvider::onGetEpisodes( response = " + response + ")");
+		}
 		
 		// assume id ensures first item is needed
 		if ( (response.size() == 0) 
@@ -308,7 +320,9 @@ class SubsonicProvider {
 	}
 
 	function onGetPlaylist(response) {
-		System.println("SubsonicProvider::onGetPlaylist( response = " + response + ")");
+		if ($.debug) {
+			System.println("SubsonicProvider::onGetPlaylist( response = " + response + ")");
+		}
 		
 		var songCount = response["songCount"];
 		if (songCount == null) {
@@ -324,7 +338,9 @@ class SubsonicProvider {
 	}
 
 	function onGetPlaylistSongs(response) {
-		System.println("SubsonicProvider::onGetPlaylistSongs( response = " + response + ")");
+		if ($.debug) {
+			System.println("SubsonicProvider::onGetPlaylistSongs( response = " + response + ")");
+		}
 		
 		response = response["entry"];
 

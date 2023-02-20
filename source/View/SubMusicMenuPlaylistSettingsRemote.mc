@@ -16,7 +16,9 @@ module SubMusic {
             }
 
             function load() {
-				System.println("Menu.PlaylistSettingsRemote::load()");
+				if ($.debug) {
+					System.println("Menu.PlaylistSettingsRemote::load()");
+				}
 
                 return MenuBase.load([
                     {

@@ -43,7 +43,9 @@ class AmpacheProvider {
 	}
 	
 	function onSettingsChanged(settings) {
-		System.println("AmpacheProvider::onSettingsChanged");
+		if ($.debug) {
+			System.println("AmpacheProvider::onSettingsChanged");
+		}
 		
 		d_api.update(settings);
 	}
@@ -76,7 +78,9 @@ class AmpacheProvider {
 	}
 	
 	function on_do_ping(response) {
-		System.println("AmpacheProvider::on_do_ping( response = " + response + ")");
+		if ($.debug) {
+			System.println("AmpacheProvider::on_do_ping( response = " + response + ")");
+		}
 		
 		d_action = null;
 		d_callback.invoke(response);
@@ -101,7 +105,9 @@ class AmpacheProvider {
 	}
 
 	function on_do_record_play(response) {
-		System.println("AmpacheProvider::on_do_record_play( response = " + response + ")");
+		if ($.debug) {
+			System.println("AmpacheProvider::on_do_record_play( response = " + response + ")");
+		}
 		
 		d_action = null;
 		d_callback.invoke(response["success"]); // expected success string
@@ -335,16 +341,20 @@ class AmpacheProvider {
 			d_limit = MAX_LIMIT;
 		}
 
-		System.println("AmpacheProvider::checkDone()");
-		System.println("Total received: " + d_response.size());
-		System.println("Last received: " + response.size());
-		System.println("Max total: " + d_count);
-		System.println("Max at once: " + d_limit);
+		if ($.debug) {
+			System.println("AmpacheProvider::checkDone()");
+			System.println("Total received: " + d_response.size());
+			System.println("Last received: " + response.size());
+			System.println("Max total: " + d_count);
+			System.println("Max at once: " + d_limit);
+		}
 
 		if ((d_response.size() < d_count)		// count not reached 
 			&& (response.size() >= d_limit)) {	// limit reached
 			// request required, since response was full and count not reached
-			System.println("AmpacheProvider::checkDone - next request");
+			if ($.debug) {
+				System.println("AmpacheProvider::checkDone - next request");
+			}
 			d_offset += d_limit;	// increase offset
 			do_();
 			return;
@@ -479,7 +489,9 @@ class AmpacheProvider {
 			&& (d_limit > 1)) {
 			
 			d_limit = (d_limit / 2).toNumber();		// half the response
-			System.println("AmpacheProvider limit was lowered to " + d_limit);
+			if ($.debug) {
+				System.println("AmpacheProvider limit was lowered to " + d_limit);
+			}
 			do_();														// retry the request
 			return;
 		}

@@ -8,7 +8,9 @@ class PodcastSync extends Deferrable {
 	private var f_progress; 		// callback on progress
 
 	function initialize(id, progress, done, fail) {
-		System.println("PodcastSync::initialize()");
+		if ($.debug) {
+			System.println("PodcastSync::initialize()");
+		}
 		Deferrable.initialize(method(:sync), done, fail);		// make sync the deferred task
 		
 		f_progress = progress;
@@ -34,7 +36,9 @@ class PodcastSync extends Deferrable {
 	}
 	
 	function onGetPodcast(response) {
-		System.println(response.toString());
+		if ($.debug) {
+			System.println(response.toString());
+		}
 		// mark first out of 2 requests done
 		onProgress(1/2);
 		
@@ -73,7 +77,9 @@ class PodcastSync extends Deferrable {
 	}
     
     function onError(error) {
-    	System.println("PodcastSync::onError(" + error.shortString() + " : " + error.toString() + ")");
+    	if ($.debug) {
+    		System.println("PodcastSync::onError(" + error.shortString() + " : " + error.toString() + ")");
+    	}
 
     	// indicate failed sync
 //   	d_ipodcast.setError(error); TODO

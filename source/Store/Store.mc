@@ -7,7 +7,9 @@ class Store {
 	private var d_value = null;	// variable that is reflected in the Application.Storage
 
 	function initialize(key, value) {
-		System.println("Store::initialize( key: " + key + " value: " + value + " )");
+		if ($.debug) {
+			System.println("Store::initialize( key: " + key + " value: " + value + " )");
+		}
 		d_key = key;
 
 		var stored = Application.Storage.getValue(d_key);

@@ -14,21 +14,27 @@ module ArtworkStore {
 	var d_delete = new ArrayStore(Storage.ARTWORK_DELETE);	// allows fast access 
 
 	function get(id) {
-//		System.println("ArtworkStore::get( id : " + id + " )");
+//		if ($.debug) {
+//			System.println("ArtworkStore::get( id : " + id + " )");
+//		}
 
 		return d_artworks.get(id);
 	}
 
 	// returns artwork ids
 	function getIds() {
-		System.println("ArtworkStore::getIds()");
+		if ($.debug) {
+			System.println("ArtworkStore::getIds()");
+		}
 
 		return d_artworks.getIds();
 	}
 
 	// returns artwork objects
 	function getAll(options) {
-		System.println("ArtworkStore::getAll( options: " + options + " )");
+		if ($.debug) {
+			System.println("ArtworkStore::getAll( options: " + options + " )");
+		}
 		var artworks = [];
 		var objects = d_artworks.getValues();
 		for (var idx = 0; idx != objects.size(); ++idx) {
@@ -53,7 +59,9 @@ module ArtworkStore {
 
     // these functions should be used only internally by IArtwork class
 	function save(artwork) {
-		System.println("ArtworkStore::save( artwork : " + artwork.toStorage() + " )");
+		if ($.debug) {
+			System.println("ArtworkStore::save( artwork : " + artwork.toStorage() + " )");
+		}
 
 		// update delete tracking
 		var id = new Id(artwork.id());
@@ -70,7 +78,9 @@ module ArtworkStore {
 	}
 
 	function remove(artwork) {
-		System.println("ArtworkStore::remove( " + artwork.toStorage() + ")");
+		if ($.debug) {
+			System.println("ArtworkStore::remove( " + artwork.toStorage() + ")");
+		}
 
 		// remove from storage
 		d_artworks.remove(artwork);
