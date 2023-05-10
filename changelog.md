@@ -1,5 +1,8 @@
 Version [] - 
 
+Version [0.2.9] - 10-05-2023
+- added support for Forerunner 265, 265s and 965
+
 Version [0.2.8] - 20-02-2023
 - fixed settings storage having 0 Bytes
 - fixed some rare crashes on receiving invalid response
