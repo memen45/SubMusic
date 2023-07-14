@@ -1,4 +1,6 @@
 Version [] - 
+Version [0.2.10] - 
+- added support for approachs70xxmm, epix2pro and fenix7xpro
 
 Version [0.2.9] - 10-05-2023
 - added support for Forerunner 265, 265s and 965
