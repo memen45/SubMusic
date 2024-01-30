@@ -40,6 +40,22 @@ Supported. Just choose Subsonic API in the Connect IQ app settings and fill in t
 ### == Plex ==
 
 Should be supported now including transcoding. Make sure you enable remote access inside Plex, then login through `plex.tv` and follow [these instructions](https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/) to obtain the server address and the API key. The Server Address should look like `https://ip-adress.somehashvalue.plex.direct:32400/`, where `ip-address` and `somehashvalue` are unique for your situation. Now head to Connect IQ app store, choose Plex API in the SubMusic app settings and fill in the Server Address and API key you found. Enjoy your music!
+```
+Step-by-step;
+	1- Open Plex in a browser
+	2- Select a music item 	(maybe any item)
+	3- Select the three dots menu next to it
+	4- Select "Get info"
+	5- Select "View XML"
+	*** The URL that is now open after clicking "View XML" ontains everything you need. ***
+	In the Application config for Subsonic on your phone, select;
+		1- API Backend = Plex API
+		2- Server Address = The 1st part of the URL e.g. https://192-168-YY-ZZ.XXXXXXXXXXXXXXXXXXXX.plex.direct:32400
+		3- Username = Use your Plex account username
+		4- API Key = is the last part of the URL taken above after "X-Plex-Token="
+		5- Authentication method = API
+```
+
 
 ## Known issues 
 Below a list of known 'issues'. These are problems that cannot be fixed by design of either the watch software or the API backends chosen.
